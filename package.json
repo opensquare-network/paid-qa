@@ -1,0 +1,12 @@
+{
+  "name": "paid-qa",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "main": "index.js",
+  "repository": "https://github.com/opensquare-network/paid-qa.git",
+  "author": "OpenSquare <https://www.opensquare.network/>",
+  "license": "MIT"
+}
