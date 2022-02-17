@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import Footer from "ui/Footer";
+
 import Layout from "./components/Layout";
 import Header from "./components/Header";
 import Main from "./components/Main";
-
 import Home from "./pages/Home";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Main>
+      <Footer />
     </Layout>
   );
 }
