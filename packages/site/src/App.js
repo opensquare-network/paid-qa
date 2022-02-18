@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Footer from "ui/Footer";
+import { Footer } from "qiyisi_test";
 
 import Layout from "./components/Layout";
 import Header from "./components/Header";
