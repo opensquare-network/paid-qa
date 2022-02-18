@@ -1,6 +1,25 @@
 {
   "name": "ui",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist && NODE_ENV=production babel lib --out-dir dist --copy-files"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "files": [ "dist" ],
+  "babel": {
+    "presets": [
+      "@babel/react",
+      "@babel/env"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.3",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.7.0",
+    "react": "^17.0.2"
+  }
 }
