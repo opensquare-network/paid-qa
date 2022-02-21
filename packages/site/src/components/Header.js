@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Container from "./Container";
 
 const Wrapper = styled.header`
   position: relative;
@@ -9,6 +8,8 @@ const Wrapper = styled.header`
 `;
 
 const ContentWrapper = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
   min-height: 80px;
   padding: 20px 32px;
   display: flex;
@@ -63,18 +64,16 @@ const AppWrapper = styled.div`
 export default function Header() {
   return (
     <Wrapper>
-      <Container>
-        <ContentWrapper>
-          <LeftWrapper>
-            <Logo />
-            <Divider />
-            <AppWrapper>
-              <img src="/imgs/icons/apps.svg" alt="" />
-              Paid QA
-            </AppWrapper>
-          </LeftWrapper>
-        </ContentWrapper>
-      </Container>
+      <ContentWrapper>
+        <LeftWrapper>
+          <Logo />
+          <Divider />
+          <AppWrapper>
+            <img src="/imgs/icons/apps.svg" alt="" />
+            Paid QA
+          </AppWrapper>
+        </LeftWrapper>
+      </ContentWrapper>
     </Wrapper>
   );
 }
