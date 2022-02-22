@@ -54,4 +54,18 @@ module.exports = {
       options: { path: "../ui", name: "ui" },
     },
   ],
+  webpack: {
+    configure: {
+      module: {
+        rules: [
+          {
+            test: /\.m?js/,
+            resolve: {
+              fullySpecified: false,
+            },
+          },
+        ],
+      },
+    },
+  },
 };
