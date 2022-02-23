@@ -1,3 +1,4 @@
+const { extractExtrinsicEvents, isExtrinsicSuccess } = require("./utils/extrinsics");
 const { getBlockIndexer } = require("./utils/indexer");
 
 async function scanBlock(block, events = []) {
@@ -5,17 +6,6 @@ async function scanBlock(block, events = []) {
   await handleExtrinsics(block.extrinsics, events, blockIndexer)
 
   return blockIndexer;
-}
-
-function extractExtrinsicEvents(events, extrinsicIndex) {
-  return events.filter((event) => {
-    const { phase } = event;
-    return !phase.isNull && phase.value.toNumber() === extrinsicIndex;
-  });
-}
-
-function isExtrinsicSuccess(events) {
-  return events.some((e) => e.event.method === "ExtrinsicSuccess");
 }
 
 async function handleExtrinsics(extrinsics, allEvents, blockIndexer) {
