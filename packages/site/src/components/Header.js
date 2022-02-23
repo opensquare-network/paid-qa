@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+import ConnectWallet from "./ConnectWallet";
+import Notification from "./Notification";
+
 const Wrapper = styled.header`
   position: relative;
   flex: 0 0 auto;
@@ -61,6 +64,13 @@ const AppWrapper = styled.div`
   }
 `;
 
+const RightWrapper = styled.div`
+  display: flex;
+  > :not(:first-child) {
+    margin-left: 16px;
+  }
+`;
+
 export default function Header() {
   return (
     <Wrapper>
@@ -73,6 +83,10 @@ export default function Header() {
             Paid QA
           </AppWrapper>
         </LeftWrapper>
+        <RightWrapper>
+          <ConnectWallet />
+          <Notification />
+        </RightWrapper>
       </ContentWrapper>
     </Wrapper>
   );
