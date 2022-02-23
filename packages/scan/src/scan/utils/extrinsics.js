@@ -1,7 +1,7 @@
 /**
  *
  * @param events all block events
- * @param extrinsicIndex the index of extrinsic at the corresponding block
+ * @param extrinsicIndex: Number. the index of extrinsic at the corresponding block
  * @returns true|false
  */
 function extractExtrinsicEvents(events, extrinsicIndex) {
@@ -20,7 +20,13 @@ function isExtrinsicSuccess(events) {
   return events.some((e) => e.event.method === "ExtrinsicSuccess");
 }
 
+function extrinsicSuccess(blockEvents, extrinsicIndex) {
+  const extrinsicEvents = extractExtrinsicEvents(blockEvents, extrinsicIndex);
+  return isExtrinsicSuccess(extrinsicEvents);
+}
+
 module.exports = {
   extractExtrinsicEvents,
   isExtrinsicSuccess,
+  extrinsicSuccess,
 }

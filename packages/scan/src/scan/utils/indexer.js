@@ -1,3 +1,5 @@
+const { BlockIndexer } = require("../../common/types/BlockIndexer")
+
 function extractBlockTime(extrinsics) {
   const setTimeExtrinsic = extrinsics.find(
     (ex) => ex.method.section === "timestamp" && ex.method.method === "set"
@@ -13,11 +15,7 @@ function getBlockIndexer(block) {
   const blockHeight = block.header.number.toNumber();
   const blockTime = extractBlockTime(block.extrinsics);
 
-  return {
-    blockHeight,
-    blockHash,
-    blockTime,
-  };
+  return new BlockIndexer(blockHeight, blockHash, blockTime);
 }
 
 module.exports = {
