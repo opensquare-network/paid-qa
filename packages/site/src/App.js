@@ -2,10 +2,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Footer } from "ui/lib";
 
-import Layout from "./components/Layout";
-import Header from "./components/Header";
-import Main from "./components/Main";
-import Home from "./pages/Home";
+import Layout from "components/Layout";
+import Header from "components/Header";
+import Main from "components/Main";
+import Home from "pages/Home";
+import Question from "pages/Question";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />}></Route>
+            <Route path="/question" element={<Question />}></Route>
           </Routes>
         </BrowserRouter>
       </Main>

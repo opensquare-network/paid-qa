@@ -4,13 +4,15 @@ import Container from "components/Container";
 import Explorer from "components/Explorer";
 import AskQuestion from "components/AskQuestion";
 import PostList from "components/PostList";
+import Background from "components/Background";
 
-const Wrapper = styled.section`
+const Wrapper = styled.div`
   position: relative;
   padding: 40px 0 64px;
 `;
 
 const ContentWrapper = styled.div`
+  position: relative;
   > :not(:first-child) {
     margin-top: 24px;
   }
@@ -31,6 +33,7 @@ const PostListTitle = styled.div`
 export default function Home() {
   return (
     <Wrapper>
+      <Background />
       <Container>
         <ContentWrapper>
           <Explorer />
