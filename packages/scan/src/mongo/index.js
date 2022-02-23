@@ -10,7 +10,7 @@ function getDbName() {
   return dbName;
 }
 
-const mongoUrl = process.env.MONGO_SCAN_URL || "mongodb+srv://127.0.0.1:27017/?maxPoolSize=20&w=majority";
+const mongoUrl = process.env.MONGO_SCAN_URL || "mongodb://localhost:27017";
 const statusCollectionName = "status";
 let statusCol = null;
 
