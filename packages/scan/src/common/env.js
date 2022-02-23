@@ -1,4 +1,4 @@
-const scanStep = parseInt(process.env.SCAN_STEP) || 100;
+let scanStep = parseInt(process.env.SCAN_STEP) || 100;
 const { CHAINS } = require("./constants");
 let chain = null;
 
@@ -24,7 +24,13 @@ function getScanStep() {
   return scanStep;
 }
 
+// For test
+function setScanStep(step) {
+  scanStep = step;
+}
+
 module.exports = {
   currentChain,
   getScanStep,
+  setScanStep,
 }

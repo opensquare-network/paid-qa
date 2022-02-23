@@ -44,5 +44,6 @@ async function fetchOneBlock(height) {
 }
 
 module.exports = {
+  fetchOneBlock,
   fetchBlocks,
 }

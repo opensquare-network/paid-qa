@@ -9,5 +9,13 @@
     "lodash.last": "^3.0.0",
     "log4js": "^6.4.1",
     "mongodb": "^4.4.0"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@polkadot|@babel)/)"
+    ]
   }
 }

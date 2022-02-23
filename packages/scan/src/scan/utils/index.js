@@ -1,5 +1,5 @@
-const { getScanStep } = require("../common/env");
-const { getFinalizedHeight } = require("../chain/finalized");
+const { getScanStep } = require("../../common/env");
+const { getFinalizedHeight } = require("../../chain/finalized");
 
 function getTargetHeight(startHeight) {
   const chainHeight = getFinalizedHeight();

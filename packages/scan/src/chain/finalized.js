@@ -17,7 +17,13 @@ function getFinalizedHeight() {
   return latestFinalizedHeight;
 }
 
+// For test
+function setFinalizedHeight(height) {
+  latestFinalizedHeight = height
+}
+
 module.exports = {
   subscribeFinalizedHeight,
   getFinalizedHeight,
+  setFinalizedHeight,
 };
