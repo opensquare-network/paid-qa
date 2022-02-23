@@ -11,7 +11,9 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function User({ address }) {
+export default function User({
+  address = "5GpDCCH3mbiLkrqQrtXiBPFjCsD3YeGWVf8CgrkTdveAGeNs",
+}) {
   return (
     <Wrapper>
       <Avatar address={address} />
