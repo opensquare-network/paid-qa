@@ -74,7 +74,6 @@ const Time = styled.div`
 
 export default function PostList() {
   return (
-    <div>
       <Wrapper>
         <ReplyWrapper>
           <div>0</div>
@@ -94,6 +93,5 @@ export default function PostList() {
           </div>
         </DetailWrapper>
       </Wrapper>
-    </div>
   );
 }
