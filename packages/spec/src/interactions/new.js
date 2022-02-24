@@ -1,5 +1,6 @@
 class NewInteraction {
   static symbol = 'N';
+  static argsCount = 3;
 
   #tokenIdentifier;
   #tokenAmount;

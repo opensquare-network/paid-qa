@@ -1,32 +1,65 @@
-const { InteractionInvalid } = require("./types/InteractionInvalid");
-const { PROTOCOL } = require("./constants")
+const { InteractionInvalid } = require("../types/InteractionInvalid");
+const { PROTOCOL, INTERACTION_SYMBOLS, } = require("../constants")
+const interactions = require("../interactions")
 
 class InteractionParser {
   #remark;
+  #valid = false;
+  #interaction;
+  #parsed = false;
 
   constructor(remark = "") {
     this.#remark = remark;
   }
 
-  parse() {
+  #parse() {
     if (typeof this.#remark !== 'string') {
-      throw new InteractionInvalid('Invalid remark type');
+      this.#valid = false;
+      return
     }
 
     const items = this.#remark.split(":");
     if (items.length < 5) {
-      throw new InteractionInvalid("Invalid interactions items count");
+      this.#valid = false
+    } else if (
+      items[0].toLowerCase() !== PROTOCOL.NETWORK ||
+      items[1].toLowerCase() !== PROTOCOL.COLLABORATION ||
+      items[2].toLowerCase() !== PROTOCOL.VERSION ||
+      !Object.values(INTERACTION_SYMBOLS).includes(items[3])
+    ) {
+      this.#valid = false
     }
 
-    if (items[0].toLowerCase() !== PROTOCOL.NETWORK) {
-      throw new InteractionInvalid("Invalid network");
+    const protocolPrefixLength = 4;
+    const interactionArgs = items.slice(4);
+    const directive = items[3];
+    for (const Interaction of Object.values(interactions)) {
+      if (directive === Interaction.symbol) {
+        this.#valid = Interaction.argsCount === items.length - protocolPrefixLength;
+        this.#interaction = new Interaction(...interactionArgs);
+      }
     }
-    if (items[1].toLowerCase() !== PROTOCOL.COLLABORATION) {
-      throw new InteractionInvalid("Invalid collaboration");
+  }
+
+  get isValid() {
+    if (!this.#parsed) {
+      this.#parse();
+      this.#parsed = true;
     }
-    if (items[2].toLowerCase() !== PROTOCOL.VERSION) {
-      throw new InteractionInvalid("Invalid version");
+    return this.#valid;
+  }
+
+  getInteraction() {
+    if (!this.#parsed) {
+      this.#parse();
+      this.#parsed = true;
     }
+
+    if (!this.#valid) {
+      throw new InteractionInvalid();
+    }
+
+    return this.#interaction;
   }
 }
 

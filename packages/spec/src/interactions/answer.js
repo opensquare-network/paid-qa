@@ -1,5 +1,6 @@
 class AnswerInteraction {
   static symbol = 'AS';
+  static argsCount = 1;
   #answerIpfsCid;
 
   constructor(answerIpfsCid) {

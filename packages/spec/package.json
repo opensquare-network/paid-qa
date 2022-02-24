@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }

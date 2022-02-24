@@ -1,5 +1,6 @@
 class AppendInteraction {
   static symbol = 'A';
+  static argsCount = 2;
 
   #topicIpfsCid;
   #messageIpfsCid;
