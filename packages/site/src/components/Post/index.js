@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-import Card from "components/Card";
 import Detail from "./Detail";
+import Answers from "./Answers";
+import Promises from "./Promises";
+import Funds from "./Funds";
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,11 +28,11 @@ export default function Post() {
     <Wrapper>
       <div>
         <Detail />
-        <Card />
+        <Answers />
       </div>
       <div>
-        <Card />
-        <Card />
+        <Promises />
+        <Funds />
       </div>
     </Wrapper>
   );
