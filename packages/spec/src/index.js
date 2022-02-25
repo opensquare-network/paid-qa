@@ -3,4 +3,5 @@ module.exports = {
   entities: require("./entities"),
   types: require("./types"),
   parser: require("./parser"),
+  constants: require("./constants"),
 }

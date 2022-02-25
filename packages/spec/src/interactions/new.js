@@ -43,6 +43,14 @@ class NewInteraction {
 
     return isTokenAmountValid(this.#tokenAmount);
   }
+
+  toJSON() {
+    return {
+      tokenIdentifier: this.#tokenIdentifier,
+      tokenAmount: this.#tokenAmount,
+      topicIpfsCid: this.#topicIpfsCid,
+    }
+  }
 }
 
 module.exports = {
