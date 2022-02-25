@@ -1,3 +1,5 @@
+const { isCid } = require("../common/cid");
+
 class FundInteraction {
   static symbol = 'F';
   static argsCount = 1;
@@ -10,6 +12,14 @@ class FundInteraction {
 
   get ipfsCid() {
     return this.#ipfsCid;
+  }
+
+  /**
+   *
+   * @returns {boolean}
+   */
+  get isValid() {
+    return isCid(this.#ipfsCid)
   }
 }
 

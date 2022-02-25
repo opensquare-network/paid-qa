@@ -35,8 +35,9 @@ class InteractionParser {
     const directive = items[3];
     for (const Interaction of Object.values(interactions)) {
       if (directive === Interaction.symbol) {
-        this.#valid = Interaction.argsCount === items.length - protocolPrefixLength;
+        const argsCountValid = Interaction.argsCount === items.length - protocolPrefixLength;
         this.#interaction = new Interaction(...interactionArgs);
+        this.#valid = argsCountValid && this.#interaction.isValid
       }
     }
   }

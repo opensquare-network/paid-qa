@@ -1,3 +1,5 @@
+const { isCid } = require("../common/cid");
+
 class AppendInteraction {
   static symbol = 'A';
   static argsCount = 2;
@@ -16,6 +18,18 @@ class AppendInteraction {
 
   get messageIpfsCid() {
     return this.#messageIpfsCid;
+  }
+
+  /**
+   *
+   * @returns {boolean}
+   */
+  get isValid() {
+    if (!isCid(this.#topicIpfsCid)) {
+      return false
+    }
+
+    return isCid(this.#topicIpfsCid);
   }
 }
 

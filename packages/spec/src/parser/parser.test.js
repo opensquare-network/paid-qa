@@ -10,6 +10,7 @@ const {
 
 const validNew = "osn:q:1:N:N:1:bafybeigvbkfmhdgnqko4ev35wfecx7exiyg35gcr7rh45ywlpw2v62itye";
 const invalid = "osn:q:1:N:N:invalid";
+const invalidNewWithInvalidIpfsCid = "osn:q:1:N:N:1:bafybeigvbkfmhdgnqko4ev35wfecx7exiyg35gcr7rh45ywlpw2v62ityp";
 
 const validAppend = "osn:q:1:A:bafybeigvbkfmhdgnqko4ev35wfecx7exiyg35gcr7rh45ywlpw2v62itye:bafybeidzruwvbbhhohll7mif5rbuupkfoeeltjf6bi3meristpx7milt2a";
 const validSupport = "osn:q:1:S:N:1:bafybeigvbkfmhdgnqko4ev35wfecx7exiyg35gcr7rh45ywlpw2v62itye";
@@ -24,6 +25,11 @@ describe("Spec parser", () => {
     const interaction = parser.getInteraction();
     expect(interaction).toBeInstanceOf(NewInteraction);
     expect(interaction.topicIpfsCid).toBe("bafybeigvbkfmhdgnqko4ev35wfecx7exiyg35gcr7rh45ywlpw2v62itye");
+  });
+
+  test("parse invalid new interaction works", () => {
+    const parser = new InteractionParser(invalidNewWithInvalidIpfsCid);
+    expect(parser.isValid).toBeFalsy()
   });
 
   test("parse invalid will throw", () => {

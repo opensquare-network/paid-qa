@@ -1,3 +1,5 @@
+const { isCid } = require("../common/cid");
+
 class AnswerInteraction {
   static symbol = 'AS';
   static argsCount = 1;
@@ -9,6 +11,14 @@ class AnswerInteraction {
 
   get answerIpfsCid() {
     return this.#answerIpfsCid;
+  }
+
+  /**
+   *
+   * @returns {boolean}
+   */
+  get isValid() {
+    return isCid(this.#answerIpfsCid);
   }
 }
 
