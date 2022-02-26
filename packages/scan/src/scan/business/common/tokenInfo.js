@@ -26,6 +26,11 @@ async function queryNativeTokenInfo() {
  */
 async function queryAssetInfo(assetId, blockHash) {
   const blockApi = await findBlockApi(blockHash);
+  const asset = await blockApi.query.assets.asset(assetId);
+  if (asset.isNone) {
+    return null
+  }
+
   const metadata = await blockApi.query.assets.metadata(assetId);
   const symbolHex = metadata.symbol.toHex();
   const decimals = metadata.decimals.toNumber();

@@ -46,4 +46,15 @@ describe("Query token info", () => {
 
     await disconnect();
   })
+
+  test("statemine invalid asset works", async () => {
+    await setupStatemineApi();
+
+    const height = 1757976;
+    const api = await getApi();
+    const blockHash = await api.rpc.chain.getBlockHash(height);
+    const token = await queryAssetInfo(8000000, blockHash);
+    expect(token).toBeNull()
+    await disconnect();
+  })
 })
