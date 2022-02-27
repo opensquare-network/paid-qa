@@ -7,10 +7,10 @@ const { constants: { NATIVE_TOKEN_IDENTIFIER } } = require("@paid-qa/spec")
 
 async function handleNew(interaction, caller, indexer) {
   const isNativeToken = NATIVE_TOKEN_IDENTIFIER === interaction.tokenIdentifier;
-  const notStatemine = [CHAINS.STATEMINE].includes(currentChain());
+  const isAssetParaChain = [CHAINS.STATEMINE].includes(currentChain());
   const chain = currentChain();
 
-  if (!isNativeToken && notStatemine) {
+  if (!isAssetParaChain && !isNativeToken) {
     remarkLogger.info(`Unsupported token identifier at ${ chain } #${ indexer.blockHeight }`)
     return
   }
@@ -33,9 +33,9 @@ async function handleNew(interaction, caller, indexer) {
     caller,
     tokenInfo: tokenInfo.toJSON(),
     tokenAmount: interaction.tokenAmount,
-    topicIpfsCid: interaction.topicIpfsCid,
+    ipfsCid: interaction.topicIpfsCid,
     parsed: false,
-    indexer,
+    indexer: indexer.toJSON(),
   }
 
   await insertTopic(topic);
