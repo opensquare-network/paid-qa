@@ -14,6 +14,13 @@ class TokenInfo {
   get decimals() {
     return this.#decimals;
   }
+
+  toJSON() {
+    return {
+      symbol: this.#symbol,
+      decimals: this.#decimals,
+    }
+  }
 }
 
 module.exports = {
