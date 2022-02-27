@@ -1,3 +1,4 @@
+const { insertPendingTopic } = require("../../../../mongo/service/pendingTopic");
 const { queryNativeTokenInfo, queryAssetInfo, } = require("../../common/tokenInfo");
 const { remarkLogger } = require("../../../../common/logger");
 const { currentChain } = require("../../../../common/env");
@@ -28,15 +29,17 @@ async function handleNew(interaction, caller, indexer) {
     return
   }
 
-  // create a pending topic object
-  const obj = {
+  const pendingTopicInfo = {
     caller,
     tokenInfo: tokenInfo.toJSON(),
     tokenAmount: interaction.tokenAmount,
     topicIpfsCid: interaction.topicIpfsCid,
+    parsed: false,
     indexer,
   }
-  // todo: check interaction validity. Abandon if invalid
+
+  await insertPendingTopic(pendingTopicInfo);
+  // todo: we just save the unparsed data first. The IPFS data cat and parsing work will be done at a dedicated worker.
 }
 
 module.exports = {
