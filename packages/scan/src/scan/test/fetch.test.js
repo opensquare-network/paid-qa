@@ -1,6 +1,6 @@
 const { setupPolkadotApi, disconnect, } = require("../../common/test/utils");
 const { fetchOneBlock } = require("../fetch");
-jest.setTimeout(30000);
+jest.setTimeout(300000);
 
 describe("Fetch", () => {
   beforeAll(async () => {

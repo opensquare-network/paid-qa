@@ -7,7 +7,7 @@ const {
   setupStatemineApi,
   disconnect,
 } = require("../../../../common/test/utils");
-jest.setTimeout(300000);
+jest.setTimeout(3000000);
 
 describe("Query token info", () => {
   test(".polkadot native works", async () => {
@@ -43,10 +43,12 @@ describe("Query token info", () => {
     const token = await queryAssetInfo(8, blockHash);
     expect(token.symbol).toBe("RMRK");
     expect(token.decimals).toEqual(10);
-
     await disconnect();
   })
 
+})
+
+describe("Query token info", () => {
   test("statemine invalid asset works", async () => {
     await setupStatemineApi();
 

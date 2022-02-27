@@ -20,6 +20,14 @@ class BlockIndexer {
   get blockTime() {
     return this.#blockTime;
   }
+
+  toJSON() {
+    return {
+      blockHeight: this.#blockHeight,
+      blockHash: this.#blockHash,
+      blockTime: this.#blockTime
+    }
+  }
 }
 
 module.exports = {

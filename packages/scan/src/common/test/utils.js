@@ -3,10 +3,10 @@ const { ApiPromise, WsProvider } = require("@polkadot/api");
 
 const polkadotEndpoint = "wss://polkadot.api.onfinality.io/public-ws";
 const kusamaEndpoint = "wss://kusama.api.onfinality.io/public-ws";
-const statemineEndpoint = "wss://statemine.api.onfinality.io/public-ws";
+const statemineEndpoint = "wss://statemine-rpc.polkadot.io";
 
 async function _setupApi(endpoint) {
-  const provider = new WsProvider(endpoint, 10);
+  const provider = new WsProvider(endpoint, 100);
   const api = await ApiPromise.create({ provider });
   setProvider(provider);
   setApi(api);
