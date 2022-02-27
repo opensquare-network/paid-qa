@@ -14,6 +14,7 @@ const mongoUrl = process.env.MONGO_SCAN_URL || "mongodb://localhost:27017";
 const statusCollectionName = "status";
 let statusCol = null;
 let topicCol = null;
+let appendixCol = null;
 
 let client = null;
 let db = null;
@@ -27,6 +28,7 @@ async function initDb() {
 
   statusCol = await getCollection(db, statusCollectionName);
   topicCol = await getCollection(db, "topic");
+  appendixCol = await getCollection(db, "appendix");
   await _createIndexes();
 }
 
@@ -53,6 +55,11 @@ async function getTopicCollection() {
   return topicCol;
 }
 
+async function getAppendixCollection() {
+  await tryInit(appendixCol);
+  return appendixCol;
+}
+
 async function closeDb() {
   if (client) {
     await client.close();
@@ -62,6 +69,7 @@ async function closeDb() {
 module.exports = {
   initDb,
   closeDb,
+  getAppendixCollection,
   getStatusCollection,
   getTopicCollection,
 };
