@@ -1,4 +1,4 @@
-const { insertPendingTopic } = require("../../../../mongo/service/pendingTopic");
+const { insertTopic } = require("../../../../mongo/service/topic");
 const { queryNativeTokenInfo, queryAssetInfo, } = require("../../common/tokenInfo");
 const { remarkLogger } = require("../../../../common/logger");
 const { currentChain } = require("../../../../common/env");
@@ -29,7 +29,7 @@ async function handleNew(interaction, caller, indexer) {
     return
   }
 
-  const pendingTopicInfo = {
+  const topic = {
     caller,
     tokenInfo: tokenInfo.toJSON(),
     tokenAmount: interaction.tokenAmount,
@@ -38,7 +38,7 @@ async function handleNew(interaction, caller, indexer) {
     indexer,
   }
 
-  await insertPendingTopic(pendingTopicInfo);
+  await insertTopic(topic);
   // todo: we just save the unparsed data first. The IPFS data cat and parsing work will be done at a dedicated worker.
 }
 
