@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function Breadcrumb() {
+export default function Breadcrumb({ value }) {
   return (
     <Wrapper>
       <Link to="/">
@@ -43,7 +43,7 @@ export default function Breadcrumb() {
       <div>
         <Link to="/">Paid QA</Link>
         <div>/</div>
-        <div>Question</div>
+        <div>{value}</div>
       </div>
     </Wrapper>
   );

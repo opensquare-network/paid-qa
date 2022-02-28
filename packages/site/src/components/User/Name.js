@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
@@ -8,13 +10,19 @@ const Wrapper = styled.div`
   :hover {
     text-decoration: underline;
   }
+  > :not(:first-child) {
+    margin-left: 4px;
+  }
 `;
 
 export default function Name({ address }) {
   return (
     <Wrapper>
-      {address.substring(0, 4)}...
-      {address.substring(address.length - 4, address.length)}
+      <img src="/imgs/icons/polkadot.svg" alt="" />
+      <div>
+        {address.substring(0, 4)}...
+        {address.substring(address.length - 4, address.length)}
+      </div>
     </Wrapper>
   );
 }
