@@ -23,6 +23,22 @@ a {
   box-sizing: border-box;
 }
 
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
 @font-face {
   font-family: "Inter";
   src: url("../public/fonts/Inter-Regular.ttf") format("truetype");

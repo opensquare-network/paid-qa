@@ -23,7 +23,7 @@ export default function Question() {
       <Background />
       <Container>
         <ContentWrapper>
-          <Breadcrumb />
+          <Breadcrumb value="Question" />
           <Post />
         </ContentWrapper>
       </Container>

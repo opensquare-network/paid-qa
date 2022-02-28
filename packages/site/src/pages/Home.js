@@ -6,6 +6,9 @@ import AskQuestion from "components/AskQuestion";
 import PostList from "components/PostList";
 import Background from "components/Background";
 
+import { useSelector } from "react-redux";
+import { testSelector } from "store/reducers/testSlice";
+
 const Wrapper = styled.div`
   position: relative;
   padding: 40px 0 64px;
@@ -31,6 +34,9 @@ const PostListTitle = styled.div`
 `;
 
 export default function Home() {
+  const test = useSelector(testSelector);
+  console.log({ test });
+
   return (
     <Wrapper>
       <Background />

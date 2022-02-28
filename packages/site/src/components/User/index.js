@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `;
 
 export default function User({
-  address = "5GpDCCH3mbiLkrqQrtXiBPFjCsD3YeGWVf8CgrkTdveAGeNs",
+  address = "12mP4sjCfKbDyMRAEyLpkeHeoYtS5USY4x34n9NMwQrcEyoh",
 }) {
   return (
     <Wrapper>
