@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 import { Footer } from "ui/lib";
 
@@ -14,13 +14,13 @@ function App() {
     <Layout>
       <Header />
       <Main>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/question" element={<Question />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </Main>
       <Footer />
     </Layout>
