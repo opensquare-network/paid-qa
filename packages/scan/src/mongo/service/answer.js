@@ -1,5 +1,13 @@
+const { getAnswerCollection } = require("../index");
+
 async function insertAnswer(answer) {
-  // TODO: insert the answer of a topic
+  const col = await getAnswerCollection()
+  const maybeInDb = await col.findOne({ answerIpfsCid: answer.answerIpfsCid });
+  if (maybeInDb) {
+    return
+  }
+
+  await col.insertOne(answer);
 }
 
 module.exports = {
