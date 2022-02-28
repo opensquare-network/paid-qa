@@ -15,6 +15,7 @@ const statusCollectionName = "status";
 let statusCol = null;
 let topicCol = null;
 let appendixCol = null;
+let answerCol = null;
 
 let client = null;
 let db = null;
@@ -29,6 +30,7 @@ async function initDb() {
   statusCol = await getCollection(db, statusCollectionName);
   topicCol = await getCollection(db, "topic");
   appendixCol = await getCollection(db, "appendix");
+  answerCol = await getCollection(db, "answer");
   await _createIndexes();
 }
 
@@ -60,6 +62,11 @@ async function getAppendixCollection() {
   return appendixCol;
 }
 
+async function getAnswerCollection() {
+  await tryInit(answerCol);
+  return answerCol;
+}
+
 async function closeDb() {
   if (client) {
     await client.close();
@@ -72,4 +79,5 @@ module.exports = {
   getAppendixCollection,
   getStatusCollection,
   getTopicCollection,
+  getAnswerCollection,
 };
