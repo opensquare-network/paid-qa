@@ -15,7 +15,7 @@ function getBlockIndexer(block) {
   const blockHeight = block.header.number.toNumber();
   const blockTime = extractBlockTime(block.extrinsics);
 
-  return new BlockIndexer(blockHeight, blockHash, blockTime);
+  return new BlockIndexer(blockHeight, blockHash, blockTime).toJSON();
 }
 
 module.exports = {

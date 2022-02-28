@@ -1,3 +1,7 @@
+const { isCid } = require("../common/cid");
+const { isTokenAmountValid } = require("../common/tokenAmount");
+const { isTokenIdentifierValid } = require("../common/tokenIdentifier");
+
 class NewInteraction {
   static symbol = 'N';
   static argsCount = 3;
@@ -22,6 +26,30 @@ class NewInteraction {
 
   get topicIpfsCid() {
     return this.#topicIpfsCid;
+  }
+
+  /**
+   *
+   * @returns {boolean}
+   */
+  get isValid() {
+    if (!isCid(this.#topicIpfsCid)) {
+      return false
+    }
+
+    if (!isTokenIdentifierValid(this.#tokenIdentifier)) {
+      return false
+    }
+
+    return isTokenAmountValid(this.#tokenAmount);
+  }
+
+  toJSON() {
+    return {
+      tokenIdentifier: this.#tokenIdentifier,
+      tokenAmount: this.#tokenAmount,
+      topicIpfsCid: this.#topicIpfsCid,
+    }
   }
 }
 

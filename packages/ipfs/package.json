@@ -1,0 +1,12 @@
+{
+  "name": "@paid-qa/ipfs",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "ipfs-http-client": "^56.0.1",
+    "it-all": "^1.0.6"
+  }
+}
