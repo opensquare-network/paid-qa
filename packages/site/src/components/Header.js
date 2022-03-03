@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import ConnectWallet from "./ConnectWallet";
 import Notification from "./Notification";
+import ChainSelector from "./Chain/ChainSelector";
 
 const Wrapper = styled.header`
   position: relative;
@@ -58,6 +58,7 @@ const AppWrapper = styled.div`
   font-weight: 600;
   font-size: 18px;
   line-height: 24px;
+
   > img {
     width: 24px;
     margin-right: 8px;
@@ -66,6 +67,7 @@ const AppWrapper = styled.div`
 
 const RightWrapper = styled.div`
   display: flex;
+
   > :not(:first-child) {
     margin-left: 16px;
   }
@@ -84,7 +86,9 @@ export default function Header() {
           </AppWrapper>
         </LeftWrapper>
         <RightWrapper>
-          <ConnectWallet />
+          <ChainSelector
+            chains={[{ network: "polkadot" }, { network: "kusama" }]}
+          />
           <Notification />
         </RightWrapper>
       </ContentWrapper>
