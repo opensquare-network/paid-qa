@@ -4,7 +4,7 @@ const AnswerSchema = new mongoose.Schema({
   topicCid: String,
   content: String,
   cid: String,
-  status: String, // "draft", "published", "onchain", "closed"
+  status: String, // "reserved", "published", "onchain", "closed"
   data: String,
   address: String,
   signature: String,
