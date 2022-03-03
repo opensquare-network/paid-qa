@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const TopicSchema = new mongoose.Schema({
   title: String,
   content: String,
+  language: String,
   cid: String,
   status: String, // "reserved", "published", "onchain", "closed"
-  data: String,
+  data: Object,
   address: String,
   signature: String,
 }, {
