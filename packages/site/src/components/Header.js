@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Notification from "./Notification";
 import ChainSelector from "./Chain/ChainSelector";
-import AccountSelector from "ui/lib/Account/accountSelector";
+import AccountSelector from "ui/lib/Account/AccountSelector";
 
 const Wrapper = styled.header`
   position: relative;
