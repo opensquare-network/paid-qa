@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import TagList from "./TagList";
 import User from "components/User";
+import DividerWrapper from "components/DividerWrapper";
 
 const Wrapper = styled.div`
   padding: 24px;
@@ -56,16 +58,6 @@ const Divider = styled.div`
   background: #f0f3f8;
 `;
 
-const DividerWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  > :not(:first-child)::before {
-    content: "·";
-    margin: 0 8px;
-    color: #a1a8b3;
-  }
-`;
-
 const Time = styled.div`
   font-size: 14px;
   line-height: 24px;
@@ -74,24 +66,26 @@ const Time = styled.div`
 
 export default function PostList() {
   return (
-      <Wrapper>
-        <ReplyWrapper>
-          <div>0</div>
-          <div>Replies</div>
-        </ReplyWrapper>
-        <DetailWrapper>
+    <Wrapper>
+      <ReplyWrapper>
+        <div>0</div>
+        <div>Replies</div>
+      </ReplyWrapper>
+      <DetailWrapper>
+        <Link to="/question">
           <Title>
             What tool we should use to measure effectiveness of PH Launch?
           </Title>
-          <Divider />
-          <div>
-            <DividerWrapper>
-              <User address="5GpDCCH3mbiLkrqQrtXiBPFjCsD3YeGWVf8CgrkTdveAGeNs" />
-              <Time>2 hours ago</Time>
-            </DividerWrapper>
-            <TagList />
-          </div>
-        </DetailWrapper>
-      </Wrapper>
+        </Link>
+        <Divider />
+        <div>
+          <DividerWrapper>
+            <User />
+            <Time>2 hours ago</Time>
+          </DividerWrapper>
+          <TagList />
+        </div>
+      </DetailWrapper>
+    </Wrapper>
   );
 }

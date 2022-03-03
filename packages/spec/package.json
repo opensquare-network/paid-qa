@@ -1,0 +1,13 @@
+{
+  "name": "@paid-qa/spec",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "private": true,
+  "dependencies": {
+    "bignumber.js": "^9.0.2",
+    "multiformats": "^9.6.4"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
