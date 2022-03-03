@@ -3,6 +3,9 @@ const Router = require("koa-router");
 const router = new Router();
 
 const featureRouters = [
+  require("./features/topic/routes"),
+  require("./features/answer/routes"),
+  require("./features/account/routes"),
 ];
 
 for (const r of featureRouters) {
