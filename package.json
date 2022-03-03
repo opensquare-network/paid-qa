@@ -2,9 +2,14 @@
   "name": "paid-qa",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/semantic-ui-css"
+    ]
+  },
   "devDependencies": {
     "husky": "^7.0.4",
     "prettier": "^2.5.1",
