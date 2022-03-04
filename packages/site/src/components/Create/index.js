@@ -26,15 +26,7 @@ const Wrapper = styled.div`
   > :nth-child(2) {
     flex: 0 0 300px;
     margin-left: 20px;
-
-    > :not(:first-child) {
-      margin-top: 20px;
-    }
   }
-`;
-
-const Card = styled.div`
-  margin-bottom: 20px;
 `;
 
 const Box = styled.div`
@@ -42,6 +34,9 @@ const Box = styled.div`
     0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
   border: 1px solid #f0f3f8;
   padding: 32px;
+  > :not(:first-child) {
+    margin-top: 20px;
+  }
 `;
 
 const Main = styled(Box)`
