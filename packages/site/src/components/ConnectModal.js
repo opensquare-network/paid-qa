@@ -79,7 +79,7 @@ const ActionBar = styled.div`
   margin-top: 28px;
 `;
 
-export default function Connect({ setShowConnect }) {
+export default function ConnectModal({ setShowConnect }) {
   const dispatch = useDispatch();
   const isMounted = useIsMounted();
   const [hasExtension, setHasExtension] = useState(null);
