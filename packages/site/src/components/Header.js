@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Notification from "./Notification";
-import Connect from "./Connect";
+import ConnectModal from "./ConnectModal";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { useRef, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
@@ -105,14 +105,15 @@ export default function Header() {
         </LeftWrapper>
         <RightWrapper>
           <Notification />
-          {account && (
+          {account ? (
             <ConnectedAccount
-              {...{ showMenu, setShowMenu, account }}
+              {...{ showMenu, setShowMenu, account, setShowConnect }}
               showNetwork
             />
+          ) : (
+            <ConnectWallet onClick={() => setShowConnect(true)} />
           )}
-          {!account && <ConnectWallet onClick={() => setShowConnect(true)} />}
-          {showConnect && <Connect setShowConnect={setShowConnect} />}
+          {showConnect && <ConnectModal setShowConnect={setShowConnect} />}
         </RightWrapper>
       </ContentWrapper>
     </Wrapper>
