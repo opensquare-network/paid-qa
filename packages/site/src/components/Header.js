@@ -3,10 +3,11 @@ import styled from "styled-components";
 import Notification from "./Notification";
 import Connect from "./Connect";
 import { accountSelector } from "../store/reducers/accountSlice";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
 import { useSelector } from "react-redux";
 import ConnectedAccount from "ui/lib/Account/ConnectedAccount";
+import { useOnClickOutside } from "ui/lib/utils/hooks";
 
 const Wrapper = styled.header`
   position: relative;
@@ -80,6 +81,15 @@ const RightWrapper = styled.div`
 
 export default function Header() {
   const [showConnect, setShowConnect] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const ref = useRef();
+  useOnClickOutside(ref, (event) => {
+    // connect modal is at body level, doesn't contained in the <Header/>, so exclude manually
+    if (document?.querySelector(".modals")?.contains(event.target)) {
+      return;
+    }
+    setShowMenu(false);
+  });
   const account = useSelector(accountSelector);
 
   return (
@@ -94,10 +104,15 @@ export default function Header() {
           </AppWrapper>
         </LeftWrapper>
         <RightWrapper>
-          {account && <ConnectedAccount account={account} showNetwork />}
+          <Notification />
+          {account && (
+            <ConnectedAccount
+              {...{ showMenu, setShowMenu, account }}
+              showNetwork
+            />
+          )}
           {!account && <ConnectWallet onClick={() => setShowConnect(true)} />}
           {showConnect && <Connect setShowConnect={setShowConnect} />}
-          <Notification />
         </RightWrapper>
       </ContentWrapper>
     </Wrapper>
