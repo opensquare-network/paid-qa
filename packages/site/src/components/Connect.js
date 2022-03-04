@@ -115,7 +115,7 @@ export default function Connect({ setShowConnect }) {
       if (!isWeb3Injected) {
         return;
       }
-      const web3Apps = await web3Enable("voting");
+      const web3Apps = await web3Enable("PaidQA");
       const polkadotEnabled = web3Apps?.length > 0;
       if (isMounted.current) {
         setIsPolkadotAccessible(polkadotEnabled);
