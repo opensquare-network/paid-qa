@@ -50,6 +50,39 @@ async function createTopic(
   };
 }
 
+async function setTopicPublished(cid) {
+  await Topic.updateOne({ cid }, { status: PostStatus.Published });
+  return true;
+}
+
+async function deleteTopic(cid) {
+  const session = await mongoose.startSession();
+  await session.withTransaction(async () => {
+    await Topic.deleteOne({ cid }, { session });
+    await Reward.deleteMany({ topicCid: cid }, { session });
+  });
+  return true;
+}
+
+async function getTopic(cid) {
+  const topic = await Topic.findOne({ cid }).populate("rewards");
+  return topic;
+}
+
+async function getTopics(page, pageSize) {
+  const topics = await Topic
+    .find({})
+    .sort({ createdAt: -1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .populate("rewards");
+  return topics;
+}
+
 module.exports = {
   createTopic,
+  setTopicPublished,
+  deleteTopic,
+  getTopic,
+  getTopics,
 };
