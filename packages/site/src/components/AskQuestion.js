@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -7,6 +8,7 @@ const Wrapper = styled.div`
   line-height: 24px;
   color: #04d2c5;
   cursor: pointer;
+
   > :not(:first-child) {
     margin-left: 8px;
   }
@@ -14,9 +16,11 @@ const Wrapper = styled.div`
 
 export default function AskQuestion() {
   return (
-    <Wrapper>
-      <img src="/imgs/icons/add.svg" alt="" />
-      <div>Ask a Question</div>
-    </Wrapper>
+    <Link to={"/askquestion"}>
+      <Wrapper>
+        <img src="/imgs/icons/add.svg" alt="" />
+        <div>Ask a Question</div>
+      </Wrapper>
+    </Link>
   );
 }

@@ -41,7 +41,7 @@ export default function Breadcrumb({ value }) {
         <img src="/imgs/icons/caret-left.svg" alt="" />
       </Link>
       <div>
-        <Link to="/">Paid QA</Link>
+        <Link to="/">Explorer</Link>
         <div>/</div>
         <div>{value}</div>
       </div>

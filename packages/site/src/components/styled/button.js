@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components";
 import { p_14_medium } from "../../styles/textStyles";
 
-const Wrapper = styled.div`
+const Wrapper = styled.button`
+  all: unset;
+  font-family: Inter, sans-serif;
   ${p_14_medium};
   text-align: center;
   padding: 7px 15px;
@@ -42,7 +44,9 @@ const Wrapper = styled.div`
     (p.isLoading || p.disabled) &&
     css`
       background: #e2e8f0;
+      border-color: #e2e8f0;
       pointer-events: none;
+      color: #ffffff;
     `}
   ${(p) =>
     p.isLoading &&
