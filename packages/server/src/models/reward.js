@@ -2,6 +2,13 @@ const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 
 const RewardSchema = new mongoose.Schema({
+  // Indexer will be set by the scanner
+  indexer: {
+    network: String,
+    blockHeight: Number,
+    blockTime: Number,
+    extrinsicIndex: Number,
+  },
   topicCid: String,
   network: String,
   currencyType: String, // "native", "asset"

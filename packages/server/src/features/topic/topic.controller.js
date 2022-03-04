@@ -1,12 +1,21 @@
+const { extractPage } = require("../../utils/pagination");
 const topicService = require("../../services/topic.service");
 const { RewardCurrencyType } = require("../../utils/constants");
 
 async function getTopics(ctx) {
-  ctx.body = {};
+  const { page, pageSize } = extractPage(ctx.query);
+
+  ctx.body = await topicService.getTopics(page, pageSize);
 }
 
 async function getTopic(ctx) {
-  ctx.body = {};
+  const { cid } = ctx.query;
+
+  if (!cid) {
+    throw new HttpError(400, { cid: ["Cid is missing"] });
+  }
+
+  ctx.body = await topicService.getTopic(cid);
 }
 
 async function createTopic(ctx) {
@@ -77,8 +86,30 @@ async function createTopic(ctx) {
   );
 }
 
+async function setTopicPublished(ctx) {
+  const { cid } = ctx.query;
+
+  if (!cid) {
+    throw new HttpError(400, { cid: ["Cid is missing"] });
+  }
+
+  ctx.body = await topicService.setTopicPublished(cid);
+}
+
+async function deleteTopic(ctx) {
+  const { cid } = ctx.query;
+
+  if (!cid) {
+    throw new HttpError(400, { cid: ["Cid is missing"] });
+  }
+
+  ctx.body = await topicService.deleteTopic(cid);
+}
+
 module.exports = {
   getTopic,
   getTopics,
   createTopic,
+  setTopicPublished,
+  deleteTopic,
 };
