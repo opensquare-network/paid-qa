@@ -18,7 +18,7 @@ import {
 } from "../styles/textStyles";
 import { ReactComponent as SvgClose } from "site/public/imgs/icons/close.svg";
 import ChainSelector from "ui/lib/Chain/ChainSelector";
-import { CHAINS } from "ui/lib/utils/constants";
+import { AVAILABLE_NETWORKS } from "ui/lib/utils/constants";
 
 function useIsMounted() {
   const isMounted = useRef(true);
@@ -87,7 +87,7 @@ export default function Connect({ setShowConnect }) {
   const [chain, setChain] = useState({ network: "polkadot" });
   const [address, setAddress] = useState();
   const [isPolkadotAccessible, setIsPolkadotAccessible] = useState(null);
-  const availableNetworks = CHAINS;
+  const availableNetworks = AVAILABLE_NETWORKS;
 
   const getAddresses = useCallback(async () => {
     const extensionAccounts = await web3Accounts();

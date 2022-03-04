@@ -4,26 +4,7 @@ import styled, { css } from "styled-components";
 import Avatar from "./Avatar";
 import Address from "./Address";
 import { encodeAddress } from "@polkadot/util-crypto";
-
-export const CHAINS = Object.freeze({
-  polkadot: "polkadot",
-  kusama: "kusama",
-  statemine: "statemine",
-  karura: "karura",
-  khala: "khala",
-  bifrost: "bifrost",
-  kintsugi: "kintsugi",
-});
-
-export const chainSs58Format = Object.freeze({
-  [CHAINS.polkadot]: 0,
-  [CHAINS.kusama]: 2,
-  [CHAINS.statemine]: 2,
-  [CHAINS.karura]: 8,
-  [CHAINS.khala]: 30,
-  [CHAINS.bifrost]: 6,
-  [CHAINS.kintsugi]: 2092,
-});
+import { ChainSS58Format } from "ui/lib/utils/constants";
 
 const Text = styled.p`
   color: #1e2134;
@@ -54,7 +35,7 @@ const ItemWrapper = styled.div`
 `;
 
 const AccountItem = ({ header, accountName, accountAddress, chain }) => {
-  const ss58Format = chainSs58Format[chain];
+  const ss58Format = ChainSS58Format[chain];
   let address = accountAddress;
   if (typeof ss58Format === "number") {
     address = encodeAddress(accountAddress, ss58Format);

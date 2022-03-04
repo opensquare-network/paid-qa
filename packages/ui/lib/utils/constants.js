@@ -54,5 +54,32 @@ export const FOOTER_ITEMS = [
   },
 ];
 
+export const Chains = {
+  polkadot: "polkadot",
+  kusama: "kusama",
+  karura: "karura",
+  acala: "acala",
+  khala: "khala",
+  substrate: "substrate",
+  basilisk: "basilisk",
+  kabocha: "kabocha",
+  bifrost: "bifrost",
+  kintsugi: "kintsugi",
+};
+
+export const ChainSS58Format = Object.freeze({
+  [Chains.polkadot]: 0,
+  [Chains.kusama]: 2,
+  [Chains.statemine]: 2,
+  [Chains.karura]: 8,
+  [Chains.khala]: 30,
+  [Chains.bifrost]: 6,
+  [Chains.kintsugi]: 2092,
+});
+
+
 //todo: add more
-export const CHAINS = [{ network: "polkadot" }, { network: "kusama" }];
+export const AVAILABLE_NETWORKS = [
+  { network: Chains.polkadot },
+  { network: Chains.kusama },
+];

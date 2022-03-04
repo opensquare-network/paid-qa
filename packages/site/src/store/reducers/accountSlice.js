@@ -2,7 +2,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 import { setCookie, getCookie, clearCookie } from "ui/lib/utils/cookie";
 import { encodeAddress } from "@polkadot/util-crypto";
-import { CHAINS } from "ui/lib/utils/constants";
+import { AVAILABLE_NETWORKS } from "ui/lib/utils/constants";
 
 const accountSlice = createSlice({
   name: "account",
@@ -55,7 +55,7 @@ export const accountSelector = (state) => {
 export const loginNetworkSelector = createSelector(
   accountSelector,
   (account) => {
-    return CHAINS.find((item) => item.network === account?.network);
+    return AVAILABLE_NETWORKS.find((item) => item.network === account?.network);
   }
 );
 
