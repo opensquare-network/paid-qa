@@ -103,6 +103,9 @@ const MenuWrapper = styled.div`
 const MenuItem = styled.div`
   margin-bottom: 8px;
   cursor: pointer;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 `;
 
 const MenuDivider = styled.div`
