@@ -3,6 +3,8 @@ import Avatar from "./Avatar";
 import ChainIcon from "../Chain/ChainIcon";
 import { useDispatch } from "react-redux";
 import { logout } from "site/src/store/reducers/accountSlice";
+import { ReactComponent as ExitIcon } from "./exit.svg";
+import { ReactComponent as CircleIcon } from "./circle.svg";
 
 const Wrapper = styled.div`
   position: relative;
@@ -101,6 +103,9 @@ const MenuWrapper = styled.div`
 const MenuItem = styled.div`
   margin-bottom: 8px;
   cursor: pointer;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 `;
 
 const MenuDivider = styled.div`
@@ -127,8 +132,20 @@ export function addressEllipsis(address, start = 4, end = 4) {
   return `${address.slice(0, start)}...${address.slice(-end)}`;
 }
 
-function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
+function ConnectedAccount({
+  account,
+  showNetwork,
+  showMenu,
+  setShowMenu,
+  setShowConnect,
+}) {
   const dispatch = useDispatch();
+
+  const onSwitch = () => {
+    setShowConnect(true);
+    setShowMenu(false);
+  };
+
   const onLogout = () => {
     dispatch(logout());
     setShowMenu(false);
@@ -146,13 +163,18 @@ function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
               )}
               <>{addressEllipsis(account.address)}</>
             </div>
-            {/*<UserIcon />*/}
           </AccountWrapper>
           <MenuDivider />
           <MenuItem>
+            <LogoutWrapper onClick={onSwitch}>
+              Switch address
+              <CircleIcon />
+            </LogoutWrapper>
+          </MenuItem>
+          <MenuItem>
             <LogoutWrapper onClick={onLogout}>
               Log out
-              <img src="/imgs/icons/logout.svg" alt="" />
+              <ExitIcon />
             </LogoutWrapper>
           </MenuItem>
         </>
