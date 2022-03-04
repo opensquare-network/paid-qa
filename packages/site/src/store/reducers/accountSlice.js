@@ -7,7 +7,6 @@ const accountSlice = createSlice({
   name: "account",
   initialState: {
     account: undefined,
-    availableNetworks: [{ network: "polkadot" }],
   },
   reducers: {
     setAccount: (state, { payload }) => {
@@ -20,13 +19,10 @@ const accountSlice = createSlice({
         setCookie("address", `${payload.network}/${payload.address}`, 7);
       }
     },
-    setAvailableNetworks: (state, { payload }) => {
-      state.availableNetworks = payload;
-    },
   },
 });
 
-export const { setAccount, setAvailableNetworks } = accountSlice.actions;
+export const { setAccount } = accountSlice.actions;
 
 export const logout = () => async (dispatch) => {
   if (typeof window !== "undefined") {
@@ -34,9 +30,6 @@ export const logout = () => async (dispatch) => {
   }
   dispatch(setAccount(""));
 };
-
-export const availableNetworksSelector = (state) =>
-  state.account.availableNetworks;
 
 export const accountSelector = (state) => {
   if (state.account.account) {
@@ -59,7 +52,6 @@ export const accountSelector = (state) => {
 };
 
 export const loginNetworkSelector = createSelector(
-  availableNetworksSelector,
   accountSelector,
   (networks, account) => {
     return networks.find((item) => item.network === account?.network);
