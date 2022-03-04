@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
 import Notification from "./Notification";
-import ChainSelector from "./Chain/ChainSelector";
-import AccountSelector from "ui/lib/Account/AccountSelector";
+import Connect from "./Connect";
+import { accountSelector } from "../store/reducers/accountSlice";
+import { useRef, useState } from "react";
+import ConnectWallet from "./ConnectWallet";
+import { useSelector } from "react-redux";
+import ConnectedAccount from "ui/lib/Account/ConnectedAccount";
+import { useOnClickOutside } from "ui/lib/utils/hooks";
 
 const Wrapper = styled.header`
   position: relative;
@@ -75,12 +80,18 @@ const RightWrapper = styled.div`
 `;
 
 export default function Header() {
-  const accounts = [
-    {
-      address: "5Dc3pDz2Cxb8rCc1ziAdQDALgFvDyHbVbZvtXXRiY5rzUMfN",
-      name: "test1",
-    },
-  ];
+  const [showConnect, setShowConnect] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const ref = useRef();
+  useOnClickOutside(ref, (event) => {
+    // connect modal is at body level, doesn't contained in the <Header/>, so exclude manually
+    if (document?.querySelector(".modals")?.contains(event.target)) {
+      return;
+    }
+    setShowMenu(false);
+  });
+  const account = useSelector(accountSelector);
+
   return (
     <Wrapper>
       <ContentWrapper>
@@ -93,14 +104,15 @@ export default function Header() {
           </AppWrapper>
         </LeftWrapper>
         <RightWrapper>
-          <ChainSelector
-            chains={[{ network: "polkadot" }, { network: "kusama" }]}
-          />
-          <AccountSelector
-            accounts={accounts}
-            chain={{ network: "polkadot" }}
-          />
           <Notification />
+          {account && (
+            <ConnectedAccount
+              {...{ showMenu, setShowMenu, account }}
+              showNetwork
+            />
+          )}
+          {!account && <ConnectWallet onClick={() => setShowConnect(true)} />}
+          {showConnect && <Connect setShowConnect={setShowConnect} />}
         </RightWrapper>
       </ContentWrapper>
     </Wrapper>

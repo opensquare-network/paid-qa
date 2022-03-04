@@ -53,3 +53,6 @@ export const FOOTER_ITEMS = [
     ],
   },
 ];
+
+//todo: add more
+export const CHAINS = [{ network: "polkadot" }, { network: "kusama" }];

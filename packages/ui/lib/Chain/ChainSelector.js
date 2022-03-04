@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { Dropdown } from "ui/lib";
-import { p_14_medium } from "../../styles/textStyles";
-import { ChainIcon } from "ui/lib";
+import { Dropdown } from "../index";
+import { p_14_medium } from "site/src/styles/textStyles";
+import { ChainIcon } from "../index";
 
 const Wrapper = styled.div`
   margin-bottom: 8px;
