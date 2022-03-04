@@ -5,9 +5,11 @@ import ConnectModal from "./ConnectModal";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { useRef, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
+import NodeSelect from "./NodeSelect";
 import { useSelector } from "react-redux";
 import ConnectedAccount from "ui/lib/Account/ConnectedAccount";
 import { useOnClickOutside } from "ui/lib/utils/hooks";
+import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
 
 const Wrapper = styled.header`
   position: relative;
@@ -91,6 +93,7 @@ export default function Header() {
     setShowMenu(false);
   });
   const account = useSelector(accountSelector);
+  useUpdateNodesDelay(account?.network);
 
   return (
     <Wrapper>
@@ -106,10 +109,13 @@ export default function Header() {
         <RightWrapper>
           <Notification />
           {account ? (
-            <ConnectedAccount
-              {...{ showMenu, setShowMenu, account, setShowConnect }}
-              showNetwork
-            />
+            <>
+              <ConnectedAccount
+                {...{ showMenu, setShowMenu, account, setShowConnect }}
+                showNetwork
+              />
+              <NodeSelect small chain={account?.network} />
+            </>
           ) : (
             <ConnectWallet onClick={() => setShowConnect(true)} />
           )}
