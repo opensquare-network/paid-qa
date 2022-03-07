@@ -1,24 +1,21 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 
-const RewardSchema = new mongoose.Schema({
-  // Indexer will be set by the scanner
-  indexer: {
+const RewardSchema = new mongoose.Schema(
+  {
+    topicCid: String,
     network: String,
-    blockHeight: Number,
-    blockTime: Number,
-    extrinsicIndex: Number,
+    currencyType: String, // "native", "asset"
+    assetId: Number,
+    symbol: String,
+    decimals: Number,
+    value: Schema.Types.Decimal128,
+    sponsor: String,
   },
-  topicCid: String,
-  network: String,
-  currencyType: String, // "native", "asset"
-  assetId: Number,
-  symbol: String,
-  value: Schema.Types.Decimal128,
-  sponsor: String,
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
 RewardSchema.index({ topicCid: 1 });
 
