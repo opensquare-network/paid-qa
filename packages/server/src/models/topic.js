@@ -1,25 +1,19 @@
 const mongoose = require("mongoose");
 
-const TopicSchema = new mongoose.Schema({
-  // Indexer will be set by the scanner
-  indexer: {
+const TopicSchema = new mongoose.Schema(
+  {
     network: String,
-    blockHeight: Number,
-    blockTime: Number,
-    extrinsicIndex: Number,
+    title: String,
+    content: String,
+    language: String,
+    cid: String,
+    status: String, // "reserved", "published", "onchain", "closed"
+    signer: String,
   },
-  network: String,
-  title: String,
-  content: String,
-  language: String,
-  cid: String,
-  status: String, // "reserved", "published", "onchain", "closed"
-  data: Object,
-  address: String,
-  signature: String,
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
 TopicSchema.virtual("rewards", {
   ref: "Reward",

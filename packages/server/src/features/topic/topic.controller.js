@@ -19,21 +19,25 @@ async function getTopic(ctx) {
 }
 
 async function createTopic(ctx) {
-  const {
-    data,
-    address,
-    signature,
-  } = ctx.request.body;
-  const {
-    title,
-    content,
-    language,
-    network,
-    rewardCurrencyType,
-    value,
-    assetId,
-    symbol,
-  } = data;
+  const { data, network, blockHash, extrinsicHash } = ctx.request.body;
+
+  if (!data) {
+    throw new HttpError(400, { title: ["Data is missing"] });
+  }
+
+  if (!network) {
+    throw new HttpError(400, { network: ["Network is missing"] });
+  }
+
+  if (!blockHash) {
+    throw new HttpError(400, { network: ["Network is missing"] });
+  }
+
+  if (!extrinsicHash) {
+    throw new HttpError(400, { network: ["Network is missing"] });
+  }
+
+  const { title, content, language } = data;
 
   if (!title) {
     throw new HttpError(400, { title: ["Title is missing"] });
@@ -47,69 +51,19 @@ async function createTopic(ctx) {
     throw new HttpError(400, { language: ["Language is missing"] });
   }
 
-  if (!network) {
-    throw new HttpError(400, { network: ["Network is missing"] });
-  }
-
-  if (!rewardCurrencyType) {
-    throw new HttpError(400, { rewardCurrencyType: ["Reward currency type is missing"] });
-  }
-
-  if (Object.values(RewardCurrencyType).includes(rewardCurrencyType)) {
-    throw new HttpError(400, { rewardCurrencyType: ["Unknown reward currency type"] });
-  }
-
-  if (rewardCurrencyType === RewardCurrencyType.Asset && !assetId) {
-    throw new HttpError(400, { assetId: ["Asset id is missing"] });
-  }
-
-  if (!symbol) {
-    throw new HttpError(400, { symbol: ["Symbol is missing"] });
-  }
-
-  if (!value) {
-    throw new HttpError(400, { value: ["Value is missing"] });
-  }
-
   ctx.body = await topicService.createTopic(
     title,
     content,
     language,
-    network,
-    rewardCurrencyType,
-    assetId,
-    symbol,
-    value,
     data,
-    address,
-    signature,
+    network,
+    blockHash,
+    extrinsicHash
   );
-}
-
-async function setTopicPublished(ctx) {
-  const { cid } = ctx.query;
-
-  if (!cid) {
-    throw new HttpError(400, { cid: ["Cid is missing"] });
-  }
-
-  ctx.body = await topicService.setTopicPublished(cid);
-}
-
-async function deleteTopic(ctx) {
-  const { cid } = ctx.query;
-
-  if (!cid) {
-    throw new HttpError(400, { cid: ["Cid is missing"] });
-  }
-
-  ctx.body = await topicService.deleteTopic(cid);
 }
 
 module.exports = {
   getTopic,
   getTopics,
   createTopic,
-  setTopicPublished,
-  deleteTopic,
 };

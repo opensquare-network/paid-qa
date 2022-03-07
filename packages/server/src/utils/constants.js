@@ -4,7 +4,6 @@ const RewardCurrencyType = Object.freeze({
 });
 
 const PostStatus = Object.freeze({
-  Reserved: "reserved",
   Published: "published",
   Onchain: "onchain",
   Closed: "closed",
