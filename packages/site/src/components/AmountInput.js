@@ -11,10 +11,10 @@ const Wrapper = styled.div`
   }
 `;
 
-function AmountInput({ symbol }) {
+function AmountInput({ value, onChange, symbol }) {
   return (
     <Wrapper>
-      <Input placeholder="0.00" />
+      <Input {...{ value, onChange }} placeholder="0.00" />
       <span>{symbol}</span>
     </Wrapper>
   );

@@ -11,7 +11,6 @@ import ChainItem from "ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
 import FlexBetween from "ui/lib/styled/FlexBetween";
 import { useState } from "react";
-import serverApi from "../../services/serverApi";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
 
@@ -75,7 +74,7 @@ export default function Create() {
   const [rewardAmount, setRewardAmount] = useState(0);
 
   const onPublish = async () => {
-    const cid = await cidOf({ title, content });
+    const cid = await cidOf({ title, content, rewardAmount });
     // todo: implement interact with on-chain API
   };
 
@@ -112,12 +111,16 @@ export default function Create() {
             <SubTitle>Reward</SubTitle>
             <img src="/imgs/icons/lanyard.svg" alt="" />
           </FlexBetween>
-          <AmountInput symbol="DOT" />
+          <AmountInput
+            value={rewardAmount}
+            onChange={(e) => setRewardAmount(e.target.value)}
+            symbol="DOT"
+          />
           <FlexBetween>
             <Header>Balance</Header>
             <span>0.50 DOT</span>
           </FlexBetween>
-          <Button onClick={onPublish} loading={true} disabled>
+          <Button onClick={onPublish} primary disabled={!account}>
             Post
           </Button>
         </Box>
