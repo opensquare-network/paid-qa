@@ -5,13 +5,15 @@ import Input from "../Input";
 import MarkdownEditor from "ui/lib/Editor/MarkdownEditor";
 import Button from "../styled/button";
 import { accountSelector } from "../../store/reducers/accountSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SubTitle from "ui/lib/styled/SubTitle";
 import ChainItem from "ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
 import FlexBetween from "ui/lib/styled/FlexBetween";
 import { useState } from "react";
 import serverApi from "../../services/serverApi";
+import { cidOf } from "../../services/ipfs";
+import { popUpConnect } from "../../store/reducers/showConnectSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -66,20 +68,14 @@ const Header = styled.span`
 `;
 
 export default function Create() {
+  const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [cid, setCid] = useState(null);
+  const [rewardAmount, setRewardAmount] = useState(0);
 
-  const uploadToIPFS = () => {
-    serverApi.upload(title, content).then(({ result, err }) => {
-      if (result) {
-        setCid(result.cid);
-      }
-    });
-  };
-
-  const onPublish = () => {
+  const onPublish = async () => {
+    const cid = await cidOf({ title, content });
     // todo: implement interact with on-chain API
   };
 
@@ -101,7 +97,7 @@ export default function Create() {
       <Side>
         {!account && (
           <Box>
-            <ConnectWallet />
+            <ConnectWallet onClick={() => dispatch(popUpConnect())} />
           </Box>
         )}
         <Box>

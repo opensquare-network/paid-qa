@@ -6,10 +6,14 @@ import { accountSelector } from "../store/reducers/accountSlice";
 import { useRef, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
 import NodeSelect from "./NodeSelect";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ConnectedAccount from "ui/lib/Account/ConnectedAccount";
 import { useOnClickOutside } from "ui/lib/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
+import {
+  popUpConnect,
+  showConnectSelector,
+} from "../store/reducers/showConnectSlice";
 
 const Wrapper = styled.header`
   position: relative;
@@ -82,7 +86,8 @@ const RightWrapper = styled.div`
 `;
 
 export default function Header() {
-  const [showConnect, setShowConnect] = useState(false);
+  const dispatch = useDispatch();
+  const showConnect = useSelector(showConnectSelector);
   const [showMenu, setShowMenu] = useState(false);
   const ref = useRef();
   useOnClickOutside(ref, (event) => {
@@ -111,15 +116,15 @@ export default function Header() {
           {account ? (
             <>
               <ConnectedAccount
-                {...{ showMenu, setShowMenu, account, setShowConnect }}
+                {...{ showMenu, setShowMenu, account }}
                 showNetwork
               />
               <NodeSelect small chain={account?.network} />
             </>
           ) : (
-            <ConnectWallet onClick={() => setShowConnect(true)} />
+            <ConnectWallet onClick={() => dispatch(popUpConnect())} />
           )}
-          {showConnect && <ConnectModal setShowConnect={setShowConnect} />}
+          {showConnect && <ConnectModal />}
         </RightWrapper>
       </ContentWrapper>
     </Wrapper>
