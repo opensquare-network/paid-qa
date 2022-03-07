@@ -35,7 +35,6 @@ const testNet = async (api) => {
 
 const updateNodeDelay = async (chain, url) => {
   try {
-    console.log("updateNodeDelay", chain, url);
     const api = await getApi(chain, url);
     return await testNet(api);
   } catch (e) {
