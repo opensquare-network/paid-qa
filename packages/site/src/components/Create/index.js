@@ -13,6 +13,8 @@ import FlexBetween from "ui/lib/styled/FlexBetween";
 import { useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
+import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
+import getApi from "ui/lib/services/chain/api";
 
 const Wrapper = styled.div`
   display: flex;
@@ -74,8 +76,22 @@ export default function Create() {
   const [rewardAmount, setRewardAmount] = useState(0);
 
   const onPublish = async () => {
+    if (!title || !content) {
+      return alert("no title | content");
+    }
     const cid = await cidOf({ title, content, language: "en" });
-    // todo: implement interact with on-chain API
+    await web3Enable("paidQA");
+    const injector = await web3FromAddress(account.address);
+    // todo: remove these hard-coded statement
+    const api = await getApi("substrate", "wss://westend-rpc.dwellir.com");
+    api.setSigner(injector.signer);
+    api.tx.system
+      .remark(`osn:q:1:N:N:1:${cid}`)
+      .signAndSend(account.address)
+      .then((res) => {
+        console.log(res);
+        //todo: read the response & get blockHash, extrinsicId
+      });
   };
 
   return (
