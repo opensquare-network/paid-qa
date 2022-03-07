@@ -10,6 +10,8 @@ import SubTitle from "ui/lib/styled/SubTitle";
 import ChainItem from "ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
 import FlexBetween from "ui/lib/styled/FlexBetween";
+import { useState } from "react";
+import serverApi from "../../services/serverApi";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,6 +36,7 @@ const Box = styled.div`
     0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
   border: 1px solid #f0f3f8;
   padding: 32px;
+
   > :not(:first-child) {
     margin-top: 20px;
   }
@@ -64,13 +67,35 @@ const Header = styled.span`
 
 export default function Create() {
   const account = useSelector(accountSelector);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [cid, setCid] = useState(null);
+
+  const uploadToIPFS = () => {
+    serverApi.upload(title, content).then(({ result, err }) => {
+      if (result) {
+        setCid(result.cid);
+      }
+    });
+  };
+
+  const onPublish = () => {
+    // todo: implement interact with on-chain API
+  };
+
   return (
     <Wrapper>
       <Main>
         <h4>Title</h4>
-        <Input placeholder="Input title here..." />
+        <Input
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+          placeholder="Input title here..."
+        />
         <h4>Topic</h4>
-        <MarkdownEditor />
+        <MarkdownEditor {...{ content, setContent }} />
         <Button>Preview</Button>
       </Main>
       <Side>
@@ -96,7 +121,7 @@ export default function Create() {
             <Header>Balance</Header>
             <span>0.50 DOT</span>
           </FlexBetween>
-          <Button loading={true} disabled>
+          <Button onClick={onPublish} loading={true} disabled>
             Post
           </Button>
         </Box>
