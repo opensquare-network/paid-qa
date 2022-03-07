@@ -5,13 +5,16 @@ import Input from "../Input";
 import MarkdownEditor from "ui/lib/Editor/MarkdownEditor";
 import Button from "../styled/button";
 import { accountSelector } from "../../store/reducers/accountSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SubTitle from "ui/lib/styled/SubTitle";
 import ChainItem from "ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
 import FlexBetween from "ui/lib/styled/FlexBetween";
 import { useState } from "react";
-import serverApi from "../../services/serverApi";
+import { cidOf } from "../../services/ipfs";
+import { popUpConnect } from "../../store/reducers/showConnectSlice";
+import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
+import getApi from "ui/lib/services/chain/api";
 
 const Wrapper = styled.div`
   display: flex;
@@ -66,21 +69,29 @@ const Header = styled.span`
 `;
 
 export default function Create() {
+  const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [cid, setCid] = useState(null);
+  const [rewardAmount, setRewardAmount] = useState(0);
 
-  const uploadToIPFS = () => {
-    serverApi.upload(title, content).then(({ result, err }) => {
-      if (result) {
-        setCid(result.cid);
-      }
-    });
-  };
-
-  const onPublish = () => {
-    // todo: implement interact with on-chain API
+  const onPublish = async () => {
+    if (!title || !content) {
+      return alert("no title | content | fund amount");
+    }
+    const cid = await cidOf({ title, content, language: "en" });
+    await web3Enable("paidQA");
+    const injector = await web3FromAddress(account.address);
+    // todo: remove these hard-coded statement
+    const api = await getApi("substrate", "wss://westend-rpc.dwellir.com");
+    api.setSigner(injector.signer);
+    api.tx.system
+      .remark(`osn:q:1:N:N:${rewardAmount}:${cid}`)
+      .signAndSend(account.address)
+      .then((res) => {
+        const extrinsicHash = res.toString();
+        //todo: send the hash to server
+      });
   };
 
   return (
@@ -101,7 +112,7 @@ export default function Create() {
       <Side>
         {!account && (
           <Box>
-            <ConnectWallet />
+            <ConnectWallet onClick={() => dispatch(popUpConnect())} />
           </Box>
         )}
         <Box>
@@ -116,12 +127,16 @@ export default function Create() {
             <SubTitle>Reward</SubTitle>
             <img src="/imgs/icons/lanyard.svg" alt="" />
           </FlexBetween>
-          <AmountInput symbol="DOT" />
+          <AmountInput
+            value={rewardAmount}
+            onChange={(e) => setRewardAmount(e.target.value)}
+            symbol="DOT"
+          />
           <FlexBetween>
             <Header>Balance</Header>
             <span>0.50 DOT</span>
           </FlexBetween>
-          <Button onClick={onPublish} loading={true} disabled>
+          <Button onClick={onPublish} primary disabled={!account}>
             Post
           </Button>
         </Box>
