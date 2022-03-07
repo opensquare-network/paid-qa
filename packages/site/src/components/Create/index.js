@@ -77,7 +77,7 @@ export default function Create() {
 
   const onPublish = async () => {
     if (!title || !content) {
-      return alert("no title | content");
+      return alert("no title | content | fund amount");
     }
     const cid = await cidOf({ title, content, language: "en" });
     await web3Enable("paidQA");
@@ -86,11 +86,11 @@ export default function Create() {
     const api = await getApi("substrate", "wss://westend-rpc.dwellir.com");
     api.setSigner(injector.signer);
     api.tx.system
-      .remark(`osn:q:1:N:N:1:${cid}`)
+      .remark(`osn:q:1:N:N:${rewardAmount}:${cid}`)
       .signAndSend(account.address)
       .then((res) => {
-        console.log(res);
-        //todo: read the response & get blockHash, extrinsicId
+        const extrinsicHash = res.toString();
+        //todo: send the hash to server
       });
   };
 
