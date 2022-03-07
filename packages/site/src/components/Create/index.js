@@ -13,8 +13,8 @@ import FlexBetween from "ui/lib/styled/FlexBetween";
 import { useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
-import { getApi } from "../../services/chainApi";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
+import getApi from "ui/lib/services/chain/api";
 
 const Wrapper = styled.div`
   display: flex;
@@ -82,7 +82,8 @@ export default function Create() {
     const cid = await cidOf({ title, content, language: "en" });
     await web3Enable("paidQA");
     const injector = await web3FromAddress(account.address);
-    const api = await getApi("westend", "wss://westend-rpc.dwellir.com");
+    // todo: remove these hard-coded statement
+    const api = await getApi("substrate", "wss://westend-rpc.dwellir.com");
     api.setSigner(injector.signer);
     api.tx.system
       .remark(`osn:q:1:N:N:1:${cid}`)
