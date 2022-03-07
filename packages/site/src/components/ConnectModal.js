@@ -19,6 +19,7 @@ import {
 import { ReactComponent as SvgClose } from "site/public/imgs/icons/close.svg";
 import ChainSelector from "ui/lib/Chain/ChainSelector";
 import { AVAILABLE_NETWORKS } from "ui/lib/utils/constants";
+import { closeConnect } from "../store/reducers/showConnectSlice";
 
 function useIsMounted() {
   const isMounted = useRef(true);
@@ -79,7 +80,7 @@ const ActionBar = styled.div`
   margin-top: 28px;
 `;
 
-export default function ConnectModal({ setShowConnect }) {
+export default function ConnectModal() {
   const dispatch = useDispatch();
   const isMounted = useIsMounted();
   const [hasExtension, setHasExtension] = useState(null);
@@ -135,14 +136,13 @@ export default function ConnectModal({ setShowConnect }) {
           network: chain.network,
         })
       );
-      // dispatch(closeConnect());
-      setShowConnect(false);
+      dispatch(closeConnect());
     } catch (error) {
       console.error(error);
     }
   };
 
-  const closeModal = () => setShowConnect(false); //dispatch(closeConnect());
+  const closeModal = () => dispatch(closeConnect());
 
   return (
     <Wrapper>

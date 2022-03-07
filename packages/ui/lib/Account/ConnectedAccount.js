@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "site/src/store/reducers/accountSlice";
 import { ReactComponent as ExitIcon } from "./exit.svg";
 import { ReactComponent as CircleIcon } from "./circle.svg";
+import { popUpConnect } from "site/src/store/reducers/showConnectSlice";
 
 const Wrapper = styled.div`
   position: relative;
@@ -132,17 +133,11 @@ export function addressEllipsis(address, start = 4, end = 4) {
   return `${address.slice(0, start)}...${address.slice(-end)}`;
 }
 
-function ConnectedAccount({
-  account,
-  showNetwork,
-  showMenu,
-  setShowMenu,
-  setShowConnect,
-}) {
+function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
   const dispatch = useDispatch();
 
   const onSwitch = () => {
-    setShowConnect(true);
+    dispatch(popUpConnect);
     setShowMenu(false);
   };
 
