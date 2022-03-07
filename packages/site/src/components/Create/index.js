@@ -74,7 +74,7 @@ export default function Create() {
   const [rewardAmount, setRewardAmount] = useState(0);
 
   const onPublish = async () => {
-    const cid = await cidOf({ title, content, rewardAmount });
+    const cid = await cidOf({ title, content, language: "en" });
     // todo: implement interact with on-chain API
   };
 
