@@ -9,11 +9,15 @@ const RewardSchema = new mongoose.Schema(
     assetId: Number,
     symbol: String,
     decimals: Number,
-    value: Schema.Types.Decimal128,
+    value: {
+      type: Schema.Types.Decimal128,
+      get: (v) => v?.toString(),
+    },
     sponsor: String,
   },
   {
     timestamps: true,
+    toJSON: { getters: true },
   }
 );
 

@@ -119,12 +119,19 @@ async function getTopic(cid) {
 }
 
 async function getTopics(page, pageSize) {
+  const total = await Topic.countDocuments();
   const topics = await Topic.find({})
     .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("rewards");
-  return topics;
+
+  return {
+    items: topics,
+    page,
+    pageSize,
+    total,
+  };
 }
 
 module.exports = {
