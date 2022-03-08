@@ -6,6 +6,7 @@ const Chains = {
   statemine: "statemine",
   bifrost: "bifrost",
   kintsugi: "kintsugi",
+  westend: "westend",
 };
 
 const nodeTimeoutSeconds = 20;

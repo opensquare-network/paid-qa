@@ -61,7 +61,7 @@ async function getRemark(ctx) {
   }
 
   try {
-    const remark = await getRemarkFromApis(apis, blockHash, extrinsicIndex);
+    const remark = await getRemarkFromApis(apis, blockHash, parseInt(extrinsicIndex));
     ctx.body = remark;
   } catch (e) {
     console.error("Get remark from node fail", e);
