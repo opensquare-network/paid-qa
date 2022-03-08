@@ -9,17 +9,18 @@ let client;
  */
 function getLocalClient(url) {
   if (!client) {
+    const urlObj = new URL(url);
     client = create({
-      host: url,
-      port: 5001,
-      protocol: 'http',
+      host: urlObj.host,
+      port: urlObj.port,
+      protocol: urlObj.protocol,
       timeout: IPFS_TIMEOUT,
-    })
+    });
   }
 
-  return client
+  return client;
 }
 
 module.exports = {
   getLocalClient,
-}
+};

@@ -6,8 +6,13 @@ const TopicSchema = new mongoose.Schema(
     title: String,
     content: String,
     language: String,
+    data: Object,
     cid: String,
-    status: String, // "reserved", "published", "onchain", "closed"
+    pinned: {
+      type: Boolean,
+      default: false,
+    },
+    status: String, // "published", "onchain", "closed"
     signer: String,
   },
   {
