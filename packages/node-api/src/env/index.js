@@ -17,6 +17,8 @@ const endpoints = Object.values(Chains).map((chain) => {
     endpoints = (process.env.BNC_ENDPOINTS || "").split(";");
   } else if (Chains.kintsugi === chain) {
     endpoints = (process.env.KINT_ENDPOINTS || "").split(";");
+  } else if (Chains.westend === chain) {
+    endpoints = (process.env.WND_ENDPOINTS || "").split(";");
   }
 
   return {
