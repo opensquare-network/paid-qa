@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import Container from "components/Container";
-import Explorer from "components/Explorer";
+// import Explorer from "components/Explorer";
 import AskQuestion from "components/AskQuestion";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
@@ -22,16 +22,14 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const PostListTitle = styled.div`
+const PostListTitle = styled.h3`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
-  > :first-child {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 32px;
-  }
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  margin: 0;
 `;
 
 export default function Home() {
@@ -50,14 +48,12 @@ export default function Home() {
       <Background />
       <Container>
         <ContentWrapper>
-          <Explorer />
-          <div>
-           <PostListTitle>
-             <div>Recently Listed</div>
-             <AskQuestion />
-           </PostListTitle>
-           <TopicsList topics={topics} />
-          </div>
+          {/*<Explorer />*/}
+          <PostListTitle>
+            Topics
+            <AskQuestion />
+          </PostListTitle>
+          <TopicsList topics={topics} />
         </ContentWrapper>
       </Container>
     </Wrapper>
