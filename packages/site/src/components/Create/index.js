@@ -87,7 +87,17 @@ export default function Create() {
     api.setSigner(injector.signer);
     api.tx.system
       .remark(`osn:q:1:N:N:${rewardAmount}:${cid}`)
-      .signAndSend(account.address)
+      .signAndSend(account.address, ({ events = [], status }) => {
+        if (events?.length > 0) {
+          const phase = JSON.parse(events[0]?.phase?.toString());
+          const extIndex = phase?.applyExtrinsic;
+        }
+        if (status.isFinalized) {
+        }
+        if (status.isInBlock) {
+          const blockHash = status.toString();
+        }
+      })
       .then((res) => {
         const extrinsicHash = res.toString();
         //todo: send the hash to server
