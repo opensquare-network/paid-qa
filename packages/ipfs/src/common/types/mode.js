@@ -14,8 +14,12 @@ class ClientMode {
   get mode() {
     return this.#mode;
   }
+
+  static Both = new ClientMode(0);
+  static Local = new ClientMode(1);
+  static Infura = new ClientMode(2);
 }
 
 module.exports = {
   ClientMode,
-}
+};

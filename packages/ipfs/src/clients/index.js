@@ -10,19 +10,25 @@ const { getInfuraClient } = require("./infura");
 function getClients(clientMode, clientOptions) {
   if (clientMode.mode === 0) {
     return [
-      getInfuraClient(clientOptions.infuraProjectId, clientOptions.infuraProjectSecret),
+      getInfuraClient(
+        clientOptions.infuraProjectId,
+        clientOptions.infuraProjectSecret
+      ),
       getLocalClient(clientOptions.localNodeIpOrUrl),
-    ]
+    ];
   }
 
-  if (clientMode === 1) {
+  if (clientMode.mode === 1) {
     return [getLocalClient(clientOptions.localNodeIpOrUrl)];
   }
 
-  if (clientMode === 2) {
+  if (clientMode.mode === 2) {
     return [
-      getInfuraClient(clientOptions.infuraProjectId, clientOptions.infuraProjectSecret),
-    ]
+      getInfuraClient(
+        clientOptions.infuraProjectId,
+        clientOptions.infuraProjectSecret
+      ),
+    ];
   }
 
   throw new Error("Invalid IPFS clients creation mode");
@@ -30,4 +36,4 @@ function getClients(clientMode, clientOptions) {
 
 module.exports = {
   getClients,
-}
+};

@@ -12,16 +12,11 @@ const {
   parser: { InteractionParser },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
+const { ipfsAdd } = require("./ipfs.service");
 
-async function createTopic(
-  title,
-  content,
-  language,
-  data,
-  network,
-  blockHash,
-  extrinsicIndex
-) {
+async function createTopic(data, network, blockHash, extrinsicIndex) {
+  const { title, content, language } = data;
+
   const jsonData = JSON.stringify(data);
   const buf = Buffer.from(jsonData);
   const cid = await Hash.of(buf);
@@ -69,6 +64,8 @@ async function createTopic(
           title,
           content,
           language,
+          data,
+          pinned: false,
           network,
           signer,
           status: PostStatus.Published,
@@ -96,7 +93,17 @@ async function createTopic(
     );
   });
 
-  //TODO: Upload topic content to IPFS
+  // Upload topic content to IPFS
+  ipfsAdd(data)
+    .then(async (added) => {
+      const pinnedCid = added?.cid?.toV0().toString();
+      if (pinnedCid !== cid) {
+        console.error("Pinned path does not match the topic content CID");
+        return;
+      }
+      await Topic.updateOne({ cid }, { pinned: true });
+    })
+    .catch(console.error);
 
   return {
     cid,

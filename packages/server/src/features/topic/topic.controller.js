@@ -51,9 +51,6 @@ async function createTopic(ctx) {
   }
 
   ctx.body = await topicService.createTopic(
-    title,
-    content,
-    language,
     data,
     network,
     blockHash,
