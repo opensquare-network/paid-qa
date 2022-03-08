@@ -65,6 +65,7 @@ export const Chains = {
   kabocha: "kabocha",
   bifrost: "bifrost",
   kintsugi: "kintsugi",
+  westend: "westend",
 };
 
 export const ChainSS58Format = Object.freeze({
@@ -77,9 +78,9 @@ export const ChainSS58Format = Object.freeze({
   [Chains.kintsugi]: 2092,
 });
 
-
 //todo: add more
 export const AVAILABLE_NETWORKS = [
   { network: Chains.polkadot },
   { network: Chains.kusama },
+  { network: Chains.westend }, //todo: use a .env file to add test network
 ];

@@ -10,7 +10,7 @@ import SubTitle from "ui/lib/styled/SubTitle";
 import ChainItem from "ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
 import FlexBetween from "ui/lib/styled/FlexBetween";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
@@ -74,23 +74,45 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [rewardAmount, setRewardAmount] = useState(0);
+  const [api, setApi] = useState();
+
+  useEffect(() => {
+    if (!account) {
+      return;
+    }
+    (async () => {
+      await web3Enable("paidQA");
+      const injector = await web3FromAddress(account.address);
+      // todo: remove these hard-coded statement
+      const api = await getApi(
+        account.network,
+        "wss://westend-rpc.dwellir.com"
+      );
+      api.setSigner(injector.signer);
+      setApi(api);
+    })();
+  }, [account]);
 
   const onPublish = async () => {
     if (!title || !content) {
+      //todo: improve this
       return alert("no title | content | fund amount");
     }
     const cid = await cidOf({ title, content, language: "en" });
-    await web3Enable("paidQA");
-    const injector = await web3FromAddress(account.address);
-    // todo: remove these hard-coded statement
-    const api = await getApi("substrate", "wss://westend-rpc.dwellir.com");
-    api.setSigner(injector.signer);
-    api.tx.system
+    const unsub = await api.tx.system
       .remark(`osn:q:1:N:N:${rewardAmount}:${cid}`)
-      .signAndSend(account.address)
-      .then((res) => {
-        const extrinsicHash = res.toString();
-        //todo: send the hash to server
+      .signAndSend(account.address, ({ events = [], status }) => {
+        if (status.isInBlock) {
+          // const extIndex = JSON.parse(events[0]?.phase?.toString())?.applyExtrinsic;
+          // const blockHash = status.asInBlock.toString();
+          unsub();
+        }
+      })
+      .catch((e) => {
+        //todo : toast an error msg
+      })
+      .finally(() => {
+        console.log("final");
       });
   };
 
@@ -110,36 +132,37 @@ export default function Create() {
         <Button>Preview</Button>
       </Main>
       <Side>
-        {!account && (
+        {account ? (
+          <Box>
+            <FlexBetween>
+              <SubTitle>Network</SubTitle>
+              <img src="/imgs/icons/network.svg" alt="" />
+            </FlexBetween>
+            <Grey>
+              <ChainItem chainName={account.network} />
+            </Grey>
+            <FlexBetween>
+              <SubTitle>Reward</SubTitle>
+              <img src="/imgs/icons/lanyard.svg" alt="" />
+            </FlexBetween>
+            <AmountInput
+              value={rewardAmount}
+              onChange={(e) => setRewardAmount(e.target.value)}
+              symbol="DOT"
+            />
+            <FlexBetween>
+              <Header>Balance</Header>
+              <span>0.50 DOT</span>
+            </FlexBetween>
+            <Button onClick={onPublish} primary disabled={!account}>
+              Post
+            </Button>
+          </Box>
+        ) : (
           <Box>
             <ConnectWallet onClick={() => dispatch(popUpConnect())} />
           </Box>
         )}
-        <Box>
-          <FlexBetween>
-            <SubTitle>Network</SubTitle>
-            <img src="/imgs/icons/network.svg" alt="" />
-          </FlexBetween>
-          <Grey>
-            <ChainItem chainName="polkadot" />
-          </Grey>
-          <FlexBetween>
-            <SubTitle>Reward</SubTitle>
-            <img src="/imgs/icons/lanyard.svg" alt="" />
-          </FlexBetween>
-          <AmountInput
-            value={rewardAmount}
-            onChange={(e) => setRewardAmount(e.target.value)}
-            symbol="DOT"
-          />
-          <FlexBetween>
-            <Header>Balance</Header>
-            <span>0.50 DOT</span>
-          </FlexBetween>
-          <Button onClick={onPublish} primary disabled={!account}>
-            Post
-          </Button>
-        </Box>
       </Side>
     </Wrapper>
   );
