@@ -2,7 +2,7 @@ const { extractPage } = require("../../utils/pagination");
 const topicService = require("../../services/topic.service");
 
 async function getTopics(ctx) {
-  const { page, pageSize } = extractPage(ctx.query);
+  const { page, pageSize } = extractPage(ctx);
 
   ctx.body = await topicService.getTopics(page, pageSize);
 }
