@@ -8,13 +8,14 @@ import ConnectWallet from "./ConnectWallet";
 import NodeSelect from "./NodeSelect";
 import { useDispatch, useSelector } from "react-redux";
 import ConnectedAccount from "ui/lib/Account/ConnectedAccount";
-import { useOnClickOutside } from "ui/lib/utils/hooks";
+import { useOnClickOutside, useWindowSize } from "ui/lib/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
 import {
   popUpConnect,
   showConnectSelector,
 } from "../store/reducers/showConnectSlice";
 import { NavLink } from "react-router-dom";
+import MobileMenu from "./MobileMenu";
 
 const Wrapper = styled.header`
   position: relative;
@@ -88,6 +89,7 @@ const RightWrapper = styled.div`
 
 export default function Header() {
   const dispatch = useDispatch();
+  const windowSize = useWindowSize();
   const showConnect = useSelector(showConnectSelector);
   const [showMenu, setShowMenu] = useState(false);
   const ref = useRef();
@@ -116,16 +118,22 @@ export default function Header() {
         </LeftWrapper>
         <RightWrapper ref={ref}>
           {/*<Notification />*/}
-          {account ? (
-            <>
-              <ConnectedAccount
-                {...{ showMenu, setShowMenu, account }}
-                showNetwork
-              />
-              <NodeSelect small chain={account?.network} />
-            </>
+          {windowSize.width > 800 ? (
+            account ? (
+              <>
+                <ConnectedAccount
+                  {...{ showMenu, setShowMenu, account }}
+                  showNetwork
+                />
+                <NodeSelect small chain={account?.network} />
+              </>
+            ) : (
+              <ConnectWallet onClick={() => dispatch(popUpConnect())} />
+            )
           ) : (
-            <ConnectWallet onClick={() => dispatch(popUpConnect())} />
+            <>
+              <MobileMenu />
+            </>
           )}
           {showConnect && <ConnectModal />}
         </RightWrapper>
