@@ -7,6 +7,8 @@ import { ReactComponent as ExitIcon } from "./exit.svg";
 import { ReactComponent as CircleIcon } from "./circle.svg";
 import { popUpConnect } from "site/src/store/reducers/showConnectSlice";
 import { p_14_medium } from "site/src/styles/textStyles";
+import { ChainSS58Format } from "../utils/constants";
+import { encodeAddress } from "@polkadot/util-crypto";
 
 const Wrapper = styled.div`
   position: relative;
@@ -137,9 +139,14 @@ export function addressEllipsis(address, start = 4, end = 4) {
 
 function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
   const dispatch = useDispatch();
+  const ss58Format = ChainSS58Format[account.network];
+  let address = account.address;
+  if (typeof ss58Format === "number") {
+    address = encodeAddress(address, ss58Format);
+  }
 
   const onSwitch = () => {
-    dispatch(popUpConnect);
+    dispatch(popUpConnect());
     setShowMenu(false);
   };
 
@@ -154,11 +161,11 @@ function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
         <>
           <AccountWrapper>
             <div>
-              <Avatar address={account.address} size={20} />
+              <Avatar address={address} size={20} />
               {showNetwork && (
                 <ChainIcon chainName={account?.network} size={16} />
               )}
-              <>{addressEllipsis(account.address)}</>
+              <>{addressEllipsis(address)}</>
             </div>
           </AccountWrapper>
           <MenuDivider />
@@ -187,10 +194,10 @@ function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
         }}
       >
         <div>
-          <Avatar address={account.address} size={20} />
+          <Avatar address={address} size={20} />
           {showNetwork && <ChainIcon chainName={account?.network} size={16} />}
           {/*todo: Identity*/}
-          {addressEllipsis(account.address)}
+          {addressEllipsis(address)}
         </div>
       </AccountWrapperPC>
       {showMenu && <>{Menu}</>}
