@@ -30,7 +30,8 @@ const AccountWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  font-size: 14px;
+  font-weight: 500;
   div {
     display: flex;
     align-items: center;
@@ -69,7 +70,7 @@ const AccountWrapperPC = styled(AccountWrapper)`
     css`
       border: 1px solid #b7c0cc;
     `}
-  padding: 7px 15px;
+  padding: 9px 15px;
   @media screen and (max-width: 800px) {
     display: none;
   }
