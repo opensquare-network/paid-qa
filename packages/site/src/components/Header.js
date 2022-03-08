@@ -114,7 +114,7 @@ export default function Header() {
             Paid QA
           </AppWrapper>
         </LeftWrapper>
-        <RightWrapper>
+        <RightWrapper ref={ref}>
           {/*<Notification />*/}
           {account ? (
             <>
