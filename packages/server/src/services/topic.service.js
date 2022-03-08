@@ -20,15 +20,15 @@ async function createTopic(
   data,
   network,
   blockHash,
-  extrinsicHash
+  extrinsicIndex
 ) {
   const jsonData = JSON.stringify(data);
   const buf = Buffer.from(jsonData);
   const cid = await Hash.of(buf);
 
-  // Get system remark from network/blockHash/extrinsicHash
+  // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, signer } = await getRemark(api, blockHash, extrinsicHash);
+  const { remark, signer } = await getRemark(api, blockHash, extrinsicIndex);
 
   // Parse system remark to verify if it is NEW instruction
   const interaction = InteractionParser.parse(remark);
@@ -95,6 +95,8 @@ async function createTopic(
       { session }
     );
   });
+
+  //TODO: Upload topic content to IPFS
 
   return {
     cid,

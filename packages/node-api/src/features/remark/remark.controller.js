@@ -13,25 +13,11 @@ function isExtrinsicSuccess(events, extrinsicIndex) {
   return extrinsicEvents.some((e) => e.event.method === "ExtrinsicSuccess");
 }
 
-function findExtrinsicIndex(extrinsics, extrinsicHash) {
-  return extrinsics.findIndex(
-    (extrinsic) => extrinsic.hash.toJSON() === extrinsicHash
-  );
-}
-
-async function getRemarkFromOneApi(api, blockHash, extrinsicHash) {
+async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
   const [block, events] = await Promise.all([
     api.rpc.chain.getBlock(blockHash),
     api.query.system.events.at(blockHash),
   ]);
-
-  const extrinsicIndex = findExtrinsicIndex(
-    block.block.extrinsics,
-    extrinsicHash
-  );
-  if (extrinsicIndex < 0) {
-    throw new Error("Extrinsic not found");
-  }
 
   const isSuccess = isExtrinsicSuccess(events, extrinsicIndex);
   if (!isSuccess) {
@@ -51,23 +37,23 @@ async function getRemarkFromOneApi(api, blockHash, extrinsicHash) {
   const remark = hexToString(remarkBytes.toHex());
   return {
     blockHash,
-    extrinsicHash,
+    extrinsicIndex,
     remark,
     signer,
   };
 }
 
-async function getRemarkFromApis(apis, blockHash, extrinsicHash) {
+async function getRemarkFromApis(apis, blockHash, extrinsicIndex) {
   const promises = [];
   for (const api of apis) {
-    promises.push(getRemarkFromOneApi(api, blockHash, extrinsicHash));
+    promises.push(getRemarkFromOneApi(api, blockHash, extrinsicIndex));
   }
 
   return Promise.any(promises);
 }
 
 async function getRemark(ctx) {
-  const { chain, blockHash, extrinsicHash } = ctx.params;
+  const { chain, blockHash, extrinsicIndex } = ctx.params;
   const apis = getApis(chain);
   if (apis.every((api) => !api.isConnected)) {
     ctx.throw(500, "No apis connected");
@@ -75,7 +61,7 @@ async function getRemark(ctx) {
   }
 
   try {
-    const remark = await getRemarkFromApis(apis, blockHash, extrinsicHash);
+    const remark = await getRemarkFromApis(apis, blockHash, extrinsicIndex);
     ctx.body = remark;
   } catch (e) {
     console.error("Get remark from node fail", e);
