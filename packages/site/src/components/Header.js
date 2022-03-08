@@ -14,6 +14,7 @@ import {
   popUpConnect,
   showConnectSelector,
 } from "../store/reducers/showConnectSlice";
+import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.header`
   position: relative;
@@ -104,7 +105,9 @@ export default function Header() {
     <Wrapper>
       <ContentWrapper>
         <LeftWrapper>
-          <Logo />
+          <NavLink to="/">
+            <Logo />
+          </NavLink>
           <Divider />
           <AppWrapper>
             <img src="/imgs/icons/apps.svg" alt="" />
