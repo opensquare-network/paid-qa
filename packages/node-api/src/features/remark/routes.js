@@ -3,6 +3,6 @@ const remarkController = require("./remark.controller");
 
 const router = new Router();
 
-router.get("/remark/:blockHash/:extrinsicHash", remarkController.getRemark);
+router.get("/remark/:blockHash/:extrinsicIndex", remarkController.getRemark);
 
 module.exports = router;

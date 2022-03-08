@@ -1,6 +1,5 @@
 const { extractPage } = require("../../utils/pagination");
 const topicService = require("../../services/topic.service");
-const { RewardCurrencyType } = require("../../utils/constants");
 
 async function getTopics(ctx) {
   const { page, pageSize } = extractPage(ctx.query);
@@ -19,7 +18,7 @@ async function getTopic(ctx) {
 }
 
 async function createTopic(ctx) {
-  const { data, network, blockHash, extrinsicHash } = ctx.request.body;
+  const { data, network, blockHash, extrinsicIndex } = ctx.request.body;
 
   if (!data) {
     throw new HttpError(400, { title: ["Data is missing"] });
@@ -30,11 +29,11 @@ async function createTopic(ctx) {
   }
 
   if (!blockHash) {
-    throw new HttpError(400, { network: ["Network is missing"] });
+    throw new HttpError(400, { network: ["Block hash is missing"] });
   }
 
-  if (!extrinsicHash) {
-    throw new HttpError(400, { network: ["Network is missing"] });
+  if (extrinsicIndex === undefined) {
+    throw new HttpError(400, { network: ["Extrinsic index is missing"] });
   }
 
   const { title, content, language } = data;
@@ -58,7 +57,7 @@ async function createTopic(ctx) {
     data,
     network,
     blockHash,
-    extrinsicHash
+    extrinsicIndex
   );
 }
 
