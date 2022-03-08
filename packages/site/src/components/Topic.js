@@ -64,7 +64,7 @@ const Time = styled.div`
   color: #506176;
 `;
 
-export default function PostList() {
+export default function Topic({ topic }) {
   return (
     <Wrapper>
       <ReplyWrapper>
@@ -73,14 +73,12 @@ export default function PostList() {
       </ReplyWrapper>
       <DetailWrapper>
         <Link to="/question">
-          <Title>
-            What tool we should use to measure effectiveness of PH Launch?
-          </Title>
+          <Title>{topic.title}</Title>
         </Link>
         <Divider />
         <div>
           <DividerWrapper>
-            <User />
+            <User address={topic.signer} />
             <Time>2 hours ago</Time>
           </DividerWrapper>
           <TagList />

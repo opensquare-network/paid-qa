@@ -82,7 +82,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
         {
           topicCid: cid,
           network,
-          rewardCurrencyType,
+          currencyType: rewardCurrencyType,
           value: tokenAmount,
           ...(rewardCurrencyType === RewardCurrencyType.Asset
             ? { assetId: tokenIdentifier }

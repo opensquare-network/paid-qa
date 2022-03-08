@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Header from "components/Profile/Header";
 import Container from "components/Container";
-import PostList from "components/PostList";
+import TopicsList from "components/TopicsList";
 import AnswerList from "components/AnswerList";
 import ActivityList from "components/ActivityList";
 
@@ -19,7 +19,7 @@ export default function Profile() {
       <Header tab={tab} setTab={setTab} />
       <Container>
         <ContentWrapper>
-          {tab === "questions" && <PostList />}
+          {tab === "questions" && <TopicsList />}
           {tab === "answers" && <AnswerList />}
           {tab === "activity" && <ActivityList />}
         </ContentWrapper>
