@@ -12,20 +12,20 @@ import AskQuestion from "./pages/AskQuestion";
 
 function App() {
   return (
-    <Layout>
-      <Header />
-      <Main>
-        <HashRouter>
+    <HashRouter>
+      <Layout>
+        <Header />
+        <Main>
           <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/askquestion" element={<AskQuestion />}></Route>
-            <Route path="/question" element={<Question />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/" element={<Home />} />
+            <Route path="/askquestion" element={<AskQuestion />} />
+            <Route path="/question" element={<Question />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
-        </HashRouter>
-      </Main>
-      <Footer />
-    </Layout>
+        </Main>
+        <Footer />
+      </Layout>
+    </HashRouter>
   );
 }
 
