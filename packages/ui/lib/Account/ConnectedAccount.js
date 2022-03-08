@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Avatar from "./Avatar";
 import ChainIcon from "../Chain/ChainIcon";
 import { useDispatch } from "react-redux";
@@ -6,6 +6,7 @@ import { logout } from "site/src/store/reducers/accountSlice";
 import { ReactComponent as ExitIcon } from "./exit.svg";
 import { ReactComponent as CircleIcon } from "./circle.svg";
 import { popUpConnect } from "site/src/store/reducers/showConnectSlice";
+import { p_14_medium } from "site/src/styles/textStyles";
 
 const Wrapper = styled.div`
   position: relative;
@@ -30,6 +31,7 @@ const AccountWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${p_14_medium};
 
   div {
     display: flex;
