@@ -10,6 +10,9 @@ const {
 } = require("./node.service");
 const {
   parser: { InteractionParser },
+  interactions: {
+    NewInteraction,
+  }
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
 const { ipfsAdd } = require("./ipfs.service");
@@ -26,8 +29,8 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
   const { remark, signer } = await getRemark(api, blockHash, extrinsicIndex);
 
   // Parse system remark to verify if it is NEW instruction
-  const interaction = InteractionParser.parse(remark);
-  if (interaction.symbol !== "N") {
+  const interaction = new InteractionParser(remark).getInteraction();
+  if (!(interaction instanceof NewInteraction)) {
     throw new HttpError(500, "System remark is not NEW instruction");
   }
 
