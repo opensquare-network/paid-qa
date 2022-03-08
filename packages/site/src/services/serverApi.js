@@ -1,5 +1,5 @@
-import Api from "./api";
+import Api from "ui/lib/services/api";
 
 class ServerApi extends Api {}
 
-export default new ServerApi("/");
+export default new ServerApi(process.env.REACT_APP_QA_API_SERVER);
