@@ -92,14 +92,14 @@ function ProductSwitch() {
           <img src="/imgs/icons/voting.svg" width={24} alt="" />
           <Flex>
             <p>Off-chain Voting</p>
-            <span>Voting system for Polkadot ecosystem</span>
+            <span>Multi-chain assets off-chain voting platform</span>
           </Flex>
         </Product>
         <Product>
           <img src="/imgs/icons/qa.svg" width={24} alt="" />
           <Flex>
             <p>Paid QA</p>
-            <span>Decentralized QA Platform</span>
+            <span>Decentralized paid QA platform</span>
           </Flex>
         </Product>
       </Products>

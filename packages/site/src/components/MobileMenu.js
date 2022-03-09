@@ -57,13 +57,13 @@ function MobileMenu() {
           <li>
             <a href="https://voting.opensquare.io/">
               <p>Off-chain Voting</p>
-              <span>Voting system for Polkadot ecosystem</span>
+              <span>Multi-chain assets off-chain voting platform</span>
             </a>
           </li>
           <li>
             <a href="/">
               <p>Paid QA</p>
-              <span>Decentralized QA Platform</span>
+              <span>Decentralized paid QA platform</span>
             </a>
           </li>
         </FloatingWrapper>
