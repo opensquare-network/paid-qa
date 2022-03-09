@@ -84,14 +84,14 @@ export default function Explorer() {
             <div>Status</div>
             <img src="/imgs/icons/sort-by.svg" alt="" />
           </div>
-          <Select placeholder="Updte" />
+          <Select placeholder="All Types" />
         </ItemWrapper>
         <ItemWrapper>
           <div>
             <div>Rewards</div>
             <img src="/imgs/icons/status.svg" alt="" />
           </div>
-          <Select placeholder="All Types" />
+          <Select placeholder="All Assets" />
         </ItemWrapper>
       </ContentWrapper>
     </Wrapper>
