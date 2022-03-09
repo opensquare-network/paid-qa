@@ -26,7 +26,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
 
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, signer } = await getRemark(api, blockHash, extrinsicIndex);
+  const { remark, signer, blockTime } = await getRemark(api, blockHash, extrinsicIndex);
 
   // Parse system remark to verify if it is NEW instruction
   const interaction = new InteractionParser(remark).getInteraction();
@@ -63,6 +63,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     await Topic.create(
       [
         {
+          blockTime,
           cid,
           title,
           content,
