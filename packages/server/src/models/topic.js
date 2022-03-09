@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const TopicSchema = new mongoose.Schema(
   {
+    blockTime: Number,
     network: String,
     title: String,
     content: String,

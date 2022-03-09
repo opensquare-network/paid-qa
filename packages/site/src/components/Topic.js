@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import TagList from "./TagList";
 import User from "components/User";
 import DividerWrapper from "components/DividerWrapper";
+import Time from "ui/lib/Time";
 
 const Wrapper = styled.div`
   padding: 24px;
@@ -58,12 +59,6 @@ const Divider = styled.div`
   background: #f0f3f8;
 `;
 
-const Time = styled.div`
-  font-size: 14px;
-  line-height: 24px;
-  color: #506176;
-`;
-
 export default function Topic({ topic }) {
   return (
     <Wrapper>
@@ -79,7 +74,7 @@ export default function Topic({ topic }) {
         <div>
           <DividerWrapper>
             <User address={topic.signer} />
-            <Time>2 hours ago</Time>
+            <Time time={topic.blockTime} />
           </DividerWrapper>
           <TagList />
         </div>

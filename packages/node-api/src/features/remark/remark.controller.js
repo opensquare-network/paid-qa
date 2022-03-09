@@ -34,10 +34,12 @@ async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
     args: [remarkBytes],
   } = extrinsic.method;
   const signer = extrinsic.signer.toString();
+  const blockTime = block.block.header.timestamp.toNumber();
   const remark = hexToString(remarkBytes.toHex());
   return {
     blockHash,
     extrinsicIndex,
+    blockTime,
     remark,
     signer,
   };
