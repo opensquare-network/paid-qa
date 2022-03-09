@@ -76,7 +76,7 @@ export default function Topic({ topic }) {
             <User address={topic.signer} />
             <Time time={topic.blockTime} />
           </DividerWrapper>
-          <TagList />
+          <TagList topic={topic} />
         </div>
       </DetailWrapper>
     </Wrapper>

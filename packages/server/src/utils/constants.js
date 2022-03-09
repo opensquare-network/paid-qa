@@ -5,8 +5,8 @@ const RewardCurrencyType = Object.freeze({
 
 const PostStatus = Object.freeze({
   Published: "published",
-  Onchain: "onchain",
-  Closed: "closed",
+  Active: "active",
+  Resolved: "resolved",
 });
 
 module.exports = {

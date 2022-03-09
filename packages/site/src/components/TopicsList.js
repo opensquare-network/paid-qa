@@ -6,6 +6,7 @@ const Wrapper = styled.div`
 `;
 
 export default function TopicsList({ topics }) {
+  //TODO: loading effect
   //TODO: show empty placeholder for no topics
   return (
     <Wrapper>

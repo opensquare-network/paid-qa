@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const BigNumber = require("bignumber.js");
 const Hash = require("ipfs-only-hash");
 const { Topic, Reward } = require("../models");
 const { PostStatus, RewardCurrencyType } = require("../utils/constants");
@@ -16,6 +17,19 @@ const {
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
 const { ipfsAdd } = require("./ipfs.service");
+
+async function validateTokenAmount(tokenAmount, decimals) {
+  if (!tokenAmount.match(/^[\.\d]+$/)) {
+    throw new HttpError(500, "Invalid reward value");
+  }
+  const amount = new BigNumber(tokenAmount);
+  if (amount.isNaN() || amount.lte(0)) {
+    throw new HttpError(500, "Invalid reward value");
+  }
+  if ((tokenAmount.split(".")[1]?.length || 0) > decimals) {
+    throw new HttpError(500, "Invalid reward value");
+  }
+}
 
 async function createTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content, language } = data;
@@ -57,6 +71,9 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
       blockHash
     ));
   }
+
+  // Validate reward value
+  validateTokenAmount(tokenAmount, decimals);
 
   const session = await mongoose.startSession();
   await session.withTransaction(async () => {
@@ -120,8 +137,14 @@ async function getTopic(cid) {
 }
 
 async function getTopics(page, pageSize) {
-  const total = await Topic.countDocuments();
-  const topics = await Topic.find({})
+  const q = {
+    status: {
+      $in: [PostStatus.Active, PostStatus.Resolved],
+    }
+  };
+  const total = await Topic.countDocuments(q);
+  const topics = await Topic
+    .find(q)
     .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
