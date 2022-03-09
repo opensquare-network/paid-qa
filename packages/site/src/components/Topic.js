@@ -73,7 +73,7 @@ export default function Topic({ topic }) {
         <Divider />
         <div>
           <DividerWrapper>
-            <User address={topic.signer} />
+            <User address={topic.signer} network={topic.network} showNetwork />
             <Time time={topic.blockTime} />
           </DividerWrapper>
           <TagList topic={topic} />
