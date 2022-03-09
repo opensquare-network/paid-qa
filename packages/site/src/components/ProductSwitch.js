@@ -1,6 +1,6 @@
 import Flex from "ui/lib/styled/Flex";
 import styled from "styled-components";
-import { p_12_normal } from "../styles/textStyles";
+import { p_12_normal, p_16_semibold } from "../styles/textStyles";
 
 const AppWrapper = styled.div`
   display: flex;
@@ -48,7 +48,7 @@ const Product = styled.li`
   all: unset;
   margin-bottom: 16px;
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 16px;
   min-height: 42px;
   color: #506176;
@@ -63,6 +63,7 @@ const Product = styled.li`
   p {
     all: unset;
     width: 100%;
+    ${p_16_semibold};
     ::before {
       content: "";
       background-image: url("/imgs/icons/caret-right.svg");
