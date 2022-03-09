@@ -17,6 +17,7 @@ import {
 import { NavLink } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
+import { MOBILE_SIZE } from "../utils/constants";
 
 const Wrapper = styled.header`
   position: relative;
@@ -34,7 +35,7 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
     min-height: 62px;
     padding: 15px 20px;
   }
@@ -53,7 +54,7 @@ const Logo = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
     width: 48px;
     height: 32px;
     background-image: url("/imgs/opensquare-logo-icon.svg");
@@ -103,7 +104,7 @@ export default function Header() {
         </LeftWrapper>
         <RightWrapper ref={ref}>
           {/*<Notification />*/}
-          {windowSize.width > 768 ? (
+          {windowSize.width > MOBILE_SIZE ? (
             account ? (
               <>
                 <ConnectedAccount

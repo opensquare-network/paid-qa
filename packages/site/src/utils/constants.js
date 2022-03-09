@@ -154,3 +154,5 @@ export const DEFAULT_NODES = {
   bifrost: DEFAULT_BIFROST_NODE_URL,
   kintsugi: DEFAULT_KINTSUGI_NODE_URL,
 };
+
+export const MOBILE_SIZE = 900;
