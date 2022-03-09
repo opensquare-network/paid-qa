@@ -12,8 +12,7 @@ const FloatingWrapper = styled.ul`
   z-index: 1;
   margin: 0;
   padding: 4px 20px;
-  filter: drop-shadow(0px 4px 31px rgba(26, 33, 44, 0.06))
-    drop-shadow(0px 0.751293px 8px rgba(26, 33, 44, 0.04));
+  background: white;
   li {
     padding-top: 16px;
     padding-bottom: 16px;
