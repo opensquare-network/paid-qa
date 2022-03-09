@@ -6,9 +6,9 @@ import Layout from "components/Layout";
 import Header from "components/Header";
 import Main from "components/Main";
 import Home from "pages/Home";
-import Question from "pages/Question";
+import Topic from "pages/Topic";
 import Profile from "pages/Profile";
-import AskQuestion from "./pages/AskQuestion";
+import NewTopic from "./pages/NewTopic";
 
 function App() {
   return (
@@ -18,8 +18,8 @@ function App() {
         <Main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/new" element={<AskQuestion />} />
-            <Route path="/question" element={<Question />} />
+            <Route path="/new" element={<NewTopic />} />
+            <Route path="/topic/:cid" element={<Topic />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </Main>

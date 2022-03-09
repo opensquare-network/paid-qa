@@ -16,13 +16,13 @@ const Wrapper = styled(Card)`
   }
 `;
 
-export default function Detail() {
+export default function Detail({ topic }) {
   return (
     <Wrapper>
-      <Title />
-      <Rewards />
-      <Description />
-      <Appendants />
+      <Title topic={topic} />
+      <Rewards rewards={topic.rewards} />
+      <Description topic={topic} />
+      <Appendants appendants={topic.appendants} />
     </Wrapper>
   );
 }

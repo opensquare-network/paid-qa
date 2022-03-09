@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { calcRewards } from "utils/rewards";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -14,11 +15,14 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function Rewards() {
+export default function Rewards({ rewards }) {
+  const tokenValues = calcRewards(rewards);
   return (
     <Wrapper>
       <div>Rewards</div>
-      <div>10 KSM</div>
+      <div>
+        {Object.keys(tokenValues).map(symbol => `${tokenValues[symbol]} ${symbol}`).join(", ")}
+      </div>
     </Wrapper>
   );
 }

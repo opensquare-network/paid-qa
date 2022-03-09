@@ -18,7 +18,11 @@ const ContentWrapper = styled.div`
   }
 `;
 
-export default function Promises() {
+export default function Promises({ rewards }) {
+  if (!rewards || rewards.length === 0) {
+    return null;
+  }
+
   return (
     <Card>
       <Title className="flex items-center justify-between">
@@ -26,9 +30,11 @@ export default function Promises() {
         <img src="/imgs/icons/support.svg" alt="" />
       </Title>
       <ContentWrapper>
-        <Item />
-        <Item />
-        <Item />
+        {
+          rewards.map((reward, index) => (
+            <Item key={index} reward={reward} />
+          ))
+        }
       </ContentWrapper>
     </Card>
   );

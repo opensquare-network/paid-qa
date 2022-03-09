@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DividerWrapper from "components/DividerWrapper";
 import User from "components/User";
 import TagList from "components/TagList";
+import Time from "ui/lib/Time";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -18,20 +19,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const Time = styled.div`
-  font-size: 14px;
-  line-height: 24px;
-  color: #506176;
-`;
-
-export default function Title() {
+export default function Title({ topic }) {
   return (
     <Wrapper>
-      <div>What tool we should use to measure effectiveness of PH Launch?</div>
+      <div>{topic.title}</div>
       <div>
         <DividerWrapper>
-          <User />
-          <Time>2 hours ago</Time>
+          <User address={topic.signer} />
+          <Time time={topic.blockTime} />
         </DividerWrapper>
         <TagList />
       </div>

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 import Detail from "./Detail";
-import Answers from "./Answers";
+// import Answers from "./Answers";
 import Promises from "./Promises";
-import Funds from "./Funds";
+// import Funds from "./Funds";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,16 +23,16 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function Post() {
+export default function Post({ topic }) {
   return (
     <Wrapper>
       <div>
-        <Detail />
-        <Answers />
+        <Detail topic={topic} />
+        {/* <Answers /> */}
       </div>
       <div>
-        <Promises />
-        <Funds />
+        <Promises rewards={topic.rewards} />
+        {/* <Funds /> */}
       </div>
     </Wrapper>
   );

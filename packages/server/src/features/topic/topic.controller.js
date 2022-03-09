@@ -9,7 +9,7 @@ async function getTopics(ctx) {
 }
 
 async function getTopic(ctx) {
-  const { cid } = ctx.query;
+  const { cid } = ctx.params;
 
   if (!cid) {
     throw new HttpError(400, { cid: ["Cid is missing"] });

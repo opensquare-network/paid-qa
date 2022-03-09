@@ -67,7 +67,7 @@ export default function Topic({ topic }) {
         <div>Replies</div>
       </ReplyWrapper>
       <DetailWrapper>
-        <Link to="/question">
+        <Link to={`/topic/${topic.cid}`}>
           <Title>{topic.title}</Title>
         </Link>
         <Divider />

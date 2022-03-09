@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { bnAdd } from "ui/lib/utils/tokenValue";
+import { calcRewards } from "utils/rewards";
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,10 +47,10 @@ function getStatusColor(status) {
 }
 
 export default function TagList({ topic }) {
-  const tokenValues = {};
-  topic.rewards?.forEach((reward) => {
-    tokenValues[reward.symbol] = bnAdd(tokenValues[reward.symbol] ?? "0", reward.value);
-  });
+  if (!topic) {
+    return null;
+  }
+  const tokenValues = calcRewards(topic.rewards);
 
   return (
     <Wrapper>

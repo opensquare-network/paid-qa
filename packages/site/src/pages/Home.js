@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Container from "components/Container";
 // import Explorer from "components/Explorer";
-import AskQuestion from "components/AskQuestion";
+import AskQuestion from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
 import { setTopics, topicsSelector } from "store/reducers/topicSlice";
