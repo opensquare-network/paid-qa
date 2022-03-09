@@ -18,14 +18,14 @@ const Placeholder = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
-  color: #a1a8b3;
+  color: #1E2134;
 `;
 
 export default function Select({ placeholder }) {
   return (
     <Wrapper>
       <Placeholder>{placeholder}</Placeholder>
-      <img src="/imgs/icons/caret-right.svg" alt="" />
+      <img src="/imgs/icons/caret-down.svg" alt="" />
     </Wrapper>
   );
 }

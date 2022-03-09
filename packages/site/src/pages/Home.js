@@ -48,7 +48,7 @@ export default function Home() {
       <Background />
       <Container>
         <ContentWrapper>
-          {/*<Explorer />*/}
+          {/* <Explorer /> */}
           <PostListTitle>
             Topics
             <AskQuestion />
