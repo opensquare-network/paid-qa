@@ -50,7 +50,7 @@ const Product = styled.li`
   display: flex;
   align-items: center;
   gap: 16px;
-  height: 42px;
+  min-height: 42px;
   color: #506176;
   &:hover {
     color: #1e2134;
