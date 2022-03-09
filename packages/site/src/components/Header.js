@@ -33,7 +33,7 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 768px) {
     min-height: 62px;
     padding: 15px 20px;
   }
@@ -52,7 +52,7 @@ const Logo = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 768px) {
     width: 48px;
     height: 32px;
     background-image: url("/imgs/opensquare-logo-icon.svg");
@@ -118,7 +118,7 @@ export default function Header() {
         </LeftWrapper>
         <RightWrapper ref={ref}>
           {/*<Notification />*/}
-          {windowSize.width > 800 ? (
+          {windowSize.width > 768 ? (
             account ? (
               <>
                 <ConnectedAccount

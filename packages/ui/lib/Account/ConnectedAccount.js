@@ -13,7 +13,7 @@ import { encodeAddress } from "@polkadot/util-crypto";
 const Wrapper = styled.div`
   position: relative;
   cursor: pointer;
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 768px) {
     padding: 0;
     > :first-child {
       margin-top: 20px;
@@ -74,7 +74,7 @@ const AccountWrapperPC = styled(AccountWrapper)`
       border: 1px solid #b7c0cc;
     `}
   padding: 7px 15px;
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 768px) {
     display: none;
   }
 `;
@@ -90,7 +90,7 @@ const MenuWrapper = styled.div`
   padding: 16px;
   padding-bottom: 8px;
   z-index: 1;
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 768px) {
     margin-top: 19px;
     border: none;
     box-shadow: none;
