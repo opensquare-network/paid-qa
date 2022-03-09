@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import IpfsSquare from "ui/lib/IpfsSquare";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -17,23 +18,14 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function Description() {
+export default function Description({ topic }) {
   return (
     <Wrapper>
       <div>
         <div>Description</div>
-        <img src="/imgs/icons/ipfs.svg" alt="" />
+        <IpfsSquare href={topic.pinned ? `https://ipfs.infura.io/ipfs/${topic.cid}` : null} />
       </div>
-      <div>
-        Viverra venenatis volutpat turpis vel viverra lectus amet justo. In
-        luctus fermentum enim ut nulla metus. Suscipit id tortor, sit facilisis.
-        Massa, ut mattis elementum tellus, viverra ut adipiscing. Non platea id
-        habitant vel morbi mollis consectetur. Tristique velit facilisis nullam
-        porttitor accumsan mattis in sed est. Adipiscing in lacus, viverra
-        pellentesque vestibulum condimentum enim non auctor. Ullamcorper quis
-        viverra commodo, odio interdum ullamcorper nunc porta. In mauris nunc
-        felis diam at suspendisse sed amet egestas.
-      </div>
+      <div>{topic.content}</div>
     </Wrapper>
   );
 }

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import Background from "components/Background";
 import Container from "components/Container";
-import Breadcrumb from "components/Breadcrumb";
-import Post from "components/Post";
+// import Background from "components/Background";
+import Breadcrumb from "../components/Breadcrumb";
+import Create from "../components/Create";
 
 const Wrapper = styled.div`
   position: relative;
@@ -12,19 +12,19 @@ const Wrapper = styled.div`
 
 const ContentWrapper = styled.div`
   position: relative;
+
   > :not(:first-child) {
     margin-top: 24px;
   }
 `;
 
-export default function Question() {
+export default function AskQuestion() {
   return (
     <Wrapper>
-      <Background />
       <Container>
         <ContentWrapper>
-          <Breadcrumb value="Question" />
-          <Post />
+          <Breadcrumb value="New Post" />
+          <Create />
         </ContentWrapper>
       </Container>
     </Wrapper>

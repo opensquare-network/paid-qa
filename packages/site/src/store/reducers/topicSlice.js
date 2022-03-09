@@ -9,16 +9,21 @@ const topicSlice = createSlice({
       pageSize: 10,
       total: 0,
     },
+    topic: null,
   },
   reducers: {
     setTopics(state, { payload }) {
       state.topics = payload;
-    }
+    },
+    setTopic(state, { payload }) {
+      state.topic = payload;
+    },
   },
 });
 
-export const { setTopics } = topicSlice.actions;
+export const { setTopics, setTopic } = topicSlice.actions;
 
-export const topicsSelector = (state) => state.topic?.topics;
+export const topicsSelector = (state) => state.topic.topics;
+export const topicSelector = (state) => state.topic.topic;
 
 export default topicSlice.reducer;

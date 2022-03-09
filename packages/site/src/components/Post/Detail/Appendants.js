@@ -38,7 +38,11 @@ const StyledDividerWrapper = styled(DividerWrapper)`
   }
 `;
 
-export default function Appendants() {
+export default function Appendants({ appendants }) {
+  if (!appendants || appendants.length === 0) {
+    return null;
+  }
+
   return (
     <Wrapper>
       <div>Appendants</div>
