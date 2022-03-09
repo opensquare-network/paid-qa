@@ -37,14 +37,11 @@ const delayQuery = debounce(() => {
       "content-type": "application/json;charset=UTF-8",
     };
 
-    fetch(
-      `${process.env.NEXT_PUBLIC_IDENTITY_SERVER_HOST}/${chain}/short-ids`,
-      {
-        headers,
-        method: "POST",
-        body: JSON.stringify({ addresses }),
-      }
-    )
+    fetch(`${process.env.REACT_APP_IDENTITY_SERVER_HOST}/${chain}/short-ids`, {
+      headers,
+      method: "POST",
+      body: JSON.stringify({ addresses }),
+    })
       .then((res) => res.json())
       .then((data) => {
         const identities = new Map(data.map((item) => [item.address, item]));
