@@ -13,7 +13,7 @@ const TopicSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    status: String, // "published", "onchain", "closed"
+    status: String, // "published", "active", "resolved"
     signer: String,
   },
   {
