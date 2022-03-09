@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
 import NodeSelect from "./NodeSelect";
 import { useDispatch, useSelector } from "react-redux";
-import ConnectedAccount from "ui/lib/Account/ConnectedAccount";
+import ConnectedAccount from "./User/ConnectedAccount";
 import { useOnClickOutside, useWindowSize } from "ui/lib/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
 import {
