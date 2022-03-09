@@ -46,7 +46,7 @@ const DetailWrapper = styled.div`
   }
 `;
 
-const Title = styled.div`
+const Title = styled(Link)`
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
@@ -67,9 +67,7 @@ export default function Topic({ topic }) {
         <div>Replies</div>
       </ReplyWrapper>
       <DetailWrapper>
-        <Link to={`/topic/${topic.cid}`}>
-          <Title>{topic.title}</Title>
-        </Link>
+        <Title to={`/topic/${topic.cid}`}>{topic.title}</Title>
         <Divider />
         <div>
           <DividerWrapper>
