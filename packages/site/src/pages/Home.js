@@ -9,7 +9,6 @@ import TopicsList from "components/TopicsList";
 import Background from "components/Background";
 import { setTopics, topicsSelector } from "store/reducers/topicSlice";
 import serverApi from "services/serverApi";
-import { MOBILE_SIZE } from "../utils/constants";
 
 const Wrapper = styled.div`
   position: relative;
@@ -20,10 +19,6 @@ const ContentWrapper = styled.div`
   position: relative;
   > :not(:first-child) {
     margin-top: 24px;
-  }
-
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
-    padding: 0 16px;
   }
 `;
 
