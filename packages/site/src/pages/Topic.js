@@ -27,7 +27,7 @@ export default function Topic() {
   const dispatch = useDispatch();
   const topic = useSelector(topicSelector);
   useEffect(() => {
-    serverApi.fetch("/topics/" + cid).then(({ result }) => {
+    serverApi.fetch(`/topics/${cid}`).then(({ result }) => {
       if (result) {
         dispatch(setTopic(result));
       }

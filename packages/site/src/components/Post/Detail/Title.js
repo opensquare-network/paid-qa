@@ -25,7 +25,7 @@ export default function Title({ topic }) {
       <div>{topic.title}</div>
       <div>
         <DividerWrapper>
-          <User address={topic.signer} />
+          <User address={topic.signer} network={topic.network} showNetwork />
           <Time time={topic.blockTime} />
         </DividerWrapper>
         <TagList />

@@ -5,10 +5,11 @@ import { Footer } from "ui/lib";
 import Layout from "components/Layout";
 import Header from "components/Header";
 import Main from "components/Main";
+import Toast from "components/Toast";
 import Home from "pages/Home";
 import Topic from "pages/Topic";
 import Profile from "pages/Profile";
-import NewTopic from "./pages/NewTopic";
+import NewTopic from "pages/NewTopic";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           </Routes>
         </Main>
         <Footer />
+        <Toast />
       </Layout>
     </HashRouter>
   );
