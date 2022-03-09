@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { Dropdown } from "../index";
-import { p_14_medium } from "site/src/styles/textStyles";
 import ChainItem from "./ChainSelectItem";
 
 const Wrapper = styled.div`

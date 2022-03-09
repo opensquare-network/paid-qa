@@ -1,6 +1,6 @@
 import ChainIcon from "./ChainIcon";
 import styled, { css } from "styled-components";
-import { p_14_medium } from "site/src/styles/textStyles";
+import { p_14_medium } from "../styles/textStyles";
 
 const Text = styled.p`
   ${p_14_medium};

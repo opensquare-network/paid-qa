@@ -16,7 +16,6 @@ import {
   p_16_semibold,
   p_20_semibold,
 } from "../styles/textStyles";
-import { ReactComponent as SvgClose } from "site/public/imgs/icons/close.svg";
 import ChainSelector from "ui/lib/Chain/ChainSelector";
 import { AVAILABLE_NETWORKS } from "ui/lib/utils/constants";
 import { closeConnect } from "../store/reducers/showConnectSlice";
@@ -144,6 +143,10 @@ export default function ConnectModal() {
 
   const closeModal = () => dispatch(closeConnect());
 
+  const closeButton = (
+    <img onClick={closeModal} src="/imgs/icons/close.svg" width={24} alt="" />
+  );
+
   return (
     <Wrapper>
       <StyledModal
@@ -153,9 +156,7 @@ export default function ConnectModal() {
         size="tiny"
       >
         <StyledCard>
-          <CloseBar>
-            <SvgClose onClick={closeModal} />
-          </CloseBar>
+          <CloseBar>{closeButton}</CloseBar>
           <StyledTitle>Connect Wallet</StyledTitle>
 
           <StyledText>Chain</StyledText>
@@ -186,9 +187,7 @@ export default function ConnectModal() {
         size="tiny"
       >
         <StyledCard>
-          <CloseBar>
-            <SvgClose onClick={closeModal} />
-          </CloseBar>
+          <CloseBar>{closeButton}</CloseBar>
           <StyledTitle>Connect Wallet</StyledTitle>
 
           <StyledDescription>
@@ -222,9 +221,7 @@ export default function ConnectModal() {
         size="tiny"
       >
         <StyledCard>
-          <CloseBar>
-            <SvgClose onClick={closeModal} />
-          </CloseBar>
+          <CloseBar>{closeButton}</CloseBar>
           <StyledTitle>Connect Wallet</StyledTitle>
 
           <StyledDescription>
@@ -258,9 +255,7 @@ export default function ConnectModal() {
         size="tiny"
       >
         <StyledCard>
-          <CloseBar>
-            <SvgClose onClick={closeModal} />
-          </CloseBar>
+          <CloseBar></CloseBar>
           <StyledTitle>Connect Wallet</StyledTitle>
 
           <StyledDescription>
