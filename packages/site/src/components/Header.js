@@ -16,6 +16,7 @@ import {
 } from "../store/reducers/showConnectSlice";
 import { NavLink } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
+import ProductSwitch from "./ProductSwitch";
 
 const Wrapper = styled.header`
   position: relative;
@@ -66,19 +67,6 @@ const Divider = styled.div`
   background: #e2e8f0;
 `;
 
-const AppWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-
-  > img {
-    width: 24px;
-    margin-right: 8px;
-  }
-`;
-
 const RightWrapper = styled.div`
   display: flex;
 
@@ -111,10 +99,7 @@ export default function Header() {
             <Logo />
           </NavLink>
           <Divider />
-          <AppWrapper>
-            <img src="/imgs/icons/apps.svg" alt="" />
-            Paid QA
-          </AppWrapper>
+          <ProductSwitch />
         </LeftWrapper>
         <RightWrapper ref={ref}>
           {/*<Notification />*/}
