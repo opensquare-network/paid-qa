@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function AskQuestion() {
+export default function NewTopicButton() {
   return (
     <Link to={"/new"}>
       <Wrapper>

@@ -18,7 +18,7 @@ const ContentWrapper = styled.div`
   }
 `;
 
-export default function AskQuestion() {
+export default function NewTopic() {
   return (
     <Wrapper>
       <Container>

@@ -4,7 +4,7 @@ import Container from "components/Container";
 import Breadcrumb from "components/Breadcrumb";
 import Profile from "components/User/Profile";
 import Tabs from "./Tabs";
-import AskQuestion from "components/AskQuestion";
+import NewTopicButton from "components/NewTopicButton";
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -30,7 +30,7 @@ const ContentWrapper = styled.div`
 
 const AboutWrapper = styled.div`
   display: flex;
-  padding: bottom: 4px;
+  padding-bottom: 4px;
   > * {
     display: flex;
     align-items: flex-start;
@@ -86,7 +86,7 @@ export default function Header({ tab, setTab }) {
           </div>
           <div>
             <Tabs value={tab} setValue={setTab} />
-            <AskQuestion />
+            <NewTopicButton />
           </div>
         </ContentWrapper>
       </Container>
