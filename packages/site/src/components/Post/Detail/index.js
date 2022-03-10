@@ -5,6 +5,7 @@ import Title from "./Title";
 // import Rewards from "./Rewards";
 import Description from "./Description";
 import Appendants from "./Appendants";
+import Share from "./Share";
 
 const Wrapper = styled(Card)`
   > :not(:first-child) {
@@ -23,6 +24,7 @@ export default function Detail({ topic }) {
       {/* <Rewards rewards={topic.rewards} /> */}
       <Description topic={topic} />
       <Appendants appendants={topic.appendants} />
+      <Share />
     </Wrapper>
   );
 }
