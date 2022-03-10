@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.span``;
 
-export default function Addr({ children = "", length = 5 }) {
+export default function Address({ children = "", length = 5 }) {
   const shortAddr =
     children.substring(0, length) +
     "..." +
