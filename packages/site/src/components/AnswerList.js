@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Card from "./Card";
+import Card from "ui/lib/styled/Card";
 import DividerWrapper from "./DividerWrapper";
 
 const Wrapper = styled.div`

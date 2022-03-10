@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Card from "components/Card";
+import Card from "ui/lib/styled/Card";
 import Item from "./Item";
 import Pagination from "components/Pagination";
 

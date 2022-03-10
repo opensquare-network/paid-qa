@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Background from "components/Background";
 import Container from "components/Container";
-import Breadcrumb from "components/Breadcrumb";
+import Breadcrumb from "ui/lib/Navi/Breadcrumb";
 import Post from "components/Post";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

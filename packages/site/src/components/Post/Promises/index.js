@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Card from "components/Card";
+import Card from "ui/lib/styled/Card";
 import Item from "./Item";
 
 const Title = styled.div`
@@ -30,11 +30,9 @@ export default function Promises({ rewards }) {
         <img src="/imgs/icons/support.svg" alt="" />
       </Title>
       <ContentWrapper>
-        {
-          rewards.map((reward, index) => (
-            <Item key={index} reward={reward} />
-          ))
-        }
+        {rewards.map((reward, index) => (
+          <Item key={index} reward={reward} />
+        ))}
       </ContentWrapper>
     </Card>
   );

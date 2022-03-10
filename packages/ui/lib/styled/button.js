@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { p_14_medium } from "../../styles/textStyles";
+import { p_14_medium } from "../styles/textStyles";
 
 const Wrapper = styled.button`
   all: unset;
