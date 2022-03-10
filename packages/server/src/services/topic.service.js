@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const BigNumber = require("bignumber.js");
 const Hash = require("ipfs-only-hash");
-const { Topic, Reward } = require("../models");
+const { Topic, Reward, Appendant } = require("../models");
 const { PostStatus, RewardCurrencyType } = require("../utils/constants");
 const {
   getApi,
@@ -13,6 +13,7 @@ const {
   parser: { InteractionParser },
   interactions: {
     NewInteraction,
+    AppendInteraction,
   }
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
@@ -34,10 +35,6 @@ async function validateTokenAmount(tokenAmount, decimals) {
 async function createTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content, language } = data;
 
-  const jsonData = JSON.stringify(data);
-  const buf = Buffer.from(jsonData);
-  const cid = await Hash.of(buf);
-
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
   const { remark, signer, blockTime } = await getRemark(api, blockHash, extrinsicIndex);
@@ -47,6 +44,14 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
   if (!(interaction instanceof NewInteraction)) {
     throw new HttpError(500, "System remark is not NEW instruction");
   }
+
+  if (!interaction.isValid) {
+    throw new HttpError(500, "System remark is not valid");
+  }
+
+  const jsonData = JSON.stringify(data);
+  const buf = Buffer.from(jsonData);
+  const cid = await Hash.of(buf);
 
   // Verfify if ipfs cid is the same as the one in the system remark
   if (interaction.topicIpfsCid !== cid) {
@@ -148,7 +153,8 @@ async function getTopics(page, pageSize) {
     .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("rewards");
+    .populate("rewards")
+    .populate("appendants");
 
   return {
     items: topics,
@@ -158,8 +164,89 @@ async function getTopics(page, pageSize) {
   };
 }
 
+async function addAppendant(data, network, blockHash, extrinsicIndex) {
+  const { topic, content } = data;
+
+  // Get system remark from network/blockHash/extrinsicIndex
+  const api = await getApi(network);
+  const { remark, signer, blockTime } = await getRemark(api, blockHash, extrinsicIndex);
+
+  // Parse system remark to verify if it is NEW instruction
+  const interaction = new InteractionParser(remark).getInteraction();
+  if (!(interaction instanceof AppendInteraction)) {
+    throw new HttpError(500, "System remark is not APPEND instruction");
+  }
+
+  if (!interaction.isValid) {
+    throw new HttpError(500, "System remark is not valid");
+  }
+
+  if (interaction.topicIpfsCid !== topic) {
+    throw new HttpError(500, "System remark topic cid does not match the append content");
+  }
+
+  const jsonData = JSON.stringify(data);
+  const buf = Buffer.from(jsonData);
+  const cid = await Hash.of(buf);
+
+  // Verfify if ipfs cid is the same as the one in the system remark
+  if (interaction.messageIpfsCid !== cid) {
+    throw new HttpError(
+      500,
+      "System remark append message cid does not match the ipfs content"
+    );
+  }
+
+  // Find the related topic
+  const appendToTopic = await Topic.findOne({ cid: interaction.topicIpfsCid });
+  if (!appendToTopic) {
+    throw new HttpError(500, "Topic does not exist");
+  }
+
+  // Only topic owner can append content to topic
+  if (appendToTopic.signer !== signer) {
+    throw new HttpError(500, "You are not the topic owner");
+  }
+
+  // Limit the appendants creation to the same network with the parent topic
+  if (appendToTopic.network !== network) {
+    throw new HttpError(500, "Appendant does not match the topic network");
+  }
+
+  await Appendant.create(
+    {
+      blockTime,
+      topicCid: interaction.topicIpfsCid,
+      cid,
+      content,
+      data,
+      pinned: false,
+      network,
+      signer,
+      status: PostStatus.Published,
+    },
+  );
+
+  // Upload topic content to IPFS
+  ipfsAdd(data)
+    .then(async (added) => {
+      const pinnedCid = added?.cid?.toV0().toString();
+      if (pinnedCid !== cid) {
+        console.error("Pinned path does not match the appendant content CID");
+        return;
+      }
+      await Appendant.updateOne({ cid }, { pinned: true });
+    })
+    .catch(console.error);
+
+  return {
+    cid,
+  };
+}
+
 module.exports = {
   createTopic,
   getTopic,
   getTopics,
+  addAppendant,
 };
