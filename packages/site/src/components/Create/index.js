@@ -15,6 +15,7 @@ import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
 import getApi from "ui/lib/services/chain/api";
+import { addToast, ToastTypes } from "../../store/reducers/toastSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -94,9 +95,23 @@ export default function Create() {
   }, [account]);
 
   const onPublish = async () => {
-    if (!title || !content) {
-      //todo: improve this
-      return alert("no title | content | fund amount");
+    let formValidateErrMsg = null;
+    if (!title) {
+      formValidateErrMsg = "Title must not be empty";
+    }
+    if (!content) {
+      formValidateErrMsg = "Content must not be empty";
+    }
+    if (isNaN(rewardAmount) || rewardAmount <= 0) {
+      formValidateErrMsg = "Reward must be a valid number";
+    }
+    if (formValidateErrMsg) {
+      return dispatch(
+        addToast({
+          type: ToastTypes.ERROR,
+          message: formValidateErrMsg,
+        })
+      );
     }
     const cid = await cidOf({ title, content, language: "en" });
     const unsub = await api.tx.system
@@ -109,10 +124,12 @@ export default function Create() {
         }
       })
       .catch((e) => {
-        //todo : toast an error msg
-      })
-      .finally(() => {
-        console.log("final");
+        return dispatch(
+          addToast({
+            type: ToastTypes.ERROR,
+            message: e.toString(),
+          })
+        );
       });
   };
 
