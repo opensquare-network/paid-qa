@@ -84,3 +84,5 @@ export const AVAILABLE_NETWORKS = [
   { network: Chains.kusama },
   { network: Chains.westend }, //todo: use a .env file to add test network
 ];
+
+export const MOBILE_SIZE = 900;
