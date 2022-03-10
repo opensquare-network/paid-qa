@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
+
   > :first-child {
     flex-grow: 1;
     > :not(:first-child) {
@@ -24,7 +25,7 @@ const Wrapper = styled.div`
     }
     @media screen and (max-width: ${MOBILE_SIZE}px) {
       margin-top: 20px;
-      flex-grow: 1;
+      flex-basis: 100%;
     }
     > :not(:first-child) {
       margin-top: 20px;
