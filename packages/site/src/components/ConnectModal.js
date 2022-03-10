@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { setAccount } from "../store/reducers/accountSlice";
 
 import { Modal } from "semantic-ui-react";
-import Button from "./styled/button";
+import Button from "ui/lib/styled/button";
 import AccountSelector from "ui/lib/Account/AccountSelector";
 import styled from "styled-components";
 import {

@@ -1,4 +1,4 @@
-import Button from "../components/styled/button";
+import Button from "ui/lib/styled/button";
 
 export default function ConnectWallet({ ...props }) {
   return (
