@@ -38,7 +38,6 @@ export default function TopicsList({ topics }) {
   //TODO: show empty placeholder for no topics
   return (
     <Wrapper>
-      <MyLoader />
       {!topics ? (
         <MyLoader />
       ) : (
