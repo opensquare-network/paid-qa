@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Container from "components/Container";
-import Breadcrumb from "components/Breadcrumb";
+import Breadcrumb from "ui/lib/Navi/Breadcrumb";
 import Profile from "components/User/Profile";
 import Tabs from "./Tabs";
 import NewTopicButton from "components/NewTopicButton";
@@ -53,7 +53,7 @@ const AboutWrapper = styled.div`
       align-self: center;
       width: 1px;
       height: 20px;
-      background: #E2E8F0;
+      background: #e2e8f0;
       margin: 0 20px;
     }
   }

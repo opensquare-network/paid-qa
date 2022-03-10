@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Container from "components/Container";
 // import Background from "components/Background";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "ui/lib/Navi/Breadcrumb";
 import Create from "../components/Create";
 
 const Wrapper = styled.div`
