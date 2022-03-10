@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Container from "components/Container";
+import Container from "ui/lib/styled/Container";
 import Breadcrumb from "ui/lib/Navi/Breadcrumb";
 import Profile from "components/User/Profile";
 import Tabs from "./Tabs";

@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 
 import Background from "components/Background";
-import Container from "components/Container";
+import Container from "ui/lib/styled/Container";
 import Breadcrumb from "ui/lib/Navi/Breadcrumb";
 import Post from "components/Post";
 import { useEffect } from "react";
