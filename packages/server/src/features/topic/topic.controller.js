@@ -59,8 +59,46 @@ async function createTopic(ctx) {
   );
 }
 
+async function addAppendant(ctx) {
+  const { data, network, blockHash, extrinsicIndex } = ctx.request.body;
+
+  if (!data) {
+    throw new HttpError(400, { title: ["Data is missing"] });
+  }
+
+  if (!network) {
+    throw new HttpError(400, { network: ["Network is missing"] });
+  }
+
+  if (!blockHash) {
+    throw new HttpError(400, { network: ["Block hash is missing"] });
+  }
+
+  if (extrinsicIndex === undefined) {
+    throw new HttpError(400, { network: ["Extrinsic index is missing"] });
+  }
+
+  const { topic, content } = data;
+
+  if (!topic) {
+    throw new HttpError(400, { topic: ["Topic cid is missing"] });
+  }
+
+  if (!content) {
+    throw new HttpError(400, { content: ["Content is missing"] });
+  }
+
+  ctx.body = await topicService.addAppendant(
+    data,
+    network,
+    blockHash,
+    extrinsicIndex
+  );
+}
+
 module.exports = {
   getTopic,
   getTopics,
   createTopic,
+  addAppendant,
 };

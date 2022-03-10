@@ -31,6 +31,13 @@ class AppendInteraction {
 
     return isCid(this.#topicIpfsCid);
   }
+
+  toJSON() {
+    return {
+      messageIpfsCid: this.#messageIpfsCid,
+      topicIpfsCid: this.#topicIpfsCid,
+    }
+  }
 }
 
 module.exports = {
