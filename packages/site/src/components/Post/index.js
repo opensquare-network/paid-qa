@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
+
   > :first-child {
     flex-grow: 1;
     > :not(:first-child) {
