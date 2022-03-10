@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import ConnectWallet from "../ConnectWallet";
-import Input from "../Input";
+import Input from "ui/lib/styled/Input";
 import MarkdownEditor from "ui/lib/Editor/MarkdownEditor";
 import Button from "ui/lib/styled/button";
 import { accountSelector } from "../../store/reducers/accountSlice";

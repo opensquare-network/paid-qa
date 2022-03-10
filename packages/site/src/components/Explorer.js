@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Input from "./Input";
+import Input from "ui/lib/styled/Input";
 import Select from "./Select";
 
 const Wrapper = styled.div`
