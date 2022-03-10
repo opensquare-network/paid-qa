@@ -153,7 +153,8 @@ async function getTopics(page, pageSize) {
     .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("rewards");
+    .populate("rewards")
+    .populate("appendants");
 
   return {
     items: topics,
