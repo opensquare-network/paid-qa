@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import TagList from "./TagList";
 import User from "components/User";
 import DividerWrapper from "components/DividerWrapper";
+import MobileInvisible from "components/MobileInvisible";
 import Time from "ui/lib/Time";
 
 const Wrapper = styled.div`
@@ -59,19 +60,28 @@ const Divider = styled.div`
   background: #f0f3f8;
 `;
 
+const RepliesCount = styled.span`
+  color: #A1A8B3;
+`;
+
 export default function Topic({ topic }) {
   return (
     <Wrapper>
-      <ReplyWrapper>
-        <div>0</div>
-        <div>Replies</div>
-      </ReplyWrapper>
+      <MobileInvisible>
+        <ReplyWrapper>
+          <div>0</div>
+          <div>Replies</div>
+        </ReplyWrapper>
+      </MobileInvisible>
       <DetailWrapper>
         <Title to={`/topic/${topic.cid}`}>{topic.title}</Title>
         <Divider />
         <div>
           <DividerWrapper>
-            <User address={topic.signer} network={topic.network} showNetwork />
+            <MobileInvisible>
+              <User address={topic.signer} network={topic.network} showNetwork />
+            </MobileInvisible>
+            <RepliesCount>{topic.replies?.length || 0} Replies</RepliesCount>
             <Time time={topic.blockTime} />
           </DividerWrapper>
           <TagList topic={topic} />

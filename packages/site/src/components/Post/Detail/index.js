@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Card from "components/Card";
 import Title from "./Title";
-import Rewards from "./Rewards";
+// import Rewards from "./Rewards";
 import Description from "./Description";
 import Appendants from "./Appendants";
 
@@ -20,7 +20,7 @@ export default function Detail({ topic }) {
   return (
     <Wrapper>
       <Title topic={topic} />
-      <Rewards rewards={topic.rewards} />
+      {/* <Rewards rewards={topic.rewards} /> */}
       <Description topic={topic} />
       <Appendants appendants={topic.appendants} />
     </Wrapper>
