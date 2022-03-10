@@ -3,12 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const topicSlice = createSlice({
   name: "topic",
   initialState: {
-    topics: {
-      items: [],
-      page: 1,
-      pageSize: 10,
-      total: 0,
-    },
+    topics: null,
     topic: null,
   },
   reducers: {
