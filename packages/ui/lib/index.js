@@ -11,7 +11,7 @@ import Avatar from "./Account/Avatar";
 import MarkdownEditor from "./Editor/MarkdownEditor";
 import IpfsSquare from "./IpfsSquare";
 import Breadcrumb from "./Navi/Breadcrumb";
-import styled from "styled";
+import styled from "./styled";
 
 export {
   Footer,
