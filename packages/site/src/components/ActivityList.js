@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Card from "ui/lib/styled/Card";
-import DividerWrapper from "./DividerWrapper";
+import DividerWrapper from "ui/lib/styled/DividerWrapper";
 import User from "./User";
 
 const Wrapper = styled.div`

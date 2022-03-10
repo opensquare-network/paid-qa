@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import DividerWrapper from "components/DividerWrapper";
+import DividerWrapper from "ui/lib/styled/DividerWrapper";
 import User from "components/User";
 import TagList from "components/TagList";
 import Time from "ui/lib/Time";
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const RepliesCount = styled.span`
-  color: #A1A8B3;
+  color: #a1a8b3;
 `;
 
 export default function Title({ topic }) {
