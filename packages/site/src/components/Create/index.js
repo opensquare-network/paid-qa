@@ -20,6 +20,10 @@ import { addToast, ToastTypes } from "../../store/reducers/toastSlice";
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
   > :first-child {
     flex-grow: 1;
@@ -31,7 +35,12 @@ const Wrapper = styled.div`
 
   > :nth-child(2) {
     flex: 0 0 300px;
-    margin-left: 20px;
+    @media screen and (min-width: 901px) {
+      margin-left: 20px;
+    }
+    @media screen and (max-width: 900px) {
+      margin-top: 20px;
+    }
   }
 `;
 
@@ -40,6 +49,10 @@ const Box = styled.div`
     0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
   border: 1px solid #f0f3f8;
   padding: 32px;
+  @media screen and (max-width: 900px) {
+    padding: 16px;
+    margin: 0 -16px;
+  }
 
   > :not(:first-child) {
     margin-top: 20px;
