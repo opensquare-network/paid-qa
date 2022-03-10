@@ -54,12 +54,20 @@ export default function TagList({ topic }) {
 
   return (
     <Wrapper>
-      <Item color={getStatusColor(topic.status)}>{topic.status}</Item>
-      {Object.keys(tokenValues).map(symbol => (
-        <Item key={symbol} color={getSymbolColor(symbol)}>
-          {`${tokenValues[symbol]} ${symbol}`}
-        </Item>
-      ))}
+      { // Show resolved tag only when the topic is resolved
+        topic.status === "resolved" && (
+          <Item color={getStatusColor(topic.status)}>{topic.status}</Item>
+        )
+      }
+      { // Show bounty tags when the topic is active
+        topic.status === "active" && (
+          Object.keys(tokenValues).map(symbol => (
+            <Item key={symbol} color={getSymbolColor(symbol)}>
+              {`${tokenValues[symbol]} ${symbol}`}
+            </Item>
+          ))
+        )
+      }
     </Wrapper>
   );
 }

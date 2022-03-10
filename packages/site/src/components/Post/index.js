@@ -4,10 +4,13 @@ import Detail from "./Detail";
 // import Answers from "./Answers";
 import Promises from "./Promises";
 // import Funds from "./Funds";
+import { MOBILE_SIZE } from "utils/constants";
+
 
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
   > :first-child {
     flex-grow: 1;
     > :not(:first-child) {
@@ -15,11 +18,21 @@ const Wrapper = styled.div`
     }
   }
   > :nth-child(2) {
-    flex: 0 0 300px;
-    margin-left: 20px;
+    @media screen and (min-width: ${MOBILE_SIZE}px) {
+      margin-left: 20px;
+      flex: 0 0 300px;
+    }
+    @media screen and (max-width: ${MOBILE_SIZE}px) {
+      margin-top: 20px;
+      flex-grow: 1;
+    }
     > :not(:first-child) {
       margin-top: 20px;
     }
+  }
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    margin: 0 -16px;
   }
 `;
 

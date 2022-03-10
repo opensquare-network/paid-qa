@@ -4,6 +4,7 @@ import DividerWrapper from "components/DividerWrapper";
 import User from "components/User";
 import TagList from "components/TagList";
 import Time from "ui/lib/Time";
+import MobileInvisible from "components/MobileInvisible";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -19,16 +20,23 @@ const Wrapper = styled.div`
   }
 `;
 
+const RepliesCount = styled.span`
+  color: #A1A8B3;
+`;
+
 export default function Title({ topic }) {
   return (
     <Wrapper>
       <div>{topic.title}</div>
       <div>
         <DividerWrapper>
-          <User address={topic.signer} network={topic.network} showNetwork />
+          <MobileInvisible>
+            <User address={topic.signer} network={topic.network} showNetwork />
+          </MobileInvisible>
+          <RepliesCount>{topic.replies?.length || 0} Replies</RepliesCount>
           <Time time={topic.blockTime} />
         </DividerWrapper>
-        <TagList />
+        <TagList topic={topic} />
       </div>
     </Wrapper>
   );
