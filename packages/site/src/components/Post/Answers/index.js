@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Card from "ui/lib/styled/Card";
 import Item from "./Item";
-import Pagination from "components/Pagination";
+import Pagination from "ui/lib/styled/Pagination";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
