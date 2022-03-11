@@ -97,7 +97,6 @@ export default function Create() {
   const navigate = useNavigate();
   const symbol = getSymbolByChain(account.network);
   const [balance, setBalance] = useState(0);
-  console.log({ api });
 
   const onPublish = async () => {
     if (!api) {
