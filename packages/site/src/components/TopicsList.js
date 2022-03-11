@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ContentLoader from "react-content-loader";
 import Topic from "components/Topic";
-import { useWindowSize } from "ui/lib/utils/hooks";
+import { useWindowSize } from "@osn/common-ui/lib/utils/hooks";
 
 const Wrapper = styled.div``;
 

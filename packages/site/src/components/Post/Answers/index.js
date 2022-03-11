@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import Card from "ui/lib/styled/Card";
+import Card from "@osn/common-ui/lib/styled/Card";
 import Item from "./Item";
-import Pagination from "ui/lib/styled/Pagination";
+import Pagination from "@osn/common-ui/lib/styled/Pagination";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;

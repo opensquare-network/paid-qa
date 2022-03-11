@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-// import Card from "ui/lib/styled/Card";
+// import Card from "@osn/common-ui/lib/styled/Card";
 import Title from "./Title";
 // import Rewards from "./Rewards";
 import Description from "./Description";

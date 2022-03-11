@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
-import Avatar from "ui/lib/Account/Avatar";
-import ChainIcon from "ui/lib/Chain/ChainIcon";
+import Avatar from "@osn/common-ui/lib/Account/Avatar";
+import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/reducers/accountSlice";
-import { ReactComponent as ExitIcon } from "ui/lib/Account/exit.svg";
-import { ReactComponent as CircleIcon } from "ui/lib/Account/circle.svg";
+import { ReactComponent as ExitIcon } from "@osn/common-ui/lib/Account/exit.svg";
+import { ReactComponent as CircleIcon } from "@osn/common-ui/lib/Account/circle.svg";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
-import { p_14_medium } from "ui/lib/styles/textStyles";
-import { ChainSS58Format } from "ui/lib/utils/constants";
+import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import { ChainSS58Format } from "@osn/common-ui/lib/utils/constants";
 import { encodeAddress } from "@polkadot/util-crypto";
 
 const Wrapper = styled.div`

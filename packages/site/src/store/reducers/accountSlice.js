@@ -1,8 +1,12 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 
-import { setCookie, getCookie, clearCookie } from "ui/lib/utils/cookie";
+import {
+  setCookie,
+  getCookie,
+  clearCookie,
+} from "@osn/common-ui/lib/utils/cookie";
 import { encodeAddress } from "@polkadot/util-crypto";
-import { AVAILABLE_NETWORKS } from "ui/lib/utils/constants";
+import { AVAILABLE_NETWORKS } from "@osn/common-ui/lib/utils/constants";
 
 const accountSlice = createSlice({
   name: "account",

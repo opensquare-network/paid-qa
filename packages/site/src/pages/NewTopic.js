@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import Container from "ui/lib/styled/Container";
+import Container from "@osn/common-ui/lib/styled/Container";
 // import Background from "components/Background";
-import Breadcrumb from "ui/lib/Navi/Breadcrumb";
+import Breadcrumb from "@osn/common-ui/lib/Navi/Breadcrumb";
 import Create from "../components/Create";
 
 const Wrapper = styled.div`

@@ -8,7 +8,10 @@ import ConnectWallet from "./ConnectWallet";
 import NodeSelect from "./NodeSelect";
 import { useDispatch, useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
-import { useOnClickOutside, useWindowSize } from "ui/lib/utils/hooks";
+import {
+  useOnClickOutside,
+  useWindowSize,
+} from "@osn/common-ui/lib/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
 import {
   popUpConnect,

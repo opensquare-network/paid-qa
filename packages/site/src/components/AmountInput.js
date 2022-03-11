@@ -1,4 +1,4 @@
-import Input from "ui/lib/styled/Input";
+import Input from "@osn/common-ui/lib/styled/Input";
 import styled from "styled-components";
 
 const Wrapper = styled.div`

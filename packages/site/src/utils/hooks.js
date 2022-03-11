@@ -19,10 +19,7 @@ export function useApi() {
     (async () => {
       await web3Enable("paidQA");
       const injector = await web3FromAddress(account.address);
-      const api = await getApi(
-        account.network,
-        nodeUrl,
-      );
+      const api = await getApi(account.network, nodeUrl);
       api.setSigner(injector.signer);
       setApi(api);
     })();

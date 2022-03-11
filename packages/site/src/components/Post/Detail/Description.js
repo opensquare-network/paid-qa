@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import IpfsSquare from "ui/lib/IpfsSquare";
+import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -23,7 +23,11 @@ export default function Description({ topic }) {
     <Wrapper>
       <div>
         <div>Description</div>
-        <IpfsSquare href={topic.pinned ? `https://ipfs.infura.io/ipfs/${topic.cid}` : null} />
+        <IpfsSquare
+          href={
+            topic.pinned ? `https://ipfs.infura.io/ipfs/${topic.cid}` : null
+          }
+        />
       </div>
       <div>{topic.content}</div>
     </Wrapper>

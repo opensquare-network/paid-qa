@@ -1,4 +1,4 @@
-import Flex from "ui/lib/styled/Flex";
+import Flex from "@osn/common-ui/lib/styled/Flex";
 import styled from "styled-components";
 import { p_12_normal, p_16_semibold } from "../styles/textStyles";
 

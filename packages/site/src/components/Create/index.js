@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 import ConnectWallet from "../ConnectWallet";
-import Input from "ui/lib/styled/Input";
-import MarkdownEditor from "ui/lib/Editor/MarkdownEditor";
-import Button from "ui/lib/styled/Button";
+import Input from "@osn/common-ui/lib/styled/Input";
+import MarkdownEditor from "@osn/common-ui/lib/Editor/MarkdownEditor";
+import Button from "@osn/common-ui/lib/styled/Button";
 import { accountSelector } from "../../store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
-import SubTitle from "ui/lib/styled/SubTitle";
-import ChainItem from "ui/lib/Chain/ChainSelectItem";
+import SubTitle from "@osn/common-ui/lib/styled/SubTitle";
+import ChainItem from "@osn/common-ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
 import FlexBetween from "ui/lib/styled/FlexBetween";
 import { useState } from "react";

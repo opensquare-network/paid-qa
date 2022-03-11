@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import Container from "ui/lib/styled/Container";
-import Breadcrumb from "ui/lib/Navi/Breadcrumb";
+import Container from "@osn/common-ui/lib/styled/Container";
+import Breadcrumb from "@osn/common-ui/lib/Navi/Breadcrumb";
 import Profile from "components/User/Profile";
 import Tabs from "./Tabs";
 import NewTopicButton from "components/NewTopicButton";
