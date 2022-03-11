@@ -70,7 +70,11 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function MarkdownEditor({ content, setContent }) {
+export default function MarkdownEditor({
+  content,
+  setContent,
+  disabled = false,
+}) {
   const ref = useRef();
   return (
     <Wrapper>
@@ -83,7 +87,7 @@ export default function MarkdownEditor({ content, setContent }) {
             textarea.style.height = "116px";
             textarea.style.height = textarea.scrollHeight + "px";
           }
-          setContent(content);
+          !disabled && setContent(content);
         }}
         toolbarCommands={[
           [
