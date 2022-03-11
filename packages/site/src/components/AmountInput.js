@@ -6,7 +6,7 @@ const Wrapper = styled.div`
 
   span {
     position: absolute;
-    top: 12px;
+    top: 14px;
     right: 16px;
   }
 `;
