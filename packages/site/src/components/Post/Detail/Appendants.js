@@ -6,6 +6,7 @@ import DividerWrapper from "ui/lib/styled/DividerWrapper";
 import RichEdit from "ui/lib/RichEdit";
 import Time from "ui/lib/Time";
 import IpfsSquare from "ui/lib/IpfsSquare";
+import FlexBetween from "ui/lib/styled/FlexBetween";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -43,9 +44,7 @@ const StyledDividerWrapper = styled(DividerWrapper)`
   }
 `;
 
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
+const Title = styled(FlexBetween)`
 `;
 
 const AddButton = styled.div`
