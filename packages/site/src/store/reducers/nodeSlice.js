@@ -17,6 +17,8 @@ import {
   DEFAULT_BASILISK_NODES,
   DEFAULT_BIFROST_NODES,
   DEFAULT_BIFROST_NODE_URL,
+  DEFAULT_WESTEND_NODES,
+  DEFAULT_WESTEND_NODE_URL,
 } from "utils/constants";
 
 let nodeUrl = (() => {
@@ -52,6 +54,9 @@ let nodeUrl = (() => {
     bifrost:
       DEFAULT_BIFROST_NODES.find((item) => item.url === localNodeUrl?.bifrost)?.url ||
       DEFAULT_BIFROST_NODE_URL,
+    westend:
+      DEFAULT_WESTEND_NODES.find((item) => item.url === localNodeUrl?.bifrost)?.url ||
+      DEFAULT_WESTEND_NODE_URL,
   };
 })();
 
@@ -64,6 +69,7 @@ export const defaultNodes = {
   khala: DEFAULT_KHALA_NODES,
   basilisk: DEFAULT_BASILISK_NODES,
   bifrost: DEFAULT_BIFROST_NODES,
+  westend: DEFAULT_WESTEND_NODES,
 };
 
 const nodeSlice = createSlice({
