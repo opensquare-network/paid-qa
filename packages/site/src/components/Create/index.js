@@ -18,6 +18,8 @@ import getApi from "ui/lib/services/chain/api";
 import { addToast, ToastTypes } from "../../store/reducers/toastSlice";
 import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
+import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
+import { getSymbolByChain } from "@osn/common-ui/lib/utils/tokenValue";
 
 const Wrapper = styled.div`
   display: flex;
@@ -94,6 +96,8 @@ export default function Create() {
   const [loading, setLoading] = useState(false);
   const [api, setApi] = useState();
   const navigate = useNavigate();
+  const symbol = getSymbolByChain(account.network);
+  const [balance, setBalance] = useState(0);
 
   useEffect(() => {
     if (!account) {
@@ -109,6 +113,13 @@ export default function Create() {
       );
       api.setSigner(injector.signer);
       setApi(api);
+      //todo: update balance every new block
+      const lastHdr = await api.rpc.chain.getHeader();
+      const { data: balanceNow } = await api.query.system.account.at(
+        lastHdr.hash,
+        account.address
+      );
+      setBalance(balanceNow?.toJSON()?.free);
     })();
   }, [account]);
 
@@ -200,11 +211,11 @@ export default function Create() {
             <AmountInput
               value={rewardAmount}
               onChange={(e) => setRewardAmount(e.target.value)}
-              symbol="DOT"
+              symbol={symbol}
             />
             <FlexBetween>
               <Header>Balance</Header>
-              <span>0.50 DOT</span>
+              <ValueDisplay value={balance} chain={account.network} showAEM />
             </FlexBetween>
             <Button onClick={onPublish} primary disabled={!account}>
               Post
