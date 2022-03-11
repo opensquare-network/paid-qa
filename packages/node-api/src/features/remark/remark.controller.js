@@ -13,6 +13,16 @@ function isExtrinsicSuccess(events, extrinsicIndex) {
   return extrinsicEvents.some((e) => e.event.method === "ExtrinsicSuccess");
 }
 
+function extractBlockTime(extrinsics) {
+  const setTimeExtrinsic = extrinsics.find(
+    (ex) => ex.method.section === "timestamp" && ex.method.method === "set"
+  );
+  if (setTimeExtrinsic) {
+    const { args } = setTimeExtrinsic.method.toJSON();
+    return args.now;
+  }
+}
+
 async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
   const [block, events] = await Promise.all([
     api.rpc.chain.getBlock(blockHash),
@@ -34,7 +44,7 @@ async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
     args: [remarkBytes],
   } = extrinsic.method;
   const signer = extrinsic.signer.toString();
-  const blockTime = block.block.header.timestamp.toNumber();
+  const blockTime = extractBlockTime(block.block.extrinsics);
   const remark = hexToString(remarkBytes.toHex());
   return {
     blockHash,
