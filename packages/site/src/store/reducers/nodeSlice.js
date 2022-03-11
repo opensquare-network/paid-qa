@@ -17,6 +17,8 @@ import {
   DEFAULT_BASILISK_NODES,
   DEFAULT_BIFROST_NODES,
   DEFAULT_BIFROST_NODE_URL,
+  DEFAULT_WESTEND_NODES,
+  DEFAULT_WESTEND_NODE_URL,
 } from "utils/constants";
 
 let nodeUrl = (() => {
@@ -29,29 +31,33 @@ let nodeUrl = (() => {
 
   return {
     polkadot:
-      DEFAULT_POLKADOT_NODES.find((item) => item.url === localNodeUrl?.polkadot)?.url ||
-      DEFAULT_POLKADOT_NODE_URL,
+      DEFAULT_POLKADOT_NODES.find((item) => item.url === localNodeUrl?.polkadot)
+        ?.url || DEFAULT_POLKADOT_NODE_URL,
     kusama:
-      DEFAULT_KUSAMA_NODES.find((item) => item.url === localNodeUrl?.kusama)?.url ||
-      DEFAULT_KUSAMA_NODE_URL,
+      DEFAULT_KUSAMA_NODES.find((item) => item.url === localNodeUrl?.kusama)
+        ?.url || DEFAULT_KUSAMA_NODE_URL,
     statemine:
-      DEFAULT_STATEMINE_NODES.find((item) => item.url === localNodeUrl?.statemine)?.url ||
-      DEFAULT_STATEMINE_NODE_URL,
+      DEFAULT_STATEMINE_NODES.find(
+        (item) => item.url === localNodeUrl?.statemine
+      )?.url || DEFAULT_STATEMINE_NODE_URL,
     karura:
-      DEFAULT_KARURA_NODES.find((item) => item.url === localNodeUrl?.karura)?.url ||
-      DEFAULT_KARURA_NODE_URL,
+      DEFAULT_KARURA_NODES.find((item) => item.url === localNodeUrl?.karura)
+        ?.url || DEFAULT_KARURA_NODE_URL,
     acala:
-      DEFAULT_ACALA_NODES.find((item) => item.url === localNodeUrl?.acala)?.url ||
-      DEFAULT_ACALA_NODE_URL,
+      DEFAULT_ACALA_NODES.find((item) => item.url === localNodeUrl?.acala)
+        ?.url || DEFAULT_ACALA_NODE_URL,
     khala:
-      DEFAULT_KHALA_NODES.find((item) => item.url === localNodeUrl?.khala)?.url ||
-      DEFAULT_KHALA_NODE_URL,
+      DEFAULT_KHALA_NODES.find((item) => item.url === localNodeUrl?.khala)
+        ?.url || DEFAULT_KHALA_NODE_URL,
     basilisk:
-      DEFAULT_BASILISK_NODES.find((item) => item.url === localNodeUrl?.basilisk)?.url ||
-      DEFAULT_BASILISK_NODE_URL,
+      DEFAULT_BASILISK_NODES.find((item) => item.url === localNodeUrl?.basilisk)
+        ?.url || DEFAULT_BASILISK_NODE_URL,
     bifrost:
-      DEFAULT_BIFROST_NODES.find((item) => item.url === localNodeUrl?.bifrost)?.url ||
-      DEFAULT_BIFROST_NODE_URL,
+      DEFAULT_BIFROST_NODES.find((item) => item.url === localNodeUrl?.bifrost)
+        ?.url || DEFAULT_BIFROST_NODE_URL,
+    westend:
+      DEFAULT_WESTEND_NODES.find((item) => item.url === localNodeUrl?.bifrost)
+        ?.url || DEFAULT_WESTEND_NODE_URL,
   };
 })();
 
@@ -64,6 +70,7 @@ export const defaultNodes = {
   khala: DEFAULT_KHALA_NODES,
   basilisk: DEFAULT_BASILISK_NODES,
   bifrost: DEFAULT_BIFROST_NODES,
+  westend: DEFAULT_WESTEND_NODES,
 };
 
 const nodeSlice = createSlice({
@@ -80,7 +87,7 @@ const nodeSlice = createSlice({
       const afterUrl = {
         ...beforeUrl,
         [chain]: url,
-      }
+      };
 
       state.currentNode = afterUrl;
       localStorage.setItem("nodeUrl", afterUrl);
@@ -95,11 +102,12 @@ const nodeSlice = createSlice({
           }
         });
       }
-
     },
     setNodesDelay(state, { payload }) {
       (payload || []).forEach((item) => {
-        const node = (state.nodes[item.chain] || []).find((node) => item.url === node.url);
+        const node = (state.nodes[item.chain] || []).find(
+          (node) => item.url === node.url
+        );
         if (node) node.delay = item.delay;
       });
     },
@@ -109,8 +117,10 @@ const nodeSlice = createSlice({
 export const currentNodeSelector = (state) => state.node?.currentNode;
 export const nodesSelector = (state) => state.node?.nodes;
 
-export const chainNodesSelector = (chain) => (state) => state.node?.nodes[chain];
-export const activeChainNodeSelector = (chain) => (state) => state.node?.currentNode[chain];
+export const chainNodesSelector = (chain) => (state) =>
+  state.node?.nodes[chain];
+export const activeChainNodeSelector = (chain) => (state) =>
+  state.node?.currentNode[chain];
 
 export const { setCurrentNode, setNodesDelay, setNodeBlockHeight } =
   nodeSlice.actions;
