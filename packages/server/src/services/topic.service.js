@@ -144,7 +144,8 @@ async function getTopic(cid) {
 async function getTopics(page, pageSize) {
   const q = {
     status: {
-      $in: [PostStatus.Active, PostStatus.Resolved],
+      //TODO: remove published status
+      $in: [PostStatus.Published, PostStatus.Active, PostStatus.Resolved],
     }
   };
   const total = await Topic.countDocuments(q);
