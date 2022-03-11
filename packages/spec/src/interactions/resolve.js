@@ -21,6 +21,10 @@ class ResolveInteraction {
   get isValid() {
     return isCid(this.#topicIpfsCid)
   }
+
+  get args() {
+    return [this.#topicIpfsCid];
+  }
 }
 
 module.exports = {

@@ -38,6 +38,10 @@ class AppendInteraction {
       topicIpfsCid: this.#topicIpfsCid,
     }
   }
+
+  get args() {
+    return [this.#topicIpfsCid, this.#messageIpfsCid];
+  }
 }
 
 module.exports = {

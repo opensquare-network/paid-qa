@@ -44,6 +44,10 @@ class NewInteraction {
     return isTokenAmountValid(this.#tokenAmount);
   }
 
+  get args() {
+    return [this.#tokenIdentifier, this.#tokenAmount, this.#topicIpfsCid];
+  }
+
   toJSON() {
     return {
       tokenIdentifier: this.#tokenIdentifier,

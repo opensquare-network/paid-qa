@@ -21,6 +21,10 @@ class FundInteraction {
   get isValid() {
     return isCid(this.#ipfsCid)
   }
+
+  get args() {
+    return [this.#ipfsCid];
+  }
 }
 
 module.exports = {
