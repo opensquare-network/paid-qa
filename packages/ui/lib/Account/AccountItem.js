@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import Avatar from "./Avatar";
 import Address from "./Address";
 import { encodeAddress } from "@polkadot/util-crypto";
-import { ChainSS58Format } from "ui/lib/utils/constants";
+import { ChainSS58Format } from "../utils/constants";
 
 const Text = styled.p`
   color: #1e2134;

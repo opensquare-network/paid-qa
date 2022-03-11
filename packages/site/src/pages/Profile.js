@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import Header from "components/Profile/Header";
-import Container from "components/Container";
+import Container from "ui/lib/styled/Container";
 import TopicsList from "components/TopicsList";
 import AnswerList from "components/AnswerList";
 import ActivityList from "components/ActivityList";

@@ -2,9 +2,9 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 
 import { Footer } from "ui/lib";
 
-import Layout from "components/Layout";
+import Layout from "ui/lib/styled/Layout";
 import Header from "components/Header";
-import Main from "components/Main";
+import Main from "ui/lib/styled/Main";
 import Toast from "components/Toast";
 import Home from "pages/Home";
 import Topic from "pages/Topic";

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import TagList from "./TagList";
 import User from "components/User";
-import DividerWrapper from "components/DividerWrapper";
+import DividerWrapper from "ui/lib/styled/DividerWrapper";
 import MobileInvisible from "components/MobileInvisible";
 import Time from "ui/lib/Time";
 
@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   border: 1px solid #f0f3f8;
   box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.04),
     0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
+  color: #1e2134;
 `;
 
 const ReplyWrapper = styled.div`
@@ -61,7 +62,7 @@ const Divider = styled.div`
 `;
 
 const RepliesCount = styled.span`
-  color: #A1A8B3;
+  color: #a1a8b3;
 `;
 
 export default function Topic({ topic }) {
@@ -79,7 +80,11 @@ export default function Topic({ topic }) {
         <div>
           <DividerWrapper>
             <MobileInvisible>
-              <User address={topic.signer} network={topic.network} showNetwork />
+              <User
+                address={topic.signer}
+                network={topic.network}
+                showNetwork
+              />
             </MobileInvisible>
             <RepliesCount>{topic.replies?.length || 0} Replies</RepliesCount>
             <Time time={topic.blockTime} />

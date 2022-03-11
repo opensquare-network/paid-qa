@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import ReactMde from "react-mde";
-import "react-mde/lib/styles/css/react-mde-all.css";
 import { useRef } from "react";
 
 const p_14_normal = css`

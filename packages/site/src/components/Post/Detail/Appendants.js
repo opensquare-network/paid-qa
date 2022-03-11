@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { ReactComponent as AddIcon } from "./icons/add-appendant.svg";
 
-import DividerWrapper from "components/DividerWrapper";
+import DividerWrapper from "ui/lib/styled/DividerWrapper";
 import RichEdit from "ui/lib/RichEdit";
 import Time from "ui/lib/Time";
 import IpfsSquare from "ui/lib/IpfsSquare";

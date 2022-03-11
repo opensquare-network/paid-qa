@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import DividerWrapper from "components/DividerWrapper";
+import DividerWrapper from "ui/lib/styled/DividerWrapper";
 import User from "components/User";
 
 const Wrapper = styled.div`

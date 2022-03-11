@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import Container from "components/Container";
+import Container from "ui/lib/styled/Container";
 // import Explorer from "components/Explorer";
 import AskQuestion from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
