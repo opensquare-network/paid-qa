@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ConnectWallet from "../ConnectWallet";
 import Input from "ui/lib/styled/Input";
 import MarkdownEditor from "ui/lib/Editor/MarkdownEditor";
-import Button from "ui/lib/styled/button";
+import Button from "ui/lib/styled/Button";
 import { accountSelector } from "../../store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import SubTitle from "ui/lib/styled/SubTitle";
