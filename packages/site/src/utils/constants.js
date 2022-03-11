@@ -144,6 +144,27 @@ export const DEFAULT_KINTSUGI_NODES = [
 
 export const DEFAULT_KINTSUGI_NODE_URL = DEFAULT_KINTSUGI_NODES[0]?.url;
 
+export const DEFAULT_WESTEND_NODES = [
+  {
+    name: "Parity",
+    url: "wss://westend-rpc.polkadot.io",
+  },
+  {
+    name: "OnFinality",
+    url: "wss://westend.api.onfinality.io/public-ws",
+  },
+  {
+    name: "Pinknode",
+    url: "wss://rpc.pinknode.io/westend/explorer",
+  },
+  {
+    name: "Dwellir",
+    url: "wss://westend-rpc.dwellir.com",
+  },
+];
+
+export const DEFAULT_WESTEND_NODE_URL = DEFAULT_WESTEND_NODES[0]?.url;
+
 export const DEFAULT_NODES = {
   polkadot: DEFAULT_POLKADOT_NODE_URL,
   kusama: DEFAULT_KUSAMA_NODE_URL,
@@ -153,6 +174,7 @@ export const DEFAULT_NODES = {
   basilisk: DEFAULT_BASILISK_NODE_URL,
   bifrost: DEFAULT_BIFROST_NODE_URL,
   kintsugi: DEFAULT_KINTSUGI_NODE_URL,
+  westend: DEFAULT_WESTEND_NODE_URL,
 };
 
 export const MOBILE_SIZE = 900;

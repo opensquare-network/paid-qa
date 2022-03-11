@@ -9,18 +9,17 @@ import { useDispatch, useSelector } from "react-redux";
 import SubTitle from "@osn/common-ui/lib/styled/SubTitle";
 import ChainItem from "@osn/common-ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import { useEffect, useState } from "react";
+import FlexBetween from "ui/lib/styled/FlexBetween";
+import { useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
-import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
-import getApi from "@osn/common-ui/lib/services/chain/api";
 import { addToast, ToastTypes } from "../../store/reducers/toastSlice";
 import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 import { getSymbolByChain } from "@osn/common-ui/lib/utils/tokenValue";
 import Preview from "@osn/common-ui/lib/Preview";
+import { useApi } from "../../utils/hooks";
 
 const Wrapper = styled.div`
   display: flex;
@@ -95,37 +94,17 @@ export default function Create() {
   const [content, setContent] = useState("");
   const [rewardAmount, setRewardAmount] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [api, setApi] = useState();
+  const api = useApi();
   const navigate = useNavigate();
   const symbol = getSymbolByChain(account.network);
   const [balance, setBalance] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
 
-  useEffect(() => {
-    if (!account) {
+  const onPublish = async () => {
+    if (!api) {
       return;
     }
-    (async () => {
-      await web3Enable("paidQA");
-      const injector = await web3FromAddress(account.address);
-      // todo: remove these hard-coded statement
-      const api = await getApi(
-        account.network,
-        "wss://westend-rpc.dwellir.com"
-      );
-      api.setSigner(injector.signer);
-      setApi(api);
-      //todo: update balance every new block
-      const lastHdr = await api.rpc.chain.getHeader();
-      const { data: balanceNow } = await api.query.system.account.at(
-        lastHdr.hash,
-        account.address
-      );
-      setBalance(balanceNow?.toJSON()?.free);
-    })();
-  }, [account]);
 
-  const onPublish = async () => {
     let formValidateErrMsg = null;
     if (!title) {
       formValidateErrMsg = "Title must not be empty";
