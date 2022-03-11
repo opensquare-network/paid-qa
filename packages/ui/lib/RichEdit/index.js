@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import MarkdownEditor from "../Editor/MarkdownEditor";
 import Button from "../styled/Button";
-import MicromarkMd from "../Preview/MicromarkMd";
+import Preview from "../Preview";
 
 const MarkdownWrapper = styled.div``;
 
@@ -14,12 +14,6 @@ const ButtonsWrapper = styled.div`
   > :not(:first-child) {
     margin-left: 16px;
   }
-`;
-
-const PreviewWrapper = styled.div`
-  padding-left: 12px;
-  border-left: 4px solid #e2e8f0;
-  min-height: 159px;
 `;
 
 const MarkdownEditorWrapper = styled.div`
@@ -47,11 +41,7 @@ export default function RichEdit({
         <MarkdownEditorWrapper preview={preview}>
           <MarkdownEditor content={content} setContent={setContent} />
         </MarkdownEditorWrapper>
-        {preview && (
-          <PreviewWrapper>
-            <MicromarkMd md={content} />
-          </PreviewWrapper>
-        )}
+        {preview && <Preview content={content} />}
       </MarkdownWrapper>
       {showButtons && (
         <ButtonsWrapper>

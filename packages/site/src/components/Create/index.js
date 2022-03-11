@@ -20,6 +20,7 @@ import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 import { getSymbolByChain } from "@osn/common-ui/lib/utils/tokenValue";
+import Preview from "@osn/common-ui/lib/Preview";
 
 const Wrapper = styled.div`
   display: flex;
@@ -98,6 +99,7 @@ export default function Create() {
   const navigate = useNavigate();
   const symbol = getSymbolByChain(account.network);
   const [balance, setBalance] = useState(0);
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     if (!account) {
@@ -191,8 +193,18 @@ export default function Create() {
           disabled={loading}
         />
         <h4>Topic</h4>
-        <MarkdownEditor {...{ content, setContent, disabled: loading }} />
-        <Button>Preview</Button>
+        {!showPreview ? (
+          <MarkdownEditor {...{ content, setContent, disabled: loading }} />
+        ) : (
+          <Preview content={content} />
+        )}
+        <Button
+          onClick={() => {
+            setShowPreview(true);
+          }}
+        >
+          Preview
+        </Button>
       </Main>
       <Side>
         {account ? (
