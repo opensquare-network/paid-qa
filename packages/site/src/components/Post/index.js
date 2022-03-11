@@ -6,11 +6,12 @@ import Promises from "./Promises";
 // import Funds from "./Funds";
 import { MOBILE_SIZE } from "utils/constants";
 
-
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
-  flex-wrap: wrap;
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    flex-wrap: wrap;
+  }
 
   > :first-child {
     flex-grow: 1;

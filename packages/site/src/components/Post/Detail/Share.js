@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 import { useState, useCallback } from "react";
+import copy from "copy-to-clipboard";
+import Tooltip from "ui/lib/Tooltip";
 import { ReactComponent as TwitterIcon } from "./icons/twitter.svg";
 import { ReactComponent as CopyIcon } from "./icons/copy.svg";
-import Tooltip from "ui/lib/Tooltip";
-import copy from "copy-to-clipboard";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,21 +19,25 @@ const ShareButton = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #F0F3F8;
+  background-color: #f0f3f8;
   :hover {
     cursor: pointer;
-    ${p => p.hoverBgColor && css`
-      background-color: ${p.hoverBgColor};
-    `}
-    ${p => p.hoverIconColor && css`
-      svg path {
-        fill: ${p.hoverIconColor};
-      }
-    `}
+    ${(p) =>
+      p.hoverBgColor &&
+      css`
+        background-color: ${p.hoverBgColor};
+      `}
+    ${(p) =>
+      p.hoverIconColor &&
+      css`
+        svg path {
+          fill: ${p.hoverIconColor};
+        }
+      `}
   }
 `;
 
-export default function Share({}) {
+export default function Share() {
   const [isCopied, setIsCopied] = useState(false);
 
   const tweet = useCallback(() => {

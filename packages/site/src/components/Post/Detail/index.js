@@ -6,6 +6,8 @@ import Title from "./Title";
 import Description from "./Description";
 import Appendants from "./Appendants";
 import Share from "./Share";
+import { useSelector } from "react-redux";
+import { accountSelector } from "store/reducers/accountSlice";
 
 const Wrapper = styled(Card)`
   > :not(:first-child) {
@@ -18,12 +20,16 @@ const Wrapper = styled(Card)`
 `;
 
 export default function Detail({ topic }) {
+  const account = useSelector(accountSelector);
+  const isOwner =
+    account?.address === topic.signer && account?.network === topic.network;
+
   return (
     <Wrapper>
       <Title topic={topic} />
       {/* <Rewards rewards={topic.rewards} /> */}
       <Description topic={topic} />
-      <Appendants appendants={topic.appendants} />
+      <Appendants appendants={topic.appendants} isOwner={isOwner} />
       <Share />
     </Wrapper>
   );
