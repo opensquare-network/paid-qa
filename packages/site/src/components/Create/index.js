@@ -192,10 +192,10 @@ export default function Create() {
         )}
         <Button
           onClick={() => {
-            setShowPreview(true);
+            setShowPreview(!showPreview);
           }}
         >
-          Preview
+          {showPreview ? "Edit" : "Preview"}
         </Button>
       </Main>
       <Side>
