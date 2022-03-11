@@ -16,6 +16,8 @@ import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
 import getApi from "ui/lib/services/chain/api";
 import { addToast, ToastTypes } from "../../store/reducers/toastSlice";
+import serverApi from "../../services/serverApi";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,6 +51,7 @@ const Box = styled.div`
     0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
   border: 1px solid #f0f3f8;
   padding: 32px;
+  background-color: white;
   @media screen and (max-width: 900px) {
     padding: 16px;
     margin: 0 -16px;
@@ -88,7 +91,9 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [rewardAmount, setRewardAmount] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [api, setApi] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!account) {
@@ -126,13 +131,29 @@ export default function Create() {
         })
       );
     }
-    const cid = await cidOf({ title, content, language: "en" });
+    setLoading(true);
+    const topic = { title, content, language: "en" };
+    const cid = await cidOf(topic);
     const unsub = await api.tx.system
       .remark(`osn:q:1:N:N:${rewardAmount}:${cid}`)
       .signAndSend(account.address, ({ events = [], status }) => {
         if (status.isInBlock) {
-          // const extIndex = JSON.parse(events[0]?.phase?.toString())?.applyExtrinsic;
-          // const blockHash = status.asInBlock.toString();
+          const extrinsicIndex = JSON.parse(
+            events[0]?.phase?.toString()
+          )?.applyExtrinsic;
+          const blockHash = status.asInBlock.toString();
+          const payload = {
+            data: topic,
+            network: account.network,
+            blockHash,
+            extrinsicIndex,
+          };
+          serverApi.post(`/topics/`, payload).then(({ result }) => {
+            if (result?.cid) {
+              navigate(`/topic/${result.cid}`);
+            }
+          });
+          setLoading(false);
           unsub();
         }
       })
@@ -156,9 +177,10 @@ export default function Create() {
             setTitle(e.target.value);
           }}
           placeholder="Input title here..."
+          disabled={loading}
         />
         <h4>Topic</h4>
-        <MarkdownEditor {...{ content, setContent }} />
+        <MarkdownEditor {...{ content, setContent, disabled: loading }} />
         <Button>Preview</Button>
       </Main>
       <Side>
