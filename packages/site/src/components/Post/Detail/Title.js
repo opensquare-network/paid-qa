@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import DividerWrapper from "ui/lib/styled/DividerWrapper";
+import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import User from "components/User";
 import TagList from "components/TagList";
-import Time from "ui/lib/Time";
+import Time from "@osn/common-ui/lib/Time";
 import MobileInvisible from "components/MobileInvisible";
 
 const Wrapper = styled.div`

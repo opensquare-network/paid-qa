@@ -6,7 +6,7 @@ import { ReactComponent as ErrorIcon } from "./icons/error.svg";
 import { ReactComponent as UnauthorizedIcon } from "./icons/error-grey.svg";
 import { ReactComponent as SubGreyIcon } from "./icons/sub-grey.svg";
 import { ReactComponent as SubRedIcon } from "./icons/sub-red.svg";
-import Tooltip from "ui/lib/Tooltip";
+import Tooltip from "@osn/common-ui/lib/Tooltip";
 
 const Wrapper = styled.span`
   position: relative;
@@ -41,7 +41,7 @@ export default function IdentityIcon({
 
   return (
     <Wrapper>
-      <StatusIcon width={ size } height={ size } />
+      <StatusIcon width={size} height={size} />
       {showTooltip && (
         <Tooltip
           content={statusDesc}

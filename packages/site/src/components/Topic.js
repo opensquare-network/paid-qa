@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 import TagList from "./TagList";
 import User from "components/User";
-import DividerWrapper from "ui/lib/styled/DividerWrapper";
+import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import MobileInvisible from "components/MobileInvisible";
-import Time from "ui/lib/Time";
+import Time from "@osn/common-ui/lib/Time";
 
 const Wrapper = styled.div`
   padding: 24px;

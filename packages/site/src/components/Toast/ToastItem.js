@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 
 import { removeToast, ToastTypes } from "store/reducers/toastSlice";
 import { ReactComponent as Close } from "./icons/close.svg";
-import { useIsMounted } from "ui/lib/utils/hooks";
+import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 
 const Wrapper = styled.div`
   padding: 20px;

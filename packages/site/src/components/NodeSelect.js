@@ -1,7 +1,10 @@
 import styled, { css } from "styled-components";
 import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useWindowSize, useOnClickOutside } from "ui/lib/utils/hooks.js";
+import {
+  useWindowSize,
+  useOnClickOutside,
+} from "@osn/common-ui/lib/utils/hooks.js";
 import {
   setCurrentNode,
   chainNodesSelector,
@@ -16,7 +19,7 @@ const Wrapper = styled.div`
 const SmallSelect = styled.div`
   width: 40px;
   height: 40px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #e2e8f0;
   padding: 8px;
   display: flex;
   align-items: center;
@@ -126,7 +129,9 @@ export default function NodeSelect({ small, chain }) {
 
   useEffect(() => {
     if (currentNode) {
-      const nodeSetting = (nodes || []).find((item) => item.url === currentNode);
+      const nodeSetting = (nodes || []).find(
+        (item) => item.url === currentNode
+      );
       setCurrentNodeSetting(nodeSetting);
     }
   }, [currentNode, nodes]);

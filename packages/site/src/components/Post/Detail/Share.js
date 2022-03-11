@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { useState, useCallback } from "react";
 import copy from "copy-to-clipboard";
-import Tooltip from "ui/lib/Tooltip";
+import Tooltip from "@osn/common-ui/lib/Tooltip";
 import { ReactComponent as TwitterIcon } from "./icons/twitter.svg";
 import { ReactComponent as CopyIcon } from "./icons/copy.svg";
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Card from "ui/lib/styled/Card";
+import Card from "@osn/common-ui/lib/styled/Card";
 
 const Title = styled.div`
   padding-bottom: 16px;
