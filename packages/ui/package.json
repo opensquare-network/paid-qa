@@ -29,6 +29,9 @@
     "@polkadot/api": "7.8.1",
     "dayjs": "^1.10.8",
     "lodash.debounce": "^4.0.8",
+    "micromark": "^3.0.10",
+    "micromark-extension-gfm": "^2.0.1",
+    "sanitize-html": "^2.7.0",
     "styled-components": "4.3.2"
   },
   "peerDependencies": {
