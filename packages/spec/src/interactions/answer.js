@@ -20,6 +20,10 @@ class AnswerInteraction {
   get isValid() {
     return isCid(this.#answerIpfsCid);
   }
+
+  get args() {
+    return [this.#answerIpfsCid];
+  }
 }
 
 module.exports = {

@@ -1,27 +1,6 @@
-const { getApis } = require("../../apis");
 const { hexToString } = require("@polkadot/util");
-
-function extractExtrinsicEvents(events, extrinsicIndex) {
-  return events.filter((event) => {
-    const { phase } = event;
-    return !phase.isNone && phase.value.toNumber() === extrinsicIndex;
-  });
-}
-
-function isExtrinsicSuccess(events, extrinsicIndex) {
-  const extrinsicEvents = extractExtrinsicEvents(events, extrinsicIndex);
-  return extrinsicEvents.some((e) => e.event.method === "ExtrinsicSuccess");
-}
-
-function extractBlockTime(extrinsics) {
-  const setTimeExtrinsic = extrinsics.find(
-    (ex) => ex.method.section === "timestamp" && ex.method.method === "set"
-  );
-  if (setTimeExtrinsic) {
-    const { args } = setTimeExtrinsic.method.toJSON();
-    return args.now;
-  }
-}
+const { getApis } = require("../../apis");
+const { isExtrinsicSuccess, extractBlockTime } = require("../utils");
 
 async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
   const [block, events] = await Promise.all([
