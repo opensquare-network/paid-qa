@@ -10,7 +10,7 @@ import SubTitle from "@osn/common-ui/lib/styled/SubTitle";
 import ChainItem from "@osn/common-ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
 import FlexBetween from "ui/lib/styled/FlexBetween";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { addToast, ToastTypes } from "../../store/reducers/toastSlice";
@@ -18,6 +18,7 @@ import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 import { getSymbolByChain } from "@osn/common-ui/lib/utils/tokenValue";
+import Preview from "@osn/common-ui/lib/Preview";
 import { useApi } from "../../utils/hooks";
 
 const Wrapper = styled.div`
@@ -97,6 +98,20 @@ export default function Create() {
   const navigate = useNavigate();
   const symbol = getSymbolByChain(account.network);
   const [balance, setBalance] = useState(0);
+  const [showPreview, setShowPreview] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      if (api) {
+        const lastHdr = await api.rpc.chain.getHeader();
+        const { data: balanceNow } = await api.query.system.account.at(
+          lastHdr.hash,
+          account.address
+        );
+        setBalance(balanceNow?.toJSON()?.free);
+      }
+    })();
+  }, [account.address, api]);
 
   const onPublish = async () => {
     if (!api) {
@@ -170,8 +185,18 @@ export default function Create() {
           disabled={loading}
         />
         <h4>Topic</h4>
-        <MarkdownEditor {...{ content, setContent, disabled: loading }} />
-        <Button>Preview</Button>
+        {!showPreview ? (
+          <MarkdownEditor {...{ content, setContent, disabled: loading }} />
+        ) : (
+          <Preview content={content} />
+        )}
+        <Button
+          onClick={() => {
+            setShowPreview(!showPreview);
+          }}
+        >
+          {showPreview ? "Edit" : "Preview"}
+        </Button>
       </Main>
       <Side>
         {account ? (
