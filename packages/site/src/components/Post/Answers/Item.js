@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import User from "components/User";
 import Time from "@osn/common-ui/lib/Time";
+import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -36,7 +37,11 @@ export default function Item({ answer }) {
           <User address={answer.signer} network={answer.network} showNetwork />
           <Time time={answer.createdAt} />
         </DividerWrapper>
-        <img src="/imgs/icons/ipfs.svg" alt="" />
+        <IpfsSquare
+          href={
+            answer.pinned ? `https://ipfs.infura.io/ipfs/${answer.cid}` : null
+          }
+        />
       </div>
       <ContentWrapper>
         <div>{answer.content}</div>
