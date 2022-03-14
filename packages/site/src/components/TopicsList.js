@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ContentLoader from "react-content-loader";
 import Topic from "components/Topic";
 import { useWindowSize } from "@osn/common-ui/lib/utils/hooks";
+import NoPost from "./NoPost";
 
 const Wrapper = styled.div``;
 
@@ -40,7 +41,6 @@ const MyLoader = (props) => {
 };
 
 export default function TopicsList({ topics }) {
-  //TODO: show empty placeholder for no topics
   return (
     <Wrapper>
       {!topics ? (
@@ -49,7 +49,11 @@ export default function TopicsList({ topics }) {
           <MyLoader />
         </LoaderWrapper>
       ) : (
-        topics?.items.map((topic, index) => <Topic key={index} topic={topic} />)
+        topics.items.length === 0 ? (
+          <NoPost message={"No current topics"} />
+        ) : (
+          topics.items.map((topic, index) => <Topic key={index} topic={topic} />)
+        )
       )}
     </Wrapper>
   );

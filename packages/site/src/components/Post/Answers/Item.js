@@ -22,13 +22,6 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const Reply = styled.div`
-  font-size: 14px;
-  line-height: 24px;
-  color: #506176;
-  margin-left: 8px;
-`;
-
 export default function Item({ answer }) {
   return (
     <Wrapper>
@@ -45,13 +38,6 @@ export default function Item({ answer }) {
       </div>
       <ContentWrapper>
         <div>{answer.content}</div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <img src="/imgs/icons/reply.svg" alt="" />
-            <Reply>Reply</Reply>
-          </div>
-          <img src="/imgs/icons/more.svg" alt="" />
-        </div>
       </ContentWrapper>
     </Wrapper>
   );
