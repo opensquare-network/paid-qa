@@ -116,7 +116,6 @@ export default function Appendants({ topicCid, appendants, isOwner }) {
 
     try {
       const { blockHash, extrinsicIndex } = await submitRemark(api, remark, account);
-
       const payload = {
         data,
         network: account.network,
