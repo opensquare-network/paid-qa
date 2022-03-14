@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 
+import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import Card from "@osn/common-ui/lib/styled/Card";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
@@ -13,12 +14,11 @@ import { signMessage } from "services/chainApi";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
-  > div {
+  > div > div {
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     padding-bottom: 17px;
-    border-bottom: solid 3px #04d2c5;
     display: inline-block;
   }
 `;
@@ -28,6 +28,14 @@ const PagnationWrapper = styled.div`
 `;
 
 const EditorWrapper = styled.div``;
+
+const Count = styled.div`
+  color: #a1a8b3;
+`;
+
+const FlexDividerWrapper = styled(DividerWrapper)`
+  display: flex;
+`;
 
 export default function Answers({ topicCid }) {
   const dispatch = useDispatch();
@@ -111,7 +119,10 @@ export default function Answers({ topicCid }) {
   return (
     <Card>
       <Title>
-        <div>Answers</div>
+        <FlexDividerWrapper>
+          <div>Replies</div>
+          <Count>{answers?.count || 0}</Count>
+        </FlexDividerWrapper>
       </Title>
       <div>
         {answers?.items?.map((answer, index) => (
@@ -132,6 +143,7 @@ export default function Answers({ topicCid }) {
           setContent={setContent}
           onSubmit={onSubmit}
           showButtons={true}
+          submitButtonName="Reply"
           submitting={loading}
         />
       </EditorWrapper>
