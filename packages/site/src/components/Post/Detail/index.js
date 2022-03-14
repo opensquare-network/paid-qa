@@ -35,7 +35,11 @@ export default function Detail({ topic }) {
       <Title topic={topic} />
       {/* <Rewards rewards={topic.rewards} /> */}
       <Description topic={topic} />
-      <Appendants appendants={topic.appendants} isOwner={isOwner} />
+      <Appendants
+        topicCid={topic.cid}
+        appendants={topic.appendants}
+        isOwner={isOwner}
+      />
       <Share />
     </Wrapper>
   );

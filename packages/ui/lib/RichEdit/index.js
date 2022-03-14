@@ -31,15 +31,18 @@ export default function RichEdit({
   setContent,
   onSubmit,
   showButtons = true,
+  submitting = false,
   submitButtonName = "Post",
 }) {
   const [preview, setPreview] = useState(false);
+
+  //TODO: implement submitting
 
   return (
     <div>
       <MarkdownWrapper>
         <MarkdownEditorWrapper preview={preview}>
-          <MarkdownEditor content={content} setContent={setContent} />
+          <MarkdownEditor content={content} setContent={setContent} disabled={submitting} />
         </MarkdownEditorWrapper>
         {preview && <Preview content={content} />}
       </MarkdownWrapper>
@@ -48,7 +51,7 @@ export default function RichEdit({
           <Button onClick={() => setPreview(!preview)}>
             {preview ? "Edit" : "Preview"}
           </Button>
-          <Button primary onClick={() => onSubmit(() => setPreview(false))}>
+          <Button primary isLoading={submitting} onClick={() => onSubmit(() => setPreview(false))}>
             {submitButtonName}
           </Button>
         </ButtonsWrapper>
