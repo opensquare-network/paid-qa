@@ -9,12 +9,13 @@ import Time from "@osn/common-ui/lib/Time";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 // import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { useApi } from "utils/hooks";
-import { addToast } from "store/reducers/toastSlice";
+import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { cidOf } from "services/ipfs";
 import { accountSelector } from "store/reducers/accountSlice";
 import { setTopic } from "store/reducers/topicSlice";
 import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
+import { submitRemark } from "services/chainApi";
 
 const { InteractionEncoder } = encoder;
 const { AppendInteraction } = interactions;
@@ -86,7 +87,7 @@ export default function Appendants({ topicCid, appendants, isOwner }) {
     if (!api) {
       dispatch(
         addToast({
-          type: "error",
+          type: ToastTypes.Error,
           message: "Network not connected yet",
         })
       );
@@ -96,7 +97,7 @@ export default function Appendants({ topicCid, appendants, isOwner }) {
     if (!content) {
       dispatch(
         addToast({
-          type: "error",
+          type: ToastTypes.Error,
           message: "Content is empty",
         })
       );
@@ -112,51 +113,54 @@ export default function Appendants({ topicCid, appendants, isOwner }) {
     const cid = await cidOf(data);
     const interaction = new AppendInteraction(topicCid, cid);
     const remark = new InteractionEncoder(interaction).getRemark();
-    const unsub = await api.tx.system
-      .remark(remark)
-      .signAndSend(account.address, ({ events = [], status }) => {
-        if (status.isInBlock) {
-          unsub();
-          setLoading(false);
 
-          const extrinsicIndex = JSON.parse(
-            events[0]?.phase?.toString()
-          )?.applyExtrinsic;
+    try {
+      const { blockHash, extrinsicIndex } = await submitRemark(api, remark, account);
 
-          const blockHash = status.asInBlock.toString();
-          const payload = {
-            data,
-            network: account.network,
-            blockHash,
-            extrinsicIndex,
-          };
+      const payload = {
+        data,
+        network: account.network,
+        blockHash,
+        extrinsicIndex,
+      };
 
-          serverApi
-            .post(`/topics/${topicCid}/appendants`, payload)
-            .then(({ result }) => {
+      serverApi
+        .post(`/topics/${topicCid}/appendants`, payload)
+        .then(({ result, error }) => {
+          if (result) {
+            setContent("");
+            // After appendant is added, update the topic
+            serverApi.fetch(`/topics/${topicCid}`).then(({ result }) => {
               if (result) {
-                setContent("");
-                // After appendant is added, update the topic
-                serverApi.fetch(`/topics/${topicCid}`).then(({ result }) => {
-                  if (result) {
-                    dispatch(setTopic(result));
-                  }
-                });
+                dispatch(setTopic(result));
               }
             });
-        }
-      })
-      .catch((e) => {
-        setLoading(false);
-        if (e.toString() !== "Error: Cancelled") {
-          return dispatch(
-            addToast({
-              type: "error",
-              message: e.toString(),
-            })
-          );
-        }
-      });
+          }
+
+          if (error) {
+            dispatch(
+              addToast({
+                type: ToastTypes.Error,
+                message: error.message,
+              })
+            );
+          }
+        });
+
+    } catch (e) {
+      if (e.toString() === "Error: Cancelled") {
+        return;
+      }
+
+      return dispatch(
+        addToast({
+          type: ToastTypes.Error,
+          message: e.toString(),
+        })
+      );
+    }
+
+    setLoading(false);
   };
 
   const appendantsCount = appendants?.length || 0;

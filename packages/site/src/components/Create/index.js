@@ -20,6 +20,11 @@ import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 import { getSymbolByChain } from "@osn/common-ui/lib/utils/tokenValue";
 import Preview from "@osn/common-ui/lib/Preview";
 import { useApi } from "../../utils/hooks";
+import { encoder, interactions } from "@paid-qa/spec";
+import { submitRemark } from "services/chainApi";
+
+const { InteractionEncoder } = encoder;
+const { NewInteraction } = interactions;
 
 const Wrapper = styled.div`
   display: flex;
@@ -131,45 +136,49 @@ export default function Create() {
     if (formValidateErrMsg) {
       return dispatch(
         addToast({
-          type: ToastTypes.ERROR,
+          type: ToastTypes.Error,
           message: formValidateErrMsg,
         })
       );
     }
     setLoading(true);
-    const topic = { title, content, language: "en" };
-    const cid = await cidOf(topic);
-    const unsub = await api.tx.system
-      .remark(`osn:q:1:N:N:${rewardAmount}:${cid}`)
-      .signAndSend(account.address, ({ events = [], status }) => {
-        if (status.isInBlock) {
-          const extrinsicIndex = JSON.parse(
-            events[0]?.phase?.toString()
-          )?.applyExtrinsic;
-          const blockHash = status.asInBlock.toString();
-          const payload = {
-            data: topic,
-            network: account.network,
-            blockHash,
-            extrinsicIndex,
-          };
-          serverApi.post(`/topics/`, payload).then(({ result }) => {
-            if (result?.cid) {
-              navigate(`/topic/${result.cid}`);
-            }
-          });
-          setLoading(false);
-          unsub();
+
+    const data = { title, content, language: "en" };
+    const cid = await cidOf(data);
+
+    const interaction = new NewInteraction("N", rewardAmount, cid);
+    const remark = new InteractionEncoder(interaction).getRemark();
+
+    try {
+      const { blockHash, extrinsicIndex } = await submitRemark(api, remark, account);
+
+      const payload = {
+        data,
+        network: account.network,
+        blockHash,
+        extrinsicIndex,
+      };
+
+      serverApi.post(`/topics/`, payload).then(({ result }) => {
+        if (result?.cid) {
+          navigate(`/topic/${result.cid}`);
         }
-      })
-      .catch((e) => {
-        return dispatch(
-          addToast({
-            type: ToastTypes.ERROR,
-            message: e.toString(),
-          })
-        );
       });
+
+    } catch (e) {
+      if (e.toString() === "Error: Cancelled") {
+        return;
+      }
+
+      return dispatch(
+        addToast({
+          type: ToastTypes.Error,
+          message: e.toString(),
+        })
+      );
+    }
+
+    setLoading(false);
   };
 
   return (
