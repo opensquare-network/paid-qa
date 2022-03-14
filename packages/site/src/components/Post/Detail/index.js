@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-// import Card from "@osn/common-ui/lib/styled/Card";
+import Card from "@osn/common-ui/lib/styled/Card";
 import Title from "./Title";
 // import Rewards from "./Rewards";
 import Description from "./Description";
@@ -9,13 +9,7 @@ import Share from "./Share";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 
-const Wrapper = styled.div`
-  background: #ffffff;
-  border: 1px solid #f0f3f8;
-  padding: 32px;
-  box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.04),
-    0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
-
+const Wrapper = styled(Card)`
   > :not(:first-child) {
     padding-top: 20px;
     border-top: solid 1px #f0f3f8;

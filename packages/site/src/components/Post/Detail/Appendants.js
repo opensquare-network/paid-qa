@@ -7,7 +7,7 @@ import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import RichEdit from "@osn/common-ui/lib/RichEdit";
 import Time from "@osn/common-ui/lib/Time";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
-// import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { useApi } from "utils/hooks";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { cidOf } from "services/ipfs";
@@ -56,10 +56,7 @@ const StyledDividerWrapper = styled(DividerWrapper)`
   }
 `;
 
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
+const Title = styled(FlexBetween)``;
 
 const AddButton = styled.div`
   cursor: pointer;
