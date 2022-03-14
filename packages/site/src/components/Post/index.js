@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Detail from "./Detail";
-// import Answers from "./Answers";
+import Answers from "./Answers";
 import Promises from "./Promises";
 // import Funds from "./Funds";
 import { MOBILE_SIZE } from "utils/constants";
@@ -43,10 +43,10 @@ export default function Post({ topic }) {
     <Wrapper>
       <div>
         <Detail topic={topic} />
-        {/* <Answers /> */}
+        <Answers topicCid={topic?.cid} />
       </div>
       <div>
-        <Promises rewards={topic.rewards} />
+        <Promises rewards={topic?.rewards} />
         {/* <Funds /> */}
       </div>
     </Wrapper>

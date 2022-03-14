@@ -1,19 +1,20 @@
 const Hash = require("ipfs-only-hash");
 const { Topic, Answer } = require("../models");
-const HttpError = require("../utils/exc");
+const { HttpError } = require("../utils/exc");
 const { isValidSignature } = require("../utils/signature");
 const { PostStatus } = require("../utils/constants");
 const { cidOf } = require("./ipfs.service");
 
 async function postAnswer(data) {
   const {
-    answer: { topic: topicCid, content },
+    answer,
     address: signer,
     signature,
   } = data;
+  const { topic: topicCid, content } = answer;
 
   // Check signature
-  const msg = JSON.stringify(data);
+  const msg = JSON.stringify(answer);
   const isValid = isValidSignature(msg, signature, signer);
   if (!isValid) {
     throw new HttpError(400, "Signature is invalid");

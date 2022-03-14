@@ -1,5 +1,6 @@
 const { extractPage } = require("../../utils/pagination");
 const answerService = require("../../services/answer.service");
+const { HttpError } = require("../../utils/exc");
 
 async function getAnswers(ctx) {
   const { topicCid } = ctx.params;
@@ -10,11 +11,12 @@ async function getAnswers(ctx) {
 
 async function postAnswer(ctx) {
   const { topicCid } = ctx.params;
+  const data = ctx.request.body;
   const {
     answer: { topic, content } = {},
     address,
     signature,
-  } = ctx.request.body;
+  } = data;
 
   if (!topic) {
     throw new HttpError(400, "Topic is missing");

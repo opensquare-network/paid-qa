@@ -70,14 +70,17 @@ const Ellipsis = styled.div`
   }
 `;
 
-export default function Pagination({ page, pageSize, total }) {
+export default function Pagination({ page, pageSize, total, setPage = () => {} }) {
   const totalPages = Math.ceil(total / pageSize)
     ? Math.ceil(total / pageSize)
     : 1;
 
   return (
     <Wrapper>
-      <Nav disabled={page === 1}>
+      <Nav
+        disabled={page === 1}
+        onClick={() => setPage(page - 1)}
+      >
         <img src="/imgs/icons/caret-left.svg" alt="" />
       </Nav>
       {Array.from(Array(totalPages)).map((_, index) =>
@@ -86,12 +89,19 @@ export default function Pagination({ page, pageSize, total }) {
         Math.abs(index + 1 - page) >= 2 ? (
           <Ellipsis key={index}>...</Ellipsis>
         ) : (
-          <Item key={index} active={page === index + 1}>
+          <Item
+            key={index}
+            active={page === index + 1}
+            onClick={() => setPage(index + 1)}
+          >
             {index + 1}
           </Item>
         )
       )}
-      <Nav disabled={page === totalPages}>
+      <Nav
+        disabled={page === totalPages}
+        onClick={() => setPage(page + 1)}
+      >
         <img src="/imgs/icons/caret-right.svg" alt="" />
       </Nav>
     </Wrapper>
