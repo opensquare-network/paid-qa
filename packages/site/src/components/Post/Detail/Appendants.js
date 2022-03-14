@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as AddIcon } from "./icons/add-appendant.svg";
 
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
@@ -7,6 +8,16 @@ import RichEdit from "@osn/common-ui/lib/RichEdit";
 import Time from "@osn/common-ui/lib/Time";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 // import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import { useApi } from "utils/hooks";
+import { addToast } from "store/reducers/toastSlice";
+import { cidOf } from "services/ipfs";
+import { accountSelector } from "store/reducers/accountSlice";
+import { setTopic } from "store/reducers/topicSlice";
+import serverApi from "services/serverApi";
+import { encoder, interactions } from "@paid-qa/spec";
+
+const { InteractionEncoder } = encoder;
+const { AppendInteraction } = interactions;
 
 const Wrapper = styled.div`
   > :first-child {
@@ -62,11 +73,90 @@ const Count = styled.div`
   color: #a1a8b3;
 `;
 
-export default function Appendants({ appendants, isOwner }) {
+export default function Appendants({ topicCid, appendants, isOwner }) {
+  const account = useSelector(accountSelector);
+
   const [editing, setEditing] = useState(false);
   const [content, setContent] = useState("");
-  const onSubmit = () => {
-    //TODO: Handle submitting appendant
+  const [loading, setLoading] = useState(false);
+
+  const api = useApi();
+  const dispatch = useDispatch();
+  const onSubmit = async () => {
+    if (!api) {
+      dispatch(
+        addToast({
+          type: "error",
+          message: "Network not connected yet",
+        })
+      );
+      return;
+    }
+
+    if (!content) {
+      dispatch(
+        addToast({
+          type: "error",
+          message: "Content is empty",
+        })
+      );
+      return;
+    }
+
+    setLoading(true);
+
+    const data = {
+      topic: topicCid,
+      content,
+    };
+    const cid = await cidOf(data);
+    const interaction = new AppendInteraction(topicCid, cid);
+    const remark = new InteractionEncoder(interaction).getRemark();
+    const unsub = await api.tx.system
+      .remark(remark)
+      .signAndSend(account.address, ({ events = [], status }) => {
+        if (status.isInBlock) {
+          unsub();
+          setLoading(false);
+
+          const extrinsicIndex = JSON.parse(
+            events[0]?.phase?.toString()
+          )?.applyExtrinsic;
+
+          const blockHash = status.asInBlock.toString();
+          const payload = {
+            data,
+            network: account.network,
+            blockHash,
+            extrinsicIndex,
+          };
+
+          serverApi
+            .post(`/topics/${topicCid}/appendants`, payload)
+            .then(({ result }) => {
+              if (result) {
+                setContent("");
+                // After appendant is added, update the topic
+                serverApi.fetch(`/topics/${topicCid}`).then(({ result }) => {
+                  if (result) {
+                    dispatch(setTopic(result));
+                  }
+                });
+              }
+            });
+        }
+      })
+      .catch((e) => {
+        setLoading(false);
+        if (e.toString() !== "Error: Cancelled") {
+          return dispatch(
+            addToast({
+              type: "error",
+              message: e.toString(),
+            })
+          );
+        }
+      });
   };
 
   const appendantsCount = appendants?.length || 0;
@@ -108,6 +198,7 @@ export default function Appendants({ appendants, isOwner }) {
             setContent={setContent}
             onSubmit={onSubmit}
             showButtons={true}
+            submitting={loading}
           />
         </EditorWrapper>
       )}

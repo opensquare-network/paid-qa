@@ -11,10 +11,7 @@ const {
 } = require("./node.service");
 const {
   parser: { InteractionParser },
-  interactions: {
-    NewInteraction,
-    AppendInteraction,
-  }
+  interactions: { NewInteraction, AppendInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
 const { ipfsAdd } = require("./ipfs.service");
@@ -37,7 +34,11 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
 
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, signer, blockTime } = await getRemark(api, blockHash, extrinsicIndex);
+  const { remark, signer, blockTime } = await getRemark(
+    api,
+    blockHash,
+    extrinsicIndex
+  );
 
   // Parse system remark to verify if it is NEW instruction
   const interaction = new InteractionParser(remark).getInteraction();
@@ -137,7 +138,9 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
 }
 
 async function getTopic(cid) {
-  const topic = await Topic.findOne({ cid }).populate("rewards");
+  const topic = await Topic.findOne({ cid })
+    .populate("rewards")
+    .populate("appendants");
   return topic;
 }
 
@@ -146,16 +149,14 @@ async function getTopics(page, pageSize) {
     status: {
       //TODO: remove published status
       $in: [PostStatus.Published, PostStatus.Active, PostStatus.Resolved],
-    }
+    },
   };
   const total = await Topic.countDocuments(q);
-  const topics = await Topic
-    .find(q)
+  const topics = await Topic.find(q)
     .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("rewards")
-    .populate("appendants");
+    .populate("rewards");
 
   return {
     items: topics,
@@ -170,7 +171,11 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
 
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, signer, blockTime } = await getRemark(api, blockHash, extrinsicIndex);
+  const { remark, signer, blockTime } = await getRemark(
+    api,
+    blockHash,
+    extrinsicIndex
+  );
 
   // Parse system remark to verify if it is NEW instruction
   const interaction = new InteractionParser(remark).getInteraction();
@@ -183,7 +188,10 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   }
 
   if (interaction.topicIpfsCid !== topic) {
-    throw new HttpError(500, "System remark topic cid does not match the append content");
+    throw new HttpError(
+      500,
+      "System remark topic cid does not match the append content"
+    );
   }
 
   const jsonData = JSON.stringify(data);
@@ -214,19 +222,17 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
     throw new HttpError(500, "Appendant does not match the topic network");
   }
 
-  await Appendant.create(
-    {
-      blockTime,
-      topicCid: interaction.topicIpfsCid,
-      cid,
-      content,
-      data,
-      pinned: false,
-      network,
-      signer,
-      status: PostStatus.Published,
-    },
-  );
+  await Appendant.create({
+    blockTime,
+    topicCid: interaction.topicIpfsCid,
+    cid,
+    content,
+    data,
+    pinned: false,
+    network,
+    signer,
+    status: PostStatus.Published,
+  });
 
   // Upload topic content to IPFS
   ipfsAdd(data)
