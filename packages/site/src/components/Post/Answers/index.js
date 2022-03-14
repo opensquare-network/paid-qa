@@ -11,6 +11,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
 import RichEdit from "@osn/common-ui/lib/RichEdit";
 import { signMessage } from "services/chainApi";
+import NoReplies from 'components/NoReplies';
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -31,10 +32,6 @@ const EditorWrapper = styled.div``;
 
 const Count = styled.div`
   color: #a1a8b3;
-`;
-
-const FlexDividerWrapper = styled(DividerWrapper)`
-  display: flex;
 `;
 
 export default function Answers({ topicCid }) {
@@ -115,20 +112,25 @@ export default function Answers({ topicCid }) {
     }
   };
 
-  //TODO: empty answers page
   return (
     <Card>
       <Title>
-        <FlexDividerWrapper>
+        <DividerWrapper>
           <div>Replies</div>
           <Count>{answers?.count || 0}</Count>
-        </FlexDividerWrapper>
+        </DividerWrapper>
       </Title>
-      <div>
-        {answers?.items?.map((answer, index) => (
-          <Item key={index} answer={answer} />
-        ))}
-      </div>
+      {
+        answers?.items.length === 0 ? (
+          <NoReplies message={"No current replies"} />
+        ) : (
+          <div>
+            {answers?.items?.map((answer, index) => (
+              <Item key={index} answer={answer} />
+            ))}
+          </div>
+        )
+      }
       <PagnationWrapper>
         <Pagination className="pagination"
           page={answers?.page}
