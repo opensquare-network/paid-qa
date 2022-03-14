@@ -176,9 +176,9 @@ export default function Create() {
           message: e.toString(),
         })
       );
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (

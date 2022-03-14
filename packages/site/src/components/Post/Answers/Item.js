@@ -2,15 +2,11 @@ import styled from "styled-components";
 
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import User from "components/User";
+import Time from "@osn/common-ui/lib/Time";
+import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 
 const Wrapper = styled.div`
   padding-top: 20px;
-`;
-
-const Time = styled.div`
-  font-size: 14px;
-  line-height: 24px;
-  color: #a1a8b3;
 `;
 
 const ContentWrapper = styled.div`
@@ -33,22 +29,22 @@ const Reply = styled.div`
   margin-left: 8px;
 `;
 
-export default function Item() {
+export default function Item({ answer }) {
   return (
     <Wrapper>
       <div className="flex items-center justify-between">
         <DividerWrapper>
-          <User />
-          <Time>2 days ago</Time>
+          <User address={answer.signer} network={answer.network} showNetwork />
+          <Time time={answer.createdAt} />
         </DividerWrapper>
-        <img src="/imgs/icons/ipfs.svg" alt="" />
+        <IpfsSquare
+          href={
+            answer.pinned ? `https://ipfs.infura.io/ipfs/${answer.cid}` : null
+          }
+        />
       </div>
       <ContentWrapper>
-        <div>
-          Mauris cum ac ut eu pellentesque arcu. Habitant cursus porttitor
-          feugiat proin. Maecenas enim tristique fermentum parturient nisi,
-          nulla sit leo.
-        </div>
+        <div>{answer.content}</div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <img src="/imgs/icons/reply.svg" alt="" />

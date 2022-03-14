@@ -154,9 +154,9 @@ export default function Appendants({ topicCid, appendants, isOwner }) {
           message: e.toString(),
         })
       );
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   const appendantsCount = appendants?.length || 0;
