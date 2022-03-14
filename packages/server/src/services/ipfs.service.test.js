@@ -10,8 +10,8 @@ describe("Ipfs Test", () => {
       language: "en",
     });
 
-    expect(added?.cid?.toV0().toString()).toEqual(
-      "QmVgGPAeCX5cDNG7RGkmaWkfF7ZMYYnVA2m4G18jwEFxkU"
+    expect(added?.cid?.toV1().toString()).toEqual(
+      "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku"
     );
   });
 });

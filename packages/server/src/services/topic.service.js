@@ -14,7 +14,7 @@ const {
   interactions: { NewInteraction, AppendInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
-const { ipfsAdd } = require("./ipfs.service");
+const { ipfsAdd, cidOf } = require("./ipfs.service");
 
 async function validateTokenAmount(tokenAmount, decimals) {
   if (!tokenAmount.match(/^[\.\d]+$/)) {
@@ -50,9 +50,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     throw new HttpError(500, "System remark is not valid");
   }
 
-  const jsonData = JSON.stringify(data);
-  const buf = Buffer.from(jsonData);
-  const cid = await Hash.of(buf);
+  const cid = cidOf(data);
 
   // Verfify if ipfs cid is the same as the one in the system remark
   if (interaction.topicIpfsCid !== cid) {
@@ -123,7 +121,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
   // Upload topic content to IPFS
   ipfsAdd(data)
     .then(async (added) => {
-      const pinnedCid = added?.cid?.toV0().toString();
+      const pinnedCid = added?.cid?.toV1().toString();
       if (pinnedCid !== cid) {
         console.error("Pinned path does not match the topic content CID");
         return;
@@ -194,9 +192,7 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
     );
   }
 
-  const jsonData = JSON.stringify(data);
-  const buf = Buffer.from(jsonData);
-  const cid = await Hash.of(buf);
+  const cid = await cidOf(data);
 
   // Verfify if ipfs cid is the same as the one in the system remark
   if (interaction.messageIpfsCid !== cid) {
@@ -237,7 +233,7 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   // Upload topic content to IPFS
   ipfsAdd(data)
     .then(async (added) => {
-      const pinnedCid = added?.cid?.toV0().toString();
+      const pinnedCid = added?.cid?.toV1().toString();
       if (pinnedCid !== cid) {
         console.error("Pinned path does not match the appendant content CID");
         return;

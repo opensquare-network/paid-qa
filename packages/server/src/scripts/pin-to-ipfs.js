@@ -11,7 +11,7 @@ async function startPinTopics() {
   for (const topic of topics) {
     try {
       const added = await ipfsAdd(topic.data);
-      const pinnedCid = added?.cid?.toV0().toString();
+      const pinnedCid = added?.cid?.toV1().toString();
       if (pinnedCid !== topic.cid) {
         console.error(
           `Pinned topic ${topic.title}: IPFS path does not match CID`
@@ -31,7 +31,7 @@ async function startPinAppendants() {
   for (const appendant of appendants) {
     try {
       const added = await ipfsAdd(appendant.data);
-      const pinnedCid = added?.cid?.toV0().toString();
+      const pinnedCid = added?.cid?.toV1().toString();
       if (pinnedCid !== appendant.cid) {
         console.error(
           `Pinned appendant ${appendant._id}: IPFS path does not match CID`
@@ -51,7 +51,7 @@ async function startPinAnswers() {
   for (const answer of answers) {
     try {
       const added = await ipfsAdd(answer.data);
-      const pinnedCid = added?.cid?.toV0().toString();
+      const pinnedCid = added?.cid?.toV1().toString();
       if (pinnedCid !== answer.cid) {
         console.error(
           `Pinned answer ${answer._id}: IPFS path does not match CID`

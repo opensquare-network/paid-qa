@@ -1,3 +1,5 @@
+const Hash = require("ipfs-only-hash");
+const { CID } = require("multiformats/cid");
 const { getClients, ClientOptions, ClientMode } = require("@paid-qa/ipfs");
 const {
   INFURA_PROJECT_ID,
@@ -19,6 +21,14 @@ async function ipfsAdd(data) {
   return added;
 }
 
+async function cidOf(obj) {
+  const data = JSON.stringify(obj);
+  const cidV0 = await Hash.of(Buffer.from(data));
+  const cid = CID.parse(cidV0);
+  return cid.toV1().toString();
+}
+
 module.exports = {
+  cidOf,
   ipfsAdd,
 };

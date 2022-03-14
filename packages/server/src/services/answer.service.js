@@ -3,6 +3,7 @@ const { Topic, Answer } = require("../models");
 const HttpError = require("../utils/exc");
 const { isValidSignature } = require("../utils/signature");
 const { PostStatus } = require("../utils/constants");
+const { cidOf } = require("./ipfs.service");
 
 async function postAnswer(data) {
   const {
@@ -23,9 +24,7 @@ async function postAnswer(data) {
     throw new HttpError(500, "Topic does not exist");
   }
 
-  const jsonData = JSON.stringify(data);
-  const buf = Buffer.from(jsonData);
-  const cid = await Hash.of(buf);
+  const cid = await cidOf(data);
 
   await Answer.create(
     {
