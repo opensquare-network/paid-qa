@@ -1,5 +1,5 @@
-import Identicon from "@polkadot/react-identicon";
+import Avatar from "@osn/common-ui/lib/Account/Avatar";
 
 export default function Avatar({ address, size = 20 }) {
-  return <Identicon value={address} size={size} theme="polkadot" />;
+  return <Avatar value={address} size={size} theme="polkadot" />;
 }
