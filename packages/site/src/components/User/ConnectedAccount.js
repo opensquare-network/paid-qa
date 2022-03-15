@@ -9,6 +9,10 @@ import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import { ChainSS58Format } from "@osn/common-ui/lib/utils/constants";
 import { encodeAddress } from "@polkadot/util-crypto";
+import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
+import { useEffect, useState } from "react";
+import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import IdentityIcon from "./IdentityIcon";
 
 const Wrapper = styled.div`
   position: relative;
@@ -26,6 +30,15 @@ const Wrapper = styled.div`
     margin: 0;
     width: 100%;
     text-align: center;
+  }
+`;
+
+const IdentityWrapper = styled.span`
+  display: flex;
+  align-items: center;
+
+  & > span {
+    margin-right: 4px;
   }
 `;
 
@@ -87,9 +100,12 @@ const MenuWrapper = styled.div`
   top: 100%;
   background: #ffffff;
   border: 1px solid #f0f3f8;
-  padding: 16px;
-  padding-bottom: 8px;
+  padding: 16px 16px 8px;
   z-index: 1;
+
+  box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.06),
+    0px 0.751293px 8px rgba(26, 33, 44, 0.04);
+
   @media screen and (max-width: 768px) {
     margin-top: 19px;
     border: none;
@@ -144,6 +160,23 @@ function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
   if (typeof ss58Format === "number") {
     address = encodeAddress(address, ss58Format);
   }
+  const network = account.network;
+  const isMounted = useIsMounted();
+  const [identity, setIdentity] = useState();
+
+  useEffect(() => {
+    if (!address) {
+      return;
+    }
+
+    fetchIdentity(network, address)
+      .then((identity) => {
+        if (isMounted.current) {
+          setIdentity(identity);
+        }
+      })
+      .catch(() => {});
+  }, [network, address, isMounted]);
 
   const onSwitch = () => {
     dispatch(popUpConnect());
@@ -196,8 +229,18 @@ function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
         <div>
           <Avatar address={address} size={20} />
           {showNetwork && <ChainIcon chainName={account?.network} size={16} />}
-          {/*todo: Identity*/}
-          {addressEllipsis(address)}
+          {identity?.info && identity?.info?.status !== "NO_ID" ? (
+            <IdentityWrapper>
+              <IdentityIcon
+                status={identity.info.status}
+                showTooltip
+                size={showNetwork ? 12 : 14}
+              />
+              {identity.info.display}
+            </IdentityWrapper>
+          ) : (
+            addressEllipsis(address)
+          )}
         </div>
       </AccountWrapperPC>
       {showMenu && <>{Menu}</>}

@@ -43,7 +43,7 @@ function getExplorerLink(network, address) {
   }
 }
 
-export default function Author({
+export default function User({
   address,
   network,
   size = 20,
