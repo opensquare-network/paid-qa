@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const BigNumber = require("bignumber.js");
-const Hash = require("ipfs-only-hash");
 const { Topic, Reward, Appendant } = require("../models");
 const { PostStatus, RewardCurrencyType } = require("../utils/constants");
 const {
@@ -15,19 +14,7 @@ const {
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
 const { ipfsAdd, cidOf } = require("./ipfs.service");
-
-async function validateTokenAmount(tokenAmount, decimals) {
-  if (!tokenAmount.match(/^[\.\d]+$/)) {
-    throw new HttpError(500, "Invalid reward value");
-  }
-  const amount = new BigNumber(tokenAmount);
-  if (amount.isNaN() || amount.lte(0)) {
-    throw new HttpError(500, "Invalid reward value");
-  }
-  if ((tokenAmount.split(".")[1]?.length || 0) > decimals) {
-    throw new HttpError(500, "Invalid reward value");
-  }
-}
+const { validateTokenAmount } = require("./common");
 
 async function createTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content, language } = data;

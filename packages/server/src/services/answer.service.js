@@ -1,4 +1,3 @@
-const Hash = require("ipfs-only-hash");
 const { Topic, Answer } = require("../models");
 const { HttpError } = require("../utils/exc");
 const { isValidSignature } = require("../utils/signature");
