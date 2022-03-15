@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Avatar from "./Avatar";
+import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import ChainIcon from "./ChainIcon";
 import IdentityOrAddr from "./IdentityOrAddr";
 import ExternalLink from "@osn/common-ui/lib/ExternalLink";
