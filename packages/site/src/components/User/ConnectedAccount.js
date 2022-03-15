@@ -1,6 +1,4 @@
 import styled, { css } from "styled-components";
-import Avatar from "@osn/common-ui/lib/Account/Avatar";
-import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/reducers/accountSlice";
 import { ReactComponent as ExitIcon } from "@osn/common-ui/lib/Account/exit.svg";
@@ -9,7 +7,7 @@ import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import { ChainSS58Format } from "@osn/common-ui/lib/utils/constants";
 import { encodeAddress } from "@polkadot/util-crypto";
-import IdentityOrAddr from "./IdentityOrAddr";
+import NetworkUser from "./NetworkUser";
 
 const Wrapper = styled.div`
   position: relative;
@@ -141,7 +139,7 @@ export function addressEllipsis(address, start = 4, end = 4) {
   return `${address.slice(0, start)}...${address.slice(-end)}`;
 }
 
-function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
+function ConnectedAccount({ account, showMenu, setShowMenu }) {
   const dispatch = useDispatch();
   const ss58Format = ChainSS58Format[account.network];
   let address = account.address;
@@ -160,23 +158,20 @@ function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
     setShowMenu(false);
   };
 
+  const networkUser = (
+    <NetworkUser
+      address={address}
+      network={network}
+      iconSize={12}
+      tooltipPosition="down"
+    />
+  );
+
   const Menu = (
     <MenuWrapper onClick={(e) => e.stopPropagation()}>
       {account && (
         <>
-          <AccountWrapper>
-            <div>
-              <Avatar address={address} size={20} />
-              {showNetwork && (
-                <ChainIcon chainName={account?.network} size={16} />
-              )}
-              <IdentityOrAddr
-                address={address}
-                network={network}
-                iconSize={12}
-              />
-            </div>
-          </AccountWrapper>
+          {networkUser}
           <MenuDivider />
           <MenuItem>
             <LogoutWrapper onClick={onSwitch}>
@@ -202,16 +197,7 @@ function ConnectedAccount({ account, showNetwork, showMenu, setShowMenu }) {
           setShowMenu(!showMenu);
         }}
       >
-        <div>
-          <Avatar address={address} size={20} />
-          {showNetwork && <ChainIcon chainName={account?.network} size={16} />}
-          <IdentityOrAddr
-            address={address}
-            network={network}
-            iconSize={12}
-            tooltipPosition="down"
-          />
-        </div>
+        {networkUser}
       </AccountWrapperPC>
       {showMenu && <>{Menu}</>}
     </Wrapper>
