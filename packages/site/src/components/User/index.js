@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
-import Avatar from "./Avatar";
+import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
 import ExternalLink from "@osn/common-ui/lib/ExternalLink";
 import IdentityIcon from "./IdentityIcon";
@@ -43,7 +43,7 @@ function getExplorerLink(network, address) {
   }
 }
 
-export default function Author({
+export default function User({
   address,
   network,
   size = 20,
