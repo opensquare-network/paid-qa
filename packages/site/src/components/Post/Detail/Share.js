@@ -16,8 +16,8 @@ const ShareButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: #f0f3f8;
   :hover {

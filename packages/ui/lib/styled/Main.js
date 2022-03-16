@@ -5,6 +5,7 @@ const maxWidth = 1080;
 
 const Main = styled.main`
   flex: 1 1 auto;
+  min-height: calc(100vh - 80px);
 
   @media screen and (min-width: ${MOBILE_SIZE}px) and (max-width: ${maxWidth}px) {
     padding: 0 32px;

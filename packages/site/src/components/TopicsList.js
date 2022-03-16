@@ -47,13 +47,14 @@ export default function TopicsList({ topics }) {
         <LoaderWrapper>
           <MyLoader />
           <MyLoader />
+          <MyLoader />
+          <MyLoader />
+          <MyLoader />
         </LoaderWrapper>
+      ) : topics.items.length === 0 ? (
+        <NoPost message={"No current topics"} />
       ) : (
-        topics.items.length === 0 ? (
-          <NoPost message={"No current topics"} />
-        ) : (
-          topics.items.map((topic, index) => <Topic key={index} topic={topic} />)
-        )
+        topics.items.map((topic, index) => <Topic key={index} topic={topic} />)
       )}
     </Wrapper>
   );
