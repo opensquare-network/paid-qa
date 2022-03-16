@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import User from "components/User";
 import TagList from "components/TagList";
 import Time from "@osn/common-ui/lib/Time";
 import MobileInvisible from "components/MobileInvisible";
+import NetworkUser from "../../User/NetworkUser";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -31,7 +31,11 @@ export default function Title({ topic }) {
       <div>
         <DividerWrapper>
           <MobileInvisible>
-            <User address={topic.signer} network={topic.network} showNetwork />
+            <NetworkUser
+              address={topic.signer}
+              network={topic.network}
+              tooltipPosition="down"
+            />
           </MobileInvisible>
           <RepliesCount>{topic.replies?.length || 0} Replies</RepliesCount>
           <Time time={topic.blockTime} />

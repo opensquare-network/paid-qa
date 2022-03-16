@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Avatar from "./Avatar";
+import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import Name from "./Name";
 
 const Wrapper = styled.div`

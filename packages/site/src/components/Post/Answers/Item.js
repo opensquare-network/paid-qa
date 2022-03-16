@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import User from "components/User";
 import Time from "@osn/common-ui/lib/Time";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
+import NetworkUser from "../../User/NetworkUser";
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -27,7 +27,11 @@ export default function Item({ answer }) {
     <Wrapper>
       <div className="flex items-center justify-between">
         <DividerWrapper>
-          <User address={answer.signer} network={answer.network} showNetwork />
+          <NetworkUser
+            address={answer.signer}
+            network={answer.network}
+            tooltipPosition="down"
+          />
           <Time time={answer.createdAt} />
         </DividerWrapper>
         <IpfsSquare

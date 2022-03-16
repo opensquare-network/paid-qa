@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Card from "@osn/common-ui/lib/styled/Card";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import User from "./User";
+import NetworkUser from "./User/NetworkUser";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -50,7 +50,7 @@ export default function AnswerList() {
     <Wrapper>
       <Card>
         <HeaderWrapper>
-          <User />
+          <NetworkUser />
           <div>mentioned you in</div>
           <StyledDividerWrapper>
             <div>Et sed at blandit nec ut.</div>

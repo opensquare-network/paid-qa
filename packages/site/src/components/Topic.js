@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import TagList from "./TagList";
-import User from "components/User";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import MobileInvisible from "components/MobileInvisible";
 import Time from "@osn/common-ui/lib/Time";
+import NetworkUser from "./User/NetworkUser";
 
 const Wrapper = styled.div`
   padding: 24px;
@@ -62,16 +62,12 @@ const Divider = styled.div`
   background: #f0f3f8;
 `;
 
-const RepliesCount = styled.span`
-  color: #a1a8b3;
-`;
-
 export default function Topic({ topic }) {
   return (
     <Wrapper>
       <MobileInvisible>
         <ReplyWrapper>
-          <div>0</div>
+          <div>{topic.replies?.length || 0}</div>
           <div>Replies</div>
         </ReplyWrapper>
       </MobileInvisible>
@@ -81,13 +77,13 @@ export default function Topic({ topic }) {
         <div>
           <DividerWrapper>
             <MobileInvisible>
-              <User
+              <NetworkUser
                 address={topic.signer}
                 network={topic.network}
-                showNetwork
+                iconSize={14}
+                tooltipPosition="down"
               />
             </MobileInvisible>
-            <RepliesCount>{topic.replies?.length || 0} Replies</RepliesCount>
             <Time time={topic.blockTime} />
           </DividerWrapper>
           <TagList topic={topic} />
