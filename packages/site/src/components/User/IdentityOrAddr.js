@@ -15,6 +15,10 @@ const IdentityWrapper = styled.span`
   }
 `;
 
+const Name = styled.span`
+  line-height: 24px;
+`;
+
 export default function IdentityOrAddr({
   address,
   network,
@@ -48,10 +52,10 @@ export default function IdentityOrAddr({
             size={iconSize}
             position={tooltipPosition}
           />
-          {identity.info.display}
+          <Name>{identity.info.display}</Name>
         </>
       ) : (
-        addressEllipsis(address)
+        <Name>{addressEllipsis(address)}</Name>
       )}
     </IdentityWrapper>
   );
