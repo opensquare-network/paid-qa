@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import User from "components/User";
-// import ProgressBar from "components/ProgressBar";
+import ProgressBar from "components/ProgressBar";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -20,9 +20,9 @@ export default function Item({ reward }) {
     <Wrapper>
       <div className="flex items-center justify-between">
         <User address={reward.sponsor} network={reward.network} showNetwork />
-        <Token>{`${reward.value} ${reward.symbol}`}</Token>
+        <Token>{`0/${reward.value} ${reward.symbol}`}</Token>
       </div>
-      {/* <ProgressBar percent={50} /> */}
+      <ProgressBar percent={0} />
     </Wrapper>
   );
 }
