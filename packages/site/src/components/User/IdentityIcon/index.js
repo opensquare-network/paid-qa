@@ -19,7 +19,7 @@ export default function IdentityIcon({
   position,
   offset,
   showTooltip = false,
-  size = 14,
+  size = 12,
 }) {
   const statusIconMap = new Map([
     ["NOT_VERIFIED", { icon: UnauthorizedIcon, desc: "Identity not verified" }],

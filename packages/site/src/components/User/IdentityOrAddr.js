@@ -8,10 +8,15 @@ import { addressEllipsis } from "./ConnectedAccount";
 const IdentityWrapper = styled.span`
   display: flex;
   align-items: center;
+  font-weight: 500;
 
   & > span {
     margin-right: 4px;
   }
+`;
+
+const Name = styled.span`
+  line-height: 24px;
 `;
 
 export default function IdentityOrAddr({
@@ -47,10 +52,10 @@ export default function IdentityOrAddr({
             size={iconSize}
             position={tooltipPosition}
           />
-          {identity.info.display}
+          <Name>{identity.info.display}</Name>
         </>
       ) : (
-        addressEllipsis(address)
+        <Name>{addressEllipsis(address)}</Name>
       )}
     </IdentityWrapper>
   );
