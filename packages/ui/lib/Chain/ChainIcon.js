@@ -6,6 +6,7 @@ import { ReactComponent as Kusama } from "../imgs/icons/chain/kusama.svg";
 import { ReactComponent as Kintsugi } from "../imgs/icons/chain/kintsugi.svg";
 import { ReactComponent as Default } from "../imgs/icons/chain/default.svg";
 import { ReactComponent as Moonriver } from "../imgs/icons/chain/moonriver.svg";
+import { ReactComponent as Westend } from "../imgs/icons/chain/westend.svg";
 
 function ChainIcon({ chainName, size = 24 }) {
   switch (chainName) {
@@ -25,6 +26,8 @@ function ChainIcon({ chainName, size = 24 }) {
       return <Kintsugi viewBox="0 0 24 24" width={size} height={size} />;
     case "moonriver":
       return <Moonriver viewBox="0 0 24 24" width={size} height={size} />;
+    case "westend":
+      return <Westend viewBox="0 0 24 24" width={size} height={size} />;
     default:
       return <Default viewBox="0 0 24 24" width={size} height={size} />;
   }

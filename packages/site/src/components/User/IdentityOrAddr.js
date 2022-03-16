@@ -8,6 +8,7 @@ import { addressEllipsis } from "./ConnectedAccount";
 const IdentityWrapper = styled.span`
   display: flex;
   align-items: center;
+  font-weight: 500;
 
   & > span {
     margin-right: 4px;
