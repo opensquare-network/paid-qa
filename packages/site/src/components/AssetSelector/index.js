@@ -70,27 +70,27 @@ const NetworkAssets = {
 };
 
 export default function AssetSelector({ network, setAsset }) {
-  const [selectedAsset, setSelectedAsset] = useState(assets[0]);
+  const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const assets = NetworkAssets[network];
-  const assetsOptions = (assets || []).map((item, i) => {
+  const assetsOptions = assets.map((item, i) => {
     return {
       key: i,
-      value: item,
+      value: i,
       content: <AssetItem assetKey={item.id} assetName={item.name} />,
     };
   });
 
   useEffect(() => {
     if (setAsset) {
-      setAsset(selectedAsset);
+      setAsset(assets[selectedAssetIndex]);
     }
-  }, [setAsset, selectedAsset]);
+  }, [setAsset, assets, selectedAssetIndex]);
 
   return (
     <DropdownSelector
       options={assetsOptions}
-      value={selectedAsset}
-      onSelect={(value) => setSelectedAsset(value)}
+      value={selectedAssetIndex}
+      onSelect={(value) => setSelectedAssetIndex(value)}
     />
   );
 }
