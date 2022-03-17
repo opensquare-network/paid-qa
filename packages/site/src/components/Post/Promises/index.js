@@ -73,7 +73,7 @@ export default function Promises({ topicCid, rewards }) {
   const account = useSelector(accountSelector);
   const [openSupportModel, setOpenSupportModel] = useState(false);
 
-  //TODO: show empty rewards pages
+  // At least one promise exists which is support by topic creator
   if (!rewards || rewards.length === 0) {
     return null;
   }
