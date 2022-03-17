@@ -10,49 +10,22 @@ const AssetWrapper = styled.div`
   }
 `;
 
+const IconsMap = {
+  karura: "karura.svg",
+  rmrk: "rmrk.svg",
+  polarisdao: "polarisdao.png",
+}
+
 function getAssetIcon(assetKey) {
-  switch (assetKey) {
-    case "karura": {
-      return (
-        <img
-          src={"/imgs/icons/assets/karura.svg"}
-          alt=""
-          width={"24px"}
-          height={"24px"}
-        />
-      );
-    }
-    case "rmrk": {
-      return (
-        <img
-          src={"/imgs/icons/assets/rmrk.svg"}
-          alt=""
-          width={"24px"}
-          height={"24px"}
-        />
-      );
-    }
-    case "polarisdao": {
-      return (
-        <img
-          src={"/imgs/icons/assets/polarisdao.png"}
-          alt=""
-          width={"24px"}
-          height={"24px"}
-        />
-      );
-    }
-    default: {
-      return (
-        <img
-          src={"/imgs/icons/assets/unknown.svg"}
-          alt=""
-          width={"24px"}
-          height={"24px"}
-        />
-      );
-    }
-  }
+  const icon = IconsMap[assetKey] || "unknown.svg";
+  return (
+    <img
+      src={`/imgs/icons/assets/${icon}`}
+      alt=""
+      width={"24px"}
+      height={"24px"}
+    />
+  );
 }
 
 function AssetItem({ assetKey, assetName }) {
@@ -97,27 +70,27 @@ const NetworkAssets = {
 };
 
 export default function AssetSelector({ network, setAsset }) {
-  const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
+  const [selectedAsset, setSelectedAsset] = useState(assets[0]);
   const assets = NetworkAssets[network];
-  const assetsOptions = assets.map((item, i) => {
+  const assetsOptions = (assets || []).map((item, i) => {
     return {
       key: i,
-      value: i,
+      value: item,
       content: <AssetItem assetKey={item.id} assetName={item.name} />,
     };
   });
 
   useEffect(() => {
     if (setAsset) {
-      setAsset(assets[selectedAssetIndex]);
+      setAsset(selectedAsset);
     }
-  }, [setAsset, assets, selectedAssetIndex]);
+  }, [setAsset, selectedAsset]);
 
   return (
     <DropdownSelector
       options={assetsOptions}
-      value={selectedAssetIndex}
-      onSelect={(value) => setSelectedAssetIndex(value)}
+      value={selectedAsset}
+      onSelect={(value) => setSelectedAsset(value)}
     />
   );
 }
