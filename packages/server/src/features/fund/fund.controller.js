@@ -1,8 +1,7 @@
 const fundService = require("../../services/fund.service");
 const { HttpError } = require("../../utils/exc");
 
-async function fundTopic(ctx) {
-  const { topicCid } = ctx.params;
+async function addFund(ctx) {
   const { network, blockHash, extrinsicIndex } = ctx.request.body;
 
   if (!network) {
@@ -17,33 +16,7 @@ async function fundTopic(ctx) {
     throw new HttpError(400, { network: ["Extrinsic index is missing"] });
   }
 
-  ctx.body = await fundService.fundTopic(
-    topicCid,
-    network,
-    blockHash,
-    extrinsicIndex
-  );
-}
-
-async function fundAnswer(ctx) {
-  const { topicCid, answerCid } = ctx.params;
-  const { network, blockHash, extrinsicIndex } = ctx.request.body;
-
-  if (!network) {
-    throw new HttpError(400, { network: ["Network is missing"] });
-  }
-
-  if (!blockHash) {
-    throw new HttpError(400, { network: ["Block hash is missing"] });
-  }
-
-  if (extrinsicIndex === undefined) {
-    throw new HttpError(400, { network: ["Extrinsic index is missing"] });
-  }
-
-  ctx.body = await fundService.fundAnswer(
-    topicCid,
-    answerCid,
+  ctx.body = await fundService.addFund(
     network,
     blockHash,
     extrinsicIndex
@@ -51,6 +24,5 @@ async function fundAnswer(ctx) {
 }
 
 module.exports = {
-  fundTopic,
-  fundAnswer,
+  addFund,
 };

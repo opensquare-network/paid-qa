@@ -21,6 +21,8 @@ import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
+import serverApi from "services/serverApi";
+import { setTopic } from "store/reducers/topicSlice";
 
 const { InteractionEncoder } = encoder;
 const { FundInteraction } = interactions;
@@ -260,9 +262,34 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         },
         account
       );
+      const payload = {
+        network: account.network,
+        blockHash,
+        extrinsicIndex,
+      };
 
-      console.log({ blockHash, extrinsicIndex });
-      //TODO: submit extrinsic to server
+      serverApi
+        .post(`/funds`, payload)
+        .then(({ result, error }) => {
+          console.log({result, error});
+          if (result) {
+            // After appendant is added, update the topic
+            serverApi.fetch(`/topics/${ipfsCid}`).then(({ result }) => {
+              if (result) {
+                dispatch(setTopic(result));
+              }
+            });
+          }
+
+          if (error) {
+            dispatch(
+              addToast({
+                type: ToastTypes.Error,
+                message: error.message,
+              })
+            );
+          }
+        });
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
@@ -296,7 +323,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
           <ItemTitle>
             <StyledText>Asset</StyledText>
-            {account.network === "statemine" && (
+            {account?.network === "statemine" && (
               <ManualSwitch>
                 <span>Manual</span>
                 <Toggle on={manualOn} setOn={setManualOn} />

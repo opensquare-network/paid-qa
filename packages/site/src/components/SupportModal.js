@@ -281,7 +281,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
 
           <ItemTitle>
             <StyledText>Asset</StyledText>
-            {account.network === "statemine" && (
+            {account?.network === "statemine" && (
               <ManualSwitch>
                 <span>Manual</span>
                 <Toggle on={manualOn} setOn={setManualOn} />

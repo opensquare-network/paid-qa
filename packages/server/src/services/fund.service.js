@@ -11,15 +11,9 @@ const {
   getAssetTokenInfo,
   getNativeTokenInfo,
 } = require("./node.service");
-const { validateTokenAmount } = require("./common");
+const BigNumber = require("bignumber.js");
 
-async function fundTopic(topicCid, network, blockHash, extrinsicIndex) {
-  // Find the related topic
-  const topic = await Topic.findOne({ cid: topicCid });
-  if (!topic) {
-    throw new HttpError(500, "Topic does not exist");
-  }
-
+async function addFund(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
   const { remark, transfer, signer, blockTime } = await getRemark(
@@ -31,22 +25,37 @@ async function fundTopic(topicCid, network, blockHash, extrinsicIndex) {
   // Parse system remark to verify if it is NEW instruction
   const interaction = new InteractionParser(remark).getInteraction();
   if (!(interaction instanceof FundInteraction)) {
-    throw new HttpError(500, "System remark is not SUPPORT instruction");
+    throw new HttpError(500, "System remark is not FUND instruction");
   }
 
   if (!interaction.isValid) {
     throw new HttpError(500, "System remark is not valid");
   }
 
-  if (interaction.ipfsCid !== topicCid) {
-    throw new HttpError(500, "Topic cid is not match");
+  // Get reward currency type and amount from system remark
+  const { tokenIdentifier, to: { id: beneficiary }, value } = transfer;
+
+  let symbol, decimals, rewardCurrencyType;
+  if (tokenIdentifier === "N") {
+    rewardCurrencyType = RewardCurrencyType.Native;
+    ({ symbol, decimals } = await getNativeTokenInfo(api));
+  } else {
+    rewardCurrencyType = RewardCurrencyType.Asset;
+    ({ symbol, decimals } = await getAssetTokenInfo(
+      api,
+      tokenIdentifier,
+      blockHash
+    ));
   }
+
+  const tokenAmount = new BigNumber(value).div(Math.pow(10, decimals)).toFixed();
 
   await Fund.create({
     blockTime,
-    ipfsCid: topicCid,
+    ipfsCid: interaction.ipfsCid,
     network,
     sponsor: signer,
+    beneficiary,
     currencyType: rewardCurrencyType,
     value: tokenAmount,
     ...(rewardCurrencyType === RewardCurrencyType.Asset
@@ -57,23 +66,13 @@ async function fundTopic(topicCid, network, blockHash, extrinsicIndex) {
   });
 
   return {
+    beneficiary,
     symbol,
     decimals,
     value: tokenAmount,
   };
 }
 
-async function fundAnswer(
-  topicCid,
-  answerCid,
-  network,
-  blockHash,
-  extrinsicIndex
-) {
-  return true;
-}
-
 module.exports = {
-  fundTopic,
-  fundAnswer,
+  addFund,
 };

@@ -3,10 +3,6 @@ const fundController = require("./fund.controller");
 
 const router = new Router();
 
-router.post("/topics/:topicCid/fund", fundController.fundTopic);
-router.post(
-  "/topics/:topicCid/answers/:answerCid/fund",
-  fundController.fundAnswer
-);
+router.post("/funds", fundController.addFund);
 
 module.exports = router;
