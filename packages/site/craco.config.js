@@ -53,6 +53,11 @@ module.exports = {
       plugin: enableImportOutsideSrcDir,
       options: { path: "../ui", name: "ui" },
     },
+    {
+      // now that we're compiling these files, enable importing them
+      plugin: enableImportOutsideSrcDir,
+      options: { path: "./public/imgs", name: "imgs" },
+    },
   ],
   webpack: {
     configure: {

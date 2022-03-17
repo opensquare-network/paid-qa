@@ -38,9 +38,11 @@ export function useWindowSize() {
 }
 
 export function useIsMounted() {
-  const isMounted = useRef(true);
+  const isMounted = useRef(false);
 
   useEffect(() => {
+    isMounted.current = true;
+
     return () => {
       isMounted.current = false;
     };

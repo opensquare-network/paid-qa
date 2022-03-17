@@ -57,10 +57,10 @@ export const FOOTER_ITEMS = [
 export const Chains = {
   polkadot: "polkadot",
   kusama: "kusama",
+  statemine: "statemine",
   karura: "karura",
   acala: "acala",
   khala: "khala",
-  substrate: "substrate",
   basilisk: "basilisk",
   kabocha: "kabocha",
   bifrost: "bifrost",
@@ -82,6 +82,7 @@ export const ChainSS58Format = Object.freeze({
 export const AVAILABLE_NETWORKS = [
   { network: Chains.polkadot },
   { network: Chains.kusama },
+  { network: Chains.statemine },
   { network: Chains.westend }, //todo: use a .env file to add test network
 ];
 

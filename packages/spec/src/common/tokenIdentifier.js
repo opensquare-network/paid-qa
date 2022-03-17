@@ -1,8 +1,8 @@
 const u32Max = 4294967295;
 
 function isNumber(value) {
-  if (typeof value !== 'number') {
-    return false
+  if (typeof value === "number") {
+    return !isNaN(value);
   }
 
   return !isNaN(parseInt(value));
@@ -10,10 +10,10 @@ function isNumber(value) {
 
 function isU32(value) {
   if (!isNumber(value)) {
-    return false
+    return false;
   }
 
-  const parsed = parseInt(value)
+  const parsed = parseInt(value);
   return 0 <= parsed && parsed <= u32Max;
 }
 
@@ -24,7 +24,7 @@ function isU32(value) {
  * @returns {boolean}
  */
 function isTokenIdentifierValid(value) {
-  if (value === 'N') {
+  if (value === "N") {
     return true;
   }
 
@@ -37,4 +37,4 @@ function isTokenIdentifierValid(value) {
 
 module.exports = {
   isTokenIdentifierValid,
-}
+};
