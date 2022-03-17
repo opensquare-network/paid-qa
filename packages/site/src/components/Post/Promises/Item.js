@@ -18,7 +18,7 @@ export default function Item({ reward }) {
   return (
     <Wrapper>
       <div className="flex items-center justify-between">
-        <NetworkUser address={reward.signer} network={reward.network} />
+        <NetworkUser address={reward.sponsor} network={reward.network} />
         <Token>{`0/${reward.value} ${reward.symbol}`}</Token>
       </div>
       <ProgressBar percent={0} />

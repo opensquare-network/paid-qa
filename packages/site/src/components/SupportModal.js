@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
+import BigNumber from "bignumber.js";
 
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
@@ -22,6 +23,10 @@ import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
+import { setTopic } from "store/reducers/topicSlice";
+import debounce from "lodash.debounce";
+import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 
 const { InteractionEncoder } = encoder;
 const { SupportInteraction } = interactions;
@@ -86,13 +91,15 @@ const ChainWrapper = styled.div`
   align-items: center;
   padding: 12px 16px;
 
-  position: static;
-  width: 352px;
   height: 48px;
 
-  background: #FBFCFE;
-  border: 1px solid #E2E8F0;
+  background: #fbfcfe;
+  border: 1px solid #e2e8f0;
   box-sizing: border-box;
+
+  > :first-child {
+    margin-right: 8px;
+  }
 `;
 
 const ManualSwitch = styled.div`
@@ -112,51 +119,97 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [manualOn, setManualOn] = useState(false);
-  const [selectedAsset, setSelectedAsset] = useState("");
-  const [assetId, setAssetId] = useState("");
+  const [selectedAsset, setSelectedAsset] = useState(null);
+  const [symbol, setSymbol] = useState("");
+  const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [loadingSymbol, setLoadingSymbol] = useState(false);
+  const isMounted = useIsMounted();
 
   const api = useApi();
-  useEffect(() => {
-    if (api && manualOn && assetId) {
-      api.query.assets.metadata(assetId).then((metadata) => {
-        const { symbol } = metadata.toJSON();
-        setSelectedAsset(hexToString(symbol));
-      }).catch(() => {
 
-      });
+  const fetchAssetSymbol = useMemo(() => {
+    return debounce(async (assetId) => {
+      if (!api || assetId === "N" || assetId === "") {
+        setSymbol("");
+        setLoadingSymbol(false);
+        return;
+      }
+      const metadata = await api.query.assets.metadata(assetId);
+      const { symbol: hexSymbol } = metadata.toJSON();
+      const symbol = hexToString(hexSymbol);
+      if (isMounted.current) {
+        setSymbol(symbol);
+        setLoadingSymbol(false);
+      }
+    }, 300);
+  }, [api, setSymbol, isMounted]);
+
+  useEffect(() => {
+    if (manualOn) {
+      if (tokenIdentifier === "N") {
+        setTokenIdentifier("");
+        return;
+      }
+
+      setLoadingSymbol(true);
+      fetchAssetSymbol(tokenIdentifier);
     }
-  }, [api, manualOn, assetId]);
+  }, [fetchAssetSymbol, manualOn, tokenIdentifier]);
+
+  useEffect(() => {
+    if (!manualOn && selectedAsset) {
+      setTokenIdentifier(selectedAsset.tokenIdentifier);
+      setSymbol(selectedAsset.symbol);
+    }
+  }, [selectedAsset, manualOn]);
+
+  const showErrorToast = (message) => {
+    dispatch(
+      addToast({
+        type: ToastTypes.Error,
+        message,
+      })
+    );
+    setOpen(false);
+  };
 
   const doConfirm = async () => {
     if (!api) {
-      dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: "Network not connected yet",
-        })
-      );
-      return;
+      return showErrorToast("Network not connected yet");
     }
 
-    if (!selectedAsset) {
-      dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: "Asset is empty",
-        })
-      );
-      return;
+    if (!tokenIdentifier) {
+      return showErrorToast("Token/Asset is missing");
     }
 
-    setLoading(true);
+    if (!inputAmount) {
+      return showErrorToast("Amount is missing");
+    }
 
-    const tokenIdentifier = selectedAsset;
-    const interaction = new SupportInteraction(tokenIdentifier, inputAmount, topicCid);
+    if (new BigNumber(inputAmount).isNaN()) {
+      return showErrorToast("Amount is invalid");
+    }
+
+    const interaction = new SupportInteraction(
+      tokenIdentifier,
+      inputAmount,
+      topicCid
+    );
+    if (!interaction.isValid) {
+      return showErrorToast("Interaction is invalid");
+    }
     const remark = new InteractionEncoder(interaction).getRemark();
 
     try {
-      const { blockHash, extrinsicIndex } = await submitRemark(api, remark, account);
+      setLoading(true);
+
+      const { blockHash, extrinsicIndex } = await submitRemark(
+        api,
+        remark,
+        account
+      );
       const payload = {
         network: account.network,
         blockHash,
@@ -167,7 +220,6 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         .post(`/topics/${topicCid}/supports`, payload)
         .then(({ result, error }) => {
           if (result) {
-            setContent("");
             // After appendant is added, update the topic
             serverApi.fetch(`/topics/${topicCid}`).then(({ result }) => {
               if (result) {
@@ -185,7 +237,6 @@ export default function SupportModal({ open, setOpen, topicCid }) {
             );
           }
         });
-
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
@@ -212,38 +263,40 @@ export default function SupportModal({ open, setOpen, topicCid }) {
 
   return (
     <Wrapper>
-      <StyledModal
-        open={open}
-        dimmer
-        onClose={closeModal}
-        size="tiny"
-      >
+      <StyledModal open={open} dimmer onClose={closeModal} size="tiny">
         <StyledCard>
           <CloseBar>{closeButton}</CloseBar>
           <StyledTitle>Promise</StyledTitle>
           <StyledDescription>
-            Support the topic and promise rewards for answers. No need to deduct or lock up assets.
+            Support the topic and promise rewards for answers. No need to deduct
+            or lock up assets.
           </StyledDescription>
 
           <StyledText>Network</StyledText>
           <ChainWrapper>
             <ChainIcon chainName={account?.network} />
-            <div>
-              <Text>{account?.network}</Text>
-            </div>
+            <Text>{account?.network}</Text>
           </ChainWrapper>
 
           <ItemTitle>
             <StyledText>Asset</StyledText>
-            {account.network === "statemine" && <ManualSwitch>
-              <span>Manual</span>
-              <Toggle on={manualOn} setOn={setManualOn} />
-            </ManualSwitch>}
+            {account.network === "statemine" && (
+              <ManualSwitch>
+                <span>Manual</span>
+                <Toggle on={manualOn} setOn={setManualOn} />
+              </ManualSwitch>
+            )}
           </ItemTitle>
           {manualOn ? (
-            <AssetInput value={assetId} onChange={(e) => setAssetId(e.target.value)} />
+            <AssetInput
+              value={tokenIdentifier}
+              onChange={(e) => setTokenIdentifier(e.target.value)}
+            />
           ) : (
-            <AssetSelector setAsset={setSelectedAsset} />
+            <AssetSelector
+              network={account?.network}
+              setAsset={setSelectedAsset}
+            />
           )}
 
           <ItemTitle>
@@ -251,12 +304,12 @@ export default function SupportModal({ open, setOpen, topicCid }) {
           </ItemTitle>
           <AmountInput
             value={inputAmount}
-            symbol={selectedAsset}
+            symbol={loadingSymbol ? <Loading /> : symbol}
             onChange={(e) => setInputAmount(e.target.value)}
           />
 
           <ActionBar>
-            <Button primary onClick={doConfirm}>
+            <Button isLoading={loading} primary onClick={doConfirm}>
               Confirm
             </Button>
           </ActionBar>

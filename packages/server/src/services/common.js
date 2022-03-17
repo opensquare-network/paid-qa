@@ -1,7 +1,7 @@
 const BigNumber = require("bignumber.js");
 const { HttpError } = require("../utils/exc");
 
-export async function validateTokenAmount(tokenAmount, decimals) {
+async function validateTokenAmount(tokenAmount, decimals) {
   if (!tokenAmount.match(/^[\.\d]+$/)) {
     throw new HttpError(500, "Invalid reward value");
   }
@@ -13,3 +13,7 @@ export async function validateTokenAmount(tokenAmount, decimals) {
     throw new HttpError(500, "Invalid reward value");
   }
 }
+
+module.exports = {
+  validateTokenAmount,
+};

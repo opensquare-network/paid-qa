@@ -3,7 +3,7 @@ const {
   interactions: { SupportInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
-const { Reward } = require("../models");
+const { Topic, Reward } = require("../models");
 const { RewardCurrencyType } = require("../utils/constants");
 const {
   getApi,

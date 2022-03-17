@@ -7,6 +7,7 @@ import Item from "./Item";
 import { accountSelector } from "store/reducers/accountSlice";
 import { popUpConnect } from "store/reducers/showConnectSlice";
 import SupportModal from "components/SupportModal";
+import { calcSponserRewards } from "utils/rewards";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -77,6 +78,8 @@ export default function Promises({ topicCid, rewards }) {
     return null;
   }
 
+  const sumUpRewards = calcSponserRewards(rewards);
+
   return (
     <Card>
       <Title className="flex items-center justify-between">
@@ -84,20 +87,26 @@ export default function Promises({ topicCid, rewards }) {
         <img src="/imgs/icons/support.svg" alt="" />
       </Title>
       <ContentWrapper>
-        {rewards.map((reward, index) => (
+        {sumUpRewards.map((reward, index) => (
           <Item key={index} reward={reward} />
         ))}
       </ContentWrapper>
       <ButtonContainer>
         {account ? (
-          <SupportButton onClick={() => setOpenSupportModel(true)}>Support</SupportButton>
+          <SupportButton onClick={() => setOpenSupportModel(true)}>
+            Support
+          </SupportButton>
         ) : (
           <ConnectButton onClick={() => dispatch(popUpConnect())}>
             Conect Wallet
           </ConnectButton>
         )}
       </ButtonContainer>
-      <SupportModal topicCid={topicCid} open={openSupportModel} setOpen={setOpenSupportModel} />
+      <SupportModal
+        topicCid={topicCid}
+        open={openSupportModel}
+        setOpen={setOpenSupportModel}
+      />
     </Card>
   );
 }

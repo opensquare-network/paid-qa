@@ -13,16 +13,44 @@ const AssetWrapper = styled.div`
 function getAssetIcon(assetKey) {
   switch (assetKey) {
     case "karura": {
-      return <img src={"/imgs/icons/assets/karura.svg"} alt="" width={"24px"} height={"24px"} />
+      return (
+        <img
+          src={"/imgs/icons/assets/karura.svg"}
+          alt=""
+          width={"24px"}
+          height={"24px"}
+        />
+      );
     }
     case "rmrk": {
-      return <img src={"/imgs/icons/assets/rmrk.svg"} alt="" width={"24px"} height={"24px"} />
+      return (
+        <img
+          src={"/imgs/icons/assets/rmrk.svg"}
+          alt=""
+          width={"24px"}
+          height={"24px"}
+        />
+      );
     }
     case "polarisdao": {
-      return <img src={"/imgs/icons/assets/polarisdao.png"} alt="" width={"24px"} height={"24px"} />
+      return (
+        <img
+          src={"/imgs/icons/assets/polarisdao.png"}
+          alt=""
+          width={"24px"}
+          height={"24px"}
+        />
+      );
     }
     default: {
-      return <img src={"/imgs/icons/assets/unknown.svg"} alt="" width={"24px"} height={"24px"} />;
+      return (
+        <img
+          src={"/imgs/icons/assets/unknown.svg"}
+          alt=""
+          width={"24px"}
+          height={"24px"}
+        />
+      );
     }
   }
 }
@@ -36,28 +64,54 @@ function AssetItem({ assetKey, assetName }) {
   );
 }
 
-const assets = [
-  { id: "karura", name: "Karura", symbol: "KAR" },
-  { id: "rmrk", name: "RMRK", symbol: "RMRK" },
-  { id: "polarisdao", name: "PolarisDAO", symbol: "ARIS" },
-];
+const NetworkAssets = {
+  polkadot: [
+    { id: "polkadot", name: "Polkadot", symbol: "DOT", tokenIdentifier: "N" },
+  ],
+  kusama: [
+    { id: "kusama", name: "Kusama", symbol: "KSM", tokenIdentifier: "N" },
+  ],
+  statemine: [
+    { id: "kusama", name: "Kusama", symbol: "KSM", tokenIdentifier: "N" },
+    { id: "rmrk", name: "RMRK", symbol: "RMRK", tokenIdentifier: "8" },
+    {
+      id: "polarisdao",
+      name: "PolarisDAO",
+      symbol: "ARIS",
+      tokenIdentifier: "16",
+    },
+  ],
+  karura: [
+    { id: "karura", name: "Karura", symbol: "KAR", tokenIdentifier: "N" },
+  ],
+  khala: [{ id: "khala", name: "Khala", symbol: "PHA", tokenIdentifier: "N" }],
+  bifrost: [
+    { id: "bifrost", name: "Bifrost", symbol: "BNC", tokenIdentifier: "N" },
+  ],
+  kintsugi: [
+    { id: "kintsugi", name: "Kintsugi", symbol: "KINT", tokenIdentifier: "N" },
+  ],
+  westend: [
+    { id: "westend", name: "Westend", symbol: "WND", tokenIdentifier: "N" },
+  ],
+};
 
-const assetsOptions = assets.map((item, i) => {
-  return {
-    key: i,
-    value: i,
-    content: <AssetItem assetKey={item.id} assetName={item.name} />,
-  };
-});
-
-export default function AssetSelector({ setAsset }) {
+export default function AssetSelector({ network, setAsset }) {
   const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
+  const assets = NetworkAssets[network];
+  const assetsOptions = assets.map((item, i) => {
+    return {
+      key: i,
+      value: i,
+      content: <AssetItem assetKey={item.id} assetName={item.name} />,
+    };
+  });
 
   useEffect(() => {
     if (setAsset) {
-      setAsset(assets[selectedAssetIndex].symbol);
+      setAsset(assets[selectedAssetIndex]);
     }
-  }, [setAsset, selectedAssetIndex]);
+  }, [setAsset, assets, selectedAssetIndex]);
 
   return (
     <DropdownSelector
