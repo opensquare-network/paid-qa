@@ -28,11 +28,29 @@ export const signMessage = async (text, address) => {
 };
 
 export async function submitRemark(api, remark, account) {
+  const tx = api.tx.system.remark(remark);
+  return await signAndSendTx(tx, account);
+}
+
+export async function submitFund(api, remark, transfer, account) {
+  const txRemark = api.tx.system.remark(remark);
+  const txTransfer = transfer.tokenIdentifier === "N"
+    ? api.tx.balances.transfer(transfer.to, transfer.value)
+    : api.tx.assets.transfer(
+        transfer.tokenIdentifier,
+        transfer.to,
+        transfer.value
+      );
+  const txBatch = api.tx.utility.batch([txRemark, txTransfer]);
+  return await signAndSendTx(txBatch, account);
+}
+
+function signAndSendTx(tx, account) {
   return new Promise(async (resolve, reject) => {
     try {
-      const unsub = await api.tx.system
-        .remark(remark)
-        .signAndSend(account.address, ({ events = [], status }) => {
+      const unsub = await tx.signAndSend(
+        account.address,
+        ({ events = [], status }) => {
           if (status.isInBlock) {
             unsub();
 
@@ -45,7 +63,8 @@ export async function submitRemark(api, remark, account) {
               extrinsicIndex,
             });
           }
-        });
+        }
+      );
     } catch (e) {
       reject(e);
     }

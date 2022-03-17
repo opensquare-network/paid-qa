@@ -14,7 +14,7 @@ const IconsMap = {
   karura: "karura.svg",
   rmrk: "rmrk.svg",
   polarisdao: "polarisdao.png",
-}
+};
 
 function getAssetIcon(assetKey) {
   const icon = IconsMap[assetKey] || "unknown.svg";
@@ -39,33 +39,90 @@ function AssetItem({ assetKey, assetName }) {
 
 const NetworkAssets = {
   polkadot: [
-    { id: "polkadot", name: "Polkadot", symbol: "DOT", tokenIdentifier: "N" },
+    {
+      id: "polkadot",
+      name: "Polkadot",
+      symbol: "DOT",
+      decimals: 10,
+      tokenIdentifier: "N",
+    },
   ],
   kusama: [
-    { id: "kusama", name: "Kusama", symbol: "KSM", tokenIdentifier: "N" },
+    {
+      id: "kusama",
+      name: "Kusama",
+      symbol: "KSM",
+      decimals: 12,
+      tokenIdentifier: "N",
+    },
   ],
   statemine: [
-    { id: "kusama", name: "Kusama", symbol: "KSM", tokenIdentifier: "N" },
-    { id: "rmrk", name: "RMRK", symbol: "RMRK", tokenIdentifier: "8" },
+    {
+      id: "kusama",
+      name: "Kusama",
+      symbol: "KSM",
+      decimals: 12,
+      tokenIdentifier: "N",
+    },
+    {
+      id: "rmrk",
+      name: "RMRK",
+      symbol: "RMRK",
+      decimals: 10,
+      tokenIdentifier: "8",
+    },
     {
       id: "polarisdao",
       name: "PolarisDAO",
       symbol: "ARIS",
       tokenIdentifier: "16",
+      decimals: 8,
     },
   ],
   karura: [
-    { id: "karura", name: "Karura", symbol: "KAR", tokenIdentifier: "N" },
+    {
+      id: "karura",
+      name: "Karura",
+      symbol: "KAR",
+      decimals: 12,
+      tokenIdentifier: "N",
+    },
   ],
-  khala: [{ id: "khala", name: "Khala", symbol: "PHA", tokenIdentifier: "N" }],
+  khala: [
+    {
+      id: "khala",
+      name: "Khala",
+      symbol: "PHA",
+      decimals: 12,
+      tokenIdentifier: "N",
+    },
+  ],
   bifrost: [
-    { id: "bifrost", name: "Bifrost", symbol: "BNC", tokenIdentifier: "N" },
+    {
+      id: "bifrost",
+      name: "Bifrost",
+      symbol: "BNC",
+      decimals: 12,
+      tokenIdentifier: "N",
+    },
   ],
   kintsugi: [
-    { id: "kintsugi", name: "Kintsugi", symbol: "KINT", tokenIdentifier: "N" },
+    {
+      id: "kintsugi",
+      name: "Kintsugi",
+      symbol: "KINT",
+      decimals: 12,
+      tokenIdentifier: "N",
+    },
   ],
   westend: [
-    { id: "westend", name: "Westend", symbol: "WND", tokenIdentifier: "N" },
+    {
+      id: "westend",
+      name: "Westend",
+      symbol: "WND",
+      decimals: 12,
+      tokenIdentifier: "N",
+    },
   ],
 };
 

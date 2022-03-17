@@ -4,6 +4,7 @@ import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import Time from "@osn/common-ui/lib/Time";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 import NetworkUser from "../../User/NetworkUser";
+import ActionBar from "./ActionBar";
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -42,6 +43,7 @@ export default function Item({ answer }) {
       </div>
       <ContentWrapper>
         <div>{answer.content}</div>
+        <ActionBar answerCid={answer.cid} answerOwner={answer.signer} />
       </ContentWrapper>
     </Wrapper>
   );
