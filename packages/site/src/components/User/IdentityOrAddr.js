@@ -24,12 +24,13 @@ export default function IdentityOrAddr({
   network,
   iconSize,
   tooltipPosition,
+  noIcon,
 }) {
   const isMounted = useIsMounted();
   const [identity, setIdentity] = useState();
 
   useEffect(() => {
-    if (!address) {
+    if (!address || !network) {
       return;
     }
 
@@ -46,12 +47,14 @@ export default function IdentityOrAddr({
     <IdentityWrapper>
       {identity?.info && identity?.info?.status !== "NO_ID" ? (
         <>
-          <IdentityIcon
-            status={identity.info.status}
-            showTooltip
-            size={iconSize}
-            position={tooltipPosition}
-          />
+          {!noIcon && (
+            <IdentityIcon
+              status={identity.info.status}
+              showTooltip
+              size={iconSize}
+              position={tooltipPosition}
+            />
+          )}
           <Name>{identity.info.display}</Name>
         </>
       ) : (

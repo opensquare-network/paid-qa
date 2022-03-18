@@ -38,13 +38,20 @@ TopicSchema.virtual("appendants", {
   ref: "Appendant",
   localField: "cid",
   foreignField: "topicCid",
-  match: topic => ({ signer: topic.signer }),
+  match: (topic) => ({ signer: topic.signer }),
 });
 
 TopicSchema.virtual("answers", {
   ref: "Answer",
   localField: "cid",
   foreignField: "topicCid",
+});
+
+TopicSchema.virtual("answersCount", {
+  ref: "Answer",
+  localField: "cid",
+  foreignField: "topicCid",
+  count: true,
 });
 
 TopicSchema.index({ cid: 1 }, { unique: true });
