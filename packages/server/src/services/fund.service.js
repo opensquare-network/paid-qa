@@ -97,7 +97,7 @@ async function getFundSummary(topicCid) {
     .populate("funds")
     .populate({
       path: "answers",
-      options: { sort: { "createdAt": -1 } },
+      options: { sort: { "createdAt": 1 } },
       populate: "funds",
     });
 

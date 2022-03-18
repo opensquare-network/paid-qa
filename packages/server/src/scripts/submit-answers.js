@@ -62,6 +62,7 @@ async function startSubmitAnswers(api) {
       console.error(e);
     }
   }
+  //TODO: flush batch in periodic intervals
   await flushBatch(api);
 }
 
@@ -72,7 +73,7 @@ async function main() {
   while (true) {
     try {
       await startSubmitAnswers(api);
-      console.log(`Last pin at:`, new Date());
+      console.log(`Last submit at:`, new Date());
     } catch (e) {
       console.error(e);
     }

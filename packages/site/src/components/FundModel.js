@@ -6,7 +6,7 @@ import BigNumber from "bignumber.js";
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
 import styled from "styled-components";
-import { p_16_semibold } from "../styles/textStyles";
+import { p_16_semibold,  p_20_semibold } from "../styles/textStyles";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import Toggle from "@osn/common-ui/lib/Toggle";
@@ -122,6 +122,12 @@ const BalanceInfo = styled.div`
   }
 `;
 
+const StyledTitle = styled.header`
+  ${p_20_semibold};
+  color: #1e2134;
+  margin-bottom: 8px;
+`;
+
 export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
@@ -205,9 +211,11 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   }, [fetchAssetSymbol, manualOn, tokenIdentifier]);
 
   useEffect(() => {
-    setLoadingBalance(true);
-    fetchAssetBalance(tokenIdentifier);
-  }, [tokenIdentifier, fetchAssetBalance]);
+    if (open) {
+      setLoadingBalance(true);
+      fetchAssetBalance(tokenIdentifier);
+    }
+  }, [tokenIdentifier, fetchAssetBalance, open]);
 
   useEffect(() => {
     if (!manualOn && selectedAsset) {
@@ -306,6 +314,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
       <StyledModal open={open} dimmer onClose={closeModal} size="tiny">
         <StyledCard>
           <CloseBar>{closeButton}</CloseBar>
+          <StyledTitle>Fund</StyledTitle>
           <StyledText>Network</StyledText>
           <ChainWrapper>
             <ChainIcon chainName={account?.network} />
