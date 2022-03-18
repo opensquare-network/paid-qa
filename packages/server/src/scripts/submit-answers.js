@@ -3,9 +3,7 @@ dotenv.config();
 
 const {
   encoder: { InteractionEncoder },
-  interactions: {
-    AnswerInteraction,
-  }
+  interactions: { AnswerInteraction },
 } = require("@paid-qa/spec");
 const { Answer } = require("../models");
 const { PostStatus } = require("../utils/constants");
@@ -23,13 +21,17 @@ async function flushBatch(api) {
     return;
   }
 
-  const result = await submitRemarks(api, copiedBatch.map(i => i.remark));
+  const result = await submitRemarks(
+    api,
+    copiedBatch.map((i) => i.remark)
+  );
+
   if (result.status === "success") {
     await Answer.updateMany(
       {
         cid: {
-          $in: copiedBatch.map(i => i.answerCid)
-        }
+          $in: copiedBatch.map((i) => i.answerCid),
+        },
       },
       { status: PostStatus.Published }
     );
