@@ -23,7 +23,7 @@ import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
-import { setTopic } from "store/reducers/topicSlice";
+import { fetchTopic } from "store/reducers/topicSlice";
 import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
@@ -221,14 +221,8 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         .post(`/topics/${topicCid}/supports`, payload)
         .then(({ result, error }) => {
           if (result) {
-            // After support is added, update the topic
-            serverApi.fetch(`/topics/${topicCid}`).then(({ result }) => {
-              if (result) {
-                dispatch(setTopic(result));
-              }
-            });
+            dispatch(fetchTopic(topicCid));
           }
-
           if (error) {
             showErrorToast(error.message);
           }

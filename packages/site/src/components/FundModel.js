@@ -22,7 +22,8 @@ import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import serverApi from "services/serverApi";
-import { setTopic } from "store/reducers/topicSlice";
+import { fetchTopic, topicSelector } from "store/reducers/topicSlice";
+import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
 
 const { InteractionEncoder } = encoder;
 const { FundInteraction } = interactions;
@@ -135,6 +136,8 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   const [loadingSymbol, setLoadingSymbol] = useState(false);
   const [loadingBalance, setLoadingBalance] = useState(false);
   const isMounted = useIsMounted();
+  const answers = useSelector(answersSelector);
+  const topic = useSelector(topicSelector);
 
   const api = useApi();
 
@@ -271,11 +274,8 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
       serverApi.post(`/funds`, payload).then(({ result, error }) => {
         if (result) {
           // After fund is added, update the topic
-          serverApi.fetch(`/topics/${ipfsCid}`).then(({ result }) => {
-            if (result) {
-              dispatch(setTopic(result));
-            }
-          });
+          dispatch(fetchTopic(topic.cid));
+          dispatch(fetchAnswers(topic.cid, answers.page));
         }
 
         if (error) {
