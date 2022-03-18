@@ -25,7 +25,6 @@ const ItemWrapper = styled.div`
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 100;
       pointer-events: none;
     `}
   img, svg {
