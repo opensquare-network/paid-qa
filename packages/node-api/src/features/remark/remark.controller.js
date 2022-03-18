@@ -1,3 +1,4 @@
+const { Keyring } = require("@polkadot/api");
 const { hexToString } = require("@polkadot/util");
 const { getApis } = require("../../apis");
 const { isExtrinsicSuccess, extractBlockTime } = require("../utils");
@@ -125,6 +126,44 @@ async function getRemark(ctx) {
   }
 }
 
+function getKeyringPair() {
+  const phrase = process.env.POLKADOT_ACCOUNT_PHRASE;
+  if (!phrase) {
+    throw new Error("POLKADOT_ACCOUNT_PHRASE is not configured");
+  }
+
+  const keyring = new Keyring({ type: "sr25519" });
+  const pair = keyring.addFromUri(phrase);
+  return pair;
+}
+
+async function batchSendRemarks(ctx) {
+  const { chain } = ctx.params;
+  const { remarks } = ctx.request.body;
+
+  const apis = getApis(chain);
+  for (const api of apis) {
+    try {
+      const keyringPair = getKeyringPair();
+      const tx = api.tx.utility.batch(remarks.map(remark => api.tx.system.remark(remark)));
+      const result = await tx.signAndSend(keyringPair);
+      console.log("BatchSendRemarks to", chain, ":", remarks, "\nExtrinsic:", result.toJSON());
+      ctx.body = {
+        status: "success",
+        result: result.toJSON(),
+      };
+      return;
+    } catch (e) {
+      console.log("BatchSendRemarks:", e);
+    }
+  }
+
+  ctx.body = {
+    status: "failed",
+  };
+}
+
 module.exports = {
   getRemark,
+  batchSendRemarks,
 };

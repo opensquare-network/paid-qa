@@ -41,9 +41,19 @@ async function getAssetTokenInfo(api, assetId, blockHash) {
   }
 }
 
+async function submitRemarks(api, remarks) {
+  try {
+    const result = await api.post("/remark/batchsend", { remarks });
+    return result.data;
+  } catch (err) {
+    throw new HttpError(500, "Failed to submit remarks");
+  }
+}
+
 module.exports = {
   getApi,
   getRemark,
   getNativeTokenInfo,
   getAssetTokenInfo,
+  submitRemarks,
 };
