@@ -50,7 +50,8 @@ async function getAnswers(topicCid, page, pageSize) {
   const answers = await Answer.find(q)
     .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
-    .limit(pageSize);
+    .limit(pageSize)
+    .populate("funds");
 
   return {
     items: answers,

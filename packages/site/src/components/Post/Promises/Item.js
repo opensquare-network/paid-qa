@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import ProgressBar from "components/ProgressBar";
 import NetworkUser from "../../User/NetworkUser";
+import { useSelector } from "react-redux";
+import { fundSummarySelector } from "store/reducers/topicSlice";
+import BigNumber from "bignumber.js";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -15,13 +18,17 @@ const Token = styled.div`
 `;
 
 export default function Item({ reward }) {
+  const fundSummary = useSelector(fundSummarySelector);
+  const paidValue = fundSummary?.statsBySponsors?.[reward.sponsor]?.[reward.symbol] || 0;
+  const percent = new BigNumber(paidValue).div(reward.value).times(100).integerValue();
+
   return (
     <Wrapper>
       <div className="flex items-center justify-between">
         <NetworkUser address={reward.sponsor} network={reward.network} />
-        <Token>{`0/${reward.value} ${reward.symbol}`}</Token>
+        <Token>{`${paidValue}/${reward.value} ${reward.symbol}`}</Token>
       </div>
-      <ProgressBar percent={0} />
+      <ProgressBar percent={percent} />
     </Wrapper>
   );
 }

@@ -12,6 +12,7 @@ import serverApi from "services/serverApi";
 import RichEdit from "@osn/common-ui/lib/RichEdit";
 import { signMessage } from "services/chainApi";
 import NoReplies from 'components/NoReplies';
+import { answersSelector, fetchAnswers } from 'store/reducers/answerSlice';
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -36,26 +37,15 @@ const Count = styled.div`
 
 export default function Answers({ topicCid }) {
   const dispatch = useDispatch();
-  const [answers, setAnswers] = useState(null);
-  const [page, setPage] = useState(1);
+  const answers = useSelector(answersSelector);
   const account = useSelector(accountSelector);
+  const [page, setPage] = useState(1);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    serverApi.fetch(`/topics/${topicCid}/answers`, { page }).then(({ result, error }) => {
-      if (result) {
-        setAnswers(result);
-      }
-      if (error) {
-        dispatch(addToast({
-          type: ToastTypes.Error,
-          message: error.message
-        }));
-      }
-    });
-  }, [dispatch, topicCid, page, refresh]);
+    dispatch(fetchAnswers(topicCid, page));
+  }, [dispatch, topicCid, page]);
 
   const onSubmit = async () => {
     if (!account) {
@@ -89,7 +79,7 @@ export default function Answers({ topicCid }) {
 
       const { result, error } = await serverApi.post(`/topics/${topicCid}/answers`, payload);
       if (result) {
-        setRefresh(Date.now());
+        dispatch(fetchAnswers(topicCid, page));
       }
       if (error) {
         dispatch(addToast({

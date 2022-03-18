@@ -4,6 +4,7 @@ const Topic = require("./topic");
 const Reward = require("./reward");
 const Appendant = require("./appendant");
 const Answer = require("./answer");
+const Fund = require("./fund");
 
 mongoose.connect(MONGODB_URI);
 mongoose.connection.on("error", () => {
@@ -16,4 +17,5 @@ module.exports = {
   Reward,
   Appendant,
   Answer,
+  Fund,
 };

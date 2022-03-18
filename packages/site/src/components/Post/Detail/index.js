@@ -6,6 +6,7 @@ import Title from "./Title";
 import Description from "./Description";
 import Appendants from "./Appendants";
 import Share from "./Share";
+import ActionBar from "./ActionBar";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 
@@ -29,6 +30,7 @@ export default function Detail({ topic }) {
       <Title topic={topic} />
       {/* <Rewards rewards={topic.rewards} /> */}
       <Description topic={topic} />
+      <ActionBar topicCid={topic.cid} topicOwner={topic.signer} funds={topic.funds} />
       <Appendants
         topicCid={topic.cid}
         appendants={topic.appendants}

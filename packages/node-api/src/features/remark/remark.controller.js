@@ -2,6 +2,68 @@ const { hexToString } = require("@polkadot/util");
 const { getApis } = require("../../apis");
 const { isExtrinsicSuccess, extractBlockTime } = require("../utils");
 
+function handleRemarkCall(txRemark) {
+  const { section, method } = txRemark;
+  if (section !== "system" || method !== "remark") {
+    throw new Error("Not a remark");
+  }
+
+  const {
+    args: [remarkBytes],
+  } = txRemark;
+  const remark = hexToString(remarkBytes.toHex());
+  return {
+    remark,
+  };
+}
+
+function handleTransferCall(txTransfer) {
+  let tokenIdentifier, to, value;
+  const { section, method } = txTransfer;
+
+  if (section === "balances" && (method === "transfer" || method === "transferKeepAlive")) {
+    tokenIdentifier = "N";
+    [to, value] = txTransfer.args;
+  } else if (section === "assets" && method === "transfer") {
+    [tokenIdentifier, to, value] = txTransfer.args;
+  } else {
+    throw new Error("Not a transfer");
+  }
+
+  return {
+    transfer: {
+      tokenIdentifier,
+      to,
+      value,
+    }
+  };
+}
+
+function handleFundCall(txFund) {
+  const { section, method } = txFund;
+  if (section !== "utility" || method !== "batch") {
+    throw new Error("Not a FUND instruction");
+  }
+
+  const {
+    args: [txs]
+  } = txFund;
+
+  if (txs.length !== 2) {
+    throw new Error("Not a FUND instruction: batch length is not 2");
+  }
+
+  const [txRemark, txTransfer] = txs;
+
+  const { remark } = handleRemarkCall(txRemark);
+  const { transfer } = handleTransferCall(txTransfer);
+
+  return {
+    remark,
+    transfer,
+  };
+}
+
 async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
   const [block, events] = await Promise.all([
     api.rpc.chain.getBlock(blockHash),
@@ -13,24 +75,27 @@ async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
     throw new Error("Extrinsic not success");
   }
 
+  let data;
+
   const extrinsic = block.block.extrinsics[extrinsicIndex];
   const { section, method } = extrinsic.method;
-  if (section !== "system" || method !== "remark") {
-    throw new Error("Extrinsic is not a system remark");
+  if (section === "system" || method === "remark") {
+    data = handleRemarkCall(extrinsic.method);
+  } else if (section === "utility" && method === "batch") {
+    data = handleFundCall(extrinsic.method);
+  } else {
+    throw new Error("Extrinsic is not a PaidQA instruction");
   }
 
-  const {
-    args: [remarkBytes],
-  } = extrinsic.method;
   const signer = extrinsic.signer.toString();
   const blockTime = extractBlockTime(block.block.extrinsics);
-  const remark = hexToString(remarkBytes.toHex());
+
   return {
     blockHash,
     extrinsicIndex,
     blockTime,
-    remark,
     signer,
+    ...data,
   };
 }
 

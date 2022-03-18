@@ -6,11 +6,7 @@ import BigNumber from "bignumber.js";
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
 import styled from "styled-components";
-import {
-  p_14_normal,
-  p_16_semibold,
-  p_20_semibold,
-} from "../styles/textStyles";
+import { p_16_semibold } from "../styles/textStyles";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import Toggle from "@osn/common-ui/lib/Toggle";
@@ -19,17 +15,18 @@ import AmountInput from "./AmountInput";
 import AssetInput from "./AssetInput";
 import { useApi } from "utils/hooks";
 import { hexToString } from "@polkadot/util";
-import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
-import { submitRemark } from "services/chainApi";
+import { submitFund } from "services/chainApi";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
-import { fetchTopic } from "store/reducers/topicSlice";
 import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
+import serverApi from "services/serverApi";
+import { fetchFundSummary, fetchTopic, topicSelector } from "store/reducers/topicSlice";
+import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
 
 const { InteractionEncoder } = encoder;
-const { SupportInteraction } = interactions;
+const { FundInteraction } = interactions;
 
 const Wrapper = styled.div``;
 
@@ -45,21 +42,10 @@ const StyledCard = styled.div`
   width: 100% !important;
 `;
 
-const StyledTitle = styled.header`
-  ${p_20_semibold};
-  color: #1e2134;
-  margin-bottom: 8px;
-`;
-
 const StyledText = styled.p`
   ${p_16_semibold};
   color: #1e2134;
   margin-bottom: 8px;
-`;
-
-const StyledDescription = styled.p`
-  ${p_14_normal};
-  color: #506176;
 `;
 
 const CloseBar = styled.div`
@@ -116,17 +102,42 @@ const ItemTitle = styled.div`
   margin-top: 8px;
 `;
 
-export default function SupportModal({ open, setOpen, topicCid }) {
+const BalanceInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+
+  > :first-child {
+    color: #506176;
+  }
+
+  > :last-child {
+    color: #1e2134;
+  }
+`;
+
+export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [manualOn, setManualOn] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [symbol, setSymbol] = useState("");
+  const [decimals, setDecimals] = useState(0);
+  const [balance, setBalance] = useState("0");
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingSymbol, setLoadingSymbol] = useState(false);
+  const [loadingBalance, setLoadingBalance] = useState(false);
   const isMounted = useIsMounted();
+  const answers = useSelector(answersSelector);
+  const topic = useSelector(topicSelector);
 
   const api = useApi();
 
@@ -134,18 +145,52 @@ export default function SupportModal({ open, setOpen, topicCid }) {
     return debounce(async (assetId) => {
       if (!api || assetId === "N" || assetId === "") {
         setSymbol("");
+        setDecimals(0);
         setLoadingSymbol(false);
         return;
       }
       const metadata = await api.query.assets.metadata(assetId);
-      const { symbol: hexSymbol } = metadata.toJSON();
+      const { symbol: hexSymbol, decimals } = metadata.toJSON();
       const symbol = hexToString(hexSymbol);
       if (isMounted.current) {
         setSymbol(symbol);
+        setDecimals(decimals);
         setLoadingSymbol(false);
       }
     }, 300);
   }, [api, isMounted]);
+
+  const fetchAssetBalance = useMemo(() => {
+    return debounce(async (assetId) => {
+      if (!api || assetId === "" || !account?.address) {
+        setBalance("0");
+        setLoadingBalance(false);
+        return;
+      }
+
+      let balance = "0";
+      if (assetId === "N") {
+        const systemBalance = await api.query.system.account(account.address);
+        const {
+          data: { free },
+        } = systemBalance.toJSON();
+        balance = new BigNumber(free).div(Math.pow(10, decimals)).toFixed();
+      } else {
+        const assetAccount = await api.query.assets.account(
+          assetId,
+          account.address
+        );
+        const { balance: hexBalance } = assetAccount.toJSON();
+        balance = new BigNumber(hexBalance)
+          .div(Math.pow(10, decimals))
+          .toFixed();
+      }
+      if (isMounted.current) {
+        setBalance(balance);
+        setLoadingBalance(false);
+      }
+    }, 300);
+  }, [api, account?.address, decimals, isMounted]);
 
   useEffect(() => {
     if (manualOn) {
@@ -160,9 +205,15 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   }, [fetchAssetSymbol, manualOn, tokenIdentifier]);
 
   useEffect(() => {
+    setLoadingBalance(true);
+    fetchAssetBalance(tokenIdentifier);
+  }, [tokenIdentifier, fetchAssetBalance]);
+
+  useEffect(() => {
     if (!manualOn && selectedAsset) {
       setTokenIdentifier(selectedAsset.tokenIdentifier);
       setSymbol(selectedAsset.symbol);
+      setDecimals(selectedAsset.decimals);
     }
   }, [selectedAsset, manualOn]);
 
@@ -193,11 +244,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
       return showErrorToast("Amount is invalid");
     }
 
-    const interaction = new SupportInteraction(
-      tokenIdentifier,
-      inputAmount,
-      topicCid
-    );
+    const interaction = new FundInteraction(ipfsCid);
     if (!interaction.isValid) {
       return showErrorToast("Interaction is invalid");
     }
@@ -206,9 +253,16 @@ export default function SupportModal({ open, setOpen, topicCid }) {
     try {
       setLoading(true);
 
-      const { blockHash, extrinsicIndex } = await submitRemark(
+      const { blockHash, extrinsicIndex } = await submitFund(
         api,
         remark,
+        {
+          tokenIdentifier,
+          value: new BigNumber(inputAmount)
+            .times(Math.pow(10, decimals))
+            .toString(),
+          to: beneficiary,
+        },
         account
       );
       const payload = {
@@ -217,16 +271,18 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         extrinsicIndex,
       };
 
-      serverApi
-        .post(`/topics/${topicCid}/supports`, payload)
-        .then(({ result, error }) => {
-          if (result) {
-            dispatch(fetchTopic(topicCid));
-          }
-          if (error) {
-            showErrorToast(error.message);
-          }
-        });
+      serverApi.post(`/funds`, payload).then(({ result, error }) => {
+        if (result) {
+          // After fund is added, update the topic
+          dispatch(fetchTopic(topic.cid));
+          dispatch(fetchAnswers(topic.cid, answers.page));
+          dispatch(fetchFundSummary(topic.cid));
+        }
+
+        if (error) {
+          showErrorToast(error.message);
+        }
+      });
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
@@ -250,12 +306,6 @@ export default function SupportModal({ open, setOpen, topicCid }) {
       <StyledModal open={open} dimmer onClose={closeModal} size="tiny">
         <StyledCard>
           <CloseBar>{closeButton}</CloseBar>
-          <StyledTitle>Promise</StyledTitle>
-          <StyledDescription>
-            Support the topic and promise rewards for answers. No need to deduct
-            or lock up assets.
-          </StyledDescription>
-
           <StyledText>Network</StyledText>
           <ChainWrapper>
             <ChainIcon chainName={account?.network} />
@@ -291,6 +341,17 @@ export default function SupportModal({ open, setOpen, topicCid }) {
             symbol={loadingSymbol ? <Loading /> : symbol}
             onChange={(e) => setInputAmount(e.target.value)}
           />
+
+          <BalanceInfo>
+            <span>Balance</span>
+            <span>
+              {loadingBalance || loadingSymbol ? (
+                <Loading />
+              ) : (
+                `${balance} ${symbol}`
+              )}
+            </span>
+          </BalanceInfo>
 
           <ActionBar>
             <Button isLoading={loading} primary onClick={doConfirm}>

@@ -7,6 +7,7 @@ const featureRouters = [
   require("./features/answer/routes"),
   require("./features/account/routes"),
   require("./features/support/routes"),
+  require("./features/fund/routes"),
 ];
 
 for (const r of featureRouters) {
