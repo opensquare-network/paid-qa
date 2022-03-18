@@ -76,6 +76,7 @@ export const ChainSS58Format = Object.freeze({
   [Chains.khala]: 30,
   [Chains.bifrost]: 6,
   [Chains.kintsugi]: 2092,
+  [Chains.westend]: 2,
 });
 
 //todo: add more

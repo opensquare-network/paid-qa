@@ -67,7 +67,7 @@ export default function Topic({ topic }) {
     <Wrapper>
       <MobileInvisible>
         <ReplyWrapper>
-          <div>{topic.replies?.length || 0}</div>
+          <div>{topic.answersCount || 0}</div>
           <div>Replies</div>
         </ReplyWrapper>
       </MobileInvisible>

@@ -1,13 +1,21 @@
 import debounce from "lodash.debounce";
+import { encodeAddress } from "@polkadot/util-crypto";
+import { Chains, ChainSS58Format } from "../utils/constants";
 
-class Deferred {
-  constructor() {
-    this.promise = new Promise((resolve, reject) => {
-      this.resolve = resolve;
-      this.reject = reject;
-    });
+export default function encodeAddressByChain(origin, chain) {
+  const ss58Format = ChainSS58Format[chain];
+  if (typeof ss58Format === "undefined") {
+    throw new Error(`Can not find ss58Format for ${chain}`);
   }
+
+  return encodeAddress(origin, ss58Format);
 }
+
+export const identityChainMap = Object.freeze({
+  [Chains.kintsugi]: [Chains.kusama],
+  [Chains.statemine]: [Chains.kusama],
+  [Chains.karura]: [Chains.kusama],
+});
 
 const cachedIdentities = new Map();
 let pendingQueries = new Map();
@@ -46,7 +54,7 @@ const delayQuery = debounce(() => {
       .then((data) => {
         const identities = new Map(data.map((item) => [item.address, item]));
 
-        for (const [idName, { resolve }] of pending) {
+        for (const [idName, [, resolve, reject]] of pending) {
           const [chainOfIdName, addrOfIdName] = idName.split("/");
           if (chainOfIdName !== chain) {
             continue;
@@ -60,12 +68,24 @@ const delayQuery = debounce(() => {
           }
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        for (const [idName, [, , reject]] of pending) {
+          const [chainOfIdName] = idName.split("/");
+          if (chainOfIdName !== chain) {
+            continue;
+          }
+          if (reject) {
+            reject();
+          }
+        }
+      });
   }
 }, 0);
 
 export function fetchIdentity(chain, address) {
-  const idName = `${chain}/${address}`;
+  const targetChain = identityChainMap[chain] || chain;
+  const targetAddress = encodeAddressByChain(address, targetChain);
+  const idName = `${targetChain}/${targetAddress}`;
   if (cachedIdentities.has(idName)) {
     return Promise.resolve(cachedIdentities.get(idName));
   }
@@ -73,9 +93,16 @@ export function fetchIdentity(chain, address) {
   const pending = pendingQueries;
 
   if (!pending.has(idName)) {
-    pending.set(idName, new Deferred());
-    delayQuery();
+    pending.set(idName, [
+      new Promise((resolve, reject) =>
+        setTimeout(() => {
+          const promise = pending.get(idName);
+          promise.push(resolve, reject);
+          delayQuery();
+        }, 0)
+      ),
+    ]);
   }
 
-  return pending.get(idName).promise;
+  return pending.get(idName)[0];
 }

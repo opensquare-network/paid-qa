@@ -47,7 +47,6 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     );
   }
 
-
   // Get reward currency type and amount from system remark
   const { tokenIdentifier, tokenAmount } = interaction.toJSON();
 
@@ -143,6 +142,7 @@ async function getTopics(page, pageSize) {
     .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
+    .populate("answersCount")
     .populate("rewards");
 
   return {

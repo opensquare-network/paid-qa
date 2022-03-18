@@ -1,13 +1,13 @@
-import DividerWrapper from '@osn/common-ui/lib/styled/DividerWrapper';
-import styled from 'styled-components';
-import { addressEllipsis } from '@osn/common-ui/lib/utils/address';
+import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
+import styled from "styled-components";
+import IdentityOrAddr from "./User/IdentityOrAddr";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin: 16px 0;
 
-  background: #FBFCFE;
+  background: #fbfcfe;
 
   font-style: normal;
   font-weight: 400;
@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.span`
-  color: #A1A8B3;
+  color: #a1a8b3;
   white-space: nowrap;
 `;
 
@@ -30,8 +30,7 @@ const Items = styled.div`
   }
 `;
 
-const Item = styled(DividerWrapper)`
-`;
+const Item = styled(DividerWrapper)``;
 
 export default function Funders({ funds }) {
   return (
@@ -40,8 +39,14 @@ export default function Funders({ funds }) {
       <Items>
         {funds?.map((fund, index) => (
           <Item key={index}>
-            <span>{addressEllipsis(fund.sponsor)}</span>
-            <span>{fund.value} {fund.symbol}</span>
+            <IdentityOrAddr
+              address={fund.sponsor}
+              network={fund.network}
+              noIcon
+            />
+            <span>
+              {fund.value} {fund.symbol}
+            </span>
           </Item>
         ))}
       </Items>
