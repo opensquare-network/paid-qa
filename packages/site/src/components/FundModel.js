@@ -268,33 +268,24 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         extrinsicIndex,
       };
 
-      serverApi
-        .post(`/funds`, payload)
-        .then(({ result, error }) => {
-          console.log({result, error});
-          if (result) {
-            // After appendant is added, update the topic
-            serverApi.fetch(`/topics/${ipfsCid}`).then(({ result }) => {
-              if (result) {
-                dispatch(setTopic(result));
-              }
-            });
-          }
+      serverApi.post(`/funds`, payload).then(({ result, error }) => {
+        if (result) {
+          // After fund is added, update the topic
+          serverApi.fetch(`/topics/${ipfsCid}`).then(({ result }) => {
+            if (result) {
+              dispatch(setTopic(result));
+            }
+          });
+        }
 
-          if (error) {
-            dispatch(
-              addToast({
-                type: ToastTypes.Error,
-                message: error.message,
-              })
-            );
-          }
-        });
+        if (error) {
+          showErrorToast(error.message);
+        }
+      });
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
       }
-
       return showErrorToast(e.toString());
     } finally {
       setLoading(false);
@@ -314,7 +305,6 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
       <StyledModal open={open} dimmer onClose={closeModal} size="tiny">
         <StyledCard>
           <CloseBar>{closeButton}</CloseBar>
-          {/* <StyledTitle>Promise</StyledTitle> */}
           <StyledText>Network</StyledText>
           <ChainWrapper>
             <ChainIcon chainName={account?.network} />

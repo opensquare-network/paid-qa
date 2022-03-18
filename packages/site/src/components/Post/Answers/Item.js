@@ -43,7 +43,7 @@ export default function Item({ answer }) {
       </div>
       <ContentWrapper>
         <div>{answer.content}</div>
-        <ActionBar answerCid={answer.cid} answerOwner={answer.signer} />
+        <ActionBar answerCid={answer.cid} answerOwner={answer.signer} funds={answer.funds} />
       </ContentWrapper>
     </Wrapper>
   );

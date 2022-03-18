@@ -41,16 +41,18 @@ const Expand = styled.div`
   align-items: center;
 `;
 
-export default function FundButton({ text, expand, setExpand, onFund }) {
+export default function FundButton({ text, expand, setExpand, onFund, canExpand }) {
   return (
     <Wrapper>
       <Fund onClick={onFund}>
         <FundIcon />
         <Text>{text}</Text>
       </Fund>
-      <Expand onClick={() => setExpand(!expand)}>
-        {expand ? <ExpandUpIcon /> : <ExpandDownIcon />}
-      </Expand>
+      {canExpand && (
+        <Expand onClick={() => setExpand(!expand)}>
+          {expand ? <ExpandUpIcon /> : <ExpandDownIcon />}
+        </Expand>
+      )}
     </Wrapper>
   );
 }

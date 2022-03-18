@@ -17,8 +17,15 @@ const AnswerSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
   }
 );
+
+AnswerSchema.virtual("funds", {
+  ref: "Fund",
+  localField: "cid",
+  foreignField: "ipfsCid",
+});
 
 AnswerSchema.index({ cid: 1 }, { unique: true });
 AnswerSchema.index({ topicCid: 1 });

@@ -221,7 +221,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         .post(`/topics/${topicCid}/supports`, payload)
         .then(({ result, error }) => {
           if (result) {
-            // After appendant is added, update the topic
+            // After support is added, update the topic
             serverApi.fetch(`/topics/${topicCid}`).then(({ result }) => {
               if (result) {
                 dispatch(setTopic(result));
@@ -230,25 +230,14 @@ export default function SupportModal({ open, setOpen, topicCid }) {
           }
 
           if (error) {
-            dispatch(
-              addToast({
-                type: ToastTypes.Error,
-                message: error.message,
-              })
-            );
+            showErrorToast(error.message);
           }
         });
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
       }
-
-      return dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      return showErrorToast(e.toString());
     } finally {
       setLoading(false);
     }

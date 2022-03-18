@@ -37,7 +37,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     throw new HttpError(500, "System remark is not valid");
   }
 
-  const cid = cidOf(data);
+  const cid = await cidOf(data);
 
   // Verfify if ipfs cid is the same as the one in the system remark
   if (interaction.topicIpfsCid !== cid) {
@@ -46,6 +46,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
       "System remark topic cid does not match the ipfs content"
     );
   }
+
 
   // Get reward currency type and amount from system remark
   const { tokenIdentifier, tokenAmount } = interaction.toJSON();
@@ -125,7 +126,8 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
 async function getTopic(cid) {
   const topic = await Topic.findOne({ cid })
     .populate("rewards")
-    .populate("appendants");
+    .populate("appendants")
+    .populate("funds");
   return topic;
 }
 

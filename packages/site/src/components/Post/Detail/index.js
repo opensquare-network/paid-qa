@@ -30,7 +30,7 @@ export default function Detail({ topic }) {
       <Title topic={topic} />
       {/* <Rewards rewards={topic.rewards} /> */}
       <Description topic={topic} />
-      <ActionBar topicCid={topic.cid} topicOwner={topic.signer} />
+      <ActionBar topicCid={topic.cid} topicOwner={topic.signer} funds={topic.funds} />
       <Appendants
         topicCid={topic.cid}
         appendants={topic.appendants}

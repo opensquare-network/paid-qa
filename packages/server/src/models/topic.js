@@ -28,6 +28,12 @@ TopicSchema.virtual("rewards", {
   foreignField: "topicCid",
 });
 
+TopicSchema.virtual("funds", {
+  ref: "Fund",
+  localField: "cid",
+  foreignField: "ipfsCid",
+});
+
 TopicSchema.virtual("appendants", {
   ref: "Appendant",
   localField: "cid",
