@@ -37,7 +37,7 @@ export default function Funds({ topicCid }) {
   }, [dispatch, topicCid]);
 
   const stats = fundSummary?.statsByAnswers;
-  if (!stats) {
+  if (!stats || Object.keys(stats).length === 0) {
     return null;
   }
 
