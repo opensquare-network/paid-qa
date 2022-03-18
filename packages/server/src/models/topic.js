@@ -41,6 +41,12 @@ TopicSchema.virtual("appendants", {
   match: topic => ({ signer: topic.signer }),
 });
 
+TopicSchema.virtual("answers", {
+  ref: "Answer",
+  localField: "cid",
+  foreignField: "topicCid",
+});
+
 TopicSchema.index({ cid: 1 }, { unique: true });
 
 const Topic = mongoose.model("Topic", TopicSchema);

@@ -22,7 +22,7 @@ import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import serverApi from "services/serverApi";
-import { fetchTopic, topicSelector } from "store/reducers/topicSlice";
+import { fetchFundSummary, fetchTopic, topicSelector } from "store/reducers/topicSlice";
 import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
 
 const { InteractionEncoder } = encoder;
@@ -276,6 +276,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
           // After fund is added, update the topic
           dispatch(fetchTopic(topic.cid));
           dispatch(fetchAnswers(topic.cid, answers.page));
+          dispatch(fetchFundSummary(topic.cid));
         }
 
         if (error) {

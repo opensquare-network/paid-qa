@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 import Card from "@osn/common-ui/lib/styled/Card";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFundSummary, fundSummarySelector } from "store/reducers/topicSlice";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -26,7 +29,18 @@ const Item = styled.div`
   }
 `;
 
-export default function Promises() {
+export default function Funds({ topicCid }) {
+  const dispatch = useDispatch();
+  const fundSummary = useSelector(fundSummarySelector);
+  useEffect(() => {
+    dispatch(fetchFundSummary(topicCid));
+  }, [dispatch, topicCid]);
+
+  const stats = fundSummary?.statsByAnswers;
+  if (!stats) {
+    return null;
+  }
+
   return (
     <Card>
       <Title className="flex items-center justify-between">
@@ -34,14 +48,27 @@ export default function Promises() {
         <img src="/imgs/icons/status.svg" alt="" />
       </Title>
       <ContentWrapper>
-        <Item>
-          <div>#21</div>
-          <div>1 RMRK</div>
-        </Item>
-        <Item>
-          <div>#28</div>
-          <div>1.26 DOT</div>
-        </Item>
+        {
+          Object.keys(stats || {}).map((key, index) => {
+            const item = stats[key];
+            return (
+              <Item key={index}>
+                <div>{key === "0" ? "Topic" : `#${key}`}</div>
+                <div>
+                  {
+                    Object.keys(item || {}).map((symbol, index) => {
+                      return (
+                        <div key={index}>
+                          {`${item[symbol]} ${symbol}`}
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              </Item>
+            )
+          })
+        }
       </ContentWrapper>
     </Card>
   );

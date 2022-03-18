@@ -23,6 +23,13 @@ async function addFund(ctx) {
   );
 }
 
+async function getFundSummary(ctx) {
+  const { topicCid } = ctx.params;
+
+  ctx.body = await fundService.getFundSummary(topicCid);
+}
+
 module.exports = {
   addFund,
+  getFundSummary,
 };
