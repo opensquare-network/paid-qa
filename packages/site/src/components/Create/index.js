@@ -149,8 +149,6 @@ export default function Create() {
     const interaction = new NewInteraction("N", rewardAmount, cid);
     const remark = new InteractionEncoder(interaction).getRemark();
 
-    console.log(remark);
-
     try {
       const { blockHash, extrinsicIndex } = await submitRemark(api, remark, account);
 
@@ -160,8 +158,6 @@ export default function Create() {
         blockHash,
         extrinsicIndex,
       };
-
-      console.log(blockHash, extrinsicIndex);
 
       serverApi.post(`/topics/`, payload).then(({ result }) => {
         if (result?.cid) {
