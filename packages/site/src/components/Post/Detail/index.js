@@ -9,6 +9,7 @@ import Share from "./Share";
 import ActionBar from "./ActionBar";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
+import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 
 const Wrapper = styled(Card)`
   > :not(:first-child) {
@@ -23,16 +24,23 @@ const Wrapper = styled(Card)`
 export default function Detail({ topic }) {
   const account = useSelector(accountSelector);
   const isOwner =
-    account?.address === topic.signer && account?.network === topic.network;
+    account?.address &&
+    encodeNetworkAddress(account?.address, topic.network) ===
+      encodeNetworkAddress(topic.signer, topic.network);
 
   return (
     <Wrapper>
       <Title topic={topic} />
       {/* <Rewards rewards={topic.rewards} /> */}
       <Description topic={topic} />
-      <ActionBar topicCid={topic.cid} topicOwner={topic.signer} funds={topic.funds} />
+      <ActionBar
+        topicCid={topic.cid}
+        topicOwner={topic.signer}
+        funds={topic.funds}
+      />
       <Appendants
         topicCid={topic.cid}
+        topicNetwork={topic.network}
         appendants={topic.appendants}
         isOwner={isOwner}
       />
