@@ -1,15 +1,6 @@
 import debounce from "lodash.debounce";
-import { encodeAddress } from "@polkadot/util-crypto";
-import { Chains, ChainSS58Format } from "../utils/constants";
-
-export default function encodeAddressByChain(origin, chain) {
-  const ss58Format = ChainSS58Format[chain];
-  if (typeof ss58Format === "undefined") {
-    throw new Error(`Can not find ss58Format for ${chain}`);
-  }
-
-  return encodeAddress(origin, ss58Format);
-}
+import { encodeAddressByChain } from "../utils/address";
+import { Chains } from "../utils/constants";
 
 export const identityChainMap = Object.freeze({
   [Chains.kintsugi]: [Chains.kusama],
