@@ -43,7 +43,7 @@ const MyLoader = (props) => {
 export default function TopicsList({ topics }) {
   return (
     <Wrapper>
-      {!topics ? (
+      {topics === null ? (
         <LoaderWrapper>
           <MyLoader />
           <MyLoader />
