@@ -3,7 +3,10 @@ import styled from "styled-components";
 import Card from "@osn/common-ui/lib/styled/Card";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFundSummary, fundSummarySelector } from "store/reducers/topicSlice";
+import {
+  fetchFundSummary,
+  fundSummarySelector,
+} from "store/reducers/topicSlice";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -29,6 +32,14 @@ const Item = styled.div`
   }
 `;
 
+const GreyText = styled.p`
+  color: #a1a8b3;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+`;
+
 export default function Funds({ topicCid }) {
   const dispatch = useDispatch();
   const fundSummary = useSelector(fundSummarySelector);
@@ -37,38 +48,30 @@ export default function Funds({ topicCid }) {
   }, [dispatch, topicCid]);
 
   const stats = fundSummary?.statsByAnswers;
-  if (!stats || Object.keys(stats).length === 0) {
-    return null;
-  }
 
   return (
     <Card>
       <Title className="flex items-center justify-between">
         <div>Funds</div>
-        <img src="/imgs/icons/status.svg" alt="" />
+        <img src="/imgs/icons/treasury.svg" alt="" />
       </Title>
       <ContentWrapper>
-        {
-          Object.keys(stats || {}).map((key, index) => {
-            const item = stats[key];
-            return (
-              <Item key={index}>
-                <div>{key === "0" ? "Topic" : `#${key}`}</div>
-                <div>
-                  {
-                    Object.keys(item || {}).map((symbol, index) => {
-                      return (
-                        <div key={index}>
-                          {`${item[symbol]} ${symbol}`}
-                        </div>
-                      );
-                    })
-                  }
-                </div>
-              </Item>
-            )
-          })
-        }
+        {(!stats || Object.keys(stats).length === 0) && (
+          <GreyText>No funds</GreyText>
+        )}
+        {Object.keys(stats || {}).map((key, index) => {
+          const item = stats[key];
+          return (
+            <Item key={index}>
+              <div>{key === "0" ? "Topic" : `#${key}`}</div>
+              <div>
+                {Object.keys(item || {}).map((symbol, index) => {
+                  return <div key={index}>{`${item[symbol]} ${symbol}`}</div>;
+                })}
+              </div>
+            </Item>
+          );
+        })}
       </ContentWrapper>
     </Card>
   );
