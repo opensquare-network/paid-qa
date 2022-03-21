@@ -5,6 +5,7 @@ import TagList from "components/TagList";
 import Time from "@osn/common-ui/lib/Time";
 import MobileInvisible from "components/MobileInvisible";
 import NetworkUser from "../../User/NetworkUser";
+import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -25,6 +26,7 @@ const RepliesCount = styled.span`
 `;
 
 export default function Title({ topic }) {
+  const signerAddress = encodeNetworkAddress(topic.signer, topic.network);
   return (
     <Wrapper>
       <div>{topic.title}</div>
@@ -32,7 +34,7 @@ export default function Title({ topic }) {
         <DividerWrapper>
           <MobileInvisible>
             <NetworkUser
-              address={topic.signer}
+              address={signerAddress}
               network={topic.network}
               tooltipPosition="down"
             />

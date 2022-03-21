@@ -5,6 +5,7 @@ import Time from "@osn/common-ui/lib/Time";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 import NetworkUser from "../../User/NetworkUser";
 import ActionBar from "./ActionBar";
+import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -24,12 +25,13 @@ const ContentWrapper = styled.div`
 `;
 
 export default function Item({ answer }) {
+  const signerAddress = encodeNetworkAddress(answer.signer, answer.network);
   return (
     <Wrapper>
       <div className="flex items-center justify-between">
         <DividerWrapper>
           <NetworkUser
-            address={answer.signer}
+            address={signerAddress}
             network={answer.network}
             tooltipPosition="down"
           />
@@ -43,7 +45,11 @@ export default function Item({ answer }) {
       </div>
       <ContentWrapper>
         <div>{answer.content}</div>
-        <ActionBar answerCid={answer.cid} answerOwner={answer.signer} funds={answer.funds} />
+        <ActionBar
+          answerCid={answer.cid}
+          answerOwner={answer.signer}
+          funds={answer.funds}
+        />
       </ContentWrapper>
     </Wrapper>
   );
