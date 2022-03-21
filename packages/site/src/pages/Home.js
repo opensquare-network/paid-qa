@@ -9,6 +9,7 @@ import TopicsList from "components/TopicsList";
 import Background from "components/Background";
 import { setTopics, topicsSelector } from "store/reducers/topicSlice";
 import serverApi from "services/serverApi";
+import { addToast, ToastTypes } from "../store/reducers/toastSlice";
 
 const Wrapper = styled.div`
   position: relative;
@@ -37,8 +38,14 @@ export default function Home() {
   const topics = useSelector(topicsSelector);
   useEffect(() => {
     serverApi.fetch("/topics").then(({ result, error }) => {
-      if (result) {
-        dispatch(setTopics(result));
+      dispatch(setTopics(result ?? { items: [] }));
+      if (error) {
+        dispatch(
+          addToast({
+            type: ToastTypes.Error,
+            message: error?.message || "Failed to load topics",
+          })
+        );
       }
     });
   }, [dispatch]);
