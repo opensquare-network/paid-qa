@@ -8,6 +8,7 @@ async function postAnswer(data) {
   const {
     answer,
     address: signer,
+    network,
     signature,
   } = data;
   const { topic: topicCid, content } = answer;
@@ -19,11 +20,6 @@ async function postAnswer(data) {
     throw new HttpError(400, "Signature is invalid");
   }
 
-  const topic = await Topic.findOne({ cid: topicCid });
-  if (!topic) {
-    throw new HttpError(500, "Topic does not exist");
-  }
-
   const cid = await cidOf(data);
 
   await Answer.create(
@@ -31,7 +27,7 @@ async function postAnswer(data) {
       cid,
       topicCid,
       content,
-      network: topic.network,
+      network,
       signer,
       signature,
       pinned: false,

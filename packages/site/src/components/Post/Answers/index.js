@@ -13,6 +13,7 @@ import RichEdit from "@osn/common-ui/lib/RichEdit";
 import { signMessage } from "services/chainApi";
 import NoReplies from 'components/NoReplies';
 import { answersSelector, fetchAnswers } from 'store/reducers/answerSlice';
+import { encodeAddressByChain } from "@osn/common-ui/lib/utils/address";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -73,7 +74,8 @@ export default function Answers({ topicCid }) {
       const signature = await signMessage(msg, account.address);
       const payload = {
         answer,
-        address: account.address,
+        address: encodeAddressByChain(account.address, account.network),
+        network: account.network,
         signature,
       };
 

@@ -1,15 +1,6 @@
 import debounce from "lodash.debounce";
-import { encodeAddress } from "@polkadot/util-crypto";
-import { Chains, ChainSS58Format } from "../utils/constants";
-
-export default function encodeAddressByChain(origin, chain) {
-  const ss58Format = ChainSS58Format[chain];
-  if (typeof ss58Format === "undefined") {
-    throw new Error(`Can not find ss58Format for ${chain}`);
-  }
-
-  return encodeAddress(origin, ss58Format);
-}
+import { Chains } from "../utils/constants";
+import { encodeNetworkAddress } from "../utils/address";
 
 export const identityChainMap = Object.freeze({
   [Chains.kintsugi]: [Chains.kusama],
@@ -84,7 +75,7 @@ const delayQuery = debounce(() => {
 
 export function fetchIdentity(chain, address) {
   const targetChain = identityChainMap[chain] || chain;
-  const targetAddress = encodeAddressByChain(address, targetChain);
+  const targetAddress = encodeNetworkAddress(address, targetChain);
   const idName = `${targetChain}/${targetAddress}`;
   if (cachedIdentities.has(idName)) {
     return Promise.resolve(cachedIdentities.get(idName));

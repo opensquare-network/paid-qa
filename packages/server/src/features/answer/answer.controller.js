@@ -15,6 +15,7 @@ async function postAnswer(ctx) {
   const {
     answer: { topic, content } = {},
     address,
+    network,
     signature,
   } = data;
 
@@ -28,6 +29,10 @@ async function postAnswer(ctx) {
 
   if (!address) {
     throw new HttpError(400, "Address is missing");
+  }
+
+  if (!network) {
+    throw new HttpError(400, "Network is missing");
   }
 
   if (!signature) {
