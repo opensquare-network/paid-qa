@@ -6,6 +6,7 @@ import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import MobileInvisible from "components/MobileInvisible";
 import Time from "@osn/common-ui/lib/Time";
 import NetworkUser from "./User/NetworkUser";
+import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 
 const Wrapper = styled.div`
   padding: 24px;
@@ -63,6 +64,7 @@ const Divider = styled.div`
 `;
 
 export default function Topic({ topic }) {
+  const signerAddress = encodeNetworkAddress(topic.signer, topic.network);
   return (
     <Wrapper>
       <MobileInvisible>
@@ -78,7 +80,7 @@ export default function Topic({ topic }) {
           <DividerWrapper>
             <MobileInvisible>
               <NetworkUser
-                address={topic.signer}
+                address={signerAddress}
                 network={topic.network}
                 iconSize={14}
                 tooltipPosition="down"

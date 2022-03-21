@@ -5,9 +5,8 @@ import { ReactComponent as ExitIcon } from "@osn/common-ui/lib/Account/exit.svg"
 import { ReactComponent as CircleIcon } from "@osn/common-ui/lib/Account/circle.svg";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
-import { ChainSS58Format } from "@osn/common-ui/lib/utils/constants";
-import { encodeAddress } from "@polkadot/util-crypto";
 import NetworkUser from "./NetworkUser";
+import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 
 const Wrapper = styled.div`
   position: relative;
@@ -141,12 +140,8 @@ export function addressEllipsis(address, start = 4, end = 4) {
 
 function ConnectedAccount({ account, showMenu, setShowMenu }) {
   const dispatch = useDispatch();
-  const ss58Format = ChainSS58Format[account.network];
-  let address = account.address;
-  if (typeof ss58Format === "number") {
-    address = encodeAddress(address, ss58Format);
-  }
   const network = account.network;
+  const address = encodeNetworkAddress(account.address, network);
 
   const onSwitch = () => {
     dispatch(popUpConnect());

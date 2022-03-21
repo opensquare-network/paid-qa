@@ -4,6 +4,7 @@ import NetworkUser from "../../User/NetworkUser";
 import { useSelector } from "react-redux";
 import { fundSummarySelector } from "store/reducers/topicSlice";
 import BigNumber from "bignumber.js";
+import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -19,13 +20,17 @@ const Token = styled.div`
 
 export default function Item({ reward }) {
   const fundSummary = useSelector(fundSummarySelector);
-  const paidValue = fundSummary?.statsBySponsors?.[reward.sponsor]?.[reward.symbol] || 0;
-  const percent = new BigNumber(paidValue).div(reward.value).times(100).integerValue();
-
+  const paidValue =
+    fundSummary?.statsBySponsors?.[reward.sponsor]?.[reward.symbol] || 0;
+  const percent = new BigNumber(paidValue)
+    .div(reward.value)
+    .times(100)
+    .integerValue();
+  const sponsorAddress = encodeNetworkAddress(reward.society, reward.network);
   return (
     <Wrapper>
       <div className="flex items-center justify-between">
-        <NetworkUser address={reward.sponsor} network={reward.network} />
+        <NetworkUser address={sponsorAddress} network={reward.network} />
         <Token>{`${paidValue}/${reward.value} ${reward.symbol}`}</Token>
       </div>
       <ProgressBar percent={percent} />
