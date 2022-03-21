@@ -26,7 +26,7 @@ export default function Item({ reward }) {
     .div(reward.value)
     .times(100)
     .integerValue();
-  const sponsorAddress = encodeNetworkAddress(reward.society, reward.network);
+  const sponsorAddress = encodeNetworkAddress(reward.sponsor, reward.network);
   return (
     <Wrapper>
       <div className="flex items-center justify-between">
