@@ -71,12 +71,19 @@ const Count = styled.div`
   color: #a1a8b3;
 `;
 
-export default function Appendants({ topicCid, appendants, isOwner }) {
+export default function Appendants({
+  topicCid,
+  topicNetwork,
+  appendants,
+  isOwner,
+}) {
   const account = useSelector(accountSelector);
 
   const [editing, setEditing] = useState(false);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const isDifferentNetwork = account?.network !== topicNetwork;
 
   const api = useApi();
   const dispatch = useDispatch();
@@ -112,7 +119,11 @@ export default function Appendants({ topicCid, appendants, isOwner }) {
     const remark = new InteractionEncoder(interaction).getRemark();
 
     try {
-      const { blockHash, extrinsicIndex } = await submitRemark(api, remark, account);
+      const { blockHash, extrinsicIndex } = await submitRemark(
+        api,
+        remark,
+        account
+      );
       const payload = {
         data,
         network: account.network,
@@ -142,7 +153,6 @@ export default function Appendants({ topicCid, appendants, isOwner }) {
             );
           }
         });
-
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
@@ -192,15 +202,19 @@ export default function Appendants({ topicCid, appendants, isOwner }) {
         </ItemWrapper>
       ))}
       {editing && (
-        <EditorWrapper>
-          <RichEdit
-            content={content}
-            setContent={setContent}
-            onSubmit={onSubmit}
-            showButtons={true}
-            submitting={loading}
-          />
-        </EditorWrapper>
+        <>
+          <EditorWrapper>
+            <RichEdit
+              content={content}
+              setContent={setContent}
+              onSubmit={onSubmit}
+              showButtons={true}
+              disabled={isDifferentNetwork}
+              submitting={loading}
+              errorMsg={isOwner && isDifferentNetwork ? "Please switch to the same network as topic to post." : ""}
+            />
+          </EditorWrapper>
+        </>
       )}
     </Wrapper>
   );
