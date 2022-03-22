@@ -116,7 +116,7 @@ export default function Answers({ topicCid }) {
       <Title>
         <DividerWrapper>
           <div>Replies</div>
-          <Count>{answers?.count || 0}</Count>
+          <Count>{answers?.total || 0}</Count>
         </DividerWrapper>
       </Title>
       {answers?.items.length === 0 ? (
