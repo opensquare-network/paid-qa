@@ -8,6 +8,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { popUpConnect } from "store/reducers/showConnectSlice";
 import SupportModal from "components/SupportModal";
 import { calcSponserRewards } from "utils/rewards";
+import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -41,6 +42,9 @@ const SupportButton = styled.div`
   font-size: 14px;
   line-height: 24px;
   cursor: pointer;
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    width: 100%;
+  }
 `;
 
 const ConnectButton = styled.div`
