@@ -5,6 +5,7 @@ import FundModel from "../../FundModel";
 import Funders from "../../Funders";
 import { ReactComponent as ReplyIcon } from "imgs/icons/reply.svg";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import Flex from "@osn/common-ui/lib/styled/Flex";
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,7 +58,7 @@ export default function ActionBar({
   return (
     <Wrapper>
       <Buttons>
-        <div className="flex">
+        <Flex>
           <ReplyButton onClick={onReplyClick}>
             <ReplyIcon />
             <Reply>Reply</Reply>
@@ -70,7 +71,7 @@ export default function ActionBar({
             onFund={() => setShowFund(true)}
             canExpand={funds?.length > 0}
           />
-        </div>
+        </Flex>
       </Buttons>
       {expand && <Funders funds={funds} />}
       <FundModel
