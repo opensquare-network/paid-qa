@@ -1,6 +1,12 @@
 import { css } from "styled-components";
 import { no_scroll_bar } from "./componentCss";
 const markdownStyle = css`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #1e2134;
+
   &.markdown-content {
     max-width: 48.5em;
     word-break: normal;
@@ -58,14 +64,11 @@ const markdownStyle = css`
 
     p {
       max-width: 48.5em;
-      font-size: 0.875em;
-      line-height: 1.75em;
       word-break: break-word;
     }
 
     ol,
     ul {
-      font-size: 0.875em;
       padding-left: 1.25em;
     }
 
@@ -122,6 +125,7 @@ const markdownStyle = css`
 
     a {
       color: #0974cd;
+      cursor: pointer;
     }
 
     img {
@@ -150,14 +154,12 @@ const markdownStyle = css`
       padding: 10px 16px;
       background: #f6f7fa;
       font-weight: bold;
-      font-size: 14px;
       color: #1e2134;
       min-width: 100px;
     }
 
     td {
       padding: 10px 16px;
-      font-size: 14px;
       color: #1e2134;
     }
   }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -14,6 +14,9 @@ import { signMessage } from "services/chainApi";
 import NoReplies from "components/NoReplies";
 import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
+import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
+import uniqWith from "lodash.uniqwith";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -37,6 +40,7 @@ const Count = styled.div`
 `;
 
 export default function Answers({ topicCid }) {
+  const editorRef = useRef();
   const dispatch = useDispatch();
   const answers = useSelector(answersSelector);
   const account = useSelector(accountSelector);
@@ -111,6 +115,50 @@ export default function Answers({ topicCid }) {
     }
   };
 
+  const loadSuggestions = async (text) => {
+    const userIdentities = await Promise.all(
+      uniqWith(
+        answers?.items || [],
+        (a, b) => a.signer === b.signer && a.network === b.network
+      )
+        .map((item) => ({ address: item.signer, network: item.network }))
+        .map(async (item) => {
+          const identity = await fetchIdentity(item.network, item.address);
+          return {
+            ...item,
+            identity,
+          };
+        })
+    );
+    const suggestions = userIdentities
+      .map((user) => {
+        const display =
+          user.identity?.info?.display || addressEllipsis(user.address);
+        return {
+          preview: display,
+          value: `[@${display}](/network/${user.network}/address/${user.address})`,
+        };
+      })
+      .filter((i) => i.preview.toLowerCase().includes(text.toLowerCase()));
+    return suggestions;
+  };
+
+  const forceEditor = () => {
+    editorRef.current?.querySelector("textarea")?.focus();
+    editorRef.current?.scrollIntoView();
+  };
+
+  const onReply = async (user) => {
+    const identity = fetchIdentity(user.network, user.address);
+    const mention = `[@${
+      identity?.info?.display || addressEllipsis(user.address)
+    }](/network/${user.network}/address/${user.address})`;
+
+    setContent(content + mention + " ");
+
+    forceEditor();
+  };
+
   return (
     <Card>
       <Title>
@@ -124,7 +172,7 @@ export default function Answers({ topicCid }) {
       ) : (
         <div>
           {answers?.items?.map((answer, index) => (
-            <Item key={index} answer={answer} />
+            <Item key={index} answer={answer} onReply={onReply} />
           ))}
         </div>
       )}
@@ -139,12 +187,14 @@ export default function Answers({ topicCid }) {
       </PagnationWrapper>
       <EditorWrapper>
         <RichEdit
+          ref={editorRef}
           content={content}
           setContent={setContent}
           onSubmit={onSubmit}
           showButtons={true}
           submitButtonName="Reply"
           submitting={loading}
+          loadSuggestions={loadSuggestions}
         />
       </EditorWrapper>
     </Card>

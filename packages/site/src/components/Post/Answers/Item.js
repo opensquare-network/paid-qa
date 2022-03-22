@@ -6,6 +6,7 @@ import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 import NetworkUser from "../../User/NetworkUser";
 import ActionBar from "./ActionBar";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -24,7 +25,7 @@ const ContentWrapper = styled.div`
   }
 `;
 
-export default function Item({ answer }) {
+export default function Item({ answer, onReply }) {
   const signerAddress = encodeNetworkAddress(answer.signer, answer.network);
   return (
     <Wrapper>
@@ -44,11 +45,13 @@ export default function Item({ answer }) {
         />
       </div>
       <ContentWrapper>
-        <div>{answer.content}</div>
+        <MicromarkMd md={answer.content} />
         <ActionBar
           answerCid={answer.cid}
           answerOwner={answer.signer}
+          answerNetwork={answer.network}
           funds={answer.funds}
+          onReply={onReply}
         />
       </ContentWrapper>
     </Wrapper>

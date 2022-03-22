@@ -51,9 +51,7 @@ const delayQuery = debounce(() => {
             continue;
           }
           const identity = identities.get(addrOfIdName) || null;
-          if (identity) {
-            cachedIdentities.set(idName, identity);
-          }
+          cachedIdentities.set(idName, identity);
           if (resolve) {
             resolve(identity);
           }

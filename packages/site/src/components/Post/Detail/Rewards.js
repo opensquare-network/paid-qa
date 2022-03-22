@@ -52,8 +52,8 @@ export default function Rewards() {
       <Item>
         <div>Funders</div>
         <FunderAvatarList>
-          {sponsors.map((sponsor) => (
-            <Avatar address={sponsor} size={20} />
+          {sponsors.map((sponsor, index) => (
+            <Avatar key={index} address={sponsor} size={20} />
           ))}
         </FunderAvatarList>
       </Item>

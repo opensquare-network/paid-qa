@@ -74,6 +74,7 @@ export default function MarkdownEditor({
   content,
   setContent,
   disabled = false,
+  loadSuggestions,
 }) {
   const ref = useRef();
   return (
@@ -105,6 +106,7 @@ export default function MarkdownEditor({
         getIcon={(commandName) => {
           return <img src={`/imgs/icons/markdown/${commandName}.svg`} alt="" />;
         }}
+        loadSuggestions={loadSuggestions}
         childProps={{
           textArea: {
             placeholder: "Please text here...",

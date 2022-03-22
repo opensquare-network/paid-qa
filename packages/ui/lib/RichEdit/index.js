@@ -1,3 +1,4 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import { useState } from "react";
 
@@ -31,29 +32,34 @@ const ErrorMsg = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  color: #EE4444;
+  color: #ee4444;
 `;
 
-export default function RichEdit({
-  content,
-  setContent,
-  onSubmit,
-  showButtons = true,
-  submitting = false,
-  disabled = false,
-  submitButtonName = "Post",
-  errorMsg = "",
-}) {
+function RichEdit(
+  {
+    content,
+    setContent,
+    onSubmit,
+    showButtons = true,
+    submitting = false,
+    disabled = false,
+    submitButtonName = "Post",
+    errorMsg = "",
+    loadSuggestions,
+  },
+  ref
+) {
   const [preview, setPreview] = useState(false);
 
   return (
     <div>
       <MarkdownWrapper>
-        <MarkdownEditorWrapper preview={preview}>
+        <MarkdownEditorWrapper preview={preview} ref={ref}>
           <MarkdownEditor
             content={content}
             setContent={setContent}
             disabled={submitting}
+            loadSuggestions={loadSuggestions}
           />
         </MarkdownEditorWrapper>
         {preview && <Preview content={content} />}
@@ -80,3 +86,5 @@ export default function RichEdit({
     </div>
   );
 }
+
+export default React.forwardRef(RichEdit);

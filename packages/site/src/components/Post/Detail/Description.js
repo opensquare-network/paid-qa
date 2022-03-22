@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
+import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -29,7 +30,7 @@ export default function Description({ topic }) {
           }
         />
       </div>
-      <div>{topic.content}</div>
+      <MicromarkMd md={topic.content} />
     </Wrapper>
   );
 }
