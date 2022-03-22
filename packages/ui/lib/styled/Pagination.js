@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+import { ReactComponent as CaretLeft } from "../imgs/icons/caret-left.svg";
+import { ReactComponent as CaretRight } from "../imgs/icons/caret-right.svg";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,7 +22,7 @@ const Nav = styled.div`
   :hover {
     background: #f0f3f8;
   }
-  > svg {
+  > svg * {
     fill: #a1a8b3;
   }
   ${(p) =>
@@ -28,7 +30,8 @@ const Nav = styled.div`
     css`
       cursor: auto;
       pointer-events: none;
-      > svg {
+      > svg,
+      > svg * {
         fill: #e3e7ed;
       }
       :hover {
@@ -70,18 +73,20 @@ const Ellipsis = styled.div`
   }
 `;
 
-export default function Pagination({ page, pageSize, total, setPage = () => {} }) {
+export default function Pagination({
+  page,
+  pageSize,
+  total,
+  setPage = () => {},
+}) {
   const totalPages = Math.ceil(total / pageSize)
     ? Math.ceil(total / pageSize)
     : 1;
 
   return (
     <Wrapper>
-      <Nav
-        disabled={page === 1}
-        onClick={() => setPage(page - 1)}
-      >
-        <img src="/imgs/icons/caret-left.svg" alt="" />
+      <Nav disabled={page === 1} onClick={() => setPage(page - 1)}>
+        <CaretLeft />
       </Nav>
       {Array.from(Array(totalPages)).map((_, index) =>
         index + 1 > 1 &&
@@ -98,11 +103,8 @@ export default function Pagination({ page, pageSize, total, setPage = () => {} }
           </Item>
         )
       )}
-      <Nav
-        disabled={page === totalPages}
-        onClick={() => setPage(page + 1)}
-      >
-        <img src="/imgs/icons/caret-right.svg" alt="" />
+      <Nav disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+        <CaretRight />
       </Nav>
     </Wrapper>
   );
