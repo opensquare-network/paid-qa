@@ -5,17 +5,22 @@ import { useSelector } from "react-redux";
 import { fundSummarySelector } from "store/reducers/topicSlice";
 import BigNumber from "bignumber.js";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
-    margin-top: 4px;
+    margin-top: 8px;
   }
 `;
 
-const Token = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
+const Token = styled.span`
+  ${p_14_medium};
+`;
+
+const Label = styled.span`
+  ${p_14_medium};
+  color: #a1a8b3;
 `;
 
 export default function Item({ reward }) {
@@ -31,9 +36,12 @@ export default function Item({ reward }) {
     <Wrapper>
       <div className="flex items-center justify-between">
         <NetworkUser address={sponsorAddress} network={reward.network} />
-        <Token>{`${paidValue}/${reward.value} ${reward.symbol}`}</Token>
       </div>
       <ProgressBar percent={percent} />
+      <FlexBetween>
+        <Label>Fund</Label>
+        <Token>{`${paidValue}/${reward.value} ${reward.symbol}`}</Token>
+      </FlexBetween>
     </Wrapper>
   );
 }
