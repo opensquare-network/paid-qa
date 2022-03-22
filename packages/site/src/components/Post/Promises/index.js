@@ -84,7 +84,7 @@ export default function Promises({ topicCid, rewards }) {
     <Card>
       <Title className="flex items-center justify-between">
         <div>Promises</div>
-        <img src="/imgs/icons/support.svg" alt="" />
+        <img src="/imgs/icons/promise.svg" alt="" />
       </Title>
       <ContentWrapper>
         {sumUpRewards.map((reward, index) => (
