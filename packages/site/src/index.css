@@ -101,3 +101,9 @@ body a:hover {
   font-weight: bold;
   src: url("../public/fonts/Montserrat-Bold.ttf") format("truetype");
 }
+
+@media only screen and (max-width: 400px) {
+  ul.mde-header-group {
+    max-width: 280px;
+  }
+}
