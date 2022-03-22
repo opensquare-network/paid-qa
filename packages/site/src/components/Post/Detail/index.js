@@ -6,6 +6,7 @@ import Rewards from "./Rewards";
 import Description from "./Description";
 import Appendants from "./Appendants";
 import Share from "./Share";
+import Resolve from "./Resolve";
 import ActionBar from "./ActionBar";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -45,6 +46,7 @@ export default function Detail({ topic }) {
         isOwner={isOwner}
       />
       <Share />
+      <Resolve topic={topic} />
     </Wrapper>
   );
 }

@@ -23,14 +23,23 @@ const Label = styled.span`
   color: #a1a8b3;
 `;
 
-export default function Item({ reward }) {
+export function useFulfillment(reward) {
   const fundSummary = useSelector(fundSummarySelector);
+  if (!reward) {
+    return [0, 0];
+  }
+
   const paidValue =
     fundSummary?.statsBySponsors?.[reward.sponsor]?.[reward.symbol] || 0;
   const percent = new BigNumber(paidValue)
     .div(reward.value)
     .times(100)
     .integerValue();
+  return [paidValue, percent];
+}
+
+export default function Item({ reward }) {
+  const [paidValue, percent] = useFulfillment(reward);
   const sponsorAddress = encodeNetworkAddress(reward.sponsor, reward.network);
   return (
     <Wrapper>
