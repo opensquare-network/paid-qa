@@ -41,10 +41,9 @@ const Nav = styled.div`
 `;
 
 const Item = styled.a`
-  padding: 0 8px;
   cursor: pointer;
-  min-width: 28px;
-  height: 28px;
+  min-width: 32px;
+  line-height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
