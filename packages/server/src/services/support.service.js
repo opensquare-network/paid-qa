@@ -12,6 +12,7 @@ const {
   getNativeTokenInfo,
 } = require("./node.service");
 const { validateTokenAmount } = require("./common");
+const { updateTopicResolve } = require("./resolve.service");
 
 async function addSupport(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -22,7 +23,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
     extrinsicIndex
   );
 
-  // Parse system remark to verify if it is NEW instruction
+  // Parse system remark to verify if it is SUPPORT instruction
   const interaction = new InteractionParser(remark).getInteraction();
   if (!(interaction instanceof SupportInteraction)) {
     throw new HttpError(500, "System remark is not SUPPORT instruction");
@@ -32,8 +33,10 @@ async function addSupport(network, blockHash, extrinsicIndex) {
     throw new HttpError(500, "System remark is not valid");
   }
 
+  const topicCid = interaction.topicIpfsCid;
+
   // Find the related topic
-  const topic = await Topic.findOne({ cid: interaction.topicIpfsCid });
+  const topic = await Topic.findOne({ cid: topicCid });
   if (!topic) {
     throw new HttpError(500, "Topic does not exist");
   }
@@ -59,7 +62,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
 
   await Reward.create({
     blockTime,
-    topicCid: interaction.topicIpfsCid,
+    topicCid,
     network,
     sponsor: signer,
     currencyType: rewardCurrencyType,
@@ -71,7 +74,10 @@ async function addSupport(network, blockHash, extrinsicIndex) {
     decimals,
   });
 
+  await updateTopicResolve(topicCid);
+
   return {
+    topicCid,
     symbol,
     decimals,
     value: tokenAmount,

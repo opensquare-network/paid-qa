@@ -3,7 +3,7 @@ const {
   interactions: { FundInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
-const { Topic, Answer, Fund } = require("../models");
+const { Topic, Fund } = require("../models");
 const { RewardCurrencyType } = require("../utils/constants");
 const {
   getApi,
@@ -23,7 +23,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
     extrinsicIndex
   );
 
-  // Parse system remark to verify if it is NEW instruction
+  // Parse system remark to verify if it is FUND instruction
   const interaction = new InteractionParser(remark).getInteraction();
   if (!(interaction instanceof FundInteraction)) {
     throw new HttpError(500, "System remark is not FUND instruction");
@@ -34,7 +34,11 @@ async function addFund(network, blockHash, extrinsicIndex) {
   }
 
   // Get reward currency type and amount from system remark
-  const { tokenIdentifier, to: { id: beneficiary }, value } = transfer;
+  const {
+    tokenIdentifier,
+    to: { id: beneficiary },
+    value,
+  } = transfer;
 
   let symbol, decimals, rewardCurrencyType;
   if (tokenIdentifier === "N") {
@@ -49,7 +53,9 @@ async function addFund(network, blockHash, extrinsicIndex) {
     ));
   }
 
-  const tokenAmount = new BigNumber(value).div(Math.pow(10, decimals)).toFixed();
+  const tokenAmount = new BigNumber(value)
+    .div(Math.pow(10, decimals))
+    .toFixed();
 
   await Fund.create({
     blockTime,
@@ -86,18 +92,18 @@ function accumulateSponsorFunds(stats, fund) {
 
 function sumUpFunds(funds) {
   const result = {};
-  funds?.forEach(fund => {
+  funds?.forEach((fund) => {
     accumulateSymbolFunds(result, fund);
   });
   return result;
-};
+}
 
 async function getFundSummary(topicCid) {
   const topic = await Topic.findOne({ cid: topicCid })
     .populate("funds")
     .populate({
       path: "answers",
-      options: { sort: { "createdAt": 1 } },
+      options: { sort: { createdAt: 1 } },
       populate: "funds",
     });
 
@@ -112,9 +118,11 @@ async function getFundSummary(topicCid) {
   });
 
   const statsBySponsors = {};
-  topic.funds?.forEach(fund => accumulateSponsorFunds(statsBySponsors, fund));
-  topic.answers?.forEach(answer => {
-    answer.funds?.forEach(fund => accumulateSponsorFunds(statsBySponsors, fund));
+  topic.funds?.forEach((fund) => accumulateSponsorFunds(statsBySponsors, fund));
+  topic.answers?.forEach((answer) => {
+    answer.funds?.forEach((fund) =>
+      accumulateSponsorFunds(statsBySponsors, fund)
+    );
   });
 
   return {

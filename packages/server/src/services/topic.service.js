@@ -166,7 +166,7 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
     extrinsicIndex
   );
 
-  // Parse system remark to verify if it is NEW instruction
+  // Parse system remark to verify if it is APPEND instruction
   const interaction = new InteractionParser(remark).getInteraction();
   if (!(interaction instanceof AppendInteraction)) {
     throw new HttpError(500, "System remark is not APPEND instruction");

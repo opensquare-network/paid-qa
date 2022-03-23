@@ -9,6 +9,7 @@ import { popUpConnect } from "store/reducers/showConnectSlice";
 import SupportModal from "components/SupportModal";
 import { calcSponserRewards } from "utils/rewards";
 import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import { isSamePublicKey } from "@osn/common-ui/lib/utils/address";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -84,8 +85,7 @@ export default function Promises({ topicCid, rewards, resolves }) {
 
   const myResolve = resolves?.find(
     (resolve) =>
-      resolve.sponsor === account.sponsor &&
-      resolve.network === account.network
+      account?.address && isSamePublicKey(resolve.sponsor, account.address)
   );
 
   const sumUpRewards = calcSponserRewards(rewards);
@@ -98,15 +98,13 @@ export default function Promises({ topicCid, rewards, resolves }) {
       </Title>
       <ContentWrapper>
         {sumUpRewards.map((reward, index) => {
-          const resolve = resolves?.find(
-            (resolve) =>
-              resolve.sponsor === reward.sponsor &&
-              resolve.network === reward.network
+          const resolve = resolves?.find((resolve) =>
+            isSamePublicKey(resolve.sponsor, reward.sponsor)
           );
           return <Item key={index} reward={reward} resolve={resolve} />;
         })}
       </ContentWrapper>
-      {myResolve && (
+      {!myResolve && (
         <ButtonContainer>
           {account ? (
             <SupportButton onClick={() => setOpenSupportModel(true)}>
