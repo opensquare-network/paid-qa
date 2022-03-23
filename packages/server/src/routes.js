@@ -9,6 +9,7 @@ const featureRouters = [
   require("./features/support/routes"),
   require("./features/fund/routes"),
   require("./features/resolve/routes"),
+  require("./features/notification/routes"),
 ];
 
 for (const r of featureRouters) {

@@ -1,0 +1,50 @@
+const { extractPage } = require("../../utils/pagination");
+const notificationService = require("../../services/notification.service");
+
+async function getNotifications(ctx) {
+  const { network, address } = ctx.params;
+  const { page, pageSize } = extractPage(ctx);
+
+  const result = await notificationService.getNotifications(
+    network,
+    address,
+    page,
+    pageSize
+  );
+
+  ctx.body = result;
+}
+
+async function getDiscussionNotifications(ctx) {
+  const { network, address } = ctx.params;
+  const { page, pageSize } = extractPage(ctx);
+
+  const result = await notificationService.getDiscussionNotifications(
+    network,
+    address,
+    page,
+    pageSize
+  );
+
+  ctx.body = result;
+}
+
+async function getRewardNotifications(ctx) {
+  const { network, address } = ctx.params;
+  const { page, pageSize } = extractPage(ctx);
+
+  const result = await notificationService.getRewardNotifications(
+    network,
+    address,
+    page,
+    pageSize
+  );
+
+  ctx.body = result;
+}
+
+module.exports = {
+  getNotifications,
+  getDiscussionNotifications,
+  getRewardNotifications,
+};

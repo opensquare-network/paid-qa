@@ -121,7 +121,10 @@ export default function Answers({ topicCid }) {
         answers?.items || [],
         (a, b) => a.signer === b.signer && a.network === b.network
       )
-        .map((item) => ({ address: item.signer, network: item.network }))
+        .map((item) => ({
+          address: encodeNetworkAddress(item.signer, item.network),
+          network: item.network,
+        }))
         .map(async (item) => {
           const identity = await fetchIdentity(item.network, item.address);
           return {

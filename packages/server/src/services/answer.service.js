@@ -1,16 +1,13 @@
-const { Topic, Answer } = require("../models");
+const { Topic, Answer, Notification } = require("../models");
 const { HttpError } = require("../utils/exc");
 const { isValidSignature } = require("../utils/signature");
 const { PostStatus } = require("../utils/constants");
 const { cidOf } = require("./ipfs.service");
+const { extractMentions } = require("../utils/mention");
+const { toPublicKey, isSamePublicKey } = require("../utils/address");
 
 async function postAnswer(data) {
-  const {
-    answer,
-    address: signer,
-    network,
-    signature,
-  } = data;
+  const { answer, address: signer, network, signature } = data;
   const { topic: topicCid, content } = answer;
 
   // Check signature
@@ -20,20 +17,60 @@ async function postAnswer(data) {
     throw new HttpError(400, "Signature is invalid");
   }
 
+  // Check topic
+  const topic = await Topic.findOne({ cid: topicCid });
+  if (!topic) {
+    throw new HttpError(400, "Topic not found");
+  }
+
   const cid = await cidOf(data);
 
-  await Answer.create(
-    {
-      cid,
-      topicCid,
-      content,
-      network,
-      signer,
-      signature,
-      pinned: false,
-      status: PostStatus.Reserved,
-    }
-  );
+  const answerObj = await Answer.create({
+    cid,
+    topicCid,
+    content,
+    network,
+    signer,
+    signature,
+    pinned: false,
+    status: PostStatus.Reserved,
+  });
+
+  if (!isSamePublicKey(topic.signer, signer)) {
+    const owner = toPublicKey(topic.signer);
+    await Notification.create({
+      owner,
+      type: ["reply"],
+      data: {
+        topic: topic._id,
+        answer: answerObj._id,
+      },
+    });
+  }
+
+  const mentions = extractMentions(content);
+  for (const mention of mentions) {
+    const owner = toPublicKey(mention.address);
+    await Notification.updateOne(
+      {
+        owner,
+        "data.topic": topic._id,
+        "data.answer": answerObj._id,
+      },
+      {
+        $addToSet: {
+          type: "mention",
+        },
+        $set: {
+          "data.who": {
+            address: signer,
+            network,
+          },
+        },
+      },
+      { upsert: true }
+    );
+  }
 
   return {
     cid,

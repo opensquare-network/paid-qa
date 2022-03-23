@@ -6,6 +6,7 @@ const Appendant = require("./appendant");
 const Answer = require("./answer");
 const Fund = require("./fund");
 const Resolve = require("./resolve");
+const Notification = require("./notification");
 
 mongoose.connect(MONGODB_URI);
 mongoose.connection.on("error", () => {
@@ -20,4 +21,5 @@ module.exports = {
   Answer,
   Fund,
   Resolve,
+  Notification,
 };

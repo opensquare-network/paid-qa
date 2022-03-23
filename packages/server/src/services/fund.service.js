@@ -3,7 +3,7 @@ const {
   interactions: { FundInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
-const { Topic, Fund } = require("../models");
+const { Topic, Fund, Notification, Answer } = require("../models");
 const { RewardCurrencyType } = require("../utils/constants");
 const {
   getApi,
@@ -57,7 +57,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
     .div(Math.pow(10, decimals))
     .toFixed();
 
-  await Fund.create({
+  const fundObj = await Fund.create({
     blockTime,
     ipfsCid: interaction.ipfsCid,
     network,
@@ -70,6 +70,25 @@ async function addFund(network, blockHash, extrinsicIndex) {
       : {}),
     symbol,
     decimals,
+  });
+
+  const topic = await Topic.findOne({ cid: interaction.ipfsCid });
+  const answer = await Answer.findOne({ cid: interaction.ipfsCid });
+  const fundTo = topic.signer || answer.signer;
+
+  const owner = toPublicKey(fundTo);
+  await Notification.create({
+    owner,
+    type: ["fund"],
+    data: {
+      topic: topic._id,
+      answer: answer._id,
+      fund: fundObj._id,
+      who: {
+        address: signer,
+        network,
+      },
+    },
   });
 
   return {
