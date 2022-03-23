@@ -5,6 +5,10 @@ import ChainItem from "./ChainSelectItem";
 
 const Wrapper = styled.div`
   margin-bottom: 8px;
+  .ui.selection.dropdown .menu > .item {
+    padding: 0 !important;
+    user-select: none; // prevent text high-lighted when user double-clicked/selected
+  }
 `;
 
 const DropdownWrapper = styled.div`
