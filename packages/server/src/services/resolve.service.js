@@ -15,7 +15,6 @@ async function resolve(network, blockHash, extrinsicIndex) {
     extrinsicIndex
   );
 
-  console.log(remark);
   // Parse system remark to verify if it is NEW instruction
   const interaction = new InteractionParser(remark).getInteraction();
   if (!(interaction instanceof ResolveInteraction)) {
