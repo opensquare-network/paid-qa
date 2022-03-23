@@ -10,7 +10,7 @@ class ResolveInteraction {
     this.#topicIpfsCid = topicIpfsCid
   }
 
-  get ipfsCid() {
+  get topicIpfsCid() {
     return this.#topicIpfsCid;
   }
 

@@ -46,7 +46,7 @@ export default function Post({ topic }) {
         <Answers topicCid={topic?.cid} />
       </div>
       <div>
-        <Promises topicCid={topic?.cid} rewards={topic?.rewards} />
+        <Promises topicCid={topic?.cid} rewards={topic?.rewards} resolves={topic?.resolves} />
         <Funds topicCid={topic?.cid} />
       </div>
     </Wrapper>

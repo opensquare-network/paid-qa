@@ -54,6 +54,12 @@ TopicSchema.virtual("answersCount", {
   count: true,
 });
 
+TopicSchema.virtual("resolves", {
+  ref: "Resolve",
+  localField: "cid",
+  foreignField: "topicCid",
+});
+
 TopicSchema.index({ cid: 1 }, { unique: true });
 
 const Topic = mongoose.model("Topic", TopicSchema);

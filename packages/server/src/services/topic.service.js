@@ -89,6 +89,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     await Reward.create(
       [
         {
+          blockTime,
           topicCid: cid,
           network,
           currencyType: rewardCurrencyType,
@@ -126,7 +127,8 @@ async function getTopic(cid) {
   const topic = await Topic.findOne({ cid })
     .populate("rewards")
     .populate("appendants")
-    .populate("funds");
+    .populate("funds")
+    .populate("resolves");
   return topic;
 }
 

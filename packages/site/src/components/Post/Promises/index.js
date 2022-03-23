@@ -72,7 +72,7 @@ const ButtonContainer = styled.div`
   padding-top: 20px;
 `;
 
-export default function Promises({ topicCid, rewards }) {
+export default function Promises({ topicCid, rewards, resolves }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [openSupportModel, setOpenSupportModel] = useState(false);
@@ -81,6 +81,12 @@ export default function Promises({ topicCid, rewards }) {
   if (!rewards || rewards.length === 0) {
     return null;
   }
+
+  const myResolve = resolves?.find(
+    (resolve) =>
+      resolve.sponsor === account.sponsor &&
+      resolve.network === account.network
+  );
 
   const sumUpRewards = calcSponserRewards(rewards);
 
@@ -91,21 +97,28 @@ export default function Promises({ topicCid, rewards }) {
         <img src="/imgs/icons/promise.svg" alt="" />
       </Title>
       <ContentWrapper>
-        {sumUpRewards.map((reward, index) => (
-          <Item key={index} reward={reward} />
-        ))}
+        {sumUpRewards.map((reward, index) => {
+          const resolve = resolves?.find(
+            (resolve) =>
+              resolve.sponsor === reward.sponsor &&
+              resolve.network === reward.network
+          );
+          return <Item key={index} reward={reward} resolve={resolve} />;
+        })}
       </ContentWrapper>
-      <ButtonContainer>
-        {account ? (
-          <SupportButton onClick={() => setOpenSupportModel(true)}>
-            Support
-          </SupportButton>
-        ) : (
-          <ConnectButton onClick={() => dispatch(popUpConnect())}>
-            Conect Wallet
-          </ConnectButton>
-        )}
-      </ButtonContainer>
+      {myResolve && (
+        <ButtonContainer>
+          {account ? (
+            <SupportButton onClick={() => setOpenSupportModel(true)}>
+              Support
+            </SupportButton>
+          ) : (
+            <ConnectButton onClick={() => dispatch(popUpConnect())}>
+              Conect Wallet
+            </ConnectButton>
+          )}
+        </ButtonContainer>
+      )}
       <SupportModal
         topicCid={topicCid}
         open={openSupportModel}
