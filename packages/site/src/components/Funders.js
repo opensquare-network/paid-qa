@@ -5,6 +5,10 @@ import IdentityOrAddr from "./User/IdentityOrAddr";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  padding: 8px 16px;
   margin: 16px 0;
 
   background: #fbfcfe;
@@ -13,43 +17,46 @@ const Wrapper = styled.div`
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
+
+  span {
+    line-height: 18px !important;
+  }
+  > :last-child {
+    margin-right: 0;
+  }
 `;
 
 const Header = styled.span`
+  margin-right: 16px;
   color: #a1a8b3;
   white-space: nowrap;
 `;
 
-const Items = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  color: #506176;
-  margin-left: 16px;
-  > :not(:last-child) {
-    margin-right: 16px;
+const Item = styled(DividerWrapper)`
+  font-weight: 500;
+  margin-right: 16px;
+
+  span {
+    color: #506176 !important;
   }
 `;
-
-const Item = styled(DividerWrapper)``;
 
 export default function Funders({ funds }) {
   return (
     <Wrapper>
       <Header>Funded by</Header>
-      <Items>
-        {funds?.map((fund, index) => (
-          <Item key={index}>
-            <IdentityOrAddr
-              address={fund.sponsor}
-              network={fund.network}
-              noIcon
-            />
-            <span>
-              {fund.value} {fund.symbol}
-            </span>
-          </Item>
-        ))}
-      </Items>
+      {funds?.map((fund, index) => (
+        <Item key={index}>
+          <IdentityOrAddr
+            address={fund.sponsor}
+            network={fund.network}
+            noIcon
+          />
+          <span>
+            {fund.value} {fund.symbol}
+          </span>
+        </Item>
+      ))}
     </Wrapper>
   );
 }
