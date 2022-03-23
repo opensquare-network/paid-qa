@@ -39,11 +39,11 @@ const MyLoader = (props) => {
 const ListLoader = () => {
   return (
     <LoaderWrapper>
-      <ListLoader />
-      <ListLoader />
-      <ListLoader />
-      <ListLoader />
-      <ListLoader />
+      <MyLoader />
+      <MyLoader />
+      <MyLoader />
+      <MyLoader />
+      <MyLoader />
     </LoaderWrapper>
   );
 };
