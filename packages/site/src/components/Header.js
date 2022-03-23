@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-// import Notification from "./Notification";
+import Notification from "./Notification";
 import ConnectModal from "./ConnectModal";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { useRef, useState } from "react";
@@ -106,7 +106,7 @@ export default function Header() {
           <ProductSwitch />
         </LeftWrapper>
         <RightWrapper ref={ref}>
-          {/*<Notification />*/}
+          <Notification />
           {windowSize.width > MOBILE_SIZE ? (
             account ? (
               <>
