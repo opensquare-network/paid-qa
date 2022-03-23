@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import DropdownSelector from "@osn/common-ui/lib/DropdownSelector";
 
+const Wrapper = styled.div`
+  > div div {
+    z-index: 10;
+  }
+`;
+
 const AssetWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -144,10 +150,12 @@ export default function AssetSelector({ network, setAsset }) {
   }, [setAsset, assets, selectedAssetIndex]);
 
   return (
-    <DropdownSelector
-      options={assetsOptions}
-      value={selectedAssetIndex}
-      onSelect={(value) => setSelectedAssetIndex(value)}
-    />
+    <Wrapper>
+      <DropdownSelector
+        options={assetsOptions}
+        value={selectedAssetIndex}
+        onSelect={(value) => setSelectedAssetIndex(value)}
+      />
+    </Wrapper>
   );
 }
