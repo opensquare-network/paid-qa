@@ -19,3 +19,7 @@ export function encodeNetworkAddress(address, network) {
   }
   return encodedAddress;
 }
+
+export function isSamePublicKey(key1, key2) {
+  return encodeAddress(key1, 42) === encodeAddress(key2, 42);
+}
