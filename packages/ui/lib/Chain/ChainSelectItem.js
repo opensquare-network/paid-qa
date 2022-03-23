@@ -26,6 +26,10 @@ const ItemWrapper = styled.div`
       top: 0;
       left: 0;
       pointer-events: none;
+    `}
+  ${(p) =>
+    p.isTopLayer &&
+    css`
       z-index: 99;
     `}
   img, svg {
@@ -33,9 +37,9 @@ const ItemWrapper = styled.div`
   }
 `;
 
-const ChainItem = ({ header, chainName }) => {
+const ChainItem = ({ header, chainName, isTopLayer = false }) => {
   return (
-    <ItemWrapper header={header}>
+    <ItemWrapper header={header} isTopLayer={isTopLayer}>
       <ChainIcon chainName={chainName} />
       <div>
         <Text>{chainName}</Text>
