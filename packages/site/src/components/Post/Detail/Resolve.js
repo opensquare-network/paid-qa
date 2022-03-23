@@ -29,11 +29,23 @@ export default function Resolve({ topic }) {
   );
   const reward = sumUpRewards[0];
 
+  if (!reward) {
+    return null;
+  }
+
+  const myResolve = topic?.resolves?.find(
+    (resolve) =>
+      resolve.sponsor === account.address &&
+      resolve.network === account.network
+  );
+
+  if (myResolve) {
+    return null;
+  }
+
   return (
     <Wrapper>
-      {reward && (
-        <ResolveButton onClick={() => setOpen(true)}>Resolve</ResolveButton>
-      )}
+      <ResolveButton onClick={() => setOpen(true)}>Resolve</ResolveButton>
       <ResolveModal
         open={open}
         setOpen={setOpen}
