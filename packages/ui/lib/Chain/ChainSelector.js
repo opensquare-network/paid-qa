@@ -5,6 +5,10 @@ import ChainItem from "./ChainSelectItem";
 
 const Wrapper = styled.div`
   margin-bottom: 8px;
+  .ui.selection.dropdown .menu > .item {
+    padding: 0 !important;
+    user-select: none; // prevent text high-lighted when user double-clicked/selected
+  }
 `;
 
 const DropdownWrapper = styled.div`
@@ -18,6 +22,7 @@ const StyledDropdown = styled(Dropdown)`
 
 const ChainSelector = ({ chains = [], onSelect = () => {} }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isTopLayer, setIsTopLayer] = useState(false);
   useEffect(() => {
     onSelect(chains[selectedIndex]);
   }, [chains, onSelect, selectedIndex]);
@@ -33,11 +38,21 @@ const ChainSelector = ({ chains = [], onSelect = () => {} }) => {
         <StyledDropdown
           selection
           options={options}
+          onOpen={() => {
+            setIsTopLayer(true);
+          }}
+          onClose={() => {
+            setIsTopLayer(false);
+          }}
           onChange={(_, { value }) => {
             setSelectedIndex(value);
           }}
         />
-        <ChainItem chainName={chains[selectedIndex]?.network} header />
+        <ChainItem
+          chainName={chains[selectedIndex]?.network}
+          header
+          isTopLayer={isTopLayer}
+        />
       </DropdownWrapper>
     </Wrapper>
   );
