@@ -30,7 +30,7 @@ const Height = styled.span`
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  color: #A1A8B3;
+  color: #a1a8b3;
 `;
 
 export default function Item({ answer, height, onReply }) {
@@ -61,7 +61,7 @@ export default function Item({ answer, height, onReply }) {
           answerCid={answer.cid}
           answerOwner={answer.signer}
           answerNetwork={answer.network}
-          funds={answer.funds}
+          funds={answer?.funds}
           onReply={onReply}
         />
       </ContentWrapper>

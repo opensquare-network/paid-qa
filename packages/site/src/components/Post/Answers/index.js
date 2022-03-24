@@ -13,10 +13,14 @@ import RichEdit from "@osn/common-ui/lib/RichEdit";
 import { signMessage } from "services/chainApi";
 import NoReplies from "components/NoReplies";
 import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
-import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import {
+  addressEllipsis,
+  encodeNetworkAddress,
+} from "@osn/common-ui/lib/utils/address";
 import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
-import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
 import uniqWith from "lodash.uniqwith";
+import Flex from "@osn/common-ui/lib/styled/Flex";
+import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -29,7 +33,7 @@ const Title = styled.div`
   }
 `;
 
-const PagnationWrapper = styled.div`
+const PaginationWrapper = styled.div`
   margin: 20px 0;
 `;
 
@@ -39,17 +43,26 @@ const Count = styled.div`
   color: #a1a8b3;
 `;
 
+const LoadingWrapper = styled(Flex)`
+  justify-content: center;
+  height: 104px;
+  border-bottom: 1px solid #f0f3f8;
+`;
+
 export default function Answers({ topicCid }) {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const answers = useSelector(answersSelector);
+
   const account = useSelector(accountSelector);
   const [page, setPage] = useState(1);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchAnswers(topicCid, page));
+    if (topicCid) {
+      dispatch(fetchAnswers(topicCid, page));
+    }
   }, [dispatch, topicCid, page]);
 
   const onSubmit = async () => {
@@ -133,7 +146,7 @@ export default function Answers({ topicCid }) {
           };
         })
     );
-    const suggestions = userIdentities
+    return userIdentities
       .map((user) => {
         const display =
           user.identity?.info?.display || addressEllipsis(user.address);
@@ -143,7 +156,6 @@ export default function Answers({ topicCid }) {
         };
       })
       .filter((i) => i.preview.toLowerCase().includes(text.toLowerCase()));
-    return suggestions;
   };
 
   const forceEditor = () => {
@@ -167,9 +179,16 @@ export default function Answers({ topicCid }) {
       <Title>
         <DividerWrapper>
           <div>Replies</div>
-          <Count>{answers?.total || 0}</Count>
+          {typeof answers?.total === "number" && (
+            <Count>{answers?.total}</Count>
+          )}
         </DividerWrapper>
       </Title>
+      {answers === null && (
+        <LoadingWrapper>
+          <Loading />
+        </LoadingWrapper>
+      )}
       {answers?.items.length === 0 ? (
         <NoReplies message={"No current replies"} />
       ) : (
@@ -184,7 +203,7 @@ export default function Answers({ topicCid }) {
           ))}
         </div>
       )}
-      <PagnationWrapper>
+      <PaginationWrapper>
         <Pagination
           className="pagination"
           page={answers?.page}
@@ -192,19 +211,21 @@ export default function Answers({ topicCid }) {
           total={answers?.total}
           setPage={setPage}
         />
-      </PagnationWrapper>
-      <EditorWrapper>
-        <RichEdit
-          ref={editorRef}
-          content={content}
-          setContent={setContent}
-          onSubmit={onSubmit}
-          showButtons={true}
-          submitButtonName="Reply"
-          submitting={loading}
-          loadSuggestions={loadSuggestions}
-        />
-      </EditorWrapper>
+      </PaginationWrapper>
+      {!(answers === null) && (
+        <EditorWrapper>
+          <RichEdit
+            ref={editorRef}
+            content={content}
+            setContent={setContent}
+            onSubmit={onSubmit}
+            showButtons={true}
+            submitButtonName="Reply"
+            submitting={loading}
+            loadSuggestions={loadSuggestions}
+          />
+        </EditorWrapper>
+      )}
     </Card>
   );
 }

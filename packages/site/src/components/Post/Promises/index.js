@@ -10,6 +10,8 @@ import SupportModal from "components/SupportModal";
 import { calcSponserRewards } from "utils/rewards";
 import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 import { isSamePublicKey } from "@osn/common-ui/lib/utils/address";
+import { ReactComponent as Loading } from "imgs/icons/loading.svg";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -77,11 +79,8 @@ export default function Promises({ topicCid, rewards, resolves }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [openSupportModel, setOpenSupportModel] = useState(false);
-
   // At least one promise exists which is support by topic creator
-  if (!rewards || rewards.length === 0) {
-    return null;
-  }
+  const isLoading = !rewards || rewards.length === 0;
 
   const myResolve = resolves?.find(
     (resolve) =>
@@ -97,6 +96,11 @@ export default function Promises({ topicCid, rewards, resolves }) {
         <img src="/imgs/icons/promise.svg" alt="" />
       </Title>
       <ContentWrapper>
+        {isLoading && (
+          <FlexCenter style={{ marginTop: 0 }}>
+            <Loading />
+          </FlexCenter>
+        )}
         {sumUpRewards.map((reward, index) => {
           const resolve = resolves?.find((resolve) =>
             isSamePublicKey(resolve.sponsor, reward.sponsor)
@@ -104,7 +108,7 @@ export default function Promises({ topicCid, rewards, resolves }) {
           return <Item key={index} reward={reward} resolve={resolve} />;
         })}
       </ContentWrapper>
-      {!myResolve && (
+      {!myResolve && !isLoading && (
         <ButtonContainer>
           {account ? (
             <SupportButton onClick={() => setOpenSupportModel(true)}>
