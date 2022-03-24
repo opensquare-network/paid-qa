@@ -63,6 +63,11 @@ const Item = styled.a`
     `}
 `;
 
+const LargeItem = styled(Item)`
+  min-width: 40px;
+  line-height: 40px;
+`;
+
 const Ellipsis = styled.div`
   font-size: 14px;
   font-weight: 500;
@@ -77,10 +82,12 @@ export default function Pagination({
   pageSize,
   total,
   setPage = () => {},
+  large = false,
 }) {
   const totalPages = Math.ceil(total / pageSize)
     ? Math.ceil(total / pageSize)
     : 1;
+  const PageItem = large ? LargeItem : Item;
 
   return (
     <Wrapper>
@@ -93,13 +100,13 @@ export default function Pagination({
         Math.abs(index + 1 - page) >= 2 ? (
           <Ellipsis key={index}>...</Ellipsis>
         ) : (
-          <Item
+          <PageItem
             key={index}
             active={page === index + 1}
             onClick={() => setPage(index + 1)}
           >
             {index + 1}
-          </Item>
+          </PageItem>
         )
       )}
       <Nav disabled={page === totalPages} onClick={() => setPage(page + 1)}>
