@@ -221,16 +221,16 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         extrinsicIndex,
       };
 
-      serverApi
-        .post(`/topics/${topicCid}/supports`, payload)
-        .then(({ result, error }) => {
-          if (result) {
-            dispatch(fetchTopic(topicCid));
-          }
-          if (error) {
-            showErrorToast(error.message);
-          }
-        });
+      const { result, error } = await serverApi.post(
+        `/topics/${topicCid}/supports`,
+        payload
+      );
+      if (result) {
+        dispatch(fetchTopic(topicCid));
+      }
+      if (error) {
+        showErrorToast(error.message);
+      }
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;

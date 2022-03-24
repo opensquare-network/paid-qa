@@ -102,7 +102,7 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-  color: #1E2134;
+  color: #1e2134;
 `;
 
 export default function Create() {
@@ -161,16 +161,20 @@ export default function Create() {
       return showErrorToast("Reward must be a valid number");
     }
 
-    setLoading(true);
-
     const data = { title, content, language: "en" };
     const cid = await cidOf(data);
 
     const interaction = new NewInteraction("N", rewardAmount, cid);
     const remark = new InteractionEncoder(interaction).getRemark();
 
+    setLoading(true);
+
     try {
-      const { blockHash, extrinsicIndex } = await submitRemark(api, remark, account);
+      const { blockHash, extrinsicIndex } = await submitRemark(
+        api,
+        remark,
+        account
+      );
 
       const payload = {
         data,
@@ -179,12 +183,10 @@ export default function Create() {
         extrinsicIndex,
       };
 
-      serverApi.post(`/topics/`, payload).then(({ result }) => {
-        if (result?.cid) {
-          navigate(`/topic/${result.cid}`);
-        }
-      });
-
+      const { result, error } = await serverApi.post(`/topics/`, payload);
+      if (result?.cid) {
+        navigate(`/topic/${result.cid}`);
+      }
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
@@ -245,7 +247,12 @@ export default function Create() {
               <Header>Balance</Header>
               <ValueDisplay value={balance} chain={account.network} showAEM />
             </FlexBetween>
-            <Button onClick={onPublish} primary disabled={!account}>
+            <Button
+              onClick={onPublish}
+              primary
+              disabled={!account}
+              isLoading={loading}
+            >
               Post
             </Button>
           </Box>

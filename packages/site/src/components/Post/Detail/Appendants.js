@@ -12,7 +12,7 @@ import { useApi } from "utils/hooks";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { cidOf } from "services/ipfs";
 import { accountSelector } from "store/reducers/accountSlice";
-import { setTopic } from "store/reducers/topicSlice";
+import { fetchTopic, setTopic } from "store/reducers/topicSlice";
 import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
@@ -87,25 +87,27 @@ export default function Appendants({
 
   const api = useApi();
   const dispatch = useDispatch();
+
+  const showErrorToast = (message) => {
+    dispatch(
+      addToast({
+        type: ToastTypes.Error,
+        message,
+      })
+    );
+  };
+
   const onSubmit = async () => {
+    if (!account) {
+      return showErrorToast("Please connect wallet");
+    }
+
     if (!api) {
-      dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: "Network not connected yet",
-        })
-      );
-      return;
+      return showErrorToast("Network not connected yet");
     }
 
     if (!content) {
-      dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: "Content is empty",
-        })
-      );
-      return;
+      return showErrorToast("Content is empty");
     }
 
     setLoading(true);
@@ -131,39 +133,24 @@ export default function Appendants({
         extrinsicIndex,
       };
 
-      serverApi
-        .post(`/topics/${topicCid}/appendants`, payload)
-        .then(({ result, error }) => {
-          if (result) {
-            setContent("");
-            // After appendant is added, update the topic
-            serverApi.fetch(`/topics/${topicCid}`).then(({ result }) => {
-              if (result) {
-                dispatch(setTopic(result));
-              }
-            });
-          }
+      const { result, error } = await serverApi.post(
+        `/topics/${topicCid}/appendants`,
+        payload
+      );
+      if (result) {
+        setContent("");
+        dispatch(fetchTopic(topicCid));
+      }
 
-          if (error) {
-            dispatch(
-              addToast({
-                type: ToastTypes.Error,
-                message: error.message,
-              })
-            );
-          }
-        });
+      if (error) {
+        showErrorToast(error.message);
+      }
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
       }
 
-      return dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      return showErrorToast(e.toString());
     } finally {
       setLoading(false);
     }
@@ -211,7 +198,11 @@ export default function Appendants({
               showButtons={true}
               disabled={isDifferentNetwork}
               submitting={loading}
-              errorMsg={isOwner && isDifferentNetwork ? "Please switch to the same network as topic to post." : ""}
+              errorMsg={
+                isOwner && isDifferentNetwork
+                  ? "Please switch to the same network as topic to post."
+                  : ""
+              }
             />
           </EditorWrapper>
         </>
