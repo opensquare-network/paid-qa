@@ -40,13 +40,7 @@ export default function TopicsList() {
       ) : (
         topics.items.map((topic, index) => <Topic key={index} topic={topic} />)
       )}
-      <Pagination
-        className="pagination"
-        page={topics?.page}
-        pageSize={topics?.pageSize}
-        total={topics?.total}
-        setPage={setPage}
-      />
+      <Pagination className="pagination" {...{ ...topics, setPage }} large />
     </Wrapper>
   );
 }
