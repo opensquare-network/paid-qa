@@ -8,9 +8,13 @@ import MobileVisible from "components/MobileVisible";
 import Time from "@osn/common-ui/lib/Time";
 import NetworkUser from "./User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import { MOBILE_SIZE } from "../utils/constants";
 
 const Wrapper = styled.div`
   padding: 24px;
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    padding: 16px;
+  }
   display: flex;
   background: #ffffff;
   border: 1px solid #f0f3f8;
