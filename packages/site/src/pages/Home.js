@@ -1,15 +1,10 @@
-import { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
 
 import Container from "@osn/common-ui/lib/styled/Container";
 // import Explorer from "components/Explorer";
 import AskQuestion from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
-import { setTopics, topicsSelector } from "store/reducers/topicSlice";
-import serverApi from "services/serverApi";
-import { addToast, ToastTypes } from "../store/reducers/toastSlice";
 
 const Wrapper = styled.div`
   position: relative;
@@ -34,22 +29,6 @@ const PostListTitle = styled.h3`
 `;
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const topics = useSelector(topicsSelector);
-  useEffect(() => {
-    serverApi.fetch("/topics").then(({ result, error }) => {
-      dispatch(setTopics(result ?? { items: [] }));
-      if (error) {
-        dispatch(
-          addToast({
-            type: ToastTypes.Error,
-            message: error?.message || "Failed to load topics",
-          })
-        );
-      }
-    });
-  }, [dispatch]);
-
   return (
     <Wrapper>
       <Background />
@@ -60,7 +39,7 @@ export default function Home() {
             Topics
             <AskQuestion />
           </PostListTitle>
-          <TopicsList topics={topics} />
+          <TopicsList />
         </ContentWrapper>
       </Container>
     </Wrapper>
