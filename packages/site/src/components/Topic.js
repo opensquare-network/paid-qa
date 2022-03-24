@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import TagList from "./TagList";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import MobileInvisible from "components/MobileInvisible";
+import MobileVisible from "components/MobileVisible";
 import Time from "@osn/common-ui/lib/Time";
 import NetworkUser from "./User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
@@ -63,6 +64,10 @@ const Divider = styled.div`
   background: #f0f3f8;
 `;
 
+const RepliesCount = styled.div`
+  color: #a1a8b3;
+`;
+
 export default function Topic({ topic }) {
   const signerAddress = encodeNetworkAddress(topic.signer, topic.network);
   return (
@@ -86,6 +91,9 @@ export default function Topic({ topic }) {
                 tooltipPosition="down"
               />
             </MobileInvisible>
+            <MobileVisible>
+              <RepliesCount>{topic.answersCount || 0} Replies</RepliesCount>
+            </MobileVisible>
             <Time time={topic.blockTime} />
           </DividerWrapper>
           <TagList topic={topic} />
