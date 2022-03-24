@@ -111,13 +111,15 @@ const BalanceInfo = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 25px;
 
   > :first-child {
     color: #506176;
   }
 
   > :last-child {
+    display: flex;
+    align-items: center;
     color: #1e2134;
   }
 `;
@@ -353,13 +355,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
           <BalanceInfo>
             <span>Balance</span>
-            <span>
+            <div>
               {loadingBalance || loadingSymbol ? (
                 <Loading />
               ) : (
                 `${balance} ${symbol}`
               )}
-            </span>
+            </div>
           </BalanceInfo>
 
           <ActionBar>
