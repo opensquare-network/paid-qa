@@ -38,7 +38,7 @@ export default function Description({ topic }) {
       <ActionBar
         topicCid={topic.cid}
         topicOwner={topic.signer}
-        funds={topic.funds}
+        funds={topic?.funds}
       />
     </Wrapper>
   );

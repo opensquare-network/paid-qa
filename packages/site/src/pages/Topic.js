@@ -35,11 +35,6 @@ export default function Topic() {
     });
   }, [dispatch, cid]);
 
-  //TODO: implement loading effect
-  if (!topic) {
-    return null;
-  }
-
   return (
     <Wrapper>
       <Background />
