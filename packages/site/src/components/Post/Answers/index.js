@@ -59,6 +59,15 @@ export default function Answers({ topicCid }) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const showErrorToast = (message) => {
+    dispatch(
+      addToast({
+        type: ToastTypes.Error,
+        message,
+      })
+    );
+  };
+
   useEffect(() => {
     if (topicCid) {
       dispatch(fetchAnswers(topicCid, page));
@@ -67,17 +76,11 @@ export default function Answers({ topicCid }) {
 
   const onSubmit = async () => {
     if (!account) {
-      return;
+      return showErrorToast("Please connect wallet");
     }
 
     if (!content) {
-      dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: "Content is empty",
-        })
-      );
-      return;
+      return showErrorToast("Content is empty");
     }
 
     setLoading(true);
@@ -102,27 +105,16 @@ export default function Answers({ topicCid }) {
       );
       if (result) {
         dispatch(fetchAnswers(topicCid, page));
+        setContent("");
       }
       if (error) {
-        dispatch(
-          addToast({
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        return showErrorToast(error.message);
       }
-
-      setContent("");
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
       }
-      dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: e.message,
-        })
-      );
+      showErrorToast(e.message)
     } finally {
       setLoading(false);
     }
