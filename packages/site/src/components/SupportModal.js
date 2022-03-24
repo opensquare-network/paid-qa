@@ -177,6 +177,10 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   };
 
   const doConfirm = async () => {
+    if (!account) {
+      return showErrorToast("Please connect wallet");
+    }
+
     if (!api) {
       return showErrorToast("Network not connected yet");
     }

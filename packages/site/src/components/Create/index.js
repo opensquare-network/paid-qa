@@ -67,6 +67,10 @@ const Box = styled.div`
   > :not(:first-child) {
     margin-top: 20px;
   }
+
+  > :nth-child(5) {
+    margin-top: 8px;
+  }
 `;
 
 const Main = styled(Box)`
@@ -90,6 +94,15 @@ const Grey = styled.div`
 
 const Header = styled.span`
   color: #506176;
+  line-height: 25px;
+`;
+
+const Title = styled.div`
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #1E2134;
 `;
 
 export default function Create() {
@@ -101,7 +114,7 @@ export default function Create() {
   const [loading, setLoading] = useState(false);
   const api = useApi();
   const navigate = useNavigate();
-  const symbol = getSymbolByChain(account.network);
+  const symbol = getSymbolByChain(account?.network);
   const [balance, setBalance] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
 
@@ -116,31 +129,38 @@ export default function Create() {
         setBalance(balanceNow?.toJSON()?.free);
       }
     })();
-  }, [account.address, api]);
+  }, [account?.address, api]);
+
+  const showErrorToast = (message) => {
+    dispatch(
+      addToast({
+        type: ToastTypes.Error,
+        message,
+      })
+    );
+  };
 
   const onPublish = async () => {
-    if (!api) {
-      return;
+    if (!account) {
+      return showErrorToast("Please connect wallet");
     }
 
-    let formValidateErrMsg = null;
+    if (!api) {
+      return showErrorToast("Network not connected yet");
+    }
+
     if (!title) {
-      formValidateErrMsg = "Title must not be empty";
+      return showErrorToast("Title must not be empty");
     }
+
     if (!content) {
-      formValidateErrMsg = "Content must not be empty";
+      return showErrorToast("Content must not be empty");
     }
+
     if (isNaN(rewardAmount) || rewardAmount <= 0) {
-      formValidateErrMsg = "Reward must be a valid number";
+      return showErrorToast("Reward must be a valid number");
     }
-    if (formValidateErrMsg) {
-      return dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: formValidateErrMsg,
-        })
-      );
-    }
+
     setLoading(true);
 
     const data = { title, content, language: "en" };
@@ -170,12 +190,7 @@ export default function Create() {
         return;
       }
 
-      return dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      return showErrorToast(e.toString());
     } finally {
       setLoading(false);
     }
@@ -184,7 +199,7 @@ export default function Create() {
   return (
     <Wrapper>
       <Main>
-        <h4>Title</h4>
+        <Title>Title</Title>
         <Input
           value={title}
           onChange={(e) => {
@@ -193,7 +208,7 @@ export default function Create() {
           placeholder="Input title here..."
           disabled={loading}
         />
-        <h4>Topic</h4>
+        <Title>Topic</Title>
         {!showPreview ? (
           <MarkdownEditor {...{ content, setContent, disabled: loading }} />
         ) : (
@@ -219,7 +234,7 @@ export default function Create() {
             </Grey>
             <FlexBetween>
               <SubTitle>Reward</SubTitle>
-              <img src="/imgs/icons/lanyard.svg" alt="" />
+              <img src="/imgs/icons/treasury.svg" alt="" />
             </FlexBetween>
             <AmountInput
               value={rewardAmount}
