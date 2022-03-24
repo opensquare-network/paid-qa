@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
+import ActionBar from "./ActionBar";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -17,6 +18,9 @@ const Wrapper = styled.div`
     line-height: 24px;
     color: #506176;
   }
+  > :nth-child(3) {
+    margin-top: 15px;
+  }
 `;
 
 export default function Description({ topic }) {
@@ -31,6 +35,11 @@ export default function Description({ topic }) {
         />
       </div>
       <MicromarkMd md={topic.content} />
+      <ActionBar
+        topicCid={topic.cid}
+        topicOwner={topic.signer}
+        funds={topic.funds}
+      />
     </Wrapper>
   );
 }
