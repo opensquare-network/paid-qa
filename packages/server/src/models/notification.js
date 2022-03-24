@@ -5,6 +5,10 @@ const NotificationSchema = new mongoose.Schema(
   {
     owner: String, // public key of owner address
     type: [String], // reply, mention, fund, resolve
+    read: {
+      type: Boolean,
+      default: false,
+    },
     data: {
       answer: {
         type: Schema.Types.ObjectId,
@@ -26,11 +30,10 @@ const NotificationSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    toJSON: { getters: true },
   }
 );
 
-NotificationSchema.index({ owner: 1 });
+NotificationSchema.index({ owner: 1, read: 1 });
 
 const Notification = mongoose.model("Notification", NotificationSchema);
 

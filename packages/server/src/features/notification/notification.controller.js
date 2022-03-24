@@ -43,8 +43,32 @@ async function getRewardNotifications(ctx) {
   ctx.body = result;
 }
 
+async function getUnreadNotifications(ctx) {
+  const { network, address } = ctx.params;
+
+  const result = await notificationService.getUnreadNotifications(
+    network,
+    address
+  );
+
+  ctx.body = result;
+}
+
+async function clearUnreadNotifications(ctx) {
+  const { network, address } = ctx.params;
+
+  const result = await notificationService.clearUnreadNotifications(
+    network,
+    address
+  );
+
+  ctx.body = result;
+}
+
 module.exports = {
   getNotifications,
   getDiscussionNotifications,
   getRewardNotifications,
+  getUnreadNotifications,
+  clearUnreadNotifications,
 };

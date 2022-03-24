@@ -18,4 +18,14 @@ router.get(
   notificationController.getRewardNotifications
 );
 
+router.get(
+  "/network/:network/address/:address/notifications/unread",
+  notificationController.getUnreadNotifications
+);
+
+router.post(
+  "/network/:network/address/:address/notifications/clearunread",
+  notificationController.clearUnreadNotifications
+);
+
 module.exports = router;
