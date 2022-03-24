@@ -25,7 +25,15 @@ const ContentWrapper = styled.div`
   }
 `;
 
-export default function Item({ answer, onReply }) {
+const Height = styled.span`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #A1A8B3;
+`;
+
+export default function Item({ answer, height, onReply }) {
   const signerAddress = encodeNetworkAddress(answer.signer, answer.network);
   return (
     <Wrapper>
@@ -38,11 +46,14 @@ export default function Item({ answer, onReply }) {
           />
           <Time time={answer.createdAt} />
         </DividerWrapper>
-        <IpfsSquare
-          href={
-            answer.pinned ? `https://ipfs.infura.io/ipfs/${answer.cid}` : null
-          }
-        />
+        <DividerWrapper>
+          <Height>#{height}</Height>
+          <IpfsSquare
+            href={
+              answer.pinned ? `https://ipfs.infura.io/ipfs/${answer.cid}` : null
+            }
+          />
+        </DividerWrapper>
       </div>
       <ContentWrapper>
         <MicromarkMd md={answer.content} />

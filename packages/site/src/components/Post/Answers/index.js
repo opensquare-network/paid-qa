@@ -175,7 +175,12 @@ export default function Answers({ topicCid }) {
       ) : (
         <div>
           {answers?.items?.map((answer, index) => (
-            <Item key={index} answer={answer} onReply={onReply} />
+            <Item
+              key={index}
+              height={(answers?.page - 1) * answers?.pageSize + index + 1}
+              answer={answer}
+              onReply={onReply}
+            />
           ))}
         </div>
       )}
