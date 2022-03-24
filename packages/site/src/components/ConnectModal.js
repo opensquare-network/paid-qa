@@ -4,8 +4,8 @@ import {
   web3Accounts,
   web3Enable,
 } from "@polkadot/extension-dapp";
-import { useDispatch } from "react-redux";
-import { setAccount } from "../store/reducers/accountSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { accountSelector, setAccount } from "../store/reducers/accountSlice";
 
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
@@ -83,6 +83,7 @@ export default function ConnectModal() {
   const dispatch = useDispatch();
   const isMounted = useIsMounted();
   const [hasExtension, setHasExtension] = useState(null);
+  const account = useSelector(accountSelector);
   const [accounts, setAccounts] = useState([]);
   const [chain, setChain] = useState({ network: "polkadot" });
   const [address, setAddress] = useState();
@@ -163,6 +164,7 @@ export default function ConnectModal() {
           <ChainSelector
             chains={availableNetworks}
             onSelect={(chain) => setChain(chain)}
+            selected={account?.network}
           />
 
           <StyledText>Account</StyledText>
@@ -170,6 +172,7 @@ export default function ConnectModal() {
             accounts={accounts}
             onSelect={(account) => setAddress(account?.address)}
             chain={chain}
+            selected={account?.address}
           />
 
           <ActionBar>
