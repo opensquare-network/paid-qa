@@ -7,7 +7,6 @@ import Description from "./Description";
 import Appendants from "./Appendants";
 import Share from "./Share";
 import Resolve from "./Resolve";
-import ActionBar from "./ActionBar";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
@@ -34,11 +33,6 @@ export default function Detail({ topic }) {
       <Title topic={topic} />
       <Rewards />
       <Description topic={topic} />
-      <ActionBar
-        topicCid={topic.cid}
-        topicOwner={topic.signer}
-        funds={topic.funds}
-      />
       <Appendants
         topicCid={topic.cid}
         topicNetwork={topic.network}
