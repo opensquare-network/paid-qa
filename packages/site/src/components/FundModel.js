@@ -6,7 +6,7 @@ import BigNumber from "bignumber.js";
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
 import styled from "styled-components";
-import { p_16_semibold,  p_20_semibold } from "../styles/textStyles";
+import { p_16_semibold, p_20_semibold } from "../styles/textStyles";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import Toggle from "@osn/common-ui/lib/Toggle";
@@ -22,7 +22,11 @@ import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import serverApi from "services/serverApi";
-import { fetchFundSummary, fetchTopic, topicSelector } from "store/reducers/topicSlice";
+import {
+  fetchFundSummary,
+  fetchTopic,
+  topicSelector,
+} from "store/reducers/topicSlice";
 import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
 
 const { InteractionEncoder } = encoder;
@@ -238,6 +242,10 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   };
 
   const doConfirm = async () => {
+    if (!account) {
+      return showErrorToast("Please connect wallet");
+    }
+
     if (!api) {
       return showErrorToast("Network not connected yet");
     }
@@ -281,18 +289,17 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         extrinsicIndex,
       };
 
-      serverApi.post(`/funds`, payload).then(({ result, error }) => {
-        if (result) {
-          // After fund is added, update the topic
-          dispatch(fetchTopic(topic.cid));
-          dispatch(fetchAnswers(topic.cid, answers.page));
-          dispatch(fetchFundSummary(topic.cid));
-        }
+      const { result, error } = await serverApi.post(`/funds`, payload);
+      if (result) {
+        // After fund is added, update the topic
+        dispatch(fetchTopic(topic.cid));
+        dispatch(fetchAnswers(topic.cid, answers.page));
+        dispatch(fetchFundSummary(topic.cid));
+      }
 
-        if (error) {
-          showErrorToast(error.message);
-        }
-      });
+      if (error) {
+        showErrorToast(error.message);
+      }
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;

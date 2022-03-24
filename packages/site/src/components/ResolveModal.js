@@ -94,6 +94,10 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
   };
 
   const doConfirm = async () => {
+    if (!account) {
+      return showErrorToast("Please connect wallet");
+    }
+
     if (!api) {
       return showErrorToast("Network not connected yet");
     }
@@ -107,24 +111,25 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
     try {
       setLoading(true);
 
-      const { blockHash, extrinsicIndex } = await submitRemark(api, remark, account);
+      const { blockHash, extrinsicIndex } = await submitRemark(
+        api,
+        remark,
+        account
+      );
       const payload = {
         network: account.network,
         blockHash,
         extrinsicIndex,
       };
 
-      serverApi
-        .post(`/resolve`, payload)
-        .then(({ result, error }) => {
-          if (result) {
-            dispatch(fetchTopic(topicCid));
-          }
+      const { result, error } = await serverApi.post(`/resolve`, payload);
+      if (result) {
+        dispatch(fetchTopic(topicCid));
+      }
 
-          if (error) {
-            showErrorToast(error.message);
-          }
-        });
+      if (error) {
+        showErrorToast(error.message);
+      }
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
         return;
