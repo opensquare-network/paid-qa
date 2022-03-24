@@ -11,8 +11,22 @@ const DropdownWrapper = styled.div`
   height: 64px;
 `;
 
-const AccountSelector = ({ accounts, chain, onSelect = () => {} }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+const AccountSelector = ({
+  accounts,
+  chain,
+  onSelect = () => {},
+  selected = "",
+}) => {
+  const [selectedIndex, setSelectedIndex] = useState(
+    (() => {
+      for (let index in accounts) {
+        if (selected === accounts[index]?.address) {
+          return index;
+        }
+      }
+      return 0;
+    })()
+  );
   useEffect(() => {
     onSelect(accounts[selectedIndex]);
   }, [accounts, onSelect, selectedIndex]);

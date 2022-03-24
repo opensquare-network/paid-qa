@@ -20,8 +20,17 @@ const StyledDropdown = styled(Dropdown)`
   height: 48px !important;
 `;
 
-const ChainSelector = ({ chains = [], onSelect = () => {} }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+const ChainSelector = ({ chains = [], onSelect = () => {}, selected = "" }) => {
+  const [selectedIndex, setSelectedIndex] = useState(
+    (() => {
+      for (let index in chains) {
+        if (selected === chains[index]?.network) {
+          return index;
+        }
+      }
+      return 0;
+    })()
+  );
   const [isTopLayer, setIsTopLayer] = useState(false);
   useEffect(() => {
     onSelect(chains[selectedIndex]);
