@@ -44,7 +44,9 @@ export default function Funds({ topicCid }) {
   const dispatch = useDispatch();
   const fundSummary = useSelector(fundSummarySelector);
   useEffect(() => {
-    dispatch(fetchFundSummary(topicCid));
+    if (topicCid) {
+      dispatch(fetchFundSummary(topicCid));
+    }
   }, [dispatch, topicCid]);
 
   const stats = fundSummary?.statsByAnswers;
