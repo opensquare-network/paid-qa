@@ -184,8 +184,11 @@ export default function Create() {
       };
 
       const { result, error } = await serverApi.post(`/topics/`, payload);
-      if (result?.cid) {
+      if (result) {
         navigate(`/topic/${result.cid}`);
+      }
+      if (error) {
+        showErrorToast(error.message);
       }
     } catch (e) {
       if (e.toString() === "Error: Cancelled") {
