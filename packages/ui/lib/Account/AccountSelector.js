@@ -21,7 +21,7 @@ const AccountSelector = ({
     (() => {
       for (let index in accounts) {
         if (selected === accounts[index]?.address) {
-          return index;
+          return parseInt(index);
         }
       }
       return 0;
@@ -52,6 +52,7 @@ const AccountSelector = ({
           onChange={(_, { value }) => {
             setSelectedIndex(value);
           }}
+          value={selectedIndex}
         />
         <AccountItem
           accountName={accounts?.[selectedIndex]?.name}

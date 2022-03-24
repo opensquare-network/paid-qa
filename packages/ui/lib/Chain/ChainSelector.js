@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Dropdown } from "../index";
 import ChainItem from "./ChainSelectItem";
 
@@ -25,7 +25,7 @@ const ChainSelector = ({ chains = [], onSelect = () => {}, selected = "" }) => {
     (() => {
       for (let index in chains) {
         if (selected === chains[index]?.network) {
-          return index;
+          return parseInt(index);
         }
       }
       return 0;
@@ -56,6 +56,7 @@ const ChainSelector = ({ chains = [], onSelect = () => {}, selected = "" }) => {
           onChange={(_, { value }) => {
             setSelectedIndex(value);
           }}
+          value={selectedIndex}
         />
         <ChainItem
           chainName={chains[selectedIndex]?.network}
