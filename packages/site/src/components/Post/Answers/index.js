@@ -179,7 +179,9 @@ export default function Answers({ topicCid }) {
       <Title>
         <DividerWrapper>
           <div>Replies</div>
-          <Count>{answers?.total || 0}</Count>
+          {typeof answers?.total === "number" && (
+            <Count>{answers?.total}</Count>
+          )}
         </DividerWrapper>
       </Title>
       {answers === null && (

@@ -7,6 +7,8 @@ import {
   fetchFundSummary,
   fundSummarySelector,
 } from "store/reducers/topicSlice";
+import { ReactComponent as Loading } from "imgs/icons/loading.svg";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -58,9 +60,15 @@ export default function Funds({ topicCid }) {
         <img src="/imgs/icons/treasury.svg" alt="" />
       </Title>
       <ContentWrapper>
-        {(!stats || Object.keys(stats).length === 0) && (
-          <GreyText>No funds</GreyText>
+        {fundSummary === null && (
+          <FlexCenter>
+            <Loading />
+          </FlexCenter>
         )}
+        {fundSummary !== null &&
+          (!stats || Object.keys(stats).length === 0) && (
+            <GreyText>No funds</GreyText>
+          )}
         {Object.keys(stats || {}).map((key, index) => {
           const item = stats[key];
           return (
