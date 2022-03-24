@@ -9,7 +9,6 @@ const ResolveSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    toJSON: { getters: true },
   }
 );
 

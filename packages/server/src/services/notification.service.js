@@ -7,7 +7,10 @@ async function getNotifications(network, address, page, pageSize) {
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
     .skip((page - 1) * pageSize)
-    .limit(pageSize);
+    .limit(pageSize)
+    .populate("data.topic")
+    .populate("data.answer")
+    .populate("data.fund");
   return {
     items: notifications,
     page,
@@ -25,7 +28,9 @@ async function getDiscussionNotifications(network, address, page, pageSize) {
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
     .skip((page - 1) * pageSize)
-    .limit(pageSize);
+    .limit(pageSize)
+    .populate("data.topic")
+    .populate("data.answer");
   return {
     items: notifications,
     page,
@@ -43,7 +48,10 @@ async function getRewardNotifications(network, address, page, pageSize) {
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
     .skip((page - 1) * pageSize)
-    .limit(pageSize);
+    .limit(pageSize)
+    .populate("data.topic")
+    .populate("data.answer")
+    .populate("data.fund");
   return {
     items: notifications,
     page,
@@ -52,8 +60,34 @@ async function getRewardNotifications(network, address, page, pageSize) {
   };
 }
 
+async function getUnreadNotifications(network, address) {
+  const publicKey = toPublicKey(address);
+  const q = {
+    publicKey,
+    read: false,
+  };
+  const count = await Notification.countDocuments(q);
+  return {
+    count,
+  };
+}
+
+async function clearUnreadNotifications(network, address) {
+  const publicKey = toPublicKey(address);
+  const q = {
+    publicKey,
+    read: false,
+  };
+  const result = await Notification.updateMany(q, { read: true });
+  return {
+    result,
+  };
+}
+
 module.exports = {
   getNotifications,
   getDiscussionNotifications,
   getRewardNotifications,
+  getUnreadNotifications,
+  clearUnreadNotifications,
 };
