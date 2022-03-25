@@ -176,8 +176,6 @@ export default function Create() {
         account
       );
 
-      console.log({ blockHash, extrinsicIndex });
-
       const payload = {
         data,
         network: account.network,
@@ -187,7 +185,6 @@ export default function Create() {
 
       const { result, error } = await serverApi.post(`/topics/`, payload);
 
-      console.log({ result, error });
       if (result) {
         navigate(`/topic/${result.cid}`);
       }
