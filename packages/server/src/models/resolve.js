@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ResolveSchema = new mongoose.Schema(
   {
-    blockTime: String,
+    blockTime: Number,
     topicCid: String,
     network: String,
     sponsor: String,
