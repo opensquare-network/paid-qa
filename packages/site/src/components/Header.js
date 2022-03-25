@@ -106,10 +106,10 @@ export default function Header() {
           <ProductSwitch />
         </LeftWrapper>
         <RightWrapper ref={ref}>
-          {account && <Notification />}
           {windowSize.width > MOBILE_SIZE ? (
             account ? (
               <>
+                <Notification />
                 <ConnectedAccount
                   {...{ showMenu, setShowMenu, account }}
                   showNetwork

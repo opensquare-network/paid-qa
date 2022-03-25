@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import MobileInvisible from "./MobileInvisible";
 
 const Wrapper = styled.div`
   width: 38px;
@@ -19,12 +18,10 @@ const Wrapper = styled.div`
 
 export default function Notification() {
   return (
-    <MobileInvisible>
-      <Link to="/notifications">
-        <Wrapper>
-          <img src="/imgs/icons/notification.svg" alt="" />
-        </Wrapper>
-      </Link>
-    </MobileInvisible>
+    <Link to="/notifications">
+      <Wrapper>
+        <img src="/imgs/icons/notification.svg" alt="" />
+      </Wrapper>
+    </Link>
   );
 }
