@@ -12,4 +12,5 @@ export default function NotificationItem({ notification }) {
   if (notification.type.includes("fund")) {
     return <FundItem notification={notification} />;
   }
+  return <></>;
 }
