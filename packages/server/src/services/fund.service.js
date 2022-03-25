@@ -73,9 +73,12 @@ async function addFund(network, blockHash, extrinsicIndex) {
     decimals,
   });
 
-  const topic = await Topic.findOne({ cid: interaction.ipfsCid });
-  const answer = await Answer.findOne({ cid: interaction.ipfsCid });
+  let topic = await Topic.findOne({ cid: interaction.ipfsCid });
+  let answer = await Answer.findOne({ cid: interaction.ipfsCid });
   const fundTo = topic?.signer || answer?.signer;
+  if (answer) {
+    topic = await Topic.findOne({ cid: answer.topicCid });
+  }
 
   const owner = toPublicKey(fundTo);
   await Notification.create({
