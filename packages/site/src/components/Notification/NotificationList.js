@@ -6,6 +6,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import styled from "styled-components";
 import ListLoader from "../Skeleton/ListLoader";
 import NotificationItem from "./NotificationItem";
+import NoPost from "../NoPost";
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,15 +38,16 @@ export default function NotificationList() {
 
   return (
     <Wrapper>
-      {
-        notifications ? (
-          notifications.items.map((notification, index) => (
-            <NotificationItem key={index} notification={notification} />
-          ))
-        ) : (
-          <ListLoader />
-        )
-      }
+      {notifications ? (
+        notifications.items.map((notification, index) => (
+          <NotificationItem key={index} notification={notification} />
+        ))
+      ) : (
+        <ListLoader />
+      )}
+      {notifications?.items?.length === 0 && (
+        <NoPost message={"No current records"} />
+      )}
     </Wrapper>
   );
 }
