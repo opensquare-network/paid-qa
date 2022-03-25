@@ -106,7 +106,7 @@ export default function Header() {
           <ProductSwitch />
         </LeftWrapper>
         <RightWrapper ref={ref}>
-          <Notification />
+          {account && <Notification />}
           {windowSize.width > MOBILE_SIZE ? (
             account ? (
               <>
