@@ -30,7 +30,7 @@ export default function FundItem({ notification }) {
     <Wrapper>
       <DividerWrapper>
         <Flex>
-          Rewarded by
+          Funded by
           <MarginX8>
             <Avatar address={signer} />
           </MarginX8>
