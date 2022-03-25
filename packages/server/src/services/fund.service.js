@@ -82,8 +82,8 @@ async function addFund(network, blockHash, extrinsicIndex) {
     owner,
     type: ["fund"],
     data: {
-      topic: topic._id,
-      answer: answer._id,
+      topic: topic?._id,
+      answer: answer?._id,
       fund: fundObj._id,
       byWho: {
         address: signer,
