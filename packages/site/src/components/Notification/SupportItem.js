@@ -23,7 +23,7 @@ const MarginX8 = styled(Flex)`
   margin-right: 8px;
 `;
 
-export default function PromiseItem({ notification }) {
+export default function SupportItem({ notification }) {
   const signer = notification.data.byWho.address;
   const network = notification.data.byWho.network;
   return (
