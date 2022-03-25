@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchFundSummary,
   fundSummarySelector,
+  setFundSummary,
 } from "store/reducers/topicSlice";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
@@ -49,6 +50,9 @@ export default function Funds({ topicCid }) {
     if (topicCid) {
       dispatch(fetchFundSummary(topicCid));
     }
+    return () => {
+      dispatch(setFundSummary(null));
+    };
   }, [dispatch, topicCid]);
 
   const stats = fundSummary?.statsByAnswers;
