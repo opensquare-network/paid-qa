@@ -13,6 +13,7 @@ const {
 } = require("./node.service");
 const BigNumber = require("bignumber.js");
 const { bnAdd } = require("../utils/bn");
+const { toPublicKey } = require("../utils/address");
 
 async function addFund(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
