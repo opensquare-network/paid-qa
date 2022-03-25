@@ -80,7 +80,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   const owner = toPublicKey(topic.signer);
   await Notification.create({
     owner,
-    type: "support",
+    type: ["support"],
     data: {
       topic: topic._id,
       byWho: {

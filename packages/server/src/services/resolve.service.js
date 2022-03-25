@@ -77,7 +77,7 @@ async function updateTopicResolve(topicCid) {
       await Notification.create(
         sponsors.map((sponsor) => ({
           owner: sponsor,
-          type: "topicResolved",
+          type: ["topicResolved"],
           data: {
             topic: topic._id,
           },
