@@ -13,6 +13,7 @@ import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
 import PromiseItem, { useFulfillment } from "./Post/Promises/Item";
 import { fetchTopic } from "store/reducers/topicSlice";
+import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 
 const { InteractionEncoder } = encoder;
 const { ResolveInteraction } = interactions;
@@ -79,6 +80,7 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [loading, setLoading] = useState(false);
+  const isMounted = useIsMounted();
   const api = useApi();
 
   const [, precent] = useFulfillment(reward);
@@ -90,7 +92,9 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
         message,
       })
     );
-    setOpen(false);
+    if (isMounted.current) {
+      setOpen(false);
+    }
   };
 
   const doConfirm = async () => {
@@ -136,10 +140,14 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
       }
       return showErrorToast(e.toString());
     } finally {
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     }
 
-    setOpen(false);
+    if (isMounted.current) {
+      setOpen(false);
+    }
   };
 
   const closeModal = () => setOpen(false);

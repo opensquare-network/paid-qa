@@ -16,6 +16,7 @@ import { fetchTopic } from "store/reducers/topicSlice";
 import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
+import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 
 const { InteractionEncoder } = encoder;
 const { AppendInteraction } = interactions;
@@ -87,6 +88,7 @@ export default function Appendants({
 
   const api = useApi();
   const dispatch = useDispatch();
+  const isMounted = useIsMounted();
 
   const showErrorToast = (message) => {
     dispatch(
@@ -152,7 +154,9 @@ export default function Appendants({
 
       return showErrorToast(e.toString());
     } finally {
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     }
   };
 

@@ -22,6 +22,7 @@ import Preview from "@osn/common-ui/lib/Preview";
 import { useApi } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
+import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 
 const { InteractionEncoder } = encoder;
 const { NewInteraction } = interactions;
@@ -117,6 +118,7 @@ export default function Create() {
   const symbol = getSymbolByChain(account?.network);
   const [balance, setBalance] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
+  const isMounted = useIsMounted();
 
   useEffect(() => {
     (async () => {
@@ -197,7 +199,9 @@ export default function Create() {
 
       return showErrorToast(e.toString());
     } finally {
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     }
   };
 
