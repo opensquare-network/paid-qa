@@ -21,6 +21,7 @@ import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
 import uniqWith from "lodash.uniqwith";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
+import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -58,6 +59,7 @@ export default function Answers({ topicCid }) {
   const [page, setPage] = useState(1);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const isMounted = useIsMounted();
 
   const showErrorToast = (message) => {
     dispatch(
@@ -119,7 +121,9 @@ export default function Answers({ topicCid }) {
       }
       showErrorToast(e.message)
     } finally {
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     }
   };
 

@@ -173,7 +173,9 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         message,
       })
     );
-    setOpen(false);
+    if (isMounted.current) {
+      setOpen(false);
+    }
   };
 
   const doConfirm = async () => {
@@ -237,10 +239,14 @@ export default function SupportModal({ open, setOpen, topicCid }) {
       }
       return showErrorToast(e.toString());
     } finally {
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     }
 
-    setOpen(false);
+    if (isMounted.current) {
+      setOpen(false);
+    }
   };
 
   const closeModal = () => setOpen(false);
