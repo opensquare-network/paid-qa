@@ -39,7 +39,7 @@ export default function FundItem({ notification }) {
             {addressEllipsis(signer)}
           </TextMajor>
           <MarginX8>with</MarginX8>
-          <TextMajor>{notification.data.fund.amount} {notification.data.fund.symbol}</TextMajor>
+          <TextMajor>{notification.data.fund.value} {notification.data.fund.symbol}</TextMajor>
           <MarginX8>in</MarginX8>
           <TextMajor>{notification.data.topic.title}</TextMajor>
         </Flex>
