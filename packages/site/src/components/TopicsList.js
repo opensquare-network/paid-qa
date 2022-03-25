@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTopics, topicsSelector } from "../store/reducers/topicSlice";
 import serverApi from "../services/serverApi";
 import { addToast, ToastTypes } from "../store/reducers/toastSlice";
+import { EmptyList } from "../utils/constants";
 
 const Wrapper = styled.div``;
 
@@ -19,7 +20,7 @@ export default function TopicsList() {
 
   useEffect(() => {
     serverApi.fetch("/topics", { page }).then(({ result, error }) => {
-      dispatch(setTopics(result ?? { items: [] }));
+      dispatch(setTopics(result ?? EmptyList));
       if (error) {
         dispatch(
           addToast({

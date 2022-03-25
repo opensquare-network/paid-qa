@@ -12,7 +12,7 @@ import serverApi from "services/serverApi";
 import RichEdit from "@osn/common-ui/lib/RichEdit";
 import { signMessage } from "services/chainApi";
 import NoReplies from "components/NoReplies";
-import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
+import { answersSelector, fetchAnswers, setAnswers } from "store/reducers/answerSlice";
 import {
   addressEllipsis,
   encodeNetworkAddress,
@@ -71,6 +71,9 @@ export default function Answers({ topicCid }) {
   useEffect(() => {
     if (topicCid) {
       dispatch(fetchAnswers(topicCid, page));
+    }
+    return () => {
+      dispatch(setAnswers(null));
     }
   }, [dispatch, topicCid, page]);
 

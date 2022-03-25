@@ -12,7 +12,7 @@ import { useApi } from "utils/hooks";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { cidOf } from "services/ipfs";
 import { accountSelector } from "store/reducers/accountSlice";
-import { fetchTopic, setTopic } from "store/reducers/topicSlice";
+import { fetchTopic } from "store/reducers/topicSlice";
 import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";

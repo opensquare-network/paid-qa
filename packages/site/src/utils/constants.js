@@ -178,3 +178,10 @@ export const DEFAULT_NODES = {
 };
 
 export const MOBILE_SIZE = 900;
+
+export const EmptyList = {
+  items: [],
+  page: 1,
+  pageSize: 10,
+  total: 0,
+};
