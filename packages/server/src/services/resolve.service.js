@@ -3,10 +3,11 @@ const {
   interactions: { ResolveInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
-const { Topic, Resolve, Reward } = require("../models");
+const { Topic, Resolve, Reward, Notification } = require("../models");
 const { getApi, getRemark } = require("./node.service");
-const { isSamePublicKey } = require("../utils/address");
+const { isSamePublicKey, toPublicKey } = require("../utils/address");
 const { PostStatus } = require("../utils/constants");
+const uniq = require("lodash.uniq");
 
 async function resolve(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -64,6 +65,26 @@ async function updateTopicResolve(topicCid) {
     { cid: topicCid },
     { status: allResolved ? PostStatus.Resolved : PostStatus.Active }
   );
+
+  if (allResolved) {
+    const topic = await Topic.findOne({ cid: topicCid }).populate("rewards");
+    const sponsors = uniq(
+      topic?.rewards?.map((reward) => toPublicKey(reward.sponsor)) || []
+    );
+
+    // Create notification for all sponsors when topic is resolved
+    if (sponsors.length > 0) {
+      await Notification.create(
+        sponsors.map((sponsor) => ({
+          owner: sponsor,
+          type: "topicResolved",
+          data: {
+            topic: topic._id,
+          },
+        }))
+      );
+    }
+  }
 }
 
 module.exports = {

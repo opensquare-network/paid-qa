@@ -22,7 +22,7 @@ const NotificationSchema = new mongoose.Schema(
         type: Schema.Types.ObjectId,
         ref: "Fund",
       },
-      who: {
+      byWho: {
         address: String,
         network: String,
       },
