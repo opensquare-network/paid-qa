@@ -7,10 +7,18 @@ import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import { Avatar } from "@osn/common-ui/lib";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled(Card)`
   ${p_14_normal};
   color: #506176;
+
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+    cursor: pointer;
+  }
 `;
 
 const TextMajor = styled.span`
@@ -33,6 +41,8 @@ const MarginX8 = styled(Flex)`
 export default function ReplyItem({ notification }) {
   const signer = notification.data.answer.signer;
   const network = notification.data.answer.network;
+  const topic = notification.data.topic;
+  const answer = notification.data.answer;
   return (
     <Wrapper>
       <DividerWrapper>
@@ -46,13 +56,15 @@ export default function ReplyItem({ notification }) {
             {addressEllipsis(signer)}
           </TextMajor>
           <MarginX8>in</MarginX8>
-          <TextMajor>{notification.data.topic.title}</TextMajor>
+          <Link to={`/topic/${topic.cid}`}>
+            <TextMajor>{topic.title}</TextMajor>
+          </Link>
         </Flex>
-        <Time time={notification.data.answer.createdAt} />
+        <Time time={answer.createdAt} />
       </DividerWrapper>
       <HorizonDivider />
       {/*todo: strip all syntax, keep plain text only*/}
-      {notification.data.answer.content}
+      {answer.content}
     </Wrapper>
   );
 }
