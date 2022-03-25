@@ -3,7 +3,20 @@ import styled from "styled-components";
 import StyledDropdown from "../styled/Dropdown";
 import AccountItem from "./AccountItem";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  .ui.selection.dropdown .menu {
+    @media only screen and (min-width: 768px) {
+      max-height: 233px;
+    }
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .ui.selection.dropdown .menu > .item {
+    padding-left: 0 !important;
+    padding-top: 3px !important;
+    padding-bottom: 4px !important;
+  }
+`;
 
 const DropdownWrapper = styled.div`
   position: relative;
