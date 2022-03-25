@@ -39,7 +39,7 @@ export default function NotificationList() {
           }
         });
     }
-  }, [account.network, account.address, isMounted, page]);
+  }, [account?.network, account?.address, isMounted, page]);
 
   return (
     <Wrapper>
