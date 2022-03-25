@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
 import Avatar from "./Avatar";
 import Address from "./Address";
 import { encodeAddress } from "@polkadot/util-crypto";
 import { ChainSS58Format } from "../utils/constants";
+import { fetchIdentity } from "../services/identity";
+import IdentityIcon from "../Identity/IdentityIcon";
+import { p_16_semibold } from "../styles/textStyles";
+import ChainIcon from "../Chain/ChainIcon";
 
 const Text = styled.p`
   color: #1e2134;
@@ -34,18 +38,55 @@ const ItemWrapper = styled.div`
     `}
 `;
 
+const IdentityWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+
+  > :not(:first-child) {
+    margin-left: 4px;
+  }
+`;
+
+const IdentityName = styled.span`
+  ${p_16_semibold};
+`;
+
+const IdentityDisplay = ({ identity, displayAccountName, chain }) => {
+  return identity?.info && identity?.info?.status !== "NO_ID" ? (
+    <IdentityWrapper>
+      <ChainIcon chainName={chain} size={16} />
+      <IdentityIcon status={identity.info.status} size={12} />
+      <IdentityName>{identity.info.display}</IdentityName>
+    </IdentityWrapper>
+  ) : (
+    <>{displayAccountName}</>
+  );
+};
+
 const AccountItem = ({ header, accountName, accountAddress, chain }) => {
+  const [identity, setIdentity] = useState();
   const ss58Format = ChainSS58Format[chain];
   let address = accountAddress;
   if (typeof ss58Format === "number") {
     address = encodeAddress(accountAddress, ss58Format);
   }
+  let displayAccountName = accountName;
+  useEffect(() => {
+    fetchIdentity(chain, accountAddress).then((identity) => {
+      setIdentity(identity);
+    });
+  }, []);
 
   return (
     <ItemWrapper header={header}>
       <Avatar address={accountAddress} size={40} />
       <div>
-        <Text>{accountName}</Text>
+        <IdentityDisplay
+          identity={identity}
+          displayAccountName={displayAccountName}
+          chain={chain}
+        />
         <TextMinor>
           <Address>{address}</Address>
         </TextMinor>
