@@ -3,7 +3,7 @@ const {
   interactions: { SupportInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
-const { Topic, Reward } = require("../models");
+const { Topic, Reward, Notification } = require("../models");
 const { RewardCurrencyType } = require("../utils/constants");
 const {
   getApi,
@@ -13,6 +13,7 @@ const {
 } = require("./node.service");
 const { validateTokenAmount } = require("./common");
 const { updateTopicResolve } = require("./resolve.service");
+const { toPublicKey } = require("../utils/address");
 
 async function addSupport(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -75,6 +76,19 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   });
 
   await updateTopicResolve(topicCid);
+
+  const owner = toPublicKey(topic.signer);
+  await Notification.create({
+    owner,
+    type: "support",
+    data: {
+      topic: topic._id,
+      byWho: {
+        address: signer,
+        network,
+      },
+    },
+  });
 
   return {
     topicCid,

@@ -23,7 +23,7 @@ async function getDiscussionNotifications(network, address, page, pageSize) {
   const publicKey = toPublicKey(address);
   const q = {
     publicKey,
-    $or: [{ type: "reply" }, { type: "mention" }],
+    $or: [{ type: "reply" }, { type: "mention" }, { type: "topicResolved" }],
   };
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
@@ -43,7 +43,7 @@ async function getRewardNotifications(network, address, page, pageSize) {
   const publicKey = toPublicKey(address);
   const q = {
     publicKey,
-    type: "fund",
+    $or: [{ type: "fund" }, { type: "support" }],
   };
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
