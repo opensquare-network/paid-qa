@@ -10,6 +10,7 @@ async function getNotifications(network, address, page, pageSize) {
     .limit(pageSize)
     .populate("data.topic")
     .populate("data.answer")
+    .populate("data.support")
     .populate("data.fund");
   return {
     items: notifications,
@@ -51,6 +52,7 @@ async function getRewardNotifications(network, address, page, pageSize) {
     .limit(pageSize)
     .populate("data.topic")
     .populate("data.answer")
+    .populate("data.support")
     .populate("data.fund");
   return {
     items: notifications,

@@ -18,6 +18,10 @@ const NotificationSchema = new mongoose.Schema(
         type: Schema.Types.ObjectId,
         ref: "Topic",
       },
+      support: {
+        type: Schema.Types.ObjectId,
+        ref: "Reward",
+      },
       fund: {
         type: Schema.Types.ObjectId,
         ref: "Fund",
