@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Container from "@osn/common-ui/lib/styled/Container";
 import Header from "../components/Notification/Header";
 import NotificationList from "../components/Notification/NotificationList";
+import DiscussionItemList from "components/Notification/DiscussionItemList";
+import RewardItemList from "components/Notification/RewardItemList";
 
 const Wrapper = styled.div`
   position: relative;
@@ -23,8 +25,8 @@ export default function Notifications() {
         <ContentWrapper>
           <Header tab={tab} setTab={setTab} />
           {tab === "notifications" && <NotificationList />}
-          {tab === "discussions" && <NotificationList />}
-          {tab === "rewards" && <NotificationList />}
+          {tab === "discussions" && <DiscussionItemList />}
+          {tab === "rewards" && <RewardItemList />}
         </ContentWrapper>
       </Container>
     </Wrapper>
