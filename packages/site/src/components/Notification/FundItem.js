@@ -18,9 +18,10 @@ const MarginX8 = styled(Flex)`
 `;
 
 export default function FundItem({ notification, type = "Funded" }) {
-  const funder = notification.data.byWho.address;
-  const network = notification.data.byWho.network;
-  const { topic, answer } = notification.data;
+  const {
+    topic,
+    byWho: { address: funder, network },
+  } = notification.data;
   let fund = notification.data.fund;
   if (type === "Supported") {
     fund = notification.data.support;

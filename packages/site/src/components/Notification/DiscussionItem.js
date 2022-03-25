@@ -26,10 +26,12 @@ const MarginX8 = styled(Flex)`
 `;
 
 export default function DiscussionItem({ notification, type = "Replied" }) {
-  const signer = notification.data.answer.signer;
-  const network = notification.data.answer.network;
-  const topic = notification.data.topic;
-  const answer = notification.data.answer;
+  const {
+    topic,
+    answer,
+    answer: { signer, network },
+  } = notification.data;
+
   return (
     <>
       <DividerWrapper>
