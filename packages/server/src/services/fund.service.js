@@ -13,6 +13,7 @@ const {
 } = require("./node.service");
 const BigNumber = require("bignumber.js");
 const { bnAdd } = require("../utils/bn");
+const { toPublicKey } = require("../utils/address");
 
 async function addFund(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -72,19 +73,22 @@ async function addFund(network, blockHash, extrinsicIndex) {
     decimals,
   });
 
-  const topic = await Topic.findOne({ cid: interaction.ipfsCid });
-  const answer = await Answer.findOne({ cid: interaction.ipfsCid });
-  const fundTo = topic.signer || answer.signer;
+  let topic = await Topic.findOne({ cid: interaction.ipfsCid });
+  let answer = await Answer.findOne({ cid: interaction.ipfsCid });
+  const fundTo = topic?.signer || answer?.signer;
+  if (answer) {
+    topic = await Topic.findOne({ cid: answer.topicCid });
+  }
 
   const owner = toPublicKey(fundTo);
   await Notification.create({
     owner,
     type: ["fund"],
     data: {
-      topic: topic._id,
-      answer: answer._id,
+      topic: topic?._id,
+      answer: answer?._id,
       fund: fundObj._id,
-      who: {
+      byWho: {
         address: signer,
         network,
       },

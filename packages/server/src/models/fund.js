@@ -3,6 +3,7 @@ const { Schema } = require("mongoose");
 
 const FundSchema = new mongoose.Schema(
   {
+    blockTime: Number,
     ipfsCid: String,
     network: String,
     currencyType: String, // "native", "asset"
