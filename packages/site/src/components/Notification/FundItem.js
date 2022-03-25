@@ -24,7 +24,7 @@ const MarginX8 = styled(Flex)`
 `;
 
 export default function FundItem({ notification }) {
-  const signer = notification.data.byWho.signer;
+  const signer = notification.data.byWho.address;
   const network = notification.data.byWho.network;
   return (
     <Wrapper>
