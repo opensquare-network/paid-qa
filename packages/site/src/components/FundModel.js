@@ -238,7 +238,9 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         message,
       })
     );
-    setOpen(false);
+    if (isMounted.current) {
+      setOpen(false);
+    }
   };
 
   const doConfirm = async () => {
@@ -306,10 +308,14 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
       }
       return showErrorToast(e.toString());
     } finally {
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     }
 
-    setOpen(false);
+    if (isMounted.current) {
+      setOpen(false);
+    }
   };
 
   const closeModal = () => setOpen(false);
