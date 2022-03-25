@@ -45,7 +45,7 @@ export default function ReplyItem({ notification }) {
           <TextMajor style={{ marginLeft: 4 }}>
             {addressEllipsis(signer)}
           </TextMajor>
-          in
+          <MarginX8>in</MarginX8>
           <TextMajor>{notification.data.topic.title}</TextMajor>
         </Flex>
         <Time time={notification.data.answer.createdAt} />
