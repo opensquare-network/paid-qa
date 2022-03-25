@@ -4,7 +4,7 @@ const { Schema } = require("mongoose");
 const NotificationSchema = new mongoose.Schema(
   {
     owner: String, // public key of owner address
-    type: [String], // reply, mention, fund, resolve
+    type: [String], // reply, mention, fund, topicResolved
     read: {
       type: Boolean,
       default: false,
