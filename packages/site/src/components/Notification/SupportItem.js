@@ -38,7 +38,9 @@ export default function SupportItem({ notification }) {
             {addressEllipsis(signer)}
           </TextMajor>
           <MarginX8>promises to fund</MarginX8>
-          <TextMajor>{notification.data.support.value} {notification.data.support.symbol}</TextMajor>
+          <TextMajor>
+            {notification.data.support.value} {notification.data.support.symbol}
+          </TextMajor>
           <MarginX8>to</MarginX8>
           <TextMajor>{notification.data.topic.title}</TextMajor>
         </Flex>

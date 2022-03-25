@@ -1,25 +1,12 @@
 import styled from "styled-components";
-import Card from "@osn/common-ui/lib/styled/Card";
 import Time from "@osn/common-ui/lib/Time";
-import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import { Avatar } from "@osn/common-ui/lib";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { Link } from "react-router-dom";
-
-const Wrapper = styled(Card)`
-  ${p_14_normal};
-  color: #506176;
-
-  a {
-    &:hover {
-      text-decoration: underline;
-    }
-    cursor: pointer;
-  }
-`;
+import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
 
 const TextMajor = styled.span`
   font-weight: 500;
@@ -38,16 +25,18 @@ const MarginX8 = styled(Flex)`
   margin-right: 8px;
 `;
 
-export default function ReplyItem({ notification }) {
-  const signer = notification.data.answer.signer;
-  const network = notification.data.answer.network;
-  const topic = notification.data.topic;
-  const answer = notification.data.answer;
+export default function DiscussionItem({ notification, type = "Replied" }) {
+  const {
+    topic,
+    answer,
+    answer: { signer, network },
+  } = notification.data;
+
   return (
-    <Wrapper>
+    <>
       <DividerWrapper>
         <Flex>
-          Replied by
+          {type} by
           <MarginX8>
             <Avatar address={signer} />
           </MarginX8>
@@ -63,8 +52,8 @@ export default function ReplyItem({ notification }) {
         <Time time={answer.createdAt} />
       </DividerWrapper>
       <HorizonDivider />
-      {/*todo: strip all syntax, keep plain text only*/}
-      {answer.content}
-    </Wrapper>
+      {/*todo: strip all syntax, keep plain text only, and <a>*/}
+      <MicromarkMd md={answer.content} />
+    </>
   );
 }

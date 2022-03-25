@@ -1,17 +1,11 @@
 import styled from "styled-components";
-import Card from "@osn/common-ui/lib/styled/Card";
 import Time from "@osn/common-ui/lib/Time";
-import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import { Avatar } from "@osn/common-ui/lib";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
-
-const Wrapper = styled(Card)`
-  ${p_14_normal};
-  color: #506176;
-`;
+import { Link } from "react-router-dom";
 
 const TextMajor = styled.span`
   font-weight: 500;
@@ -23,28 +17,38 @@ const MarginX8 = styled(Flex)`
   margin-right: 8px;
 `;
 
-export default function FundItem({ notification }) {
-  const signer = notification.data.byWho.address;
-  const network = notification.data.byWho.network;
+export default function FundItem({ notification, type = "Funded" }) {
+  const {
+    topic,
+    byWho: { address: funder, network },
+  } = notification.data;
+  let fund = notification.data.fund;
+  if (type === "Supported") {
+    fund = notification.data.support;
+  }
   return (
-    <Wrapper>
+    <>
       <DividerWrapper>
         <Flex>
-          Funded by
+          {type} by
           <MarginX8>
-            <Avatar address={signer} />
+            <Avatar address={funder} />
           </MarginX8>
           <ChainIcon chainName={network} size={16} />
           <TextMajor style={{ marginLeft: 4 }}>
-            {addressEllipsis(signer)}
+            {addressEllipsis(funder)}
           </TextMajor>
-          <MarginX8>with</MarginX8>
-          <TextMajor>{notification.data.fund.value} {notification.data.fund.symbol}</TextMajor>
-          <MarginX8>in</MarginX8>
-          <TextMajor>{notification.data.topic.title}</TextMajor>
+          &nbsp;with&nbsp;
+          <TextMajor>
+            {fund.value} {fund.symbol}
+          </TextMajor>
+          &nbsp;in&nbsp;
+          <Link to={`/topic/${topic.cid}`}>
+            <TextMajor>{topic.title}</TextMajor>
+          </Link>
         </Flex>
-        <Time time={notification.data.fund.blockTime} />
+        <Time time={notification.createdAt} />
       </DividerWrapper>
-    </Wrapper>
+    </>
   );
 }
