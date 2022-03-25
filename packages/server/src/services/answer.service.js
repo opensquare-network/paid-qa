@@ -44,6 +44,10 @@ async function postAnswer(data) {
       data: {
         topic: topic._id,
         answer: answerObj._id,
+        byWho: {
+          address: signer,
+          network,
+        },
       },
     });
   }
@@ -62,7 +66,7 @@ async function postAnswer(data) {
           type: "mention",
         },
         $set: {
-          "data.who": {
+          "data.byWho": {
             address: signer,
             network,
           },

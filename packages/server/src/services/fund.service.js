@@ -74,7 +74,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
 
   const topic = await Topic.findOne({ cid: interaction.ipfsCid });
   const answer = await Answer.findOne({ cid: interaction.ipfsCid });
-  const fundTo = topic.signer || answer.signer;
+  const fundTo = topic?.signer || answer?.signer;
 
   const owner = toPublicKey(fundTo);
   await Notification.create({
@@ -84,7 +84,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
       topic: topic._id,
       answer: answer._id,
       fund: fundObj._id,
-      who: {
+      byWho: {
         address: signer,
         network,
       },
