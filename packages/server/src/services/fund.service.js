@@ -84,7 +84,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
       topic: topic._id,
       answer: answer._id,
       fund: fundObj._id,
-      who: {
+      byWho: {
         address: signer,
         network,
       },
