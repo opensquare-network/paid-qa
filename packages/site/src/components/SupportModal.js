@@ -22,7 +22,7 @@ import { hexToString } from "@polkadot/util";
 import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
-import { addToast, ToastTypes } from "store/reducers/toastSlice";
+import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
 import { fetchTopic } from "store/reducers/topicSlice";
 import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
@@ -209,13 +209,31 @@ export default function SupportModal({ open, setOpen, topicCid }) {
     }
     const remark = new InteractionEncoder(interaction).getRemark();
 
+    const toastId = newToastId();
+    dispatch(
+      addToast({
+        type: ToastTypes.Pending,
+        message: "Waiting for signing...",
+        id: toastId,
+        sticky: true,
+      })
+    );
+
     try {
       setLoading(true);
 
       const { blockHash, extrinsicIndex } = await submitRemark(
         api,
         remark,
-        account
+        account,
+        (status) => {
+          dispatch(
+            updateToast({
+              id: toastId,
+              message: status,
+            })
+          );
+        }
       );
       const payload = {
         network: account.network,
@@ -228,20 +246,42 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         payload
       );
       if (result) {
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Success,
+            message: "Support added",
+          })
+        );
         dispatch(fetchTopic(topicCid));
       }
       if (error) {
-        showErrorToast(error.message);
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Error,
+            message: error.message,
+          })
+        );
       }
     } catch (e) {
-      if (e.toString() === "Error: Cancelled") {
-        return;
-      }
-      return showErrorToast(e.toString());
+      dispatch(
+        updateToast({
+          id: toastId,
+          type: ToastTypes.Error,
+          message: e.toString(),
+        })
+      );
     } finally {
       if (isMounted.current) {
         setLoading(false);
       }
+      dispatch(
+        updateToast({
+          id: toastId,
+          sticky: false,
+        })
+      );
     }
 
     if (isMounted.current) {

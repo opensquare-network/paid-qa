@@ -213,6 +213,7 @@ export default function Create() {
         dispatch(
           updateToast({
             id: toastId,
+            type: ToastTypes.Success,
             message: "Topic created successfully",
           })
         );

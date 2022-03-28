@@ -9,7 +9,7 @@ import Time from "@osn/common-ui/lib/Time";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { useApi } from "utils/hooks";
-import { addToast, ToastTypes } from "store/reducers/toastSlice";
+import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
 import { cidOf } from "services/ipfs";
 import { accountSelector } from "store/reducers/accountSlice";
 import { fetchTopic } from "store/reducers/topicSlice";
@@ -112,8 +112,6 @@ export default function Appendants({
       return showErrorToast("Content is empty");
     }
 
-    setLoading(true);
-
     const data = {
       topic: topicCid,
       content,
@@ -122,11 +120,31 @@ export default function Appendants({
     const interaction = new AppendInteraction(topicCid, cid);
     const remark = new InteractionEncoder(interaction).getRemark();
 
+    setLoading(true);
+
+    const toastId = newToastId();
+    dispatch(
+      addToast({
+        type: ToastTypes.Pending,
+        message: "Waiting for signing...",
+        id: toastId,
+        sticky: true,
+      })
+    );
+
     try {
       const { blockHash, extrinsicIndex } = await submitRemark(
         api,
         remark,
-        account
+        account,
+        (status) => {
+          dispatch(
+            updateToast({
+              id: toastId,
+              message: status,
+            })
+          );
+        }
       );
       const payload = {
         data,
@@ -141,22 +159,43 @@ export default function Appendants({
       );
       if (result) {
         setContent("");
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Success,
+            message: "Appendant added",
+          })
+        );
         dispatch(fetchTopic(topicCid));
       }
 
       if (error) {
-        showErrorToast(error.message);
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Error,
+            message: error.message,
+          })
+        );
       }
     } catch (e) {
-      if (e.toString() === "Error: Cancelled") {
-        return;
-      }
-
-      return showErrorToast(e.toString());
+      dispatch(
+        updateToast({
+          id: toastId,
+          type: ToastTypes.Error,
+          message: e.toString(),
+        })
+      );
     } finally {
       if (isMounted.current) {
         setLoading(false);
       }
+      dispatch(
+        updateToast({
+          id: toastId,
+          sticky: false,
+        })
+      );
     }
   };
 

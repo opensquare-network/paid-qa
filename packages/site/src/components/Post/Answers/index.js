@@ -6,7 +6,7 @@ import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import Card from "@osn/common-ui/lib/styled/Card";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
-import { addToast, ToastTypes } from "store/reducers/toastSlice";
+import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
 import RichEdit from "@osn/common-ui/lib/RichEdit";
@@ -88,14 +88,25 @@ export default function Answers({ topicCid }) {
       return showErrorToast("Content is empty");
     }
 
-    setLoading(true);
-
     const answer = {
       topic: topicCid,
       content,
     };
     const msg = JSON.stringify(answer);
+
+    const toastId = newToastId();
+    dispatch(
+      addToast({
+        type: ToastTypes.Pending,
+        message: "Waiting for signing...",
+        id: toastId,
+        sticky: true,
+      })
+    );
+
     try {
+      setLoading(true);
+
       const signature = await signMessage(msg, account.address);
       const payload = {
         answer,
@@ -104,26 +115,55 @@ export default function Answers({ topicCid }) {
         signature,
       };
 
+      dispatch(
+        updateToast({
+          id: toastId,
+          message: "Posting...",
+        })
+      );
+
       const { result, error } = await serverApi.post(
         `/topics/${topicCid}/answers`,
         payload
       );
       if (result) {
-        dispatch(fetchAnswers(topicCid, page));
         setContent("");
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Success,
+            message: "Answer posted",
+          })
+        );
+        dispatch(fetchAnswers(topicCid, page));
       }
       if (error) {
-        return showErrorToast(error.message);
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Error,
+            message: error.message,
+          })
+        );
       }
     } catch (e) {
-      if (e.toString() === "Error: Cancelled") {
-        return;
-      }
-      showErrorToast(e.message)
+      dispatch(
+        updateToast({
+          id: toastId,
+          type: ToastTypes.Error,
+          message: e.toString(),
+        })
+      );
     } finally {
       if (isMounted.current) {
         setLoading(false);
       }
+      dispatch(
+        updateToast({
+          id: toastId,
+          sticky: false,
+        })
+      );
     }
   };
 
