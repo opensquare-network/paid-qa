@@ -27,25 +27,26 @@ export const signMessage = async (text, address) => {
   return result.signature;
 };
 
-export async function submitRemark(api, remark, account) {
+export async function submitRemark(api, remark, account, callback) {
   const tx = api.tx.system.remark(remark);
-  return await signAndSendTx(tx, account);
+  return await signAndSendTx(tx, account, callback);
 }
 
-export async function submitFund(api, remark, transfer, account) {
+export async function submitFund(api, remark, transfer, account, callback) {
   const txRemark = api.tx.system.remark(remark);
-  const txTransfer = transfer.tokenIdentifier === "N"
-    ? api.tx.balances.transfer(transfer.to, transfer.value)
-    : api.tx.assets.transfer(
-        transfer.tokenIdentifier,
-        transfer.to,
-        transfer.value
-      );
+  const txTransfer =
+    transfer.tokenIdentifier === "N"
+      ? api.tx.balances.transfer(transfer.to, transfer.value)
+      : api.tx.assets.transfer(
+          transfer.tokenIdentifier,
+          transfer.to,
+          transfer.value
+        );
   const txBatch = api.tx.utility.batch([txRemark, txTransfer]);
-  return await signAndSendTx(txBatch, account);
+  return await signAndSendTx(txBatch, account, callback);
 }
 
-function signAndSendTx(tx, account) {
+function signAndSendTx(tx, account, callback = () => {}) {
   return new Promise(async (resolve, reject) => {
     try {
       const unsub = await tx.signAndSend(
@@ -53,6 +54,8 @@ function signAndSendTx(tx, account) {
         ({ events = [], status }) => {
           if (status.isInBlock) {
             unsub();
+
+            callback("InBlock");
 
             const extrinsicIndex = JSON.parse(
               events[0]?.phase?.toString()
@@ -65,6 +68,7 @@ function signAndSendTx(tx, account) {
           }
         }
       );
+      callback("Broadcast");
     } catch (e) {
       reject(e);
     }
