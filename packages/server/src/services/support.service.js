@@ -61,7 +61,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   // Validate reward value
   validateTokenAmount(tokenAmount, decimals);
 
-  await Reward.create({
+  const support = await Reward.create({
     blockTime,
     topicCid,
     network,
@@ -83,6 +83,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
     type: ["support"],
     data: {
       topic: topic._id,
+      support: support._id,
       byWho: {
         address: signer,
         network,
