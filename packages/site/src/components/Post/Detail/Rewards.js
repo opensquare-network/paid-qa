@@ -27,6 +27,9 @@ const Item = styled.div`
 
 const FunderAvatarList = styled.div`
   display: flex;
+  > div:not(:first-child) {
+    position: relative;
+  }
 `;
 
 export default function Rewards() {
@@ -53,7 +56,9 @@ export default function Rewards() {
         <div>Funders</div>
         <FunderAvatarList>
           {sponsors.map((sponsor, index) => (
-            <Avatar key={index} address={sponsor} size={20} />
+            <div key={index} style={{ left: -index * 10 }}>
+              <Avatar address={sponsor} size={20} />
+            </div>
           ))}
         </FunderAvatarList>
       </Item>
