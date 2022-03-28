@@ -17,7 +17,7 @@ import { useApi } from "utils/hooks";
 import { hexToString } from "@polkadot/util";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitFund } from "services/chainApi";
-import { addToast, ToastTypes } from "store/reducers/toastSlice";
+import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
 import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
@@ -270,6 +270,16 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
     }
     const remark = new InteractionEncoder(interaction).getRemark();
 
+    const toastId = newToastId();
+    dispatch(
+      addToast({
+        type: ToastTypes.Pending,
+        message: "Waiting for signing...",
+        id: toastId,
+        sticky: true,
+      })
+    );
+
     try {
       setLoading(true);
 
@@ -283,7 +293,15 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
             .toString(),
           to: beneficiary,
         },
-        account
+        account,
+        (status) => {
+          dispatch(
+            updateToast({
+              id: toastId,
+              message: status,
+            })
+          );
+        }
       );
       const payload = {
         network: account.network,
@@ -293,6 +311,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
       const { result, error } = await serverApi.post(`/funds`, payload);
       if (result) {
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Success,
+            message: "Funded",
+          })
+        );
         // After fund is added, update the topic
         dispatch(fetchTopic(topic.cid));
         dispatch(fetchAnswers(topic.cid, answers.page));
@@ -300,17 +325,32 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
       }
 
       if (error) {
-        showErrorToast(error.message);
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Error,
+            message: error.message,
+          })
+        );
       }
     } catch (e) {
-      if (e.toString() === "Error: Cancelled") {
-        return;
-      }
-      return showErrorToast(e.toString());
+      dispatch(
+        updateToast({
+          id: toastId,
+          type: ToastTypes.Error,
+          message: e.toString(),
+        })
+      );
     } finally {
       if (isMounted.current) {
         setLoading(false);
       }
+      dispatch(
+        updateToast({
+          id: toastId,
+          sticky: false,
+        })
+      );
     }
 
     if (isMounted.current) {
