@@ -46,12 +46,12 @@ const Capitalize = styled.span`
 export default function Tabs({ items = [], value, setValue }) {
   return (
     <Wrapper>
-      {items.map((item) => {
+      {items.map((item, index) => {
         if (item === "divider") {
-          return <Divider />;
+          return <Divider key={index} />;
         }
         return (
-          <Item active={value === item} onClick={() => setValue(item)}>
+          <Item key={index} active={value === item} onClick={() => setValue(item)}>
             <Capitalize>{item}</Capitalize>
           </Item>
         );

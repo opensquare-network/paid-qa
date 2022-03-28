@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function NotificationList() {
+export default function RewardItemList() {
   const [page, setPage] = useState(1);
   const [notifications, setNotifications] = useState(null);
   const account = useSelector(accountSelector);
@@ -28,7 +28,7 @@ export default function NotificationList() {
     if (account?.network && account?.address) {
       serverApi
         .fetch(
-          `/network/${account.network}/address/${account.address}/notifications`,
+          `/network/${account.network}/address/${account.address}/notifications/reward`,
           { page, pageSize: 10 }
         )
         .then(({ result }) => {
