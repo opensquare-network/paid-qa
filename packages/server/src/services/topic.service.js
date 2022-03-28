@@ -15,6 +15,7 @@ const {
 const { HttpError } = require("../utils/exc");
 const { ipfsAdd, cidOf } = require("./ipfs.service");
 const { validateTokenAmount } = require("./common");
+const { toPublicKey } = require("../utils/address");
 
 async function createTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content, language } = data;
@@ -66,6 +67,8 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
   // Validate reward value
   validateTokenAmount(tokenAmount, decimals);
 
+  const signerPublicKey = toPublicKey(signer);
+
   const session = await mongoose.startSession();
   await session.withTransaction(async () => {
     await Topic.create(
@@ -80,6 +83,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
           pinned: false,
           network,
           signer,
+          signerPublicKey,
           status: PostStatus.Published,
         },
       ],
@@ -100,6 +104,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
           symbol,
           decimals,
           sponsor: signer,
+          sponsorPublicKey: signerPublicKey,
         },
       ],
       { session }

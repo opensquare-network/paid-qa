@@ -25,12 +25,14 @@ async function postAnswer(data) {
 
   const cid = await cidOf(data);
 
+  const signerPublicKey = toPublicKey(signer);
   const answerObj = await Answer.create({
     cid,
     topicCid,
     content,
     network,
     signer,
+    signerPublicKey,
     signature,
     pinned: false,
     status: PostStatus.Reserved,

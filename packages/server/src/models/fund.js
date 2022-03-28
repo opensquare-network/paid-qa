@@ -15,7 +15,9 @@ const FundSchema = new mongoose.Schema(
       get: (v) => v?.toString(),
     },
     sponsor: String,
+    sponsorPublicKey: String,
     beneficiary: String,
+    beneficiaryPublicKey: String,
   },
   {
     timestamps: true,

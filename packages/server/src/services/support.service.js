@@ -61,11 +61,13 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   // Validate reward value
   validateTokenAmount(tokenAmount, decimals);
 
+  const sponsorPublicKey = toPublicKey(signer);
   const support = await Reward.create({
     blockTime,
     topicCid,
     network,
     sponsor: signer,
+    sponsorPublicKey,
     currencyType: rewardCurrencyType,
     value: tokenAmount,
     ...(rewardCurrencyType === RewardCurrencyType.Asset
