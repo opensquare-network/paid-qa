@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 
@@ -79,7 +78,6 @@ const StyledText = styled.p`
 export default function ResolveModal({ open, setOpen, reward, topicCid }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
-  const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();
   const api = useApi();
 
@@ -98,6 +96,8 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
   };
 
   const doConfirm = async () => {
+    setOpen(false);
+
     if (!account) {
       return showErrorToast("Please connect wallet");
     }
@@ -123,8 +123,6 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
     );
 
     try {
-      setLoading(true);
-
       const { blockHash, extrinsicIndex } = await submitRemark(
         api,
         remark,
@@ -174,19 +172,12 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
         })
       );
     } finally {
-      if (isMounted.current) {
-        setLoading(false);
-      }
       dispatch(
         updateToast({
           id: toastId,
           sticky: false,
         })
       );
-    }
-
-    if (isMounted.current) {
-      setOpen(false);
     }
   };
 
@@ -212,7 +203,7 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
           </ItemTitle>
           {reward && <PromiseItem reward={reward} />}
           <ActionBar>
-            <Button isLoading={loading} primary onClick={doConfirm}>
+            <Button primary onClick={doConfirm}>
               Confirm
             </Button>
           </ActionBar>

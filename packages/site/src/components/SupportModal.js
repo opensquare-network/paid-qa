@@ -124,7 +124,6 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   const [symbol, setSymbol] = useState("");
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
-  const [loading, setLoading] = useState(false);
   const [loadingSymbol, setLoadingSymbol] = useState(false);
   const isMounted = useIsMounted();
 
@@ -179,6 +178,8 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   };
 
   const doConfirm = async () => {
+    setOpen(false);
+
     if (!account) {
       return showErrorToast("Please connect wallet");
     }
@@ -220,8 +221,6 @@ export default function SupportModal({ open, setOpen, topicCid }) {
     );
 
     try {
-      setLoading(true);
-
       const { blockHash, extrinsicIndex } = await submitRemark(
         api,
         remark,
@@ -273,19 +272,12 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         })
       );
     } finally {
-      if (isMounted.current) {
-        setLoading(false);
-      }
       dispatch(
         updateToast({
           id: toastId,
           sticky: false,
         })
       );
-    }
-
-    if (isMounted.current) {
-      setOpen(false);
     }
   };
 
@@ -343,7 +335,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
           />
 
           <ActionBar>
-            <Button isLoading={loading} primary onClick={doConfirm}>
+            <Button primary onClick={doConfirm}>
               Confirm
             </Button>
           </ActionBar>

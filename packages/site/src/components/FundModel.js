@@ -144,7 +144,6 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   const [balance, setBalance] = useState("0");
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
-  const [loading, setLoading] = useState(false);
   const [loadingSymbol, setLoadingSymbol] = useState(false);
   const [loadingBalance, setLoadingBalance] = useState(false);
   const isMounted = useIsMounted();
@@ -244,6 +243,8 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   };
 
   const doConfirm = async () => {
+    setOpen(false);
+
     if (!account) {
       return showErrorToast("Please connect wallet");
     }
@@ -281,8 +282,6 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
     );
 
     try {
-      setLoading(true);
-
       const { blockHash, extrinsicIndex } = await submitFund(
         api,
         remark,
@@ -342,19 +341,12 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         })
       );
     } finally {
-      if (isMounted.current) {
-        setLoading(false);
-      }
       dispatch(
         updateToast({
           id: toastId,
           sticky: false,
         })
       );
-    }
-
-    if (isMounted.current) {
-      setOpen(false);
     }
   };
 
@@ -418,7 +410,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
           </BalanceInfo>
 
           <ActionBar>
-            <Button isLoading={loading} primary onClick={doConfirm}>
+            <Button primary onClick={doConfirm}>
               Confirm
             </Button>
           </ActionBar>
