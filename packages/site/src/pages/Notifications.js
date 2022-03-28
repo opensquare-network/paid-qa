@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import Container from "@osn/common-ui/lib/styled/Container";
@@ -6,6 +6,9 @@ import Header from "../components/Notification/Header";
 import NotificationList from "../components/Notification/NotificationList";
 import DiscussionItemList from "components/Notification/DiscussionItemList";
 import RewardItemList from "components/Notification/RewardItemList";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUnread } from "store/reducers/notificationSlice";
+import { accountSelector } from "store/reducers/accountSlice";
 
 const Wrapper = styled.div`
   position: relative;
@@ -17,7 +20,16 @@ const ContentWrapper = styled.div`
 `;
 
 export default function Notifications() {
+  const dispatch = useDispatch();
+  const account = useSelector(accountSelector);
   const [tab, setTab] = useState("notifications");
+
+  useEffect(() => {
+    if (!account?.address || !account?.network) {
+      return;
+    }
+    dispatch(clearUnread(account.network, account.address))
+  }, [dispatch, account?.network, account?.address]);
 
   return (
     <Wrapper>
