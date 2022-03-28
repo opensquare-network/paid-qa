@@ -6,6 +6,7 @@ import nodeReducer from "./nodeSlice";
 import topicReducer from "./topicSlice";
 import answerReducer from "./answerSlice";
 import toastReducer from "./toastSlice";
+import notificationReducer from "./notificationSlice";
 
 export default combineReducers({
   account: accountReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   topic: topicReducer,
   answer: answerReducer,
   toast: toastReducer,
+  notification: notificationReducer,
 });
