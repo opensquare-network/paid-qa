@@ -13,7 +13,12 @@ import FlexBetween from "ui/lib/styled/FlexBetween";
 import { useEffect, useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
-import { addToast, ToastTypes } from "../../store/reducers/toastSlice";
+import {
+  addToast,
+  ToastTypes,
+  newToastId,
+  updateToast,
+} from "../../store/reducers/toastSlice";
 import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
@@ -171,11 +176,29 @@ export default function Create() {
 
     setLoading(true);
 
+    const toastId = newToastId();
+    dispatch(
+      addToast({
+        type: ToastTypes.Pending,
+        message: "Waiting for signing...",
+        id: toastId,
+        sticky: true,
+      })
+    );
+
     try {
       const { blockHash, extrinsicIndex } = await submitRemark(
         api,
         remark,
-        account
+        account,
+        (status) => {
+          dispatch(
+            updateToast({
+              id: toastId,
+              message: status,
+            })
+          );
+        }
       );
 
       const payload = {
@@ -187,21 +210,41 @@ export default function Create() {
 
       const { result, error } = await serverApi.post(`/topics/`, payload);
       if (result) {
+        dispatch(
+          updateToast({
+            id: toastId,
+            message: "Topic created successfully",
+          })
+        );
         navigate(`/topic/${result.cid}`);
       }
       if (error) {
-        showErrorToast(error.message);
+        dispatch(
+          updateToast({
+            id: toastId,
+            type: ToastTypes.Error,
+            message: error.message,
+          })
+        );
       }
     } catch (e) {
-      if (e.toString() === "Error: Cancelled") {
-        return;
-      }
-
-      return showErrorToast(e.toString());
+      dispatch(
+        updateToast({
+          id: toastId,
+          type: ToastTypes.Error,
+          message: e.toString(),
+        })
+      );
     } finally {
       if (isMounted.current) {
         setLoading(false);
       }
+      dispatch(
+        updateToast({
+          id: toastId,
+          sticky: false,
+        })
+      );
     }
   };
 
