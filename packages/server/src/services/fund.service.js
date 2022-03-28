@@ -41,6 +41,10 @@ async function addFund(network, blockHash, extrinsicIndex) {
     value,
   } = transfer;
 
+  if (beneficiary === signer) {
+    throw new HttpError(500, "Not allow to fund self");
+  }
+
   let symbol, decimals, rewardCurrencyType;
   if (tokenIdentifier === "N") {
     rewardCurrencyType = RewardCurrencyType.Native;

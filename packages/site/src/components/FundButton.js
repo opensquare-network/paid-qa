@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ReactComponent as ExpandDownIcon } from "imgs/icons/expand-down.svg";
 import { ReactComponent as ExpandUpIcon } from "imgs/icons/expand-up.svg";
 import { ReactComponent as FundIcon } from "imgs/icons/fund.svg";
@@ -19,7 +19,6 @@ const Text = styled.span`
 `;
 
 const Fund = styled.div`
-  cursor: pointer;
   display: flex;
   align-items: center;
   > :first-child {
@@ -27,11 +26,16 @@ const Fund = styled.div`
   }
 
   color: #a1a8b3;
-  :hover {
-    color: #506176;
-    > svg path {
-      fill: #506176;
-    }
+  ${
+    p => !p.disabled && css`
+      cursor: pointer;
+      :hover {
+        color: #506176;
+        > svg path {
+          fill: #506176;
+        }
+      }
+    `
   }
 `;
 
@@ -41,10 +45,10 @@ const Expand = styled.div`
   align-items: center;
 `;
 
-export default function FundButton({ text, expand, setExpand, onFund, canExpand }) {
+export default function FundButton({ text, expand, setExpand, onFund, canExpand, disabled }) {
   return (
     <Wrapper>
-      <Fund onClick={onFund}>
+      <Fund disabled={disabled} onClick={() => !disabled && onFund()}>
         <FundIcon />
         <Text>{text}</Text>
       </Fund>

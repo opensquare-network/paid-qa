@@ -3,6 +3,9 @@ import styled from "styled-components";
 import FundButton from "../../FundButton";
 import FundModel from "../../FundModel";
 import Funders from "../../Funders";
+import { useSelector } from "react-redux";
+import { accountSelector } from "store/reducers/accountSlice";
+import { isSamePublicKey } from "@osn/common-ui/lib/utils/address";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,6 +22,8 @@ const Buttons = styled.div`
 export default function ActionBar({ topicCid, topicOwner, funds }) {
   const [expand, setExpand] = useState(false);
   const [showFund, setShowFund] = useState(false);
+  const account = useSelector(accountSelector);
+  const isOwner = account && isSamePublicKey(account.address, topicOwner);
 
   return (
     <Wrapper>
@@ -30,6 +35,7 @@ export default function ActionBar({ topicCid, topicOwner, funds }) {
             setExpand={setExpand}
             onFund={() => setShowFund(true)}
             canExpand={funds?.length > 0}
+            disabled={!account || isOwner}
           />
         </div>
       </Buttons>

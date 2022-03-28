@@ -4,8 +4,10 @@ import FundButton from "../../FundButton";
 import FundModel from "../../FundModel";
 import Funders from "../../Funders";
 import { ReactComponent as ReplyIcon } from "imgs/icons/reply.svg";
-import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import { encodeNetworkAddress, isSamePublicKey } from "@osn/common-ui/lib/utils/address";
 import Flex from "@osn/common-ui/lib/styled/Flex";
+import { useSelector } from "react-redux";
+import { accountSelector } from "store/reducers/accountSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,6 +50,8 @@ export default function ActionBar({
 }) {
   const [expand, setExpand] = useState(false);
   const [showFund, setShowFund] = useState(false);
+  const account = useSelector(accountSelector);
+  const isOwner = account && isSamePublicKey(account.address, answerOwner);
 
   const onReplyClick = useCallback(() => {
     const network = answerNetwork;
@@ -70,6 +74,7 @@ export default function ActionBar({
             setExpand={setExpand}
             onFund={() => setShowFund(true)}
             canExpand={funds?.length > 0}
+            disabled={!account || isOwner}
           />
         </Flex>
       </Buttons>
