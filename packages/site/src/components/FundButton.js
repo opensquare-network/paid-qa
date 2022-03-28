@@ -18,7 +18,7 @@ const Text = styled.span`
   line-height: 24px;
 `;
 
-const Fund = styled.button`
+const Fund = styled.div`
   display: flex;
   align-items: center;
   pointer-events: none;
