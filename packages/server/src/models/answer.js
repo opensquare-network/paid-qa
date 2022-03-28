@@ -6,6 +6,7 @@ const AnswerSchema = new mongoose.Schema(
     topicCid: String,
     content: String,
     signer: String,
+    signerPublicKey: String,
     signature: String,
     data: Object,
     cid: String,
@@ -25,6 +26,12 @@ AnswerSchema.virtual("funds", {
   ref: "Fund",
   localField: "cid",
   foreignField: "ipfsCid",
+});
+
+AnswerSchema.virtual("topic", {
+  ref: "Topic",
+  localField: "topicCid",
+  foreignField: "cid",
 });
 
 AnswerSchema.index({ cid: 1 }, { unique: true });

@@ -58,12 +58,17 @@ async function addFund(network, blockHash, extrinsicIndex) {
     .div(Math.pow(10, decimals))
     .toFixed();
 
+  const sponsorPublicKey = toPublicKey(signer);
+  const beneficiaryPublicKey = toPublicKey(beneficiary);
+
   const fundObj = await Fund.create({
     blockTime,
     ipfsCid: interaction.ipfsCid,
     network,
     sponsor: signer,
+    sponsorPublicKey,
     beneficiary,
+    beneficiaryPublicKey,
     currencyType: rewardCurrencyType,
     value: tokenAmount,
     ...(rewardCurrencyType === RewardCurrencyType.Asset

@@ -15,6 +15,7 @@ const TopicSchema = new mongoose.Schema(
     },
     status: String, // "published", "active", "resolved"
     signer: String,
+    signerPublicKey: String,
   },
   {
     timestamps: true,

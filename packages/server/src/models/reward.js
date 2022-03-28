@@ -15,6 +15,7 @@ const RewardSchema = new mongoose.Schema(
       get: (v) => v?.toString(),
     },
     sponsor: String,
+    sponsorPublicKey: String,
   },
   {
     timestamps: true,
