@@ -18,9 +18,10 @@ const Text = styled.span`
   line-height: 24px;
 `;
 
-const Fund = styled.div`
+const Fund = styled.button`
   display: flex;
   align-items: center;
+  pointer-events: none;
   > :first-child {
     margin-right: 8px;
   }
@@ -28,6 +29,7 @@ const Fund = styled.div`
   color: #a1a8b3;
   ${
     p => !p.disabled && css`
+      pointer-events: auto;
       cursor: pointer;
       :hover {
         color: #506176;
@@ -48,7 +50,7 @@ const Expand = styled.div`
 export default function FundButton({ text, expand, setExpand, onFund, canExpand, disabled }) {
   return (
     <Wrapper>
-      <Fund disabled={disabled} onClick={() => !disabled && onFund()}>
+      <Fund disabled={disabled} onClick={onFund}>
         <FundIcon />
         <Text>{text}</Text>
       </Fund>
