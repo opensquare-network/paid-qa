@@ -32,7 +32,7 @@ export const clearUnread = (network, address) => async (dispatch) => {
     .post(`/network/${network}/address/${address}/notifications/clearunread`)
     .then(({ result }) => {
       if (result) {
-        dispatch(fetchUnread(network, address));
+        dispatch(setUnread(0));
       }
     });
 };
