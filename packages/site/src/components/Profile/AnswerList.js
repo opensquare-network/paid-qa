@@ -36,12 +36,6 @@ const Divider = styled.div`
   margin: 16px 0;
 `;
 
-const Content = styled.div`
-  font-size: 14px;
-  line-height: 24px;
-  color: #506176;
-`;
-
 export default function AnswerList({ network, address }) {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
