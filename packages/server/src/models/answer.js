@@ -32,6 +32,7 @@ AnswerSchema.virtual("topic", {
   ref: "Topic",
   localField: "topicCid",
   foreignField: "cid",
+  justOne: true,
 });
 
 AnswerSchema.index({ cid: 1 }, { unique: true });
