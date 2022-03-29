@@ -82,7 +82,6 @@ export default function Explorer() {
   const setStatus = (status) => {
     dispatch(setFilterStatus(status));
   };
-  console.log(filterStatus, filterAsset);
 
   return (
     <Wrapper>
