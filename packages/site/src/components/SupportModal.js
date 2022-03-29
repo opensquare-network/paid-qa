@@ -14,7 +14,7 @@ import {
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import Toggle from "@osn/common-ui/lib/Toggle";
-import AssetSelector from "./AssetSelector";
+import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
 import AssetInput from "./AssetInput";
 import { useApi } from "utils/hooks";
@@ -22,7 +22,12 @@ import { hexToString } from "@polkadot/util";
 import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
-import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
+import {
+  addToast,
+  newToastId,
+  ToastTypes,
+  updateToast,
+} from "store/reducers/toastSlice";
 import { fetchTopic } from "store/reducers/topicSlice";
 import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";

@@ -1,7 +1,15 @@
 import styled from "styled-components";
 
 import Input from "@osn/common-ui/lib/styled/Input";
-import Select from "./Select";
+import TopicStatusSelect from "./TopicStatusSelect";
+import AssetSelector from "./AssetSelector";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  filterAssetSelector,
+  filterStatusSelector,
+  setFilterAsset,
+  setFilterStatus,
+} from "store/reducers/topicSlice";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -65,11 +73,21 @@ const ItemWrapper = styled.div`
 `;
 
 export default function Explorer() {
+  const dispatch = useDispatch();
+  const filterStatus = useSelector(filterStatusSelector);
+  const filterAsset = useSelector(filterAssetSelector);
+  const setAsset = (asset) => {
+    dispatch(setFilterAsset(asset));
+  };
+  const setStatus = (status) => {
+    dispatch(setFilterStatus(status));
+  };
+  console.log(filterStatus, filterAsset);
+
   return (
     <Wrapper>
       <TitleWrapper>
         <div>Explorer</div>
-        <div>All Questions (202)</div>
       </TitleWrapper>
       <ContentWrapper>
         <ItemWrapper>
@@ -77,21 +95,21 @@ export default function Explorer() {
             <div>Search</div>
             <img src="/imgs/icons/search.svg" alt="" />
           </div>
-          <Input placeholder="Search the OpenSquare Q&A" />
+          <Input placeholder="Search topic..." />
         </ItemWrapper>
         <ItemWrapper>
           <div>
             <div>Status</div>
             <img src="/imgs/icons/sort-by.svg" alt="" />
           </div>
-          <Select placeholder="All Types" />
+          <TopicStatusSelect status={filterStatus} setStatus={setStatus} />
         </ItemWrapper>
         <ItemWrapper>
           <div>
             <div>Rewards</div>
-            <img src="/imgs/icons/status.svg" alt="" />
+            <img src="/imgs/icons/treasury.svg" alt="" />
           </div>
-          <Select placeholder="All Assets" />
+          <AssetSelector setAsset={setAsset} />
         </ItemWrapper>
       </ContentWrapper>
     </Wrapper>

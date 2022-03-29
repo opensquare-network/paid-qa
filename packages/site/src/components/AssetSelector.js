@@ -1,0 +1,147 @@
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import DropdownSelector from "@osn/common-ui/lib/DropdownSelector";
+
+const Wrapper = styled.div`
+  > div div {
+    z-index: 10;
+  }
+`;
+
+const AssetWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  > :first-child {
+    margin-right: 8px;
+  }
+`;
+
+const IconsMap = {
+  karura: "karura.svg",
+  rmrk: "rmrk.svg",
+  polarisdao: "polarisdao.png",
+};
+
+function getAssetIcon(assetKey) {
+  if (assetKey === "all") {
+    return null;
+  }
+  const icon = IconsMap[assetKey] || "unknown.svg";
+  return (
+    <img
+      src={`/imgs/icons/assets/${icon}`}
+      alt=""
+      width={"24px"}
+      height={"24px"}
+    />
+  );
+}
+
+function AssetItem({ assetKey, assetName }) {
+  return (
+    <AssetWrapper>
+      {getAssetIcon(assetKey)}
+      <span>{assetName}</span>
+    </AssetWrapper>
+  );
+}
+
+const Assets = [
+  {
+    id: "all",
+    name: "All Assets",
+  },
+  {
+    id: "polkadot",
+    name: "Polkadot",
+    symbol: "DOT",
+    decimals: 10,
+    tokenIdentifier: "N",
+  },
+  {
+    id: "kusama",
+    name: "Kusama",
+    symbol: "KSM",
+    decimals: 12,
+    tokenIdentifier: "N",
+  },
+  {
+    id: "rmrk",
+    name: "RMRK",
+    symbol: "RMRK",
+    decimals: 10,
+    tokenIdentifier: "8",
+  },
+  {
+    id: "polarisdao",
+    name: "PolarisDAO",
+    symbol: "ARIS",
+    tokenIdentifier: "16",
+    decimals: 8,
+  },
+  {
+    id: "karura",
+    name: "Karura",
+    symbol: "KAR",
+    decimals: 12,
+    tokenIdentifier: "N",
+  },
+  {
+    id: "khala",
+    name: "Khala",
+    symbol: "PHA",
+    decimals: 12,
+    tokenIdentifier: "N",
+  },
+  {
+    id: "bifrost",
+    name: "Bifrost",
+    symbol: "BNC",
+    decimals: 12,
+    tokenIdentifier: "N",
+  },
+  {
+    id: "kintsugi",
+    name: "Kintsugi",
+    symbol: "KINT",
+    decimals: 12,
+    tokenIdentifier: "N",
+  },
+  {
+    id: "westend",
+    name: "Westend",
+    symbol: "WND",
+    decimals: 12,
+    tokenIdentifier: "N",
+  },
+];
+
+export default function AssetSelector({ asset, setAsset }) {
+  const index = Assets.findIndex((item) => item.id === asset?.id);
+  const [selectedAssetIndex, setSelectedAssetIndex] = useState(
+    index === -1 ? 0 : index
+  );
+  const assetsOptions = Assets.map((item, i) => {
+    return {
+      key: i,
+      value: i,
+      content: <AssetItem assetKey={item.id} assetName={item.name} />,
+    };
+  });
+
+  useEffect(() => {
+    if (setAsset) {
+      setAsset(Assets[selectedAssetIndex]);
+    }
+  }, [setAsset, selectedAssetIndex]);
+
+  return (
+    <Wrapper>
+      <DropdownSelector
+        options={assetsOptions}
+        value={selectedAssetIndex}
+        onSelect={(value) => setSelectedAssetIndex(value)}
+      />
+    </Wrapper>
+  );
+}

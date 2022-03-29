@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Container from "@osn/common-ui/lib/styled/Container";
-// import Explorer from "components/Explorer";
+import Explorer from "components/Explorer";
 import NewTopicAnchor from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
@@ -34,7 +34,7 @@ export default function Home() {
       <Background />
       <Container>
         <ContentWrapper>
-          {/* <Explorer /> */}
+          <Explorer />
           <PostListTitle>
             Topics
             <NewTopicAnchor />
