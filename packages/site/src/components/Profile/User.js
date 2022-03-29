@@ -3,12 +3,18 @@ import styled from "styled-components";
 import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import Name from "../User/Name";
 import ExternalLink from "@osn/common-ui/lib/ExternalLink";
+import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 24px;
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
   > :nth-child(2) {
-    margin-left: 24px;
     > :first-child {
       font-weight: 600;
       line-height: 32px;
@@ -18,6 +24,23 @@ const Wrapper = styled.div`
       line-height: 24px;
       color: #506176;
     }
+  }
+  object > div {
+    @media screen and (max-width: ${MOBILE_SIZE}px) {
+      justify-content: center;
+    }
+  }
+  a {
+    display: block;
+  }
+`;
+
+const Text = styled.span`
+  display: block;
+  word-break: break-all;
+  text-align: center;
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    margin-bottom: 16px;
   }
 `;
 
@@ -31,7 +54,7 @@ export default function Profile({ network, address }) {
             <Name network={network} address={address} noLink={true} />
           </object>
         </ExternalLink>
-        <div>{address}</div>
+        <Text>{address}</Text>
       </div>
     </Wrapper>
   );
