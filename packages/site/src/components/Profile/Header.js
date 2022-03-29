@@ -4,6 +4,11 @@ import Container from "@osn/common-ui/lib/styled/Container";
 import Profile from "components/User/Profile";
 import Tabs from "./Tabs";
 import NewTopicButton from "components/NewTopicButton";
+import { useEffect, useState } from "react";
+
+import serverApi from "services/serverApi";
+import { addToast, ToastTypes } from "store/reducers/toastSlice";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -58,7 +63,33 @@ const AboutWrapper = styled.div`
   }
 `;
 
+const sum = (arr) => arr.reduce((acc, cur) => acc + cur, 0);
+const avg = (arr) => (arr?.length > 0 ? sum(arr) / arr.length : undefined);
+
 export default function Header({ network, address, tab, setTab }) {
+  const dispatch = useDispatch();
+  const [promises, setPromises] = useState({});
+  const percentages = Object.values(promises).map(
+    ({ fund, promise }) => fund / promise
+  );
+  const avgPercentage = avg(percentages) || 0;
+
+  useEffect(() => {
+    serverApi
+      .fetch(`/network/${network}/address/${address}/promises`)
+      .then(({ result, error }) => {
+        setPromises(result ?? {});
+        if (error) {
+          dispatch(
+            addToast({
+              type: ToastTypes.Error,
+              message: error?.message || "Failed to load promises",
+            })
+          );
+        }
+      });
+  }, [dispatch, network, address]);
+
   return (
     <Wrapper>
       <Container>
@@ -67,14 +98,14 @@ export default function Header({ network, address, tab, setTab }) {
             <Profile network={network} address={address} />
             <AboutWrapper>
               <div>
-                <img src="/imgs/icons/support.svg" alt="" />
+                <img src="/imgs/icons/promise.svg" alt="" />
                 <div>
                   <div>Promises</div>
-                  <div>50%</div>
+                  <div>{parseInt(avgPercentage * 100)}%</div>
                 </div>
               </div>
               <div>
-                <img src="/imgs/icons/status.svg" alt="" />
+                <img src="/imgs/icons/treasury.svg" alt="" />
                 <div>
                   <div>Rewards</div>
                   <div>0</div>
