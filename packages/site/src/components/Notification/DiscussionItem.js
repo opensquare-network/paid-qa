@@ -22,6 +22,8 @@ const TextMajor = styled.span`
 `;
 
 const HorizonDivider = styled.div`
+  width: 100%;
+  flex-shrink: 0;
   height: 1px;
   background: #f0f3f8;
   margin-top: 16px;
@@ -41,8 +43,8 @@ export default function DiscussionItem({ notification, type = "Replied" }) {
   } = notification.data;
 
   return (
-    <>
-      <FlexWrapper style={{ flexWrap: "wrap" }}>
+    <Flex style={{ flexWrap: "wrap" }}>
+      <FlexWrapper>
         {type} by
         <MarginX8>
           <Avatar address={signer} />
@@ -60,6 +62,6 @@ export default function DiscussionItem({ notification, type = "Replied" }) {
       <HorizonDivider />
       {/*todo: strip all syntax, keep plain text only, and <a>*/}
       <MicromarkMd md={answer.content} />
-    </>
+    </Flex>
   );
 }

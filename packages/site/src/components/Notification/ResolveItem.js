@@ -21,7 +21,7 @@ export default function ResolveItem({ notification }) {
   const { topic } = notification.data;
   return (
     <>
-      <FlexWrapper style={{ flexWrap: "wrap" }}>
+      <FlexWrapper>
         Topic&nbsp;
         <Link to={`/topic/${topic.cid}`}>
           <TextMajor>{topic.title}</TextMajor>
