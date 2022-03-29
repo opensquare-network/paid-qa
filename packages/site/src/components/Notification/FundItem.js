@@ -36,7 +36,7 @@ export default function FundItem({ notification, type = "Funded" }) {
   }
   return (
     <>
-      <FlexWrapper style={{ flexWrap: "wrap" }}>
+      <FlexWrapper>
         {type} by
         <MarginX8>
           <Avatar address={funder} />
