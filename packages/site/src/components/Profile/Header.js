@@ -8,11 +8,15 @@ import { useEffect, useState } from "react";
 import serverApi from "services/serverApi";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { useDispatch } from "react-redux";
+import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 
 const Wrapper = styled.div`
   background: #ffffff;
   border-bottom: solid 1px #f0f3f8;
   padding-top: 40px;
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    padding-top: 20px;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -23,6 +27,10 @@ const ContentWrapper = styled.div`
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    @media screen and (max-width: ${MOBILE_SIZE}px) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
   > :nth-child(2) {
     display: flex;
