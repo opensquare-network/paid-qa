@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import IdentityOrAddr from "./IdentityOrAddr";
-import ExternalLink from "@osn/common-ui/lib/ExternalLink";
 
 const Wrapper = styled.span`
   display: flex;
@@ -23,7 +22,7 @@ export default function NetworkUser({
   network,
   iconSize,
   tooltipPosition,
-  link,
+  noLink,
 }) {
   const identity = (
     <IdentityOrAddr
@@ -31,19 +30,15 @@ export default function NetworkUser({
       network={network}
       iconSize={iconSize}
       tooltipPosition={tooltipPosition}
+      noLink={noLink}
     />
   );
-
-  let user = identity;
-  if (link) {
-    user = <ExternalLink href={link}>{identity}</ExternalLink>;
-  }
 
   return (
     <Wrapper>
       <Avatar address={address} size={20} />
       {network && <ChainIcon chainName={network} size={16} />}
-      {user}
+      {identity}
     </Wrapper>
   );
 }

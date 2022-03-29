@@ -13,6 +13,7 @@ import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
 import Time from "@osn/common-ui/lib/Time";
 import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -34,6 +35,13 @@ const Divider = styled.div`
   height: 1px;
   background: #f0f3f8;
   margin: 16px 0;
+`;
+
+const TitleLink = styled(Link)`
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 export default function AnswerList({ network, address }) {
@@ -67,7 +75,9 @@ export default function AnswerList({ network, address }) {
             <Card key={index}>
               <StyledDividerWrapper>
                 <div>Reply to</div>
-                <div>{answer.topic.title}</div>
+                <div>
+                  <TitleLink to={`/topic/${answer.topic.cid}`}>{answer.topic.title}</TitleLink>
+                </div>
                 <Time time={answer.createdAt} />
               </StyledDividerWrapper>
               <Divider />

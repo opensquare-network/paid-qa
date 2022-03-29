@@ -1,15 +1,20 @@
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { useEffect, useState } from "react";
 import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import IdentityIcon from "./IdentityIcon";
 import { addressEllipsis } from "./ConnectedAccount";
 
 const IdentityWrapper = styled.a`
-  cursor: pointer;
   display: flex;
   align-items: center;
   font-weight: 500;
+
+  ${p => p.noLink && css`pointer-events: none;` }
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
 
   & > span {
     margin-right: 4px;
@@ -26,6 +31,7 @@ export default function IdentityOrAddr({
   iconSize,
   tooltipPosition,
   noIcon,
+  noLink,
 }) {
   const isMounted = useIsMounted();
   const [identity, setIdentity] = useState();
@@ -45,7 +51,7 @@ export default function IdentityOrAddr({
   }, [network, address, isMounted]);
 
   return (
-    <IdentityWrapper href={`/#/network/${network}/address/${address}`}>
+    <IdentityWrapper noLink={noLink} href={`/#/network/${network}/address/${address}`}>
       {identity?.info && identity?.info?.status !== "NO_ID" ? (
         <>
           {!noIcon && (

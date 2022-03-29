@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Container from "@osn/common-ui/lib/styled/Container";
-import Profile from "components/User/Profile";
+import User from "components/Profile/User";
 import Tabs from "./Tabs";
 import NewTopicButton from "components/NewTopicButton";
 import { useEffect, useState } from "react";
@@ -95,20 +95,13 @@ export default function Header({ network, address, tab, setTab }) {
       <Container>
         <ContentWrapper>
           <div>
-            <Profile network={network} address={address} />
+            <User network={network} address={address} />
             <AboutWrapper>
               <div>
                 <img src="/imgs/icons/promise.svg" alt="" />
                 <div>
                   <div>Promises</div>
                   <div>{parseInt(avgPercentage * 100)}%</div>
-                </div>
-              </div>
-              <div>
-                <img src="/imgs/icons/treasury.svg" alt="" />
-                <div>
-                  <div>Rewards</div>
-                  <div>0</div>
                 </div>
               </div>
             </AboutWrapper>

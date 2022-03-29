@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 import Avatar from "@osn/common-ui/lib/Account/Avatar";
-import Name from "./Name";
+import Name from "../User/Name";
+import ExternalLink from "@osn/common-ui/lib/ExternalLink";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,7 +11,6 @@ const Wrapper = styled.div`
     margin-left: 24px;
     > :first-child {
       font-weight: 600;
-      font-size: 20px;
       line-height: 32px;
     }
     > :nth-child(2) {
@@ -26,7 +26,11 @@ export default function Profile({ network, address }) {
     <Wrapper>
       <Avatar address={address} size={64} />
       <div>
-        <Name network={network} address={address} />
+        <ExternalLink href={`https://${network}.subscan.io/account/${address}`}>
+          <object>
+            <Name network={network} address={address} noLink={true} />
+          </object>
+        </ExternalLink>
         <div>{address}</div>
       </div>
     </Wrapper>
