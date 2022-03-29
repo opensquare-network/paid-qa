@@ -108,7 +108,7 @@ export default function Explorer() {
             <div>Rewards</div>
             <img src="/imgs/icons/treasury.svg" alt="" />
           </div>
-          <AssetSelector setAsset={setAsset} />
+          <AssetSelector asset={filterAsset} setAsset={setAsset} />
         </ItemWrapper>
       </ContentWrapper>
     </Wrapper>
