@@ -69,10 +69,10 @@ const avg = (arr) => (arr?.length > 0 ? sum(arr) / arr.length : undefined);
 export default function Header({ network, address, tab, setTab }) {
   const dispatch = useDispatch();
   const [promises, setPromises] = useState({});
-  const precents = Object.values(promises).map(
+  const percentages = Object.values(promises).map(
     ({ fund, promise }) => fund / promise
   );
-  const precent = avg(precents) || 0;
+  const avgPercentage = avg(percentages) || 0;
 
   useEffect(() => {
     serverApi
@@ -101,7 +101,7 @@ export default function Header({ network, address, tab, setTab }) {
                 <img src="/imgs/icons/promise.svg" alt="" />
                 <div>
                   <div>Promises</div>
-                  <div>{parseInt(precent * 100)}%</div>
+                  <div>{parseInt(avgPercentage * 100)}%</div>
                 </div>
               </div>
               <div>
