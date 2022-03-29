@@ -48,7 +48,7 @@ export default function AnswerList({ network, address }) {
         dispatch(
           addToast({
             type: ToastTypes.Error,
-            message: error?.message || "Failed to load answers",
+            message: error?.message || "Failed to load replies",
           })
         );
       }
@@ -60,7 +60,7 @@ export default function AnswerList({ network, address }) {
       {answers === null ? (
         <ListLoader />
       ) : answers.items.length === 0 ? (
-        <NoPost message={"No current answers"} />
+        <NoPost message={"No current replies"} />
       ) : (
         answers.items.map((answer, index) => {
           return (
