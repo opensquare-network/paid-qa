@@ -26,22 +26,40 @@ async function getAccountTopics(ctx) {
 
 async function getAccountPromises(ctx) {
   const { address } = ctx.params;
-  const { page, pageSize } = extractPage(ctx);
 
   const sponsorPublicKey = toPublicKey(address);
   const q = { sponsorPublicKey };
-  const total = await Reward.countDocuments(q);
-  const topics = await Reward.find(q)
-    .sort({ blockTime: -1 })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize);
+  const rewards = await Reward.aggregate([
+    { $match: q },
+    {
+      $group: {
+        _id: "$symbol",
+        value: { $sum: "$value" },
+      },
+    },
+  ]);
 
-  ctx.body = {
-    items: topics,
-    page,
-    pageSize,
-    total,
-  };
+  const funds = await Fund.aggregate([
+    { $match: q },
+    {
+      $group: {
+        _id: "$symbol",
+        value: { $sum: "$value" },
+      },
+    },
+  ]);
+
+  const result = {};
+  rewards.forEach((reward) => {
+    result[reward._id] = { promise: reward.value.toString() };
+  });
+  funds.forEach((fund) => {
+    if (result[fund._id]) {
+      result[fund._id].fund = fund.value.toString();
+    }
+  });
+
+  ctx.body = result;
 }
 
 async function getAccountRewards(ctx) {
