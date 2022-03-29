@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   ${markdownStyle};
 `;
 
-export default function MicromarkMd({ md = "" }) {
+export default function MicromarkMd({ md = "", allowTags }) {
   const linkMd = matchMdLink(replaceMentionLinks(md));
   const displayContent = linkMd.replace(/\n+/g, function (ns) {
     if (ns.length === 1) return "  " + ns;
@@ -31,11 +31,9 @@ export default function MicromarkMd({ md = "" }) {
   });
 
   const cleanHtml = sanitizeHtml(html, {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      "img",
-      "iframe",
-      "br",
-    ]),
+    allowedTags:
+      allowTags ??
+      sanitizeHtml.defaults.allowedTags.concat(["img", "iframe", "br"]),
     allowedAttributes: {
       img: ["src", "size", "width", "height"],
       iframe: ["src", "width", "height"],

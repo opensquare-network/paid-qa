@@ -60,8 +60,7 @@ export default function DiscussionItem({ notification, type = "Replied" }) {
       </FlexWrapper>
       <Time time={answer.createdAt} />
       <HorizonDivider />
-      {/*todo: strip all syntax, keep plain text only, and <a>*/}
-      <MicromarkMd md={answer.content} />
+      <MicromarkMd md={answer.content} allowTags={["a"]} />
     </Flex>
   );
 }

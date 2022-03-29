@@ -9,6 +9,13 @@ import { useParams } from "react-router";
 
 const ContentWrapper = styled.div`
   margin: 20px 0;
+  .markdown-content {
+    max-width: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 `;
 
 export default function Profile() {
@@ -20,8 +27,12 @@ export default function Profile() {
       <Header network={network} address={address} tab={tab} setTab={setTab} />
       <Container>
         <ContentWrapper>
-          {tab === "posts" && <TopicsList network={network} address={address} />}
-          {tab === "replies" && <AnswerList network={network} address={address} />}
+          {tab === "posts" && (
+            <TopicsList network={network} address={address} />
+          )}
+          {tab === "replies" && (
+            <AnswerList network={network} address={address} />
+          )}
         </ContentWrapper>
       </Container>
     </div>
