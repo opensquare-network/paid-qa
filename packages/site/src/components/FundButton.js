@@ -2,33 +2,29 @@ import styled, { css } from "styled-components";
 import { ReactComponent as ExpandDownIcon } from "imgs/icons/expand-down.svg";
 import { ReactComponent as ExpandUpIcon } from "imgs/icons/expand-up.svg";
 import { ReactComponent as FundIcon } from "imgs/icons/fund.svg";
+import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import Flex from "@osn/common-ui/lib/styled/Flex";
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
+const Wrapper = styled(Flex)`
   > :first-child {
     margin-right: 8px;
   }
 `;
 
 const Text = styled.span`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
+  ${p_14_normal};
 `;
 
-const Fund = styled.div`
-  display: flex;
-  align-items: center;
+const Fund = styled(Flex)`
   pointer-events: none;
   > :first-child {
     margin-right: 8px;
   }
 
   color: #a1a8b3;
-  ${
-    p => !p.disabled && css`
+  ${(p) =>
+    !p.disabled &&
+    css`
       pointer-events: auto;
       cursor: pointer;
       :hover {
@@ -37,17 +33,21 @@ const Fund = styled.div`
           fill: #506176;
         }
       }
-    `
-  }
+    `}
 `;
 
-const Expand = styled.div`
+const Expand = styled(Flex)`
   cursor: pointer;
-  display: flex;
-  align-items: center;
 `;
 
-export default function FundButton({ text, expand, setExpand, onFund, canExpand, disabled }) {
+export default function FundButton({
+  text,
+  expand,
+  setExpand,
+  onFund,
+  canExpand,
+  disabled,
+}) {
   return (
     <Wrapper>
       <Fund disabled={disabled} onClick={onFund}>

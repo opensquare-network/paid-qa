@@ -1,15 +1,13 @@
 import styled from "styled-components";
+import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
-const Wrapper = styled.div`
+const Wrapper = styled(FlexCenter)`
   background: #ffffff;
   border-top: 1px solid #f0f3f8;
   border-bottom: 1px solid #f0f3f8;
   height: 131px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  line-height: 24px;
+  ${p_14_normal};
   color: #9da9bb;
 `;
 

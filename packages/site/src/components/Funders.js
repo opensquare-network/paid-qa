@@ -1,6 +1,7 @@
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import styled from "styled-components";
 import IdentityOrAddr from "./User/IdentityOrAddr";
+import { p_12_normal } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,10 +14,7 @@ const Wrapper = styled.div`
 
   background: #fbfcfe;
 
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
+  ${p_12_normal};
 
   span {
     line-height: 18px !important;

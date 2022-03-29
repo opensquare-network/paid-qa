@@ -7,6 +7,7 @@ import BigNumber from "bignumber.js";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -23,16 +24,13 @@ const Label = styled.span`
   color: #a1a8b3;
 `;
 
-const ResolvedTag = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const ResolvedTag = styled(FlexCenter)`
   padding: 2px 8px;
 
   width: 61px;
   height: 18px;
 
-  border: 1px solid #B7C0CC;
+  border: 1px solid #b7c0cc;
   box-sizing: border-box;
   border-radius: 9px;
 
@@ -42,7 +40,7 @@ const ResolvedTag = styled.div`
   line-height: 14px;
 
   text-align: center;
-  color: #A1A8B3;
+  color: #a1a8b3;
 `;
 
 export function useFulfillment(reward) {
@@ -69,17 +67,15 @@ export default function Item({ reward, resolve }) {
         <NetworkUser address={sponsorAddress} network={reward.network} />
         {resolve && <ResolvedTag>Resolved</ResolvedTag>}
       </div>
-      {
-        !resolve && (
-          <>
-            <ProgressBar percent={percent} />
-            <FlexBetween>
-              <Label>Fund</Label>
-              <Token>{`${paidValue}/${reward.value} ${reward.symbol}`}</Token>
-            </FlexBetween>
-          </>
-        )
-      }
+      {!resolve && (
+        <>
+          <ProgressBar percent={percent} />
+          <FlexBetween>
+            <Label>Fund</Label>
+            <Token>{`${paidValue}/${reward.value} ${reward.symbol}`}</Token>
+          </FlexBetween>
+        </>
+      )}
     </Wrapper>
   );
 }

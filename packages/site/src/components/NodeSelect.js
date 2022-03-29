@@ -11,19 +11,18 @@ import {
   activeChainNodeSelector,
 } from "store/reducers/nodeSlice";
 import { DEFAULT_NODES } from "utils/constants";
+import Flex from "@osn/common-ui/lib/styled/Flex";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Wrapper = styled.div`
   position: relative;
 `;
 
-const SmallSelect = styled.div`
+const SmallSelect = styled(FlexCenter)`
   width: 40px;
   height: 40px;
   border: 1px solid #e2e8f0;
   padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   > img {
     width: 24px;
@@ -31,12 +30,10 @@ const SmallSelect = styled.div`
   }
 `;
 
-const Select = styled.div`
+const Select = styled(Flex)`
   border: 1px solid #e0e4eb;
   border-radius: 4px;
   height: 38px;
-  display: flex;
-  align-items: center;
   padding: 0 12px;
   cursor: pointer;
   font-weight: 500;
@@ -75,9 +72,7 @@ const Options = styled.div`
     `}
 `;
 
-const Item = styled.div`
-  display: flex;
-  align-items: center;
+const Item = styled(Flex)`
   padding: 6px 12px;
   font-weight: 500;
   font-size: 14px;

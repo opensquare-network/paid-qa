@@ -10,6 +10,11 @@ import {
   setFilterAsset,
   setFilterStatus,
 } from "store/reducers/topicSlice";
+import {
+  h3_36_bold,
+  p_16_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -17,20 +22,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const TitleWrapper = styled.div`
-  display: flex;
+const TitleWrapper = styled(FlexBetween)`
   align-items: flex-end;
-  justify-content: space-between;
   > :first-child {
-    font-family: "Montserrat";
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 36px;
+    ${h3_36_bold};
   }
   > :nth-child(2) {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    ${p_16_semibold};
     color: #506176;
     margin-left: 40px;
   }
@@ -59,9 +57,7 @@ const ItemWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    ${p_16_semibold};
     > img {
       width: 24px;
       height: 24px;

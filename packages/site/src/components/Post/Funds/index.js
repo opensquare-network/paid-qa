@@ -10,26 +10,25 @@ import {
 } from "store/reducers/topicSlice";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import {
+  p_14_medium,
+  p_14_normal,
+  p_16_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
 const Title = styled.div`
   padding-bottom: 16px;
   border-bottom: solid 1px #f0f3f8;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  ${p_16_semibold};
 `;
 
 const ContentWrapper = styled.div`
   margin-top: 16px;
 `;
 
-const Item = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const Item = styled(FlexBetween)`
+  ${p_14_medium};
   > :first-child {
     color: #a1a8b3;
   }
@@ -38,9 +37,7 @@ const Item = styled.div`
 const GreyText = styled.p`
   color: #a1a8b3;
   text-align: center;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
+  ${p_14_normal};
 `;
 
 export default function Funds({ topicCid }) {

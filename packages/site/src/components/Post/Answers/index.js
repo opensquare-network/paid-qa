@@ -6,13 +6,22 @@ import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import Card from "@osn/common-ui/lib/styled/Card";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
-import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
+import {
+  addToast,
+  newToastId,
+  ToastTypes,
+  updateToast,
+} from "store/reducers/toastSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
 import RichEdit from "@osn/common-ui/lib/RichEdit";
 import { signMessage } from "services/chainApi";
 import NoReplies from "components/NoReplies";
-import { answersSelector, fetchAnswers, setAnswers } from "store/reducers/answerSlice";
+import {
+  answersSelector,
+  fetchAnswers,
+  setAnswers,
+} from "store/reducers/answerSlice";
 import {
   addressEllipsis,
   encodeNetworkAddress,
@@ -22,13 +31,13 @@ import uniqWith from "lodash.uniqwith";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
   > div > div {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    ${p_16_semibold};
     padding-bottom: 17px;
     display: inline-block;
   }
@@ -44,8 +53,7 @@ const Count = styled.div`
   color: #a1a8b3;
 `;
 
-const LoadingWrapper = styled(Flex)`
-  justify-content: center;
+const LoadingWrapper = styled(FlexCenter)`
   height: 104px;
   border-bottom: 1px solid #f0f3f8;
 `;
@@ -76,7 +84,7 @@ export default function Answers({ topicCid }) {
     }
     return () => {
       dispatch(setAnswers(null));
-    }
+    };
   }, [dispatch, topicCid, page]);
 
   const onSubmit = async () => {

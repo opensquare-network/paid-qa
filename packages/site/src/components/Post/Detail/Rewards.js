@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { calcRewards } from "utils/rewards";
 import { useSelector } from "react-redux";
 import { fundSummarySelector } from "store/reducers/topicSlice";
+import {
+  p_14_normal,
+  p_16_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,14 +17,11 @@ const Wrapper = styled.div`
 const Item = styled.div`
   flex-grow: 1;
   > :first-child {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    ${p_16_semibold};
   }
   > :nth-child(2) {
     margin-top: 1px;
-    font-size: 14px;
-    line-height: 24px;
+    ${p_14_normal};
     color: #506176;
   }
 `;

@@ -2,13 +2,11 @@ import styled from "styled-components";
 
 import { ChainIcon } from "@osn/common-ui/lib";
 import IdentityOrAddr from "./IdentityOrAddr";
+import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import Flex from "@osn/common-ui/lib/styled/Flex";
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
+const Wrapper = styled(Flex)`
+  ${p_14_medium};
   > :not(:first-child) {
     margin-left: 4px;
   }

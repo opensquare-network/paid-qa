@@ -7,6 +7,7 @@ import NetworkUser from "../../User/NetworkUser";
 import ActionBar from "./ActionBar";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
+import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -17,8 +18,7 @@ const ContentWrapper = styled.div`
   padding-bottom: 20px;
   border-bottom: solid 1px #f0f3f8;
   > :first-child {
-    font-size: 14px;
-    line-height: 24px;
+    ${p_14_normal};
   }
   > :not(:first-child) {
     margin-top: 8px;
@@ -26,10 +26,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Height = styled.span`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
+  ${p_14_normal};
   color: #a1a8b3;
 `;
 
