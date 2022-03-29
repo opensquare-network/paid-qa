@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import Header from "components/Profile/Header";
 import Container from "@osn/common-ui/lib/styled/Container";
-// import TopicsList from "components/TopicsList";
-// import AnswerList from "components/AnswerList";
-// import ActivityList from "components/ActivityList";
+import TopicsList from "components/Profile/TopicsList";
+import AnswerList from "components/AnswerList";
+import ActivityList from "components/ActivityList";
 import { useParams } from "react-router";
 
 const ContentWrapper = styled.div`
@@ -14,16 +14,16 @@ const ContentWrapper = styled.div`
 
 export default function Profile() {
   const { network, address } = useParams();
-  const [tab, setTab] = useState("questions");
+  const [tab, setTab] = useState("posts");
 
   return (
     <div>
       <Header network={network} address={address} tab={tab} setTab={setTab} />
       <Container>
         <ContentWrapper>
-          {/* {tab === "questions" && <TopicsList />}
-          {tab === "answers" && <AnswerList />}
-          {tab === "activity" && <ActivityList />} */}
+          {tab === "posts" && <TopicsList network={network} address={address} />}
+          {tab === "replies" && <AnswerList />}
+          {tab === "analytics" && <ActivityList />}
         </ContentWrapper>
       </Container>
     </div>
