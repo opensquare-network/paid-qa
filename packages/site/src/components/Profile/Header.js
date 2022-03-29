@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Container from "@osn/common-ui/lib/styled/Container";
 import User from "components/Profile/User";
 import Tabs from "./Tabs";
-import NewTopicButton from "components/NewTopicButton";
 import { useEffect, useState } from "react";
 
 import serverApi from "services/serverApi";
@@ -108,7 +107,6 @@ export default function Header({ network, address, tab, setTab }) {
           </div>
           <div>
             <Tabs value={tab} setValue={setTab} />
-            <NewTopicButton />
           </div>
         </ContentWrapper>
       </Container>
