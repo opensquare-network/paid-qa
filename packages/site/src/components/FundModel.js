@@ -10,14 +10,19 @@ import { p_16_semibold, p_20_semibold } from "../styles/textStyles";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import Toggle from "@osn/common-ui/lib/Toggle";
-import AssetSelector from "./AssetSelector";
+import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
 import AssetInput from "./AssetInput";
 import { useApi } from "utils/hooks";
 import { hexToString } from "@polkadot/util";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitFund } from "services/chainApi";
-import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
+import {
+  addToast,
+  newToastId,
+  ToastTypes,
+  updateToast,
+} from "store/reducers/toastSlice";
 import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";

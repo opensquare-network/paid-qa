@@ -137,27 +137,109 @@ async function getTopic(cid) {
   return topic;
 }
 
-async function getTopics(page, pageSize) {
-  const q = {
-    status: {
-      //TODO: remove published status
+async function getTopics(symbol, status, page, pageSize) {
+  const q = {};
+  if (status && status !== "all") {
+    q.status = status;
+  } else {
+    q.status = {
       $in: [PostStatus.Published, PostStatus.Active, PostStatus.Resolved],
-    },
-  };
-  const total = await Topic.countDocuments(q);
-  const topics = await Topic.find(q)
-    .sort({ createdAt: -1 })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize)
-    .populate("answersCount")
-    .populate("rewards");
+    };
+  }
 
-  return {
-    items: topics,
-    page,
-    pageSize,
-    total,
-  };
+  if (symbol && symbol !== "all") {
+    const [topics] = await Topic.aggregate([
+      { $match: q },
+      {
+        $lookup: {
+          from: "rewards",
+          let: { topicCid: "$cid" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$topicCid", "$$topicCid"],
+                },
+              },
+            },
+            {
+              $addFields: {
+                value: { $toString: "$value" },
+              },
+            },
+          ],
+          as: "rewards",
+        },
+      },
+      {
+        $match: {
+          "rewards.symbol": symbol,
+        },
+      },
+      {
+        $facet: {
+          total: [
+            {
+              $count: "count",
+            },
+          ],
+          items: [
+            { $sort: { blockTime: -1 } },
+            { $skip: (page - 1) * pageSize },
+            { $limit: pageSize },
+            {
+              $lookup: {
+                from: "answers",
+                let: { topicCid: "$cid" },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ["$topicCid", "$$topicCid"],
+                      },
+                    },
+                  },
+                  {
+                    $count: "count",
+                  },
+                ],
+                as: "answersCount",
+              },
+            },
+            {
+              $addFields: {
+                answersCount: {
+                  $arrayElemAt: ["$answersCount.count", 0],
+                },
+              },
+            },
+          ],
+        },
+      },
+    ]);
+
+    return {
+      items: topics.items,
+      page,
+      pageSize,
+      total: topics.total,
+    };
+  } else {
+    const total = await Topic.countDocuments(q);
+    const topics = await Topic.find(q)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .populate("answersCount")
+      .populate("rewards");
+
+    return {
+      items: topics,
+      page,
+      pageSize,
+      total,
+    };
+  }
 }
 
 async function addAppendant(data, network, blockHash, extrinsicIndex) {

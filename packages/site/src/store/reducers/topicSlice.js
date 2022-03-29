@@ -8,6 +8,8 @@ const topicSlice = createSlice({
     topics: null,
     topic: null,
     fundSummary: null,
+    filterAsset: null,
+    filterStatus: null,
   },
   reducers: {
     setTopics(state, { payload }) {
@@ -19,14 +21,28 @@ const topicSlice = createSlice({
     setFundSummary(state, { payload }) {
       state.fundSummary = payload;
     },
+    setFilterAsset(state, { payload }) {
+      state.filterAsset = payload;
+    },
+    setFilterStatus(state, { payload }) {
+      state.filterStatus = payload;
+    },
   },
 });
 
-export const { setTopics, setTopic, setFundSummary } = topicSlice.actions;
+export const {
+  setTopics,
+  setTopic,
+  setFundSummary,
+  setFilterAsset,
+  setFilterStatus,
+} = topicSlice.actions;
 
 export const topicsSelector = (state) => state.topic.topics;
 export const topicSelector = (state) => state.topic.topic;
 export const fundSummarySelector = (state) => state.topic.fundSummary;
+export const filterAssetSelector = (state) => state.topic.filterAsset;
+export const filterStatusSelector = (state) => state.topic.filterStatus;
 
 export const fetchTopic = (topicCid) => async (dispatch) => {
   serverApi.fetch(`/topics/${topicCid}`).then(({ result, error }) => {
@@ -34,26 +50,32 @@ export const fetchTopic = (topicCid) => async (dispatch) => {
       dispatch(setTopic(result));
     }
     if (error) {
-      dispatch(addToast({
-        type: ToastTypes.Error,
-        message: error.message
-      }));
+      dispatch(
+        addToast({
+          type: ToastTypes.Error,
+          message: error.message,
+        })
+      );
     }
   });
-}
+};
 
 export const fetchFundSummary = (topicCid) => async (dispatch) => {
-  serverApi.fetch(`/topics/${topicCid}/fundsummary`).then(({ result, error }) => {
-    if (result) {
-      dispatch(setFundSummary(result));
-    }
-    if (error) {
-      dispatch(addToast({
-        type: ToastTypes.Error,
-        message: error.message
-      }));
-    }
-  });
-}
+  serverApi
+    .fetch(`/topics/${topicCid}/fundsummary`)
+    .then(({ result, error }) => {
+      if (result) {
+        dispatch(setFundSummary(result));
+      }
+      if (error) {
+        dispatch(
+          addToast({
+            type: ToastTypes.Error,
+            message: error.message,
+          })
+        );
+      }
+    });
+};
 
 export default topicSlice.reducer;
