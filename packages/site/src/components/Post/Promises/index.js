@@ -12,6 +12,7 @@ import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 import { isSamePublicKey } from "@osn/common-ui/lib/utils/address";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import Button from "@osn/common-ui/lib/styled/Button";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -28,47 +29,20 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const SupportButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 24px;
-
-  width: 236px;
-  height: 48px;
-
-  border: 1px solid #b7c0cc;
-  box-sizing: border-box;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  cursor: pointer;
+const SupportButton = styled(Button)`
+  width: 204px;
+  line-height: 32px;
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     width: 100%;
   }
 `;
 
-const ConnectButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 24px;
-
-  position: static;
-  width: 236px;
-  height: 48px;
-
-  background: #191e27;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  color: #ffffff;
-
-  cursor: pointer;
+const ConnectButton = styled(Button)`
+  width: 204px;
+  line-height: 32px;
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    width: 100%;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -115,8 +89,8 @@ export default function Promises({ topicCid, rewards, resolves }) {
               Support
             </SupportButton>
           ) : (
-            <ConnectButton onClick={() => dispatch(popUpConnect())}>
-              Conect Wallet
+            <ConnectButton onClick={() => dispatch(popUpConnect())} primary>
+              Connect Wallet
             </ConnectButton>
           )}
         </ButtonContainer>

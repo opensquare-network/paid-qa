@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Container from "@osn/common-ui/lib/styled/Container";
 // import Explorer from "components/Explorer";
-import AskQuestion from "components/NewTopicButton";
+import NewTopicAnchor from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
 
@@ -37,7 +37,7 @@ export default function Home() {
           {/* <Explorer /> */}
           <PostListTitle>
             Topics
-            <AskQuestion />
+            <NewTopicAnchor />
           </PostListTitle>
           <TopicsList />
         </ContentWrapper>
