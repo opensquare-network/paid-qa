@@ -21,14 +21,12 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function Profile({
-  address = "12mP4sjCfKbDyMRAEyLpkeHeoYtS5USY4x34n9NMwQrcEyoh",
-}) {
+export default function Profile({ network, address }) {
   return (
     <Wrapper>
       <Avatar address={address} size={64} />
       <div>
-        <Name address={address} />
+        <Name network={network} address={address} />
         <div>{address}</div>
       </div>
     </Wrapper>

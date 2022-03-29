@@ -10,7 +10,7 @@ import Home from "pages/Home";
 import Topic from "pages/Topic";
 import Profile from "pages/Profile";
 import NewTopic from "pages/NewTopic";
-import Notifications from "./pages/Notifications";
+import Notifications from "pages/Notifications";
 
 function App() {
   return (
@@ -22,8 +22,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/new" element={<NewTopic />} />
             <Route path="/topic/:cid" element={<Topic />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/notifications" element={<Notifications />} />
+            <Route path="/network/:network/address/:address" element={<Profile />} />
           </Routes>
         </Main>
         <Footer />

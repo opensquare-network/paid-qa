@@ -9,7 +9,6 @@ import RewardItemList from "components/Notification/RewardItemList";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
-import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import serverApi from "../services/serverApi";
 import NoPost from "../components/NoPost";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";

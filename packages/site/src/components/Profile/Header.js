@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import Container from "@osn/common-ui/lib/styled/Container";
-import Breadcrumb from "@osn/common-ui/lib/Navi/Breadcrumb";
 import Profile from "components/User/Profile";
 import Tabs from "./Tabs";
 import NewTopicButton from "components/NewTopicButton";
@@ -16,12 +15,12 @@ const ContentWrapper = styled.div`
   > :not(:first-child) {
     margin-top: 32px;
   }
-  > :nth-child(2) {
+  > :nth-child(1) {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
   }
-  > :nth-child(3) {
+  > :nth-child(2) {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -59,14 +58,13 @@ const AboutWrapper = styled.div`
   }
 `;
 
-export default function Header({ tab, setTab }) {
+export default function Header({ network, address, tab, setTab }) {
   return (
     <Wrapper>
       <Container>
         <ContentWrapper>
-          <Breadcrumb value="Profile" />
           <div>
-            <Profile />
+            <Profile network={network} address={address} />
             <AboutWrapper>
               <div>
                 <img src="/imgs/icons/support.svg" alt="" />

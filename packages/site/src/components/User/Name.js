@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
+import { ChainIcon } from "@osn/common-ui/lib";
+import IdentityOrAddr from "./IdentityOrAddr";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,15 +19,12 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function Name({ address }) {
+export default function Name({ network, address }) {
   return (
-    <Link to="/profile">
+    <Link to={`/network/${network}/address/${address}`}>
       <Wrapper>
-        <img src="/imgs/icons/polkadot.svg" alt="" />
-        <div>
-          {address.substring(0, 4)}...
-          {address.substring(address.length - 4, address.length)}
-        </div>
+        <ChainIcon chainName={network} size={12} />
+        <IdentityOrAddr network={network} address={address} />
       </Wrapper>
     </Link>
   );

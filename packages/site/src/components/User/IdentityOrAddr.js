@@ -5,7 +5,8 @@ import styled from "styled-components";
 import IdentityIcon from "./IdentityIcon";
 import { addressEllipsis } from "./ConnectedAccount";
 
-const IdentityWrapper = styled.span`
+const IdentityWrapper = styled.a`
+  cursor: pointer;
   display: flex;
   align-items: center;
   font-weight: 500;
@@ -44,7 +45,7 @@ export default function IdentityOrAddr({
   }, [network, address, isMounted]);
 
   return (
-    <IdentityWrapper>
+    <IdentityWrapper href={`/#/network/${network}/address/${address}`}>
       {identity?.info && identity?.info?.status !== "NO_ID" ? (
         <>
           {!noIcon && (
