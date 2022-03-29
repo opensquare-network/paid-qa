@@ -22,6 +22,13 @@ const Wrapper = styled.div`
 
 const ContentWrapper = styled.div`
   margin: 20px 0;
+  .markdown-content {
+    max-width: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 `;
 
 const tabRouterMap = new Map([

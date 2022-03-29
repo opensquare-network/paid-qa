@@ -50,17 +50,19 @@ export default function AnswerList({ network, address }) {
   const [answers, setAnswers] = useState(null);
 
   useEffect(() => {
-    serverApi.fetch(`/network/${network}/address/${address}/answers`, { page }).then(({ result, error }) => {
-      setAnswers(result ?? EmptyList);
-      if (error) {
-        dispatch(
-          addToast({
-            type: ToastTypes.Error,
-            message: error?.message || "Failed to load replies",
-          })
-        );
-      }
-    });
+    serverApi
+      .fetch(`/network/${network}/address/${address}/answers`, { page })
+      .then(({ result, error }) => {
+        setAnswers(result ?? EmptyList);
+        if (error) {
+          dispatch(
+            addToast({
+              type: ToastTypes.Error,
+              message: error?.message || "Failed to load replies",
+            })
+          );
+        }
+      });
   }, [dispatch, network, address, page]);
 
   return (
@@ -76,12 +78,14 @@ export default function AnswerList({ network, address }) {
               <StyledDividerWrapper>
                 <div>Reply to</div>
                 <div>
-                  <TitleLink to={`/topic/${answer.topic.cid}`}>{answer.topic.title}</TitleLink>
+                  <TitleLink to={`/topic/${answer.topic.cid}`}>
+                    {answer.topic.title}
+                  </TitleLink>
                 </div>
                 <Time time={answer.createdAt} />
               </StyledDividerWrapper>
               <Divider />
-              <MicromarkMd md={answer.content} />
+              <MicromarkMd md={answer.content} allowTags={["a"]} />
             </Card>
           );
         })
