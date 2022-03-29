@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Header from "components/Profile/Header";
 import Container from "@osn/common-ui/lib/styled/Container";
 import TopicsList from "components/Profile/TopicsList";
-import AnswerList from "components/AnswerList";
+import AnswerList from "components/Profile/AnswerList";
 import ActivityList from "components/ActivityList";
 import { useParams } from "react-router";
 
@@ -22,7 +22,7 @@ export default function Profile() {
       <Container>
         <ContentWrapper>
           {tab === "posts" && <TopicsList network={network} address={address} />}
-          {tab === "replies" && <AnswerList />}
+          {tab === "replies" && <AnswerList network={network} address={address} />}
           {tab === "analytics" && <ActivityList />}
         </ContentWrapper>
       </Container>
