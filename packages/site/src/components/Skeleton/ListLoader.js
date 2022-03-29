@@ -36,9 +36,9 @@ const MyLoader = (props) => {
   );
 };
 
-const ListLoader = () => {
+const ListLoader = ({ style = {} }) => {
   return (
-    <LoaderWrapper>
+    <LoaderWrapper style={style}>
       <MyLoader />
       <MyLoader />
       <MyLoader />
