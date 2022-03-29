@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { micromark } from "micromark";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
-import { matchMdLink } from "../utils/markdown";
+import { matchMdLink, replaceMentionLinks } from "../utils/markdown";
 import sanitizeHtml from "sanitize-html";
 import markdownStyle from "../styles/markdown";
 
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `;
 
 export default function MicromarkMd({ md = "" }) {
-  const linkMd = matchMdLink(md);
+  const linkMd = matchMdLink(replaceMentionLinks(md));
   const displayContent = linkMd.replace(/\n+/g, function (ns) {
     if (ns.length === 1) return "  " + ns;
     return ns;
