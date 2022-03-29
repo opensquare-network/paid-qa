@@ -153,20 +153,16 @@ function ConnectedAccount({ account, showMenu, setShowMenu }) {
     setShowMenu(false);
   };
 
-  const networkUser = (
-    <NetworkUser
-      address={address}
-      network={network}
-      iconSize={12}
-      tooltipPosition="down"
-    />
-  );
-
   const Menu = (
     <MenuWrapper onClick={(e) => e.stopPropagation()}>
       {account && (
         <>
-          {networkUser}
+          <NetworkUser
+            address={address}
+            network={network}
+            iconSize={12}
+            tooltipPosition="down"
+          />
           <MenuDivider />
           <MenuItem>
             <LogoutWrapper onClick={onSwitch}>
@@ -192,7 +188,13 @@ function ConnectedAccount({ account, showMenu, setShowMenu }) {
           setShowMenu(!showMenu);
         }}
       >
-        {networkUser}
+        <NetworkUser
+          address={address}
+          network={network}
+          iconSize={12}
+          tooltipPosition="down"
+          noLink={true}
+        />
       </AccountWrapperPC>
       {showMenu && <>{Menu}</>}
     </Wrapper>
