@@ -51,12 +51,15 @@ export default function Tabs({ items = [], value, setValue }) {
           return <Divider key={index} />;
         }
         return (
-          <Item key={index} active={value === item} onClick={() => setValue(item)}>
+          <Item
+            key={index}
+            active={value === item}
+            onClick={() => setValue(item)}
+          >
             <Capitalize>{item}</Capitalize>
           </Item>
         );
       })}
-      <Divider />
     </Wrapper>
   );
 }
