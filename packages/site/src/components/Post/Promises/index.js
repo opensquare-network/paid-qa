@@ -34,6 +34,7 @@ const SupportButton = styled(Button)`
   line-height: 32px;
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     width: 100%;
+    box-sizing: border-box;
   }
 `;
 
