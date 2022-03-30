@@ -26,6 +26,7 @@ export default function TopicsList() {
   const filterStatus = useSelector(filterStatusSelector);
 
   useEffect(() => {
+    dispatch(setTopics(null));
     serverApi
       .fetch("/topics", {
         status: filterStatus || "all",
