@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 
 import Input from "@osn/common-ui/lib/styled/Input";
@@ -19,6 +19,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import MobileVisible from "./MobileVisible";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -47,6 +48,11 @@ const ContentWrapper = styled.div`
   border: 1px solid #f0f3f8;
   box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.04),
     0px 0.751293px 3.88168px rgba(26, 33, 44, 0.03);
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    .mobile-invisible {
+      display: none;
+    }
+  }
 `;
 
 const ItemWrapper = styled.div`
@@ -78,6 +84,7 @@ export default function Explorer() {
   const dispatch = useDispatch();
   const filterStatus = useSelector(filterStatusSelector);
   const filterAsset = useSelector(filterAssetSelector);
+  const [collapsed, setCollapsed] = useState(true);
   const setAsset = (asset) => {
     dispatch(setFilterAsset(asset));
   };
@@ -100,22 +107,40 @@ export default function Explorer() {
             <div>Search</div>
             <img src="/imgs/icons/search.svg" alt="" />
           </div>
-          <Input placeholder="Search topic..." onChange={(e) => debouncedSetTitle(e.target.value)}/>
+          <Input
+            placeholder="Search topic..."
+            onChange={(e) => debouncedSetTitle(e.target.value)}
+          />
         </ItemWrapper>
-        <ItemWrapper>
+        <ItemWrapper className={collapsed && "mobile-invisible"}>
           <div>
             <div>Status</div>
             <img src="/imgs/icons/sort-by.svg" alt="" />
           </div>
           <TopicStatusSelect status={filterStatus} setStatus={setStatus} />
         </ItemWrapper>
-        <ItemWrapper>
+        <ItemWrapper className={collapsed && "mobile-invisible"}>
           <div>
             <div>Rewards</div>
             <img src="/imgs/icons/treasury.svg" alt="" />
           </div>
           <AssetSelector asset={filterAsset} setAsset={setAsset} />
         </ItemWrapper>
+        <MobileVisible
+          className={!collapsed && "mobile-invisible"}
+          style={{ flexBasis: "100%" }}
+        >
+          <ItemWrapper
+            onClick={() => {
+              setCollapsed(false);
+            }}
+          >
+            <div>
+              <div>Filter</div>
+              <img src="/imgs/icons/filter.svg" alt="" />
+            </div>
+          </ItemWrapper>
+        </MobileVisible>
       </ContentWrapper>
     </Wrapper>
   );
