@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useCallback } from "react";
+import debounce from "lodash.debounce";
 
 import Input from "@osn/common-ui/lib/styled/Input";
 import TopicStatusSelect from "./TopicStatusSelect";
@@ -9,6 +11,7 @@ import {
   filterStatusSelector,
   setFilterAsset,
   setFilterStatus,
+  setFilterTitle,
 } from "store/reducers/topicSlice";
 
 const Wrapper = styled.div`
@@ -82,6 +85,10 @@ export default function Explorer() {
   const setStatus = (status) => {
     dispatch(setFilterStatus(status));
   };
+  const debouncedSetTitle = useCallback(
+    debounce((text) => dispatch(setFilterTitle(text)), 500),
+    [dispatch]
+  );
 
   return (
     <Wrapper>
@@ -94,7 +101,7 @@ export default function Explorer() {
             <div>Search</div>
             <img src="/imgs/icons/search.svg" alt="" />
           </div>
-          <Input placeholder="Search topic..." />
+          <Input placeholder="Search topic..." onChange={(e) => debouncedSetTitle(e.target.value)}/>
         </ItemWrapper>
         <ItemWrapper>
           <div>

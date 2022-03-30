@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const BigNumber = require("bignumber.js");
 const { Topic, Reward, Appendant } = require("../models");
 const { PostStatus, RewardCurrencyType } = require("../utils/constants");
 const {
@@ -16,6 +15,7 @@ const { HttpError } = require("../utils/exc");
 const { ipfsAdd, cidOf } = require("./ipfs.service");
 const { validateTokenAmount } = require("./common");
 const { toPublicKey } = require("../utils/address");
+const { escapeRegex } = require("../utils/regex");
 
 async function createTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content, language } = data;
@@ -137,7 +137,7 @@ async function getTopic(cid) {
   return topic;
 }
 
-async function getTopics(symbol, status, page, pageSize) {
+async function getTopics(symbol, status, title, page, pageSize) {
   const q = {};
   if (status && status !== "all") {
     q.status = status;
@@ -145,6 +145,10 @@ async function getTopics(symbol, status, page, pageSize) {
     q.status = {
       $in: [PostStatus.Published, PostStatus.Active, PostStatus.Resolved],
     };
+  }
+
+  if (title && title !== "") {
+    q.title = new RegExp(escapeRegex(title), "i");
   }
 
   if (symbol && symbol !== "all") {

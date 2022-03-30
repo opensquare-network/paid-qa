@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   filterAssetSelector,
   filterStatusSelector,
+  filterTitleSelector,
   setTopics,
   topicsSelector,
 } from "../store/reducers/topicSlice";
@@ -24,12 +25,14 @@ export default function TopicsList() {
   const topics = useSelector(topicsSelector);
   const filterAsset = useSelector(filterAssetSelector);
   const filterStatus = useSelector(filterStatusSelector);
+  const filterTitle = useSelector(filterTitleSelector);
 
   useEffect(() => {
     serverApi
       .fetch("/topics", {
         status: filterStatus || "all",
         symbol: filterAsset?.symbol || "all",
+        title: filterTitle || "",
         page,
       })
       .then(({ result, error }) => {
@@ -43,7 +46,7 @@ export default function TopicsList() {
           );
         }
       });
-  }, [dispatch, filterStatus, filterAsset, page]);
+  }, [dispatch, filterStatus, filterAsset, filterTitle, page]);
 
   return (
     <Wrapper>
