@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 const AssetWrapper = styled.div`
   display: flex;
   align-items: center;
+
   > :first-child {
     margin-right: 8px;
   }
@@ -20,6 +21,11 @@ const IconsMap = {
   karura: "karura.svg",
   rmrk: "rmrk.svg",
   polarisdao: "polarisdao.png",
+  polkadot: "polkadot.svg",
+  kusama: "kusama.svg",
+  khala: "khala.svg",
+  bifrost: "bifrost.svg",
+  kintsugi: "kintsugi.svg",
 };
 
 function getAssetIcon(assetKey) {
@@ -71,32 +77,34 @@ const Assets = [
     name: "PolarisDAO",
     symbol: "ARIS",
   },
-  {
-    id: "karura",
-    name: "Karura",
-    symbol: "KAR",
-  },
-  {
-    id: "khala",
-    name: "Khala",
-    symbol: "PHA",
-  },
-  {
-    id: "bifrost",
-    name: "Bifrost",
-    symbol: "BNC",
-  },
-  {
-    id: "kintsugi",
-    name: "Kintsugi",
-    symbol: "KINT",
-  },
-  {
+  // {
+  //   id: "karura",
+  //   name: "Karura",
+  //   symbol: "KAR",
+  // },
+  // {
+  //   id: "khala",
+  //   name: "Khala",
+  //   symbol: "PHA",
+  // },
+  // {
+  //   id: "bifrost",
+  //   name: "Bifrost",
+  //   symbol: "BNC",
+  // },
+  // {
+  //   id: "kintsugi",
+  //   name: "Kintsugi",
+  //   symbol: "KINT",
+  // },
+];
+if (process.env.NEXT_PUBLIC_SHOW_WESTEND === "TRUE") {
+  Assets.push({
     id: "westend",
     name: "Westend",
     symbol: "WND",
-  },
-];
+  });
+}
 
 export default function AssetSelector({ asset, setAsset }) {
   const index = Assets.findIndex((item) => item.id === asset?.id);
