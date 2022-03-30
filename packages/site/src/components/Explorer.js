@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useCallback } from "react";
+import { useMemo } from "react";
 import debounce from "lodash.debounce";
 
 import Input from "@osn/common-ui/lib/styled/Input";
@@ -84,8 +84,8 @@ export default function Explorer() {
   const setStatus = (status) => {
     dispatch(setFilterStatus(status));
   };
-  const debouncedSetTitle = useCallback(
-    debounce((text) => dispatch(setFilterTitle(text)), 500),
+  const debouncedSetTitle = useMemo(
+    () => debounce((text) => dispatch(setFilterTitle(text)), 500),
     [dispatch]
   );
 
