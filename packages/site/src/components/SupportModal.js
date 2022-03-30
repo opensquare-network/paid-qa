@@ -6,13 +6,7 @@ import BigNumber from "bignumber.js";
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
 import styled from "styled-components";
-import {
-  p_14_normal,
-  p_16_semibold,
-  p_20_semibold,
-} from "../styles/textStyles";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
-import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import Toggle from "@osn/common-ui/lib/Toggle";
 import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
@@ -32,6 +26,12 @@ import { fetchTopic } from "store/reducers/topicSlice";
 import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
+import {
+  p_14_medium,
+  p_14_normal,
+  p_16_semibold,
+  p_20_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
 
 const { InteractionEncoder } = encoder;
 const { SupportInteraction } = interactions;

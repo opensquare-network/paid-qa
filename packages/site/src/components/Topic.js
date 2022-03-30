@@ -9,6 +9,12 @@ import Time from "@osn/common-ui/lib/Time";
 import NetworkUser from "./User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 import { MOBILE_SIZE } from "../utils/constants";
+import {
+  p_14_normal,
+  p_16_semibold,
+  p_20_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Wrapper = styled.div`
   padding: 24px;
@@ -24,24 +30,18 @@ const Wrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const ReplyWrapper = styled.div`
+const ReplyWrapper = styled(FlexCenter)`
   width: 80px;
   height: 80px;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   border: 1px solid #f0f3f8;
   margin-right: 24px;
   flex: 0 0 auto;
   > :first-child {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 32px;
+    ${p_20_semibold};
   }
   > :nth-child(2) {
-    font-size: 14px;
-    line-height: 24px;
+    ${p_14_normal};
     color: #506176;
   }
 `;
@@ -56,9 +56,7 @@ const DetailWrapper = styled.div`
 `;
 
 const Title = styled(Link)`
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  ${p_16_semibold};
   cursor: pointer;
 `;
 

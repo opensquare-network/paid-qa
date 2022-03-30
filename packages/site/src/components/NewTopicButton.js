@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { p_16_normal } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   display: flex;
-  font-size: 16px;
-  line-height: 24px;
+  ${p_16_normal};
   color: #04d2c5;
   cursor: pointer;
 

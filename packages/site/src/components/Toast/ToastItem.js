@@ -6,6 +6,10 @@ import { removeToast, ToastTypes } from "store/reducers/toastSlice";
 import { ReactComponent as Close } from "./icons/close.svg";
 import { ReactComponent as Sticky } from "./icons/sticky.svg";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import {
+  p_14_normal,
+  p_16_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -37,15 +41,12 @@ const LeftWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  ${p_16_semibold};
   margin-bottom: 4px;
 `;
 
 const Content = styled.div`
-  font-size: 14px;
-  line-height: 24px;
+  ${p_14_normal};
   color: #506176;
   word-wrap: break-word;
   word-break: break-all;

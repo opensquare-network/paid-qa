@@ -4,15 +4,25 @@ import { accountSelector } from "../store/reducers/accountSlice";
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
 import styled from "styled-components";
-import { p_16_semibold, p_20_semibold } from "../styles/textStyles";
+import {
+  p_14_normal,
+  p_16_semibold,
+  p_20_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
 import { useApi } from "utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
-import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
+import {
+  addToast,
+  newToastId,
+  ToastTypes,
+  updateToast,
+} from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
 import PromiseItem, { useFulfillment } from "./Post/Promises/Item";
 import { fetchTopic } from "store/reducers/topicSlice";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
 const { InteractionEncoder } = encoder;
 const { ResolveInteraction } = interactions;
@@ -55,17 +65,11 @@ const StyledTitle = styled.header`
 `;
 
 const Info = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
+  ${p_14_normal};
   color: #506176;
 `;
 
-const ItemTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const ItemTitle = styled(FlexBetween)`
   margin: 8px 0px;
 `;
 

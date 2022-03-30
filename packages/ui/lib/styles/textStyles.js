@@ -108,6 +108,13 @@ export const p_12_semibold = css`
   line-height: 18px;
 `;
 
+export const p_12_medium = css`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+`;
+
 export const p_12_normal = css`
   font-style: normal;
   font-weight: normal;

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,9 +16,7 @@ const Item = styled.div`
   > :first-child {
     display: flex;
     align-items: center;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    ${p_16_semibold};
 
     > :not(:first-child) {
       margin-left: 4px;

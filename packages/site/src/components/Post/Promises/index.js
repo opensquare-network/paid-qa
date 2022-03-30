@@ -13,13 +13,12 @@ import { isSamePublicKey } from "@osn/common-ui/lib/utils/address";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 import Button from "@osn/common-ui/lib/styled/Button";
+import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 
 const Title = styled.div`
   padding-bottom: 16px;
   border-bottom: solid 1px #f0f3f8;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  ${p_16_semibold};
 `;
 
 const ContentWrapper = styled.div`

@@ -1,13 +1,13 @@
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import styled from "styled-components";
-import { p_12_normal, p_16_semibold } from "../styles/textStyles";
+import {
+  p_12_normal,
+  p_16_semibold,
+  p_18_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
 
-const AppWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
+const AppWrapper = styled(Flex)`
+  ${p_18_semibold};
   height: 40px;
   cursor: pointer;
   .color {
