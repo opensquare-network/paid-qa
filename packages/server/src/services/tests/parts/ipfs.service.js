@@ -3,7 +3,7 @@ const { cidOf } = require("../../ipfs.service");
 jest.setTimeout(10 * 1000);
 
 module.exports = () => {
-  test("cidOf", async () => {
+  test("cidOf topic", async () => {
     const cid = await cidOf({
       title: "This is the title",
       content: "This is the content",
@@ -15,7 +15,7 @@ module.exports = () => {
     );
   });
 
-  test("cidOf", async () => {
+  test("cidOf appendant", async () => {
     const cid = await cidOf({
       topic: "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku",
       content: "This is the appendant content",
@@ -26,7 +26,7 @@ module.exports = () => {
     );
   });
 
-  test("cidOf", async () => {
+  test("cidOf answer", async () => {
     const cid = await cidOf({
       answer: {
         topic: "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku",

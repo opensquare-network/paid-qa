@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 
 import Input from "@osn/common-ui/lib/styled/Input";
