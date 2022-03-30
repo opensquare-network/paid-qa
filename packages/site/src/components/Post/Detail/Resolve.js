@@ -4,20 +4,15 @@ import styled from "styled-components";
 import ResolveModal from "../../ResolveModal";
 import { accountSelector } from "store/reducers/accountSlice";
 import { calcSponserRewards } from "utils/rewards";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Wrapper = styled.div``;
 
-const ResolveButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const ResolveButton = styled(FlexCenter)`
   padding: 12px 24px;
-
   height: 48px;
-
   border: 1px solid #b7c0cc;
   box-sizing: border-box;
-
   cursor: pointer;
 `;
 
@@ -35,8 +30,7 @@ export default function Resolve({ topic }) {
 
   const myResolve = topic?.resolves?.find(
     (resolve) =>
-      resolve.sponsor === account.address &&
-      resolve.network === account.network
+      resolve.sponsor === account.address && resolve.network === account.network
   );
 
   if (myResolve) {

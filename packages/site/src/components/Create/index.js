@@ -28,6 +28,7 @@ import { useApi } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 
 const { InteractionEncoder } = encoder;
 const { NewInteraction } = interactions;
@@ -104,10 +105,7 @@ const Header = styled.span`
 `;
 
 const Title = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  ${p_16_semibold};
   color: #1e2134;
 `;
 

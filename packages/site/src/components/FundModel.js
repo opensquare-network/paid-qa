@@ -6,9 +6,12 @@ import BigNumber from "bignumber.js";
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
 import styled from "styled-components";
-import { p_16_semibold, p_20_semibold } from "../styles/textStyles";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
-import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import {
+  p_14_medium,
+  p_16_semibold,
+  p_20_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
 import Toggle from "@osn/common-ui/lib/Toggle";
 import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
@@ -33,6 +36,8 @@ import {
   topicSelector,
 } from "store/reducers/topicSlice";
 import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import Flex from "@osn/common-ui/lib/styled/Flex";
 
 const { InteractionEncoder } = encoder;
 const { FundInteraction } = interactions;
@@ -81,13 +86,9 @@ const ActionBar = styled.div`
   margin-top: 28px;
 `;
 
-const ChainWrapper = styled.div`
-  display: flex;
-  align-items: center;
+const ChainWrapper = styled(Flex)`
   padding: 12px 16px;
-
   height: 48px;
-
   background: #fbfcfe;
   border: 1px solid #e2e8f0;
   box-sizing: border-box;
@@ -97,29 +98,20 @@ const ChainWrapper = styled.div`
   }
 `;
 
-const ManualSwitch = styled.div`
+const ManualSwitch = styled(Flex)`
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 8px;
 `;
 
-const ItemTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const ItemTitle = styled(FlexBetween)`
   margin-top: 8px;
 `;
 
-const BalanceInfo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const BalanceInfo = styled(FlexBetween)`
   margin-top: 8px;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
+  ${p_14_medium};
   line-height: 25px;
 
   > :first-child {

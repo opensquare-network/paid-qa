@@ -4,6 +4,7 @@ import copy from "copy-to-clipboard";
 import Tooltip from "@osn/common-ui/lib/Tooltip";
 import { ReactComponent as TwitterIcon } from "./icons/twitter.svg";
 import { ReactComponent as CopyIcon } from "./icons/copy.svg";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,10 +13,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ShareButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const ShareButton = styled(FlexCenter)`
   width: 32px;
   height: 32px;
   border-radius: 50%;

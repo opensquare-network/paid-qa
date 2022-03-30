@@ -9,6 +9,10 @@ import serverApi from "services/serverApi";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { useDispatch } from "react-redux";
 import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import {
+  p_14_normal,
+  p_16_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -48,13 +52,10 @@ const AboutWrapper = styled.div`
     > :nth-child(2) {
       margin-left: 8px;
       > :first-child {
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
+        ${p_16_semibold};
       }
       > :nth-child(2) {
-        font-size: 14px;
-        line-height: 24px;
+        ${p_14_normal};
         color: #506176;
         margin-top: 1px;
       }

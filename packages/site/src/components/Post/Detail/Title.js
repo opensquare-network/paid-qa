@@ -8,12 +8,11 @@ import NetworkUser from "../../User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 import { useSelector } from "react-redux";
 import { answersSelector } from "../../../store/reducers/answerSlice";
+import { p_18_semibold } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   > :first-child {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 24px;
+    ${p_18_semibold};
   }
   > :nth-child(2) {
     margin-top: 16px;

@@ -14,6 +14,7 @@ import { EmptyList } from "utils/constants";
 import Time from "@osn/common-ui/lib/Time";
 import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
 import { Link } from "react-router-dom";
+import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -22,8 +23,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledDividerWrapper = styled(DividerWrapper)`
-  font-size: 14px;
-  line-height: 24px;
+  ${p_14_normal};
   color: #506176;
   > :nth-child(2) {
     font-weight: 500;

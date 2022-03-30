@@ -7,6 +7,7 @@ import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import NetworkUser from "./NetworkUser";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
 const Wrapper = styled.div`
   position: relative;
@@ -27,10 +28,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const AccountWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const AccountWrapper = styled(FlexBetween)`
   ${p_14_medium};
 
   div {
@@ -110,8 +108,7 @@ const MenuItem = styled.div`
   margin-bottom: 8px;
   cursor: pointer;
   font-family: Inter, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+  ${p_14_medium};
 `;
 
 const MenuDivider = styled.div`
@@ -120,10 +117,7 @@ const MenuDivider = styled.div`
   margin: 12px 0;
 `;
 
-const LogoutWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const LogoutWrapper = styled(FlexBetween)`
   color: #506176;
 
   :hover {

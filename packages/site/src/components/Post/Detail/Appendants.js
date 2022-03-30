@@ -9,7 +9,12 @@ import Time from "@osn/common-ui/lib/Time";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { useApi } from "utils/hooks";
-import { addToast, newToastId, ToastTypes, updateToast } from "store/reducers/toastSlice";
+import {
+  addToast,
+  newToastId,
+  ToastTypes,
+  updateToast,
+} from "store/reducers/toastSlice";
 import { cidOf } from "services/ipfs";
 import { accountSelector } from "store/reducers/accountSlice";
 import { fetchTopic } from "store/reducers/topicSlice";
@@ -17,15 +22,19 @@ import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import {
+  p_14_normal,
+  p_16_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
+import Flex from "@osn/common-ui/lib/styled/Flex";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const { InteractionEncoder } = encoder;
 const { AppendInteraction } = interactions;
 
 const Wrapper = styled.div`
   > :first-child {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    ${p_16_semibold};
   }
   > :not(:first-child) {
     margin-top: 16px;
@@ -40,15 +49,13 @@ const ItemWrapper = styled.div`
   }
   > :nth-child(2) {
     margin-top: 4px;
-    font-size: 14px;
-    line-height: 24px;
+    ${p_14_normal};
     color: #506176;
   }
 `;
 
 const StyledDividerWrapper = styled(DividerWrapper)`
-  font-size: 14px;
-  line-height: 24px;
+  ${p_14_normal};
   > :first-child {
     font-weight: 500;
   }
@@ -59,11 +66,8 @@ const StyledDividerWrapper = styled(DividerWrapper)`
 
 const Title = styled(FlexBetween)``;
 
-const AddButton = styled.div`
+const AddButton = styled(FlexCenter)`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const EditorWrapper = styled.div``;

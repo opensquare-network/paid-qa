@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { calcRewards } from "utils/rewards";
+import { p_12_medium } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,11 +11,10 @@ const Wrapper = styled.div`
 
 const Item = styled.div`
   padding: 2px 12px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
+  ${p_12_medium};
   color: #ffffff;
   background: ${(p) => p.color ?? "#E2E8F0"};
+  background-color: red !important;
   text-transform: capitalize;
 `;
 
@@ -54,11 +54,12 @@ export default function TagList({ topic }) {
 
   return (
     <Wrapper>
-      { // Show resolved tag only when the topic is resolved
+      {
+        // Show resolved tag only when the topic is resolved
         topic.status === "resolved" ? (
           <Item color={getStatusColor(topic.status)}>{topic.status}</Item>
         ) : (
-          Object.keys(tokenValues).map(symbol => (
+          Object.keys(tokenValues).map((symbol) => (
             <Item key={symbol} color={getSymbolColor(symbol)}>
               {`${tokenValues[symbol]} ${symbol}`}
             </Item>

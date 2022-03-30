@@ -4,21 +4,20 @@ import FundButton from "../../FundButton";
 import FundModel from "../../FundModel";
 import Funders from "../../Funders";
 import { ReactComponent as ReplyIcon } from "imgs/icons/reply.svg";
-import { encodeNetworkAddress, isSamePublicKey } from "@osn/common-ui/lib/utils/address";
+import {
+  encodeNetworkAddress,
+  isSamePublicKey,
+} from "@osn/common-ui/lib/utils/address";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
+import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 8px;
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 const ReplyButton = styled.div`
@@ -36,8 +35,7 @@ const ReplyButton = styled.div`
 `;
 
 const Reply = styled.div`
-  font-size: 14px;
-  line-height: 24px;
+  ${p_14_normal};
   margin-left: 8px;
 `;
 
@@ -61,7 +59,7 @@ export default function ActionBar({
 
   return (
     <Wrapper>
-      <Buttons>
+      <FlexBetween>
         <Flex>
           <ReplyButton onClick={onReplyClick}>
             <ReplyIcon />
@@ -77,7 +75,7 @@ export default function ActionBar({
             disabled={!account || isOwner}
           />
         </Flex>
-      </Buttons>
+      </FlexBetween>
       {expand && <Funders funds={funds} />}
       <FundModel
         ipfsCid={answerCid}
