@@ -13,7 +13,10 @@ const LoaderWrapper = styled.div`
 
 const MyLoader = (props) => {
   const windowSize = useWindowSize();
-  const loaderWidth = windowSize.width > 1144 ? 1080 : windowSize.width - 64;
+  const padding = windowSize.width > 900 ? 64 : 32;
+  const loaderWidth =
+    windowSize.width > 1144 ? 1080 : windowSize.width - padding;
+
   if (isNaN(loaderWidth)) {
     return null;
   }
@@ -27,9 +30,23 @@ const MyLoader = (props) => {
       foregroundColor="#EFF3F9"
       {...props}
     >
-      <rect x="24" y="28" rx="3" ry="3" width="1032" height="16" />
+      <rect
+        x="24"
+        y="28"
+        rx="3"
+        ry="3"
+        width={loaderWidth - padding * 1.5}
+        height="16"
+      />
       <rect x="24" y="52" rx="3" ry="3" width="178" height="16" />
-      <rect x="24" y="88" rx="3" ry="3" width="1032" height="1" />
+      <rect
+        x="24"
+        y="88"
+        rx="3"
+        ry="3"
+        width={loaderWidth - padding * 1.5}
+        height="1"
+      />
       <circle cx="36" cy="118" r="12" />
       <rect x="56" y="109" rx="3" ry="3" width="128" height="16" />
     </ContentLoader>
