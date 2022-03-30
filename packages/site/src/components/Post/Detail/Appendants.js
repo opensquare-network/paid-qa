@@ -26,7 +26,6 @@ import {
   p_14_normal,
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import Flex from "@osn/common-ui/lib/styled/Flex";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const { InteractionEncoder } = encoder;
