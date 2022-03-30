@@ -28,7 +28,6 @@ import {
 } from "@osn/common-ui/lib/utils/address";
 import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
 import uniqWith from "lodash.uniqwith";
-import Flex from "@osn/common-ui/lib/styled/Flex";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
