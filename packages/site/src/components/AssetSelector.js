@@ -77,26 +77,6 @@ const Assets = [
     name: "PolarisDAO",
     symbol: "ARIS",
   },
-  // {
-  //   id: "karura",
-  //   name: "Karura",
-  //   symbol: "KAR",
-  // },
-  // {
-  //   id: "khala",
-  //   name: "Khala",
-  //   symbol: "PHA",
-  // },
-  // {
-  //   id: "bifrost",
-  //   name: "Bifrost",
-  //   symbol: "BNC",
-  // },
-  // {
-  //   id: "kintsugi",
-  //   name: "Kintsugi",
-  //   symbol: "KINT",
-  // },
 ];
 if (process.env.NEXT_PUBLIC_SHOW_WESTEND === "TRUE") {
   Assets.push({
