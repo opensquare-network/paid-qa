@@ -14,7 +14,6 @@ const Item = styled.div`
   ${p_12_medium};
   color: #ffffff;
   background: ${(p) => p.color ?? "#E2E8F0"};
-  background-color: red !important;
   text-transform: capitalize;
 `;
 
