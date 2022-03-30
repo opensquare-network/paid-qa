@@ -4,9 +4,9 @@ const { HttpError } = require("../../utils/exc");
 
 async function getTopics(ctx) {
   const { page, pageSize } = extractPage(ctx);
-  const { symbol, status } = ctx.request.query;
+  const { symbol, status, title } = ctx.request.query;
 
-  ctx.body = await topicService.getTopics(symbol, status, page, pageSize);
+  ctx.body = await topicService.getTopics(symbol, status, title, page, pageSize);
 }
 
 async function getTopic(ctx) {
