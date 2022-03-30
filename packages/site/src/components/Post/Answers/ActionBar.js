@@ -14,6 +14,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import More from "../../Icon/More";
+import ReportModal from "../../ReportModal";
 
 const Wrapper = styled.div`
   position: relative;
@@ -80,6 +81,7 @@ export default function ActionBar({
 }) {
   const [expand, setExpand] = useState(false);
   const [showFund, setShowFund] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const [showMoreActions, setShowMoreActions] = useState(false);
   const account = useSelector(accountSelector);
   const isOwner = account && isSamePublicKey(account.address, answerOwner);
@@ -113,7 +115,12 @@ export default function ActionBar({
         <More className="more" onClick={toggleShowMoreActions} />
         {showMoreActions && (
           <MoreActions>
-            <MoreActionItem>
+            <MoreActionItem
+              onClick={() => {
+                setShowMoreActions(false);
+                setShowReport(true);
+              }}
+            >
               <span>Report</span>
               <img src="/imgs/icons/exclamation.svg" alt="" />
             </MoreActionItem>
@@ -127,6 +134,7 @@ export default function ActionBar({
         open={showFund}
         setOpen={setShowFund}
       />
+      <ReportModal open={showReport} setOpen={setShowReport} />
     </Wrapper>
   );
 }
