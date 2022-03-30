@@ -13,21 +13,31 @@ import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import More from "../../Icon/More";
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-top: 8px;
+
+  svg.more {
+    cursor: pointer;
+
+    &:hover * {
+      fill: #506176;
+    }
+  }
 `;
 
-const ReplyButton = styled.div`
+const ReplyButton = styled(Flex)`
   cursor: pointer;
-  display: flex;
-  align-items: center;
   margin-right: 20px;
   color: #a1a8b3;
+
   :hover {
     color: #506176;
+
     > svg path {
       fill: #506176;
     }
@@ -39,6 +49,28 @@ const Reply = styled.div`
   margin-left: 8px;
 `;
 
+const MoreActions = styled.div`
+  padding: 16px;
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  right: 0;
+  top: 26px;
+  background-color: white;
+  box-shadow: 0px 4px 31px rgba(26, 33, 44, 0.06),
+    0px 0.751293px 8px rgba(26, 33, 44, 0.04);
+`;
+
+const MoreActionItem = styled(FlexBetween)`
+  user-select: none;
+  width: 128px;
+  cursor: pointer;
+  color: #506176;
+  &:hover {
+    color: #1e2134;
+  }
+`;
+
 export default function ActionBar({
   answerCid,
   answerOwner,
@@ -48,8 +80,11 @@ export default function ActionBar({
 }) {
   const [expand, setExpand] = useState(false);
   const [showFund, setShowFund] = useState(false);
+  const [showMoreActions, setShowMoreActions] = useState(false);
   const account = useSelector(accountSelector);
   const isOwner = account && isSamePublicKey(account.address, answerOwner);
+
+  const toggleShowMoreActions = () => setShowMoreActions(!showMoreActions);
 
   const onReplyClick = useCallback(() => {
     const network = answerNetwork;
@@ -75,6 +110,15 @@ export default function ActionBar({
             disabled={!account || isOwner}
           />
         </Flex>
+        <More className="more" onClick={toggleShowMoreActions} />
+        {showMoreActions && (
+          <MoreActions>
+            <MoreActionItem>
+              <span>Report</span>
+              <img src="/imgs/icons/exclamation.svg" alt="" />
+            </MoreActionItem>
+          </MoreActions>
+        )}
       </FlexBetween>
       {expand && <Funders funds={funds} />}
       <FundModel
