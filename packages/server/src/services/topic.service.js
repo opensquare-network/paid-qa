@@ -112,16 +112,17 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
   });
 
   // Upload topic content to IPFS
-  ipfsAdd(data)
-    .then(async (added) => {
-      const pinnedCid = added?.cid?.toV1().toString();
-      if (pinnedCid !== cid) {
-        console.error("Pinned path does not match the topic content CID");
-        return;
-      }
-      await Topic.updateOne({ cid }, { pinned: true });
-    })
-    .catch(console.error);
+  try {
+    const added = await ipfsAdd(data);
+    const pinnedCid = added?.cid?.toV1().toString();
+    if (pinnedCid !== cid) {
+      console.error("Pinned path does not match the topic content CID");
+      return;
+    }
+    await Topic.updateOne({ cid }, { pinned: true });
+  } catch (err) {
+    console.error(err);
+  }
 
   return {
     cid,
@@ -313,16 +314,17 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   });
 
   // Upload topic content to IPFS
-  ipfsAdd(data)
-    .then(async (added) => {
-      const pinnedCid = added?.cid?.toV1().toString();
-      if (pinnedCid !== cid) {
-        console.error("Pinned path does not match the appendant content CID");
-        return;
-      }
-      await Appendant.updateOne({ cid }, { pinned: true });
-    })
-    .catch(console.error);
+  try {
+    const added = await ipfsAdd(data);
+    const pinnedCid = added?.cid?.toV1().toString();
+    if (pinnedCid !== cid) {
+      console.error("Pinned path does not match the appendant content CID");
+      return;
+    }
+    await Appendant.updateOne({ cid }, { pinned: true });
+  } catch (err) {
+    console.error(err);
+  }
 
   return {
     cid,
