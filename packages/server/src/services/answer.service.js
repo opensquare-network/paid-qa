@@ -34,6 +34,7 @@ async function postAnswer(data) {
     signer,
     signerPublicKey,
     signature,
+    data,
     pinned: false,
     status: PostStatus.Reserved,
   });

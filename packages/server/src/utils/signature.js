@@ -1,7 +1,4 @@
-const {
-  decodeAddress,
-  signatureVerify,
-} = require("@polkadot/util-crypto");
+const { decodeAddress, signatureVerify } = require("@polkadot/util-crypto");
 const { u8aToHex } = require("@polkadot/util");
 
 function isValidSignature(signedMessage, signature, address) {
