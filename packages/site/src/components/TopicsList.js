@@ -16,17 +16,20 @@ import {
 import serverApi from "../services/serverApi";
 import { addToast, ToastTypes } from "../store/reducers/toastSlice";
 import { EmptyList } from "../utils/constants";
+import { useSearchParams } from "react-router-dom";
 
 const Wrapper = styled.div``;
 
 export default function TopicsList() {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(searchParams.get("page") ?? 1);
   const topics = useSelector(topicsSelector);
   const filterAsset = useSelector(filterAssetSelector);
   const filterStatus = useSelector(filterStatusSelector);
   const filterTitle = useSelector(filterTitleSelector);
   useEffect(() => {
+    setSearchParams({ page });
     dispatch(setTopics({ items: null, total: topics.total }));
     serverApi
       .fetch("/topics", {
