@@ -23,13 +23,15 @@ const Wrapper = styled.div``;
 export default function TopicsList() {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [page, setPage] = useState(searchParams.get("page") ?? 1);
+  const page = searchParams.get("page") ?? 1;
+  const setPage = (page) => {
+    setSearchParams({ page });
+  };
   const topics = useSelector(topicsSelector);
   const filterAsset = useSelector(filterAssetSelector);
   const filterStatus = useSelector(filterStatusSelector);
   const filterTitle = useSelector(filterTitleSelector);
   useEffect(() => {
-    setSearchParams({ page });
     dispatch(setTopics({ items: null, total: topics.total }));
     serverApi
       .fetch("/topics", {

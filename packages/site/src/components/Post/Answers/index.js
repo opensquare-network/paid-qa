@@ -32,6 +32,7 @@ import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import { useSearchParams } from "react-router-dom";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -63,7 +64,11 @@ export default function Answers({ topicCid }) {
   const answers = useSelector(answersSelector);
 
   const account = useSelector(accountSelector);
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get("page") ?? 1;
+  const setPage = (page) => {
+    setSearchParams({ page });
+  };
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();
