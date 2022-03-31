@@ -20,7 +20,7 @@ import {
 import { NavLink } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
-import { MOBILE_SIZE } from "../utils/constants";
+import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 
 const Wrapper = styled.header`
   position: relative;

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
 import getApi from "ui/lib/services/chain/api";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
-import { clearUnread } from "../store/reducers/notificationSlice";
 import serverApi from "../services/serverApi";
 import { EmptyList, tabRouterMap } from "./constants";
 

@@ -8,7 +8,7 @@ import MobileVisible from "@osn/common-ui/lib/styled/MobileVisible";
 import Time from "@osn/common-ui/lib/Time";
 import NetworkUser from "./User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
-import { MOBILE_SIZE } from "../utils/constants";
+import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 import {
   p_14_normal,
   p_16_semibold,
