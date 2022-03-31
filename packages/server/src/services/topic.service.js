@@ -153,7 +153,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
   }
 
   if (symbol && symbol !== "all") {
-    const [{ items: topics, total: [{ count: total } = {}] = [] } = {}] =
+    const [{ items: topics, total: [{ count: total = 0 } = {}] = [] } = {}] =
       await Topic.aggregate([
         { $match: q },
         {
