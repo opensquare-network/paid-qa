@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MOBILE_SIZE } from "../utils/constants";
+import { MOBILE_SIZE } from "@paid-qa/site/src/utils/constants";
 
 const MobileInvisible = styled.div`
   display: flex;

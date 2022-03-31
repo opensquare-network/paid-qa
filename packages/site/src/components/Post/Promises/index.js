@@ -54,7 +54,7 @@ export default function Promises({ topicCid, rewards, resolves }) {
   const account = useSelector(accountSelector);
   const [openSupportModel, setOpenSupportModel] = useState(false);
   // At least one promise exists which is support by topic creator
-  const isLoading = !rewards || rewards.length === 0;
+  const isLoading = !(rewards?.length > 0);
 
   const myResolve = resolves?.find(
     (resolve) =>

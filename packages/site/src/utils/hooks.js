@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
 import getApi from "ui/lib/services/chain/api";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
+import { clearUnread } from "../store/reducers/notificationSlice";
+import serverApi from "../services/serverApi";
+import { EmptyList, tabRouterMap } from "./constants";
 
 export function useApi() {
   const account = useSelector(accountSelector);
@@ -26,4 +29,37 @@ export function useApi() {
   }, [account?.address, account?.network, nodeUrl]);
 
   return api;
+}
+
+export function useNotifications(page, account, tab, setPage) {
+  const pageSize = 10;
+  const [notifications, setNotifications] = useState(null);
+
+  useEffect(() => {
+    setNotifications(null);
+    setPage(1);
+  }, [tab]);
+
+  useEffect(() => {
+    console.log(111, account);
+    if (account?.network && account?.address) {
+      console.log(222);
+      serverApi
+        .fetch(
+          `/network/${account.network}/address/${
+            account.address
+          }/${tabRouterMap.get(tab)}`,
+          { page, pageSize }
+        )
+        .then(({ result }) => {
+          if (result) {
+            setNotifications(result);
+          } else {
+            setNotifications(EmptyList);
+          }
+        });
+    }
+  }, [account?.network, account?.address, page, tab]);
+  console.log(notifications);
+  return notifications;
 }

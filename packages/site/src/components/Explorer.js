@@ -19,7 +19,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import MobileVisible from "./MobileVisible";
+import MobileVisible from "@osn/common-ui/lib/styled/MobileVisible";
 
 const Wrapper = styled.div`
   > :not(:first-child) {

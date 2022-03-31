@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Notification from "./Notification";
+import NotificationBell from "./NotificationBell";
 import ConnectModal from "./ConnectModal";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { useRef, useState } from "react";
@@ -109,7 +109,7 @@ export default function Header() {
           {windowSize.width > MOBILE_SIZE ? (
             account ? (
               <>
-                <Notification />
+                <NotificationBell />
                 <ConnectedAccount
                   {...{ showMenu, setShowMenu, account }}
                   showNetwork

@@ -17,7 +17,7 @@ import {
 } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
-const Title = styled.div`
+const Title = styled(FlexBetween)`
   padding-bottom: 16px;
   border-bottom: solid 1px #f0f3f8;
   ${p_16_semibold};
@@ -56,8 +56,8 @@ export default function Funds({ topicCid }) {
 
   return (
     <Card>
-      <Title className="flex items-center justify-between">
-        <div>Funds</div>
+      <Title>
+        <span>Funds</span>
         <img src="/imgs/icons/treasury.svg" alt="" />
       </Title>
       <ContentWrapper>

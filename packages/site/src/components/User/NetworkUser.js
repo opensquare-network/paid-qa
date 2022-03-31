@@ -2,10 +2,9 @@ import styled from "styled-components";
 import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import IdentityOrAddr from "./IdentityOrAddr";
+import Flex from "@osn/common-ui/lib/styled/Flex";
 
-const Wrapper = styled.span`
-  display: flex;
-  align-items: center;
+const Wrapper = styled(Flex)`
   color: #2e343d;
 
   > :not(:first-child) {

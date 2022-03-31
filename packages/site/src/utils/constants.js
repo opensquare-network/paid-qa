@@ -185,3 +185,9 @@ export const EmptyList = {
   pageSize: 10,
   total: 0,
 };
+
+export const tabRouterMap = new Map([
+  ["notifications", "notifications"],
+  ["discussions", "notifications/discussion"],
+  ["rewards", "notifications/reward"],
+]);

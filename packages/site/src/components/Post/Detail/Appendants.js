@@ -27,6 +27,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
 
 const { InteractionEncoder } = encoder;
 const { AppendInteraction } = interactions;
@@ -209,15 +210,15 @@ export default function Appendants({
 
   return (
     <Wrapper>
-      <Title>
+      <FlexBetween>
         <DividerWrapper>
-          <div>Appendants</div>
+          <span>Appendants</span>
           <Count>{appendantsCount}</Count>
         </DividerWrapper>
         <AddButton onClick={() => setEditing(!editing)}>
           <AddIcon />
         </AddButton>
-      </Title>
+      </FlexBetween>
       {appendants?.map((item, index) => (
         <ItemWrapper key={index}>
           <div>
@@ -231,27 +232,25 @@ export default function Appendants({
               }
             />
           </div>
-          <div>{item.content}</div>
+          <MicromarkMd md={item.content} />
         </ItemWrapper>
       ))}
       {editing && (
-        <>
-          <EditorWrapper>
-            <RichEdit
-              content={content}
-              setContent={setContent}
-              onSubmit={onSubmit}
-              showButtons={true}
-              disabled={isDifferentNetwork}
-              submitting={loading}
-              errorMsg={
-                isOwner && isDifferentNetwork
-                  ? "Please switch to the same network as topic to post."
-                  : ""
-              }
-            />
-          </EditorWrapper>
-        </>
+        <EditorWrapper>
+          <RichEdit
+            content={content}
+            setContent={setContent}
+            onSubmit={onSubmit}
+            showButtons={true}
+            disabled={isDifferentNetwork}
+            submitting={loading}
+            errorMsg={
+              isOwner && isDifferentNetwork
+                ? "Please switch to the same network as topic to post."
+                : ""
+            }
+          />
+        </EditorWrapper>
       )}
     </Wrapper>
   );
