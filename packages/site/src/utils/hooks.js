@@ -41,9 +41,7 @@ export function useNotifications(page, account, tab, setPage) {
   }, [tab]);
 
   useEffect(() => {
-    console.log(111, account);
     if (account?.network && account?.address) {
-      console.log(222);
       serverApi
         .fetch(
           `/network/${account.network}/address/${
@@ -60,6 +58,5 @@ export function useNotifications(page, account, tab, setPage) {
         });
     }
   }, [account?.network, account?.address, page, tab]);
-  console.log(notifications);
   return notifications;
 }
