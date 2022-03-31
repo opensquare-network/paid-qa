@@ -153,81 +153,82 @@ async function getTopics(symbol, status, title, page, pageSize) {
   }
 
   if (symbol && symbol !== "all") {
-    const [topics] = await Topic.aggregate([
-      { $match: q },
-      {
-        $lookup: {
-          from: "rewards",
-          let: { topicCid: "$cid" },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $eq: ["$topicCid", "$$topicCid"],
+    const [{ items: topics, total: [{ count: total } = {}] = [] } = {}] =
+      await Topic.aggregate([
+        { $match: q },
+        {
+          $lookup: {
+            from: "rewards",
+            let: { topicCid: "$cid" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $eq: ["$topicCid", "$$topicCid"],
+                  },
                 },
               },
-            },
-            {
-              $addFields: {
-                value: { $toString: "$value" },
+              {
+                $addFields: {
+                  value: { $toString: "$value" },
+                },
               },
-            },
-          ],
-          as: "rewards",
+            ],
+            as: "rewards",
+          },
         },
-      },
-      {
-        $match: {
-          "rewards.symbol": symbol,
+        {
+          $match: {
+            "rewards.symbol": symbol,
+          },
         },
-      },
-      {
-        $facet: {
-          total: [
-            {
-              $count: "count",
-            },
-          ],
-          items: [
-            { $sort: { blockTime: -1 } },
-            { $skip: (page - 1) * pageSize },
-            { $limit: pageSize },
-            {
-              $lookup: {
-                from: "answers",
-                let: { topicCid: "$cid" },
-                pipeline: [
-                  {
-                    $match: {
-                      $expr: {
-                        $eq: ["$topicCid", "$$topicCid"],
+        {
+          $facet: {
+            total: [
+              {
+                $count: "count",
+              },
+            ],
+            items: [
+              { $sort: { blockTime: -1 } },
+              { $skip: (page - 1) * pageSize },
+              { $limit: pageSize },
+              {
+                $lookup: {
+                  from: "answers",
+                  let: { topicCid: "$cid" },
+                  pipeline: [
+                    {
+                      $match: {
+                        $expr: {
+                          $eq: ["$topicCid", "$$topicCid"],
+                        },
                       },
                     },
-                  },
-                  {
-                    $count: "count",
-                  },
-                ],
-                as: "answersCount",
-              },
-            },
-            {
-              $addFields: {
-                answersCount: {
-                  $arrayElemAt: ["$answersCount.count", 0],
+                    {
+                      $count: "count",
+                    },
+                  ],
+                  as: "answersCount",
                 },
               },
-            },
-          ],
+              {
+                $addFields: {
+                  answersCount: {
+                    $arrayElemAt: ["$answersCount.count", 0],
+                  },
+                },
+              },
+            ],
+          },
         },
-      },
-    ]);
+      ]);
 
     return {
-      items: topics.items,
+      items: topics,
       page,
       pageSize,
-      total: topics.total,
+      total,
     };
   } else {
     const total = await Topic.countDocuments(q);
