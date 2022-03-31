@@ -8,9 +8,9 @@ const topicSlice = createSlice({
     topics: { items: null, total: 0 },
     topic: null,
     fundSummary: null,
-    filterAsset: null,
-    filterStatus: null,
-    filterTitle: null,
+    filterAsset: "all",
+    filterStatus: "all",
+    filterTitle: "",
   },
   reducers: {
     setTopics(state, { payload }) {

@@ -26,14 +26,13 @@ export default function TopicsList() {
   const filterAsset = useSelector(filterAssetSelector);
   const filterStatus = useSelector(filterStatusSelector);
   const filterTitle = useSelector(filterTitleSelector);
-
   useEffect(() => {
     dispatch(setTopics({ items: null, total: topics.total }));
     serverApi
       .fetch("/topics", {
-        status: filterStatus || "all",
+        status: filterStatus,
         symbol: filterAsset?.symbol || "all",
-        title: filterTitle || "",
+        title: filterTitle,
         page,
       })
       .then(({ result, error }) => {
@@ -47,7 +46,14 @@ export default function TopicsList() {
           );
         }
       });
-  }, [dispatch, filterStatus, filterAsset, filterTitle, page, topics.total]);
+  }, [
+    dispatch,
+    filterAsset?.symbol,
+    filterStatus,
+    filterTitle,
+    page,
+    topics.total,
+  ]);
 
   return (
     <Wrapper>
