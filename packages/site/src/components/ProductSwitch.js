@@ -13,14 +13,14 @@ const AppWrapper = styled(Flex)`
   .color {
     display: none;
   }
-  ul {
+  div.products {
     display: none;
   }
   &:hover {
     .monochrome {
       display: none;
     }
-    ul,
+    div.products,
     .color {
       display: initial;
     }
@@ -32,8 +32,7 @@ const AppWrapper = styled(Flex)`
   }
 `;
 
-const Products = styled.ul`
-  all: unset;
+const Products = styled.div`
   position: absolute;
   top: 60px;
   z-index: 1;
@@ -44,8 +43,7 @@ const Products = styled.ul`
     0px 0.751293px 8px rgba(26, 33, 44, 0.04);
 `;
 
-const Product = styled.li`
-  all: unset;
+const Product = styled.a`
   margin-bottom: 16px;
   display: flex;
   align-items: start;
@@ -88,15 +86,15 @@ function ProductSwitch() {
       <img className="monochrome" src="/imgs/icons/apps.svg" alt="" />
       <img className="color" src="/imgs/icons/apps-color.svg" alt="" />
       Paid QA
-      <Products>
-        <Product>
+      <Products className="products">
+        <Product href="https://voting.opensquare.io/">
           <img src="/imgs/icons/voting.svg" width={24} alt="" />
           <Flex>
             <p>Off-chain Voting</p>
             <span>Multi-chain assets off-chain voting platform</span>
           </Flex>
         </Product>
-        <Product>
+        <Product href="/">
           <img src="/imgs/icons/qa.svg" width={24} alt="" />
           <Flex>
             <p>Paid QA</p>
