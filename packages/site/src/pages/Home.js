@@ -6,6 +6,7 @@ import NewTopicAnchor from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
 import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
 const Wrapper = styled.div`
   position: relative;
@@ -22,14 +23,13 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const PostListTitle = styled.h3`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 28px;
-  margin: 0;
+const PostListTitle = styled(FlexBetween)`
+  h3 {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    margin: 0;
+  }
 `;
 
 export default function Home() {
@@ -40,7 +40,7 @@ export default function Home() {
         <ContentWrapper>
           <Explorer />
           <PostListTitle>
-            Topics
+            <h3>Topics</h3>
             <NewTopicAnchor />
           </PostListTitle>
           <TopicsList />

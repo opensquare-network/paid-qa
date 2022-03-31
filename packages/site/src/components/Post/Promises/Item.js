@@ -26,19 +26,15 @@ const Label = styled.span`
 
 const ResolvedTag = styled(FlexCenter)`
   padding: 2px 8px;
-
   width: 61px;
   height: 18px;
-
   border: 1px solid #b7c0cc;
   box-sizing: border-box;
   border-radius: 9px;
-
   font-style: normal;
   font-weight: 600;
   font-size: 10px;
   line-height: 14px;
-
   text-align: center;
   color: #a1a8b3;
 `;
@@ -63,10 +59,10 @@ export default function Item({ reward, resolve }) {
   const sponsorAddress = encodeNetworkAddress(reward.sponsor, reward.network);
   return (
     <Wrapper>
-      <div className="flex items-center justify-between">
+      <FlexBetween>
         <NetworkUser address={sponsorAddress} network={reward.network} />
         {resolve && <ResolvedTag>Resolved</ResolvedTag>}
-      </div>
+      </FlexBetween>
       {!resolve && (
         <>
           <ProgressBar percent={percent} />

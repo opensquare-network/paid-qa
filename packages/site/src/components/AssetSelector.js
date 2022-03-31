@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import DropdownSelector from "@osn/common-ui/lib/DropdownSelector";
+import Flex from "@osn/common-ui/lib/styled/Flex";
 
 const Wrapper = styled.div`
   > div div {
@@ -8,10 +9,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const AssetWrapper = styled.div`
-  display: flex;
-  align-items: center;
-
+const AssetWrapper = styled(Flex)`
   > :first-child {
     margin-right: 8px;
   }

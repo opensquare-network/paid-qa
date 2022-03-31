@@ -68,7 +68,7 @@ function signAndSendTx(tx, account, callback = () => {}) {
           }
         }
       );
-      callback("Broadcast");
+      callback("Broadcasting");
     } catch (e) {
       reject(e);
     }

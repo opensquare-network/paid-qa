@@ -4,16 +4,14 @@ import styled from "styled-components";
 import ResolveModal from "../../ResolveModal";
 import { accountSelector } from "store/reducers/accountSlice";
 import { calcSponserRewards } from "utils/rewards";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import Button from "@osn/common-ui/lib/styled/Button";
 
 const Wrapper = styled.div``;
 
-const ResolveButton = styled(FlexCenter)`
-  padding: 12px 24px;
-  height: 48px;
-  border: 1px solid #b7c0cc;
+const ResolveButton = styled(Button)`
+  padding: 11px 24px;
+  width: 100%;
   box-sizing: border-box;
-  cursor: pointer;
 `;
 
 export default function Resolve({ topic }) {

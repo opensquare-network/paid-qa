@@ -18,7 +18,7 @@ const Wrapper = styled(FlexCenter)`
   cursor: pointer;
 `;
 
-export default function Notification() {
+export default function NotificationBell() {
   const dispatch = useDispatch();
   const unread = useSelector(unreadSelector);
   const account = useSelector(accountSelector);

@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 import TagList from "./TagList";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import MobileInvisible from "components/MobileInvisible";
-import MobileVisible from "components/MobileVisible";
+import MobileInvisible from "@osn/common-ui/lib/styled/MobileInvisible";
+import MobileVisible from "@osn/common-ui/lib/styled/MobileVisible";
 import Time from "@osn/common-ui/lib/Time";
 import NetworkUser from "./User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
-import { MOBILE_SIZE } from "../utils/constants";
+import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 import {
   p_14_normal,
   p_16_semibold,

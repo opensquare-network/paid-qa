@@ -28,7 +28,7 @@ export default function Description({ topic }) {
   return (
     <Wrapper>
       <div>
-        <div>Description</div>
+        <span>Description</span>
         <IpfsSquare
           href={
             topic.pinned ? `https://ipfs.infura.io/ipfs/${topic.cid}` : null

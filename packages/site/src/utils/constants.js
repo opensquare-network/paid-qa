@@ -177,11 +177,15 @@ export const DEFAULT_NODES = {
   westend: DEFAULT_WESTEND_NODE_URL,
 };
 
-export const MOBILE_SIZE = 900;
-
 export const EmptyList = {
   items: [],
   page: 1,
   pageSize: 10,
   total: 0,
 };
+
+export const tabRouterMap = new Map([
+  ["notifications", "notifications"],
+  ["discussions", "notifications/discussion"],
+  ["rewards", "notifications/reward"],
+]);
