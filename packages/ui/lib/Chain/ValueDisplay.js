@@ -16,7 +16,7 @@ import { ReactComponent as Loading } from "../imgs/icons/loading.svg";
  */
 
 export default function ValueDisplay({ value, chain, showAEM = false }) {
-  if (!value) {
+  if (isNaN(value)) {
     return <Loading />;
   }
   const lostPrecision =

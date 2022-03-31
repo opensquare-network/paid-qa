@@ -119,12 +119,13 @@ export default function Create() {
   const api = useApi();
   const navigate = useNavigate();
   const symbol = getSymbolByChain(account?.network);
-  const [balance, setBalance] = useState(0);
+  const [balance, setBalance] = useState();
   const [showPreview, setShowPreview] = useState(false);
   const isMounted = useIsMounted();
 
   useEffect(() => {
     (async () => {
+      setBalance(undefined);
       if (api) {
         const lastHdr = await api.rpc.chain.getHeader();
         const { data: balanceNow } = await api.query.system.account.at(
@@ -134,7 +135,7 @@ export default function Create() {
         setBalance(balanceNow?.toJSON()?.free);
       }
     })();
-  }, [account?.address, api]);
+  }, [account?.address, account?.network, api]);
 
   const showErrorToast = (message) => {
     dispatch(
