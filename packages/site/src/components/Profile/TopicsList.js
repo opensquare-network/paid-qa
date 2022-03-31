@@ -14,33 +14,41 @@ const Wrapper = styled.div``;
 
 export default function TopicsList({ network, address }) {
   const dispatch = useDispatch();
+  const pageSize = 10;
   const [page, setPage] = useState(1);
-  const [topics, setTopics] = useState(null);
+  const [topics, setTopics] = useState({ items: null, total: 0 });
 
   useEffect(() => {
-    serverApi.fetch(`/network/${network}/address/${address}/topics`, { page }).then(({ result, error }) => {
-      setTopics(result ?? EmptyList);
-      if (error) {
-        dispatch(
-          addToast({
-            type: ToastTypes.Error,
-            message: error?.message || "Failed to load topics",
-          })
-        );
-      }
-    });
-  }, [dispatch, network, address, page]);
+    setTopics({ items: null, total: topics.total });
+    serverApi
+      .fetch(`/network/${network}/address/${address}/topics`, { page })
+      .then(({ result, error }) => {
+        setTopics(result ?? EmptyList);
+        if (error) {
+          dispatch(
+            addToast({
+              type: ToastTypes.Error,
+              message: error?.message || "Failed to load topics",
+            })
+          );
+        }
+      });
+  }, [dispatch, network, address, page, topics.total]);
 
   return (
     <Wrapper>
-      {topics === null ? (
+      {topics.items === null ? (
         <ListLoader />
       ) : topics.items.length === 0 ? (
         <NoPost message={"No current topics"} />
       ) : (
         topics.items.map((topic, index) => <Topic key={index} topic={topic} />)
       )}
-      <Pagination className="pagination" {...{ ...topics, setPage }} large />
+      <Pagination
+        className="pagination"
+        {...{ ...topics, setPage, pageSize }}
+        large
+      />
     </Wrapper>
   );
 }

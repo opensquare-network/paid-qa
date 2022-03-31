@@ -5,7 +5,7 @@ import serverApi from "services/serverApi";
 const topicSlice = createSlice({
   name: "topic",
   initialState: {
-    topics: null,
+    topics: { items: null, total: 0 },
     topic: null,
     fundSummary: null,
     filterAsset: null,
@@ -30,7 +30,7 @@ const topicSlice = createSlice({
     },
     setFilterTitle(state, { payload }) {
       state.filterTitle = payload;
-    }
+    },
   },
 });
 

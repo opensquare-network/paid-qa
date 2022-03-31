@@ -32,15 +32,16 @@ export function useApi() {
 
 export function useNotifications(page, account, tab, setPage) {
   const pageSize = 10;
-  const [notifications, setNotifications] = useState(null);
+  const [notifications, setNotifications] = useState({ items: null, total: 0 });
 
   useEffect(() => {
     setNotifications(null);
     setPage(1);
-  }, [tab]);
+  }, [setPage, tab]);
 
   useEffect(() => {
     if (account?.network && account?.address) {
+      setNotifications({ items: null, total: notifications.total });
       serverApi
         .fetch(
           `/network/${account.network}/address/${
@@ -56,6 +57,6 @@ export function useNotifications(page, account, tab, setPage) {
           }
         });
     }
-  }, [account?.network, account?.address, page, tab]);
-  return notifications;
+  }, [account?.network, account?.address, page, tab, notifications.total]);
+  return { ...notifications };
 }

@@ -51,7 +51,9 @@ export default function Notifications() {
       <Container>
         <ContentWrapper>
           <Header tab={tab} setTab={setTab} />
-          {notifications === null && <ListLoader style={{ marginTop: 20 }} />}
+          {notifications?.items === null && (
+            <ListLoader style={{ marginTop: 20 }} />
+          )}
           {tab === "notifications" && (
             <NotificationList {...{ notifications }} />
           )}
@@ -63,12 +65,10 @@ export default function Notifications() {
         {notifications?.items?.length === 0 && (
           <NoPost message={"No current records"} />
         )}
-        {notifications && (
-          <Pagination
-            {...{ page, setPage, pageSize }}
-            total={notifications?.total}
-          />
-        )}
+        <Pagination
+          {...{ page, setPage, pageSize }}
+          total={notifications?.total}
+        />
       </Container>
     </Wrapper>
   );

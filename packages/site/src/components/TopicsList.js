@@ -28,7 +28,7 @@ export default function TopicsList() {
   const filterTitle = useSelector(filterTitleSelector);
 
   useEffect(() => {
-    dispatch(setTopics(null));
+    dispatch(setTopics({ items: null, total: topics.total }));
     serverApi
       .fetch("/topics", {
         status: filterStatus || "all",
@@ -47,16 +47,18 @@ export default function TopicsList() {
           );
         }
       });
-  }, [dispatch, filterStatus, filterAsset, filterTitle, page]);
+  }, [dispatch, filterStatus, filterAsset, filterTitle, page, topics.total]);
 
   return (
     <Wrapper>
-      {topics === null ? (
+      {topics?.items === null ? (
         <ListLoader />
-      ) : topics.items.length === 0 ? (
+      ) : topics?.items?.length === 0 ? (
         <NoPost message={"No current topics"} />
       ) : (
-        topics.items.map((topic, index) => <Topic key={index} topic={topic} />)
+        topics?.items?.map((topic, index) => (
+          <Topic key={index} topic={topic} />
+        ))
       )}
       <Pagination className="pagination" {...{ ...topics, setPage }} large />
     </Wrapper>
