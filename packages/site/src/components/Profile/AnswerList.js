@@ -68,7 +68,7 @@ export default function AnswerList({ network, address }) {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [dispatch, network, address, page, answers.total]);
+  }, [dispatch, network, address, page]);
 
   return (
     <Wrapper>

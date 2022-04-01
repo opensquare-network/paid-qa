@@ -13,6 +13,7 @@ import {
   p_14_normal,
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
+import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -28,13 +29,8 @@ const ContentWrapper = styled.div`
     margin-top: 32px;
   }
   > :nth-child(1) {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    @media screen and (max-width: ${MOBILE_SIZE}px) {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+    flex-wrap: wrap;
+    justify-content: center;
   }
   > :nth-child(2) {
     display: flex;
@@ -43,8 +39,8 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const AboutWrapper = styled.div`
-  display: flex;
+const AboutWrapper = styled(FlexCenter)`
+  margin-top: 16px;
   padding-bottom: 4px;
   > * {
     display: flex;

@@ -37,7 +37,7 @@ export default function TopicsList({ network, address }) {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [dispatch, network, address, page, topics.total]);
+  }, [dispatch, network, address, page]);
 
   return (
     <Wrapper>
