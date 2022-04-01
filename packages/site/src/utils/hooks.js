@@ -18,13 +18,23 @@ export function useApi() {
       return;
     }
 
-    (async () => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    (async (signal) => {
       await web3Enable("paidQA");
       const injector = await web3FromAddress(account.address);
       const api = await getApi(account.network, nodeUrl);
       api.setSigner(injector.signer);
+      if (signal.aborted) {
+        return;
+      }
       setApi(api);
-    })();
+    })(signal);
+    return () => {
+      abortController.abort();
+      setApi(null);
+    }; //clean up
   }, [account?.address, account?.network, nodeUrl]);
 
   return api;
