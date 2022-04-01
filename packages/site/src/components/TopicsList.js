@@ -28,11 +28,12 @@ export default function TopicsList() {
     setSearchParams({ page });
   };
   const topics = useSelector(topicsSelector);
+  const [isLoading, setIsLoading] = useState(true);
   const filterAsset = useSelector(filterAssetSelector);
   const filterStatus = useSelector(filterStatusSelector);
   const filterTitle = useSelector(filterTitleSelector);
   useEffect(() => {
-    dispatch(setTopics({ items: null, total: topics.total }));
+    setIsLoading(true);
     serverApi
       .fetch("/topics", {
         status: filterStatus,
@@ -50,6 +51,9 @@ export default function TopicsList() {
             })
           );
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [
     dispatch,
@@ -62,7 +66,7 @@ export default function TopicsList() {
 
   return (
     <Wrapper>
-      {topics?.items === null ? (
+      {isLoading ? (
         <ListLoader />
       ) : topics?.items?.length === 0 ? (
         <NoPost message={"No current topics"} />
