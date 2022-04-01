@@ -76,7 +76,7 @@ const Assets = [
     symbol: "ARIS",
   },
 ];
-if (process.env.REACT_APPSHOW_WESTEND === "TRUE") {
+if (process.env.REACT_APP_SHOW_WESTEND === "TRUE") {
   Assets.push({
     id: "westend",
     name: "Westend",

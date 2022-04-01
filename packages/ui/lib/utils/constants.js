@@ -79,12 +79,14 @@ export const ChainSS58Format = Object.freeze({
   [Chains.westend]: 2,
 });
 
-//todo: add more
 export const AVAILABLE_NETWORKS = [
   { network: Chains.polkadot },
   { network: Chains.kusama },
   { network: Chains.statemine },
-  { network: Chains.westend }, //todo: use a .env file to add test network
 ];
+
+if (process.env.REACT_APP_SHOW_WESTEND === "TRUE") {
+  AVAILABLE_NETWORKS.push({ network: Chains.westend });
+}
 
 export const MOBILE_SIZE = 900;

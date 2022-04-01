@@ -16,24 +16,29 @@ import {
 import serverApi from "../services/serverApi";
 import { addToast, ToastTypes } from "../store/reducers/toastSlice";
 import { EmptyList } from "../utils/constants";
+import { useSearchParams } from "react-router-dom";
 
 const Wrapper = styled.div``;
 
 export default function TopicsList() {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get("page") ?? 1;
+  const setPage = (page) => {
+    setSearchParams({ page });
+  };
   const topics = useSelector(topicsSelector);
+  const [isLoading, setIsLoading] = useState(true);
   const filterAsset = useSelector(filterAssetSelector);
   const filterStatus = useSelector(filterStatusSelector);
   const filterTitle = useSelector(filterTitleSelector);
-
   useEffect(() => {
-    dispatch(setTopics(null));
+    setIsLoading(true);
     serverApi
       .fetch("/topics", {
-        status: filterStatus || "all",
+        status: filterStatus,
         symbol: filterAsset?.symbol || "all",
-        title: filterTitle || "",
+        title: filterTitle,
         page,
       })
       .then(({ result, error }) => {
@@ -46,17 +51,29 @@ export default function TopicsList() {
             })
           );
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, [dispatch, filterStatus, filterAsset, filterTitle, page]);
+  }, [
+    dispatch,
+    filterAsset?.symbol,
+    filterStatus,
+    filterTitle,
+    page,
+    topics.total,
+  ]);
 
   return (
     <Wrapper>
-      {topics === null ? (
+      {isLoading ? (
         <ListLoader />
-      ) : topics.items.length === 0 ? (
+      ) : topics?.items?.length === 0 ? (
         <NoPost message={"No current topics"} />
       ) : (
-        topics.items.map((topic, index) => <Topic key={index} topic={topic} />)
+        topics?.items?.map((topic, index) => (
+          <Topic key={index} topic={topic} />
+        ))
       )}
       <Pagination className="pagination" {...{ ...topics, setPage }} large />
     </Wrapper>

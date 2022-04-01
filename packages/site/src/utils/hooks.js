@@ -32,15 +32,18 @@ export function useApi() {
 
 export function useNotifications(page, account, tab, setPage) {
   const pageSize = 10;
-  const [notifications, setNotifications] = useState(null);
+  const [notifications, setNotifications] = useState({ items: null, total: 0 });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setNotifications(null);
     setPage(1);
-  }, [tab]);
+  }, [setPage, tab]);
 
   useEffect(() => {
     if (account?.network && account?.address) {
+      setIsLoading(true);
+      setNotifications({ items: null, total: notifications.total });
       serverApi
         .fetch(
           `/network/${account.network}/address/${
@@ -54,8 +57,11 @@ export function useNotifications(page, account, tab, setPage) {
           } else {
             setNotifications(EmptyList);
           }
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
-  }, [account?.network, account?.address, page, tab]);
-  return notifications;
+  }, [account?.network, account?.address, page, tab, notifications.total]);
+  return [isLoading, notifications];
 }

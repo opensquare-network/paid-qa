@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 
 import Input from "@osn/common-ui/lib/styled/Input";
@@ -85,6 +85,16 @@ export default function Explorer() {
   const filterStatus = useSelector(filterStatusSelector);
   const filterAsset = useSelector(filterAssetSelector);
   const [collapsed, setCollapsed] = useState(true);
+
+  useEffect(() => {
+    return () => {
+      //reset filter when leave home page
+      dispatch(setFilterAsset("all"));
+      dispatch(setFilterStatus("all"));
+      dispatch(setFilterTitle(""));
+    };
+  }, [dispatch]);
+
   const setAsset = (asset) => {
     dispatch(setFilterAsset(asset));
   };

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { p_16_normal } from "@osn/common-ui/lib/styles/textStyles";
+import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   display: flex;
-  ${p_16_normal};
+  gap: 8px;
+  ${p_16_semibold};
   color: #04d2c5;
   cursor: pointer;
 

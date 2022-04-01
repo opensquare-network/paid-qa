@@ -48,8 +48,10 @@ export default function AnswerList({ network, address }) {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [answers, setAnswers] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     serverApi
       .fetch(`/network/${network}/address/${address}/answers`, { page })
       .then(({ result, error }) => {
@@ -62,17 +64,20 @@ export default function AnswerList({ network, address }) {
             })
           );
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, [dispatch, network, address, page]);
+  }, [dispatch, network, address, page, answers.total]);
 
   return (
     <Wrapper>
-      {answers === null ? (
+      {isLoading ? (
         <ListLoader />
-      ) : answers.items.length === 0 ? (
+      ) : answers?.items?.length === 0 ? (
         <NoPost message={"No current replies"} />
       ) : (
-        answers.items.map((answer, index) => {
+        answers?.items?.map((answer, index) => {
           return (
             <Card key={index}>
               <StyledDividerWrapper>
@@ -90,7 +95,11 @@ export default function AnswerList({ network, address }) {
           );
         })
       )}
-      <Pagination className="pagination" {...{ ...answers, setPage }} large />
+      <Pagination
+        className="pagination"
+        {...{ ...answers, page, setPage }}
+        large
+      />
     </Wrapper>
   );
 }

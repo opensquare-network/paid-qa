@@ -5,12 +5,12 @@ import serverApi from "services/serverApi";
 const topicSlice = createSlice({
   name: "topic",
   initialState: {
-    topics: null,
+    topics: { items: null, total: 0 },
     topic: null,
     fundSummary: null,
-    filterAsset: null,
-    filterStatus: null,
-    filterTitle: null,
+    filterAsset: "all",
+    filterStatus: "all",
+    filterTitle: "",
   },
   reducers: {
     setTopics(state, { payload }) {
@@ -30,7 +30,7 @@ const topicSlice = createSlice({
     },
     setFilterTitle(state, { payload }) {
       state.filterTitle = payload;
-    }
+    },
   },
 });
 

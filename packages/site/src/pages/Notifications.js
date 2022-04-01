@@ -38,7 +38,12 @@ export default function Notifications() {
   const [page, setPage] = useState(1);
   const account = useSelector(accountSelector);
   const [tab, setTab] = useState("notifications");
-  const notifications = useNotifications(page, account, tab, setPage);
+  const [isLoading, notifications] = useNotifications(
+    page,
+    account,
+    tab,
+    setPage
+  );
 
   useEffect(() => {
     if (account?.address && account?.network) {
@@ -51,7 +56,7 @@ export default function Notifications() {
       <Container>
         <ContentWrapper>
           <Header tab={tab} setTab={setTab} />
-          {notifications === null && <ListLoader style={{ marginTop: 20 }} />}
+          {isLoading && <ListLoader style={{ marginTop: 20 }} />}
           {tab === "notifications" && (
             <NotificationList {...{ notifications }} />
           )}
@@ -63,12 +68,10 @@ export default function Notifications() {
         {notifications?.items?.length === 0 && (
           <NoPost message={"No current records"} />
         )}
-        {notifications && (
-          <Pagination
-            {...{ page, setPage, pageSize }}
-            total={notifications?.total}
-          />
-        )}
+        <Pagination
+          {...{ page, setPage, pageSize }}
+          total={notifications?.total}
+        />
       </Container>
     </Wrapper>
   );
