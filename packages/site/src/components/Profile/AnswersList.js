@@ -44,7 +44,7 @@ const TitleLink = styled(Link)`
   }
 `;
 
-export default function AnswerList({ network, address }) {
+export default function AnswersList({ network, address }) {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [answers, setAnswers] = useState(null);

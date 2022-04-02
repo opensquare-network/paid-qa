@@ -9,11 +9,9 @@ import RewardItemList from "components/Notification/RewardItemList";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
-import serverApi from "../services/serverApi";
 import NoPost from "../components/NoPost";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import ListLoader from "../components/Skeleton/ListLoader";
-import { EmptyList } from "../utils/constants";
 import { useNotifications } from "../utils/hooks";
 
 const Wrapper = styled.div`

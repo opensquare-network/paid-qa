@@ -64,8 +64,6 @@ const StyledDividerWrapper = styled(DividerWrapper)`
   }
 `;
 
-const Title = styled(FlexBetween)``;
-
 const AddButton = styled(FlexCenter)`
   cursor: pointer;
 `;
