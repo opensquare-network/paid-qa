@@ -63,13 +63,47 @@ async function getAccountFunds(ctx) {
   const signerPublicKey = toPublicKey(address);
   const q = { signerPublicKey };
   const total = await Fund.countDocuments(q);
-  const topics = await Fund.find(q)
-    .sort({ blockTime: -1 })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize);
+  const funds = await Fund.aggregate([
+    { $match: { sponsorPublicKey: signerPublicKey } },
+    {
+      $lookup: {
+        from: "topics",
+        localField: "ipfsCid",
+        foreignField: "cid",
+        as: "topic",
+      },
+    },
+    {
+      $lookup: {
+        from: "answers",
+        localField: "ipfsCid",
+        foreignField: "cid",
+        as: "answer",
+      },
+    },
+    {
+      $lookup: {
+        from: "topics",
+        localField: "answer.topicCid",
+        foreignField: "cid",
+        as: "answerTopic",
+      },
+    },
+    {
+      $project: {
+        topic: { $arrayElemAt: ["$topic", 0] },
+        answerTopic: { $arrayElemAt: ["$answerTopic", 0] },
+        createdAt: 1,
+        beneficiary: 1,
+        network: 1,
+        value: { $toString: "$value" },
+        symbol: 1,
+      },
+    },
+  ]);
 
   ctx.body = {
-    items: topics,
+    items: funds,
     page,
     pageSize,
     total,
