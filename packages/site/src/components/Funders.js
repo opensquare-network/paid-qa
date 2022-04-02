@@ -2,6 +2,7 @@ import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import styled from "styled-components";
 import IdentityOrAddr from "./User/IdentityOrAddr";
 import { p_12_normal } from "@osn/common-ui/lib/styles/textStyles";
+import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,18 +44,21 @@ export default function Funders({ funds }) {
   return (
     <Wrapper>
       <Header>Funded by</Header>
-      {funds?.map((fund, index) => (
-        <Item key={index}>
-          <IdentityOrAddr
-            address={fund.sponsor}
-            network={fund.network}
-            noIcon
-          />
-          <span>
-            {fund.value} {fund.symbol}
-          </span>
-        </Item>
-      ))}
+      {funds?.map((fund, index) => {
+        const ss58Address = encodeNetworkAddress(fund.sponsor, fund.network);
+        return (
+          <Item key={index}>
+            <IdentityOrAddr
+              address={ss58Address}
+              network={fund.network}
+              noIcon
+            />
+            <span>
+              {fund.value} {fund.symbol}
+            </span>
+          </Item>
+        );
+      })}
     </Wrapper>
   );
 }
