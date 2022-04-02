@@ -17,10 +17,18 @@ import { Avatar } from "@osn/common-ui/lib";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
 import Flex from "@osn/common-ui/lib/styled/Flex";
+import { Link } from "react-router-dom";
+import IdentityOrAddr from "../User/IdentityOrAddr";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
     margin-top: 20px;
+  }
+  a {
+    :hover {
+      text-decoration: underline;
+    }
+    cursor: pointer;
   }
 `;
 
@@ -42,6 +50,10 @@ const TextMajor = styled.span`
 const MarginX8 = styled(Flex)`
   margin-left: 8px;
   margin-right: 8px;
+`;
+
+const TextAccessory = styled.div`
+  color: #a1a8b3;
 `;
 
 export default function FundsList({ network, address }) {
@@ -78,6 +90,7 @@ export default function FundsList({ network, address }) {
         <NoPost message={"No current replies"} />
       ) : (
         funds?.items?.map((fund, index) => {
+          const topic = fund.topic ?? fund.answerTopic;
           return (
             <Card key={index}>
               <StyledDividerWrapper>
@@ -87,15 +100,23 @@ export default function FundsList({ network, address }) {
                     <Avatar address={fund.beneficiary} />
                   </MarginX8>
                   <ChainIcon chainName={network} size={16} />
-                  <TextMajor style={{ marginLeft: 4 }}>
-                    {addressEllipsis(fund.beneficiary)}
-                  </TextMajor>
+                  &nbsp;
+                  <IdentityOrAddr
+                    address={fund.beneficiary}
+                    network={fund.network}
+                  />
                   &nbsp;with&nbsp;
                   <TextMajor>
                     {fund.value} {fund.symbol}
                   </TextMajor>
+                  &nbsp;in&nbsp;
+                  <Link to={`/topic/${topic.cid}`}>
+                    <TextMajor>{topic.title}</TextMajor>
+                  </Link>
                 </Flex>
-                <Time time={fund.createdAt} />
+                <TextAccessory>
+                  <Time time={fund.createdAt} />
+                </TextAccessory>
               </StyledDividerWrapper>
             </Card>
           );
