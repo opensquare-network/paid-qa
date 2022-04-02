@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import Topic from "components/Topic";
 import NoPost from "components/NoPost";
 import ListLoader from "components/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
@@ -9,8 +8,39 @@ import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
+import Flex from "@osn/common-ui/lib/styled/Flex";
+import { Link } from "react-router-dom";
+import Card from "@osn/common-ui/lib/styled/Card";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import Tag from "../Tag";
+import ProgressBar from "../ProgressBar";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  > div {
+    margin-bottom: 20px;
+  }
+`;
+
+const PromiseWrapper = styled(Flex)`
+  flex-wrap: wrap;
+  gap: 8px;
+  > div {
+    flex-basis: 100%;
+  }
+
+  > :first-child {
+    margin-bottom: 4px;
+  }
+`;
+
+const TextMajor = styled.span`
+  font-weight: 500;
+  color: #1e2134;
+`;
+
+const TextAccessory = styled.div`
+  color: #a1a8b3;
+`;
 
 export default function PromisesList({ network, address }) {
   const dispatch = useDispatch();
@@ -47,7 +77,34 @@ export default function PromisesList({ network, address }) {
         <NoPost message={"No current topics"} />
       ) : (
         promises?.items?.map((promise, index) => (
-          <Topic key={index} topic={promise.topic} />
+          <Card key={index}>
+            <PromiseWrapper>
+              <FlexBetween>
+                <Flex>
+                  <span>Promised</span>
+                  &nbsp;
+                  <TextMajor>
+                    {promise.value} {promise.symbol}
+                  </TextMajor>
+                  &nbsp;in&nbsp;
+                  <Link to={`/topic/${promise.topic.cid}`}>
+                    <TextMajor>{promise.topic.title}</TextMajor>
+                  </Link>
+                </Flex>
+                <Tag>{promise.topic.status}</Tag>
+              </FlexBetween>
+              <ProgressBar
+                percent={(promise.fundsAmount / promise.value) * 100}
+              />
+              <FlexBetween>
+                <TextAccessory>Fund</TextAccessory>
+                <span>
+                  {" "}
+                  {promise.fundsAmount}/{promise.value} {promise.symbol}
+                </span>
+              </FlexBetween>
+            </PromiseWrapper>
+          </Card>
         ))
       )}
       <Pagination

@@ -35,6 +35,14 @@ async function getAccountPromisedTopics(ctx) {
     { $match: { sponsorPublicKey: signerPublicKey } },
     {
       $lookup: {
+        from: "funds",
+        localField: "topicCid",
+        foreignField: "ipfsCid",
+        as: "funds",
+      },
+    },
+    {
+      $lookup: {
         from: "topics",
         localField: "topicCid",
         foreignField: "cid",
@@ -43,7 +51,10 @@ async function getAccountPromisedTopics(ctx) {
     },
     {
       $project: {
+        fundsAmount: { $toString: { $sum: "$funds.value" } },
         topic: { $arrayElemAt: ["$topic", 0] },
+        value: { $toString: "$value" },
+        symbol: 1,
       },
     },
   ]);
