@@ -51,7 +51,7 @@ export function useFulfillment(reward) {
     .div(reward.value)
     .times(100)
     .integerValue();
-  return [paidValue, percent];
+  return [paidValue, Math.max(0, Math.min(percent, 100))];
 }
 
 export default function Item({ reward, resolve }) {
