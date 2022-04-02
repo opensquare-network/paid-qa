@@ -9,6 +9,11 @@ router.get(
 );
 
 router.get(
+  "/network/:network/address/:address/promisedtopics",
+  accountController.getAccountPromisedTopics
+);
+
+router.get(
   "/network/:network/address/:address/answers",
   accountController.getAccountAnswers
 );
@@ -19,8 +24,18 @@ router.get(
 );
 
 router.get(
+  "/network/:network/address/:address/funds",
+  accountController.getAccountFunds
+);
+
+router.get(
   "/network/:network/address/:address/rewards",
   accountController.getAccountRewards
+);
+
+router.get(
+  "/network/:network/address/:address",
+  accountController.getAccountOverview
 );
 
 module.exports = router;

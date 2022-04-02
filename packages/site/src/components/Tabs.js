@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Item = styled.div`
+const Item = styled(DividerWrapper)`
   cursor: pointer;
   padding-bottom: 20px;
 
@@ -21,6 +22,10 @@ const Item = styled.div`
     > :not(:first-child) {
       margin-left: 4px;
     }
+  }
+
+  > :nth-child(2) {
+    color: #a1a8b3;
   }
 
   ${(p) =>
@@ -52,10 +57,11 @@ export default function Tabs({ items = [], value, setValue }) {
         return (
           <Item
             key={index}
-            active={value === item}
-            onClick={() => setValue(item)}
+            active={value === item.value}
+            onClick={() => setValue(item.value)}
           >
-            <Capitalize>{item}</Capitalize>
+            <Capitalize>{item.value}</Capitalize>
+            {item.suffix !== undefined && <span>{item.suffix}</span>}
           </Item>
         );
       })}

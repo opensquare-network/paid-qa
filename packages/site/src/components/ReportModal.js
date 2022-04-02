@@ -5,7 +5,6 @@ import {
   p_14_medium,
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import Button from "@osn/common-ui/lib/styled/Button";
 
