@@ -76,7 +76,7 @@ export default function PromisesList({ network, address }) {
         setIsLoading(false);
       });
   }, [dispatch, network, address, page]);
-  // console.log(promises)
+
   return (
     <Wrapper>
       {isLoading ? (
@@ -84,53 +84,58 @@ export default function PromisesList({ network, address }) {
       ) : promises?.items?.length === 0 ? (
         <NoPost message={"No current topics"} />
       ) : (
-        promises?.items?.map((promise, index) => (
-          <Card key={index}>
-            <PromiseWrapper>
-              <FlexBetween>
-                <Flex>
-                  <span>Promised</span>
-                  &nbsp;
-                  <TextMajor>
-                    {promise.value} {promise.symbol}
-                  </TextMajor>
-                  &nbsp;in&nbsp;
-                  <Link to={`/topic/${promise.topic.cid}`}>
-                    <TextMajor>{promise.topic.title}</TextMajor>
-                  </Link>
-                </Flex>
-                <Tag>{promise.topic.status}</Tag>
-              </FlexBetween>
-              {promise?.symbols?.map((symbol, index) => {
-                const filter = (p) => p.symbol === symbol;
-                const sum = (a, b) => parseFloat(a) + parseFloat(b);
-                const promisedAmount = promise.promises
-                  .filter(filter)
-                  .map((p) => p.value)
-                  .reduce(sum, 0);
-                const fundedAmount =
-                  promise.funds
-                    ?.filter(filter)
-                    ?.map((p) => p.value)
-                    ?.reduce(sum, 0) ?? 0;
-                return (
-                  <Process key={index}>
-                    <ProgressBar
-                      percent={(fundedAmount / promisedAmount) * 100}
-                    />
-                    <FlexBetween>
-                      <TextAccessory>Fund</TextAccessory>
-                      <span>
-                        {" "}
-                        {fundedAmount}/{promisedAmount} {symbol}
-                      </span>
-                    </FlexBetween>
-                  </Process>
-                );
-              })}
-            </PromiseWrapper>
-          </Card>
-        ))
+        promises?.items?.map((promise, index) => {
+          const symbols = Array.from(
+            new Set(promise.promises.map((p) => p.symbol))
+          );
+          return (
+            <Card key={index}>
+              <PromiseWrapper>
+                <FlexBetween>
+                  <Flex>
+                    <span>Promised</span>
+                    &nbsp;
+                    <TextMajor>
+                      {promise.value} {promise.symbol}
+                    </TextMajor>
+                    &nbsp;in&nbsp;
+                    <Link to={`/topic/${promise.topic.cid}`}>
+                      <TextMajor>{promise.topic.title}</TextMajor>
+                    </Link>
+                  </Flex>
+                  <Tag>{promise.topic.status}</Tag>
+                </FlexBetween>
+                {symbols?.map((symbol, index) => {
+                  const filter = (p) => p.symbol === symbol;
+                  const sum = (a, b) => parseFloat(a) + parseFloat(b);
+                  const promisedAmount = promise.promises
+                    .filter(filter)
+                    .map((p) => p.value)
+                    .reduce(sum, 0);
+                  const fundedAmount =
+                    promise.funds
+                      ?.filter(filter)
+                      ?.map((p) => p.value)
+                      ?.reduce(sum, 0) ?? 0;
+                  return (
+                    <Process key={index}>
+                      <ProgressBar
+                        percent={(fundedAmount / promisedAmount) * 100}
+                      />
+                      <FlexBetween>
+                        <TextAccessory>Fund</TextAccessory>
+                        <span>
+                          {" "}
+                          {fundedAmount}/{promisedAmount} {symbol}
+                        </span>
+                      </FlexBetween>
+                    </Process>
+                  );
+                })}
+              </PromiseWrapper>
+            </Card>
+          );
+        })
       )}
       <Pagination
         className="pagination"

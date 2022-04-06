@@ -35,25 +35,22 @@ async function getAccountPromisedTopics(ctx) {
       {
         $group: {
           _id: "$topicCid",
-          topicCid: { $first: "$topicCid" },
           promises: {
             $addToSet: { value: { $toString: "$value" }, symbol: "$symbol" },
           },
-          symbols: { $addToSet: "$symbol" },
           blockTime: { $first: "$blockTime" },
         },
       },
       {
         $lookup: {
           from: "funds",
-          let: { topicCid: "$topicCid" },
+          let: { topicCid: "$_id" },
           pipeline: [
             {
               $match: {
                 $expr: { $eq: ["$ipfsCid", "$$topicCid"] },
               },
             },
-            { $project: { symbol: 1, value: 1 } },
             {
               $group: {
                 _id: "$symbol",
@@ -73,7 +70,7 @@ async function getAccountPromisedTopics(ctx) {
       {
         $lookup: {
           from: "topics",
-          localField: "topicCid",
+          localField: "_id",
           foreignField: "cid",
           as: "topic",
         },
@@ -231,7 +228,7 @@ async function getAccountOverview(ctx) {
     { $count: "total" },
   ]);
   const [
-    [{ total: promisesCount }],
+    [{ total: promisesCount } = { total: 0 }] = [],
     fundsCount,
     rewardsCount,
     topicsCount,
