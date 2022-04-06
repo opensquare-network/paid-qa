@@ -28,48 +28,18 @@ async function getAccountFunds(ctx) {
   const { address } = ctx.params;
   const { page, pageSize } = extractPage(ctx);
 
-  const signerPublicKey = toPublicKey(address);
-  const q = { signerPublicKey };
+  const sponsorPublicKey = toPublicKey(address);
+  const q = { sponsorPublicKey };
   const total = await Fund.countDocuments(q);
-  const funds = await Fund.aggregate([
-    { $match: { sponsorPublicKey: signerPublicKey } },
-    {
-      $lookup: {
-        from: "topics",
-        localField: "ipfsCid",
-        foreignField: "cid",
-        as: "topic",
-      },
-    },
-    {
-      $lookup: {
-        from: "answers",
-        localField: "ipfsCid",
-        foreignField: "cid",
-        as: "answer",
-      },
-    },
-    {
-      $lookup: {
-        from: "topics",
-        localField: "answer.topicCid",
-        foreignField: "cid",
-        as: "answerTopic",
-      },
-    },
-    {
-      $project: {
-        topic: { $arrayElemAt: ["$topic", 0] },
-        answerTopic: { $arrayElemAt: ["$answerTopic", 0] },
-        createdAt: 1,
-        beneficiary: 1,
-        network: 1,
-        value: { $toString: "$value" },
-        symbol: 1,
-        blockTime: 1,
-      },
-    },
-  ]);
+  const funds = await Fund.find(q)
+    .sort({ blockTime: -1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .populate("topic")
+    .populate({
+      path: "answer",
+      populate: "topic",
+    });
 
   ctx.body = {
     items: funds,
@@ -124,13 +94,18 @@ async function getAccountRewards(ctx) {
   const beneficiaryPublicKey = toPublicKey(address);
   const q = { beneficiaryPublicKey };
   const total = await Fund.countDocuments(q);
-  const topics = await Fund.find(q)
+  const rewards = await Fund.find(q)
     .sort({ blockTime: -1 })
     .skip((page - 1) * pageSize)
-    .limit(pageSize);
+    .limit(pageSize)
+    .populate("topic")
+    .populate({
+      path: "answer",
+      populate: "topic",
+    });
 
   ctx.body = {
-    items: topics,
+    items: rewards,
     page,
     pageSize,
     total,
@@ -162,17 +137,19 @@ async function getAccountOverview(ctx) {
   const { address } = ctx.params;
   const signerPublicKey = toPublicKey(address);
   const q = { signerPublicKey };
-  const [answersCount, fundsCount, topicsCount, rewardsCount] =
+  const [promisesCount, fundsCount, rewardsCount, topicsCount, answersCount] =
     await Promise.all([
-      Answer.countDocuments(q),
-      Fund.countDocuments(q),
-      Topic.countDocuments(q),
       Reward.countDocuments({ sponsorPublicKey: signerPublicKey }),
+      Fund.countDocuments({ sponsorPublicKey: signerPublicKey }),
+      Fund.countDocuments({ beneficiaryPublicKey: signerPublicKey }),
+      Topic.countDocuments(q),
+      Answer.countDocuments(q),
     ]);
 
   ctx.body = {
-    promisesCount: rewardsCount,
+    promisesCount,
     fundsCount,
+    rewardsCount,
     topicsCount,
     answersCount,
   };

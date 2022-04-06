@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
 import styled, { css } from "styled-components";
 import IdentityIcon from "./IdentityIcon";
-import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
+import { addressEllipsis, encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
 
 const IdentityWrapper = styled.a`
   display: flex;
@@ -40,6 +40,11 @@ export default function IdentityOrAddr({
   const isMounted = useIsMounted();
   const [identity, setIdentity] = useState();
 
+  let ss58Address = address;
+  if (address && network) {
+    ss58Address = encodeNetworkAddress(address, network)
+  }
+
   useEffect(() => {
     if (!address || !network) {
       return;
@@ -57,7 +62,7 @@ export default function IdentityOrAddr({
   return (
     <IdentityWrapper
       noLink={noLink}
-      href={`/#/network/${network}/address/${address}`}
+      href={`/#/network/${network}/address/${ss58Address}`}
     >
       {identity?.info && identity?.info?.status !== "NO_ID" ? (
         <>
@@ -72,7 +77,7 @@ export default function IdentityOrAddr({
           <Name>{identity.info.display}</Name>
         </>
       ) : (
-        <Name>{addressEllipsis(address)}</Name>
+        <Name>{addressEllipsis(ss58Address)}</Name>
       )}
     </IdentityWrapper>
   );

@@ -55,7 +55,7 @@ const TextAccessory = styled.div`
   color: #a1a8b3;
 `;
 
-export default function FundsList({ network, address }) {
+export default function RewardsList({ network, address }) {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [funds, setFunds] = useState(null);
@@ -64,14 +64,14 @@ export default function FundsList({ network, address }) {
   useEffect(() => {
     setIsLoading(true);
     serverApi
-      .fetch(`/network/${network}/address/${address}/funds`, { page })
+      .fetch(`/network/${network}/address/${address}/rewards`, { page })
       .then(({ result, error }) => {
         setFunds(result ?? EmptyList);
         if (error) {
           dispatch(
             addToast({
               type: ToastTypes.Error,
-              message: error?.message || "Failed to load funds",
+              message: error?.message || "Failed to load rewards",
             })
           );
         }
@@ -86,22 +86,22 @@ export default function FundsList({ network, address }) {
       {isLoading ? (
         <ListLoader />
       ) : funds?.items?.length === 0 ? (
-        <NoPost message={"No current funds"} />
+        <NoPost message={"No current rewards"} />
       ) : (
         funds?.items?.map((fund, index) => {
           const topic = fund.topic ?? fund.answer?.topic;
           return (
             <Card key={index}>
               <StyledDividerWrapper>
-                Funded
+                Funded by
                 <Flex>
                   <MarginX8>
-                    <Avatar address={fund.beneficiary} />
+                    <Avatar address={fund.sponsor} />
                   </MarginX8>
                   <ChainIcon chainName={fund.network} size={16} />
                   &nbsp;
                   <IdentityOrAddr
-                    address={fund.beneficiary}
+                    address={fund.sponsor}
                     network={fund.network}
                   />
                   &nbsp;with&nbsp;
