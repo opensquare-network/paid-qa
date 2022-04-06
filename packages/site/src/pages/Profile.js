@@ -10,6 +10,7 @@ import serverApi from "../services/serverApi";
 import { addToast, ToastTypes } from "../store/reducers/toastSlice";
 import { useDispatch } from "react-redux";
 import FundsList from "../components/Profile/FundsList";
+import RewardsList from "../components/Profile/RewardsList";
 
 const ContentWrapper = styled.div`
   margin: 20px 0;
@@ -62,6 +63,9 @@ export default function Profile() {
             <AnswersList network={network} address={address} />
           )}
           {tab === "funds" && <FundsList network={network} address={address} />}
+          {tab === "rewards" && (
+            <RewardsList network={network} address={address} />
+          )}
         </ContentWrapper>
       </Container>
     </div>
