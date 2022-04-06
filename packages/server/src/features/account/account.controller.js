@@ -24,38 +24,6 @@ async function getAccountTopics(ctx) {
   };
 }
 
-async function getAccountPromisedTopics(ctx) {
-  const { address } = ctx.params;
-  const { page, pageSize } = extractPage(ctx);
-
-  const signerPublicKey = toPublicKey(address);
-  const q = { sponsorPublicKey: signerPublicKey };
-  const total = await Reward.countDocuments(q);
-  const promises = await Reward.aggregate([
-    { $match: { sponsorPublicKey: signerPublicKey } },
-    {
-      $lookup: {
-        from: "topics",
-        localField: "topicCid",
-        foreignField: "cid",
-        as: "topic",
-      },
-    },
-    {
-      $project: {
-        topic: { $arrayElemAt: ["$topic", 0] },
-      },
-    },
-  ]);
-
-  ctx.body = {
-    items: promises,
-    page,
-    pageSize,
-    total,
-  };
-}
-
 async function getAccountFunds(ctx) {
   const { address } = ctx.params;
   const { page, pageSize } = extractPage(ctx);
@@ -211,7 +179,6 @@ async function getAccountOverview(ctx) {
 
 module.exports = {
   getAccountTopics,
-  getAccountPromisedTopics,
   getAccountPromises,
   getAccountFunds,
   getAccountRewards,

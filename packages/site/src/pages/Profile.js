@@ -9,7 +9,6 @@ import { useParams } from "react-router";
 import serverApi from "../services/serverApi";
 import { addToast, ToastTypes } from "../store/reducers/toastSlice";
 import { useDispatch } from "react-redux";
-import PromisesList from "../components/Profile/PromisesList";
 import FundsList from "../components/Profile/FundsList";
 
 const ContentWrapper = styled.div`
@@ -26,7 +25,7 @@ const ContentWrapper = styled.div`
 export default function Profile() {
   const { network, address } = useParams();
   const dispatch = useDispatch();
-  const [tab, setTab] = useState("promises");
+  const [tab, setTab] = useState("funds");
   const [overview, setOverview] = useState();
 
   useEffect(() => {
@@ -61,9 +60,6 @@ export default function Profile() {
           )}
           {tab === "replies" && (
             <AnswersList network={network} address={address} />
-          )}
-          {tab === "promises" && (
-            <PromisesList network={network} address={address} />
           )}
           {tab === "funds" && <FundsList network={network} address={address} />}
         </ContentWrapper>
