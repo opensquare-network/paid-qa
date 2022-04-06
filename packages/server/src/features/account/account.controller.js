@@ -24,6 +24,94 @@ async function getAccountTopics(ctx) {
   };
 }
 
+async function getAccountPromisedTopics(ctx) {
+  const { address } = ctx.params;
+  const { page, pageSize } = extractPage(ctx);
+
+  const signerPublicKey = toPublicKey(address);
+  const [{ items: promises, total: [{ count: total = 0 } = {}] = [] } = {}] =
+    await Reward.aggregate([
+      { $match: { sponsorPublicKey: signerPublicKey } },
+      {
+        $group: {
+          _id: "$topicCid",
+          topicCid: { $first: "$topicCid" },
+          promises: {
+            $addToSet: { value: { $toString: "$value" }, symbol: "$symbol" },
+          },
+          symbols: { $addToSet: "$symbol" },
+          blockTime: { $first: "$blockTime" },
+        },
+      },
+      {
+        $lookup: {
+          from: "funds",
+          let: { topicCid: "$topicCid" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$ipfsCid", "$$topicCid"] },
+              },
+            },
+            { $project: { symbol: 1, value: 1 } },
+            {
+              $group: {
+                _id: "$symbol",
+                value: { $sum: "$value" },
+              },
+            },
+            {
+              $project: {
+                value: { $toString: "$value" },
+                symbol: "$_id",
+              },
+            },
+          ],
+          as: "funds",
+        },
+      },
+      {
+        $lookup: {
+          from: "topics",
+          localField: "topicCid",
+          foreignField: "cid",
+          as: "topic",
+        },
+      },
+      {
+        $project: {
+          topicCid: 1,
+          topic: { $arrayElemAt: ["$topic", 0] },
+          promises: 1,
+          funds: 1,
+          symbols: 1,
+          blockTime: 1,
+        },
+      },
+      {
+        $facet: {
+          total: [
+            {
+              $count: "count",
+            },
+          ],
+          items: [
+            { $sort: { blockTime: -1 } },
+            { $skip: (page - 1) * pageSize },
+            { $limit: pageSize },
+          ],
+        },
+      },
+    ]);
+
+  ctx.body = {
+    items: promises,
+    page,
+    pageSize,
+    total,
+  };
+}
+
 async function getAccountFunds(ctx) {
   const { address } = ctx.params;
   const { page, pageSize } = extractPage(ctx);
@@ -181,6 +269,7 @@ async function getAccountOverview(ctx) {
 module.exports = {
   getAccountTopics,
   getAccountPromises,
+  getAccountPromisedTopics,
   getAccountFunds,
   getAccountRewards,
   getAccountAnswers,
