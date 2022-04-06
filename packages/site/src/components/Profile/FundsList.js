@@ -115,7 +115,7 @@ export default function FundsList({ network, address }) {
                   </Link>
                 </Flex>
                 <TextAccessory>
-                  <Time time={fund.createdAt} />
+                  <Time time={fund.blockTime} />
                 </TextAccessory>
               </StyledDividerWrapper>
             </Card>

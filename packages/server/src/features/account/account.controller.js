@@ -66,6 +66,7 @@ async function getAccountFunds(ctx) {
         network: 1,
         value: { $toString: "$value" },
         symbol: 1,
+        blockTime: 1,
       },
     },
   ]);
