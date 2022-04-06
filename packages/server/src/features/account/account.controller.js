@@ -225,14 +225,24 @@ async function getAccountOverview(ctx) {
   const { address } = ctx.params;
   const signerPublicKey = toPublicKey(address);
   const q = { signerPublicKey };
-  const [promisesCount, fundsCount, rewardsCount, topicsCount, answersCount] =
-    await Promise.all([
-      Reward.countDocuments({ sponsorPublicKey: signerPublicKey }),
-      Fund.countDocuments({ sponsorPublicKey: signerPublicKey }),
-      Fund.countDocuments({ beneficiaryPublicKey: signerPublicKey }),
-      Topic.countDocuments(q),
-      Answer.countDocuments(q),
-    ]);
+  const promisesCountPromise = Reward.aggregate([
+    { $match: { sponsorPublicKey: signerPublicKey } },
+    { $group: { _id: "$topicCid" } },
+    { $count: "total" },
+  ]);
+  const [
+    [{ total: promisesCount }],
+    fundsCount,
+    rewardsCount,
+    topicsCount,
+    answersCount,
+  ] = await Promise.all([
+    promisesCountPromise,
+    Fund.countDocuments({ sponsorPublicKey: signerPublicKey }),
+    Fund.countDocuments({ beneficiaryPublicKey: signerPublicKey }),
+    Topic.countDocuments(q),
+    Answer.countDocuments(q),
+  ]);
 
   ctx.body = {
     promisesCount,
