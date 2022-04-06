@@ -14,6 +14,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import Tooltip from "@osn/common-ui/lib/Tooltip";
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -48,6 +49,11 @@ const AboutWrapper = styled(FlexCenter)`
     > :nth-child(2) {
       margin-left: 8px;
       > :first-child {
+        display: flex;
+        align-items: center;
+        > :first-child {
+          margin-right: 4px;
+        }
         ${p_16_semibold};
       }
       > :nth-child(2) {
@@ -104,8 +110,33 @@ export default function Header({ network, address, tab, setTab, overview }) {
               <div>
                 <img src="/imgs/icons/promise.svg" alt="" />
                 <div>
-                  <div>Promises</div>
+                  <div>
+                    <span>Promises</span>
+                    <Tooltip content={`Promised ${overview?.promisesCount || 0}, Keep ${overview?.promiseFulfilledCount || 0}`} size="fit">
+                      <div>
+                        <FlexCenter>
+                          <img src="/imgs/icons/info.svg" alt="" />
+                        </FlexCenter>
+                      </div>
+                    </Tooltip>
+                  </div>
                   <div>{parseInt(avgPercentage * 100)}%</div>
+                </div>
+              </div>
+              <div>
+                <img src="/imgs/icons/treasury.svg" alt="" />
+                <div>
+                  <div>
+                    <span>Rewards</span>
+                    <Tooltip content={`Received ${overview?.rewardsCount || 0} funds`} size="fit">
+                      <div>
+                        <FlexCenter>
+                          <img src="/imgs/icons/info.svg" alt="" />
+                        </FlexCenter>
+                      </div>
+                    </Tooltip>
+                  </div>
+                  <div>{overview?.rewardsCount || 0}</div>
                 </div>
               </div>
             </AboutWrapper>
