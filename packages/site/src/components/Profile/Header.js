@@ -70,7 +70,7 @@ const AboutWrapper = styled(FlexCenter)`
 const sum = (arr) => arr.reduce((acc, cur) => acc + cur, 0);
 const avg = (arr) => (arr?.length > 0 ? sum(arr) / arr.length : undefined);
 
-export default function Header({ network, address, tab, setTab }) {
+export default function Header({ network, address, tab, setTab, overview }) {
   const dispatch = useDispatch();
   const [promises, setPromises] = useState({});
   const percentages = Object.values(promises).map(
@@ -111,7 +111,7 @@ export default function Header({ network, address, tab, setTab }) {
             </AboutWrapper>
           </div>
           <div>
-            <Tabs value={tab} setValue={setTab} />
+            <Tabs value={tab} setValue={setTab} overview={overview} />
           </div>
         </ContentWrapper>
       </Container>

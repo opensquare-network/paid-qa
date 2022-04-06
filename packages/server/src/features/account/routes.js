@@ -19,8 +19,18 @@ router.get(
 );
 
 router.get(
+  "/network/:network/address/:address/funds",
+  accountController.getAccountFunds
+);
+
+router.get(
   "/network/:network/address/:address/rewards",
   accountController.getAccountRewards
+);
+
+router.get(
+  "/network/:network/address/:address",
+  accountController.getAccountOverview
 );
 
 module.exports = router;

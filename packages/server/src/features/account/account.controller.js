@@ -24,6 +24,61 @@ async function getAccountTopics(ctx) {
   };
 }
 
+async function getAccountFunds(ctx) {
+  const { address } = ctx.params;
+  const { page, pageSize } = extractPage(ctx);
+
+  const signerPublicKey = toPublicKey(address);
+  const q = { signerPublicKey };
+  const total = await Fund.countDocuments(q);
+  const funds = await Fund.aggregate([
+    { $match: { sponsorPublicKey: signerPublicKey } },
+    {
+      $lookup: {
+        from: "topics",
+        localField: "ipfsCid",
+        foreignField: "cid",
+        as: "topic",
+      },
+    },
+    {
+      $lookup: {
+        from: "answers",
+        localField: "ipfsCid",
+        foreignField: "cid",
+        as: "answer",
+      },
+    },
+    {
+      $lookup: {
+        from: "topics",
+        localField: "answer.topicCid",
+        foreignField: "cid",
+        as: "answerTopic",
+      },
+    },
+    {
+      $project: {
+        topic: { $arrayElemAt: ["$topic", 0] },
+        answerTopic: { $arrayElemAt: ["$answerTopic", 0] },
+        createdAt: 1,
+        beneficiary: 1,
+        network: 1,
+        value: { $toString: "$value" },
+        symbol: 1,
+        blockTime: 1,
+      },
+    },
+  ]);
+
+  ctx.body = {
+    items: funds,
+    page,
+    pageSize,
+    total,
+  };
+}
+
 async function getAccountPromises(ctx) {
   const { address } = ctx.params;
 
@@ -103,9 +158,31 @@ async function getAccountAnswers(ctx) {
   };
 }
 
+async function getAccountOverview(ctx) {
+  const { address } = ctx.params;
+  const signerPublicKey = toPublicKey(address);
+  const q = { signerPublicKey };
+  const [answersCount, fundsCount, topicsCount, rewardsCount] =
+    await Promise.all([
+      Answer.countDocuments(q),
+      Fund.countDocuments(q),
+      Topic.countDocuments(q),
+      Reward.countDocuments({ sponsorPublicKey: signerPublicKey }),
+    ]);
+
+  ctx.body = {
+    promisesCount: rewardsCount,
+    fundsCount,
+    topicsCount,
+    answersCount,
+  };
+}
+
 module.exports = {
   getAccountTopics,
   getAccountPromises,
+  getAccountFunds,
   getAccountRewards,
   getAccountAnswers,
+  getAccountOverview,
 };

@@ -12,50 +12,62 @@ import serverApi from "services/serverApi";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
 import Time from "@osn/common-ui/lib/Time";
-import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
-import { Link } from "react-router-dom";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import { Avatar } from "@osn/common-ui/lib";
+import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
+import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
+import Flex from "@osn/common-ui/lib/styled/Flex";
+import { Link } from "react-router-dom";
+import IdentityOrAddr from "../User/IdentityOrAddr";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
     margin-top: 20px;
+  }
+  a {
+    :hover {
+      text-decoration: underline;
+    }
+    cursor: pointer;
   }
 `;
 
 const StyledDividerWrapper = styled(DividerWrapper)`
   ${p_14_normal};
   color: #506176;
+
   > :nth-child(2) {
     font-weight: 500;
     color: #1e2134;
   }
 `;
 
-const Divider = styled.div`
-  height: 1px;
-  background: #f0f3f8;
-  margin: 16px 0;
+const TextMajor = styled.span`
+  font-weight: 500;
+  color: #1e2134;
 `;
 
-const TitleLink = styled(Link)`
-  cursor: pointer;
-  :hover {
-    text-decoration: underline;
-  }
+const MarginX8 = styled(Flex)`
+  margin-left: 8px;
+  margin-right: 8px;
 `;
 
-export default function AnswerList({ network, address }) {
+const TextAccessory = styled.div`
+  color: #a1a8b3;
+`;
+
+export default function FundsList({ network, address }) {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [answers, setAnswers] = useState(null);
+  const [funds, setFunds] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
     serverApi
-      .fetch(`/network/${network}/address/${address}/answers`, { page })
+      .fetch(`/network/${network}/address/${address}/funds`, { page })
       .then(({ result, error }) => {
-        setAnswers(result ?? EmptyList);
+        setFunds(result ?? EmptyList);
         if (error) {
           dispatch(
             addToast({
@@ -74,30 +86,45 @@ export default function AnswerList({ network, address }) {
     <Wrapper>
       {isLoading ? (
         <ListLoader />
-      ) : answers?.items?.length === 0 ? (
+      ) : funds?.items?.length === 0 ? (
         <NoPost message={"No current replies"} />
       ) : (
-        answers?.items?.map((answer, index) => {
+        funds?.items?.map((fund, index) => {
+          const topic = fund.topic ?? fund.answerTopic;
           return (
             <Card key={index}>
               <StyledDividerWrapper>
-                <div>Reply to</div>
-                <div>
-                  <TitleLink to={`/topic/${answer.topic.cid}`}>
-                    {answer.topic.title}
-                  </TitleLink>
-                </div>
-                <Time time={answer.createdAt} />
+                Funded
+                <Flex>
+                  <MarginX8>
+                    <Avatar address={fund.beneficiary} />
+                  </MarginX8>
+                  <ChainIcon chainName={network} size={16} />
+                  &nbsp;
+                  <IdentityOrAddr
+                    address={fund.beneficiary}
+                    network={fund.network}
+                  />
+                  &nbsp;with&nbsp;
+                  <TextMajor>
+                    {fund.value} {fund.symbol}
+                  </TextMajor>
+                  &nbsp;in&nbsp;
+                  <Link to={`/topic/${topic.cid}`}>
+                    <TextMajor>{topic.title}</TextMajor>
+                  </Link>
+                </Flex>
+                <TextAccessory>
+                  <Time time={fund.blockTime} />
+                </TextAccessory>
               </StyledDividerWrapper>
-              <Divider />
-              <MicromarkMd md={answer.content} allowTags={["a"]} />
             </Card>
           );
         })
       )}
       <Pagination
         className="pagination"
-        {...{ ...answers, page, setPage }}
+        {...{ ...funds, page, setPage }}
         large
       />
     </Wrapper>

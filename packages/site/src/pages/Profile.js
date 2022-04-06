@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import Header from "components/Profile/Header";
 import Container from "@osn/common-ui/lib/styled/Container";
 import TopicsList from "components/Profile/TopicsList";
-import AnswerList from "components/Profile/AnswerList";
+import AnswersList from "components/Profile/AnswersList";
 import { useParams } from "react-router";
+import serverApi from "../services/serverApi";
+import { addToast, ToastTypes } from "../store/reducers/toastSlice";
+import { useDispatch } from "react-redux";
+import FundsList from "../components/Profile/FundsList";
 
 const ContentWrapper = styled.div`
   margin: 20px 0;
@@ -20,19 +24,44 @@ const ContentWrapper = styled.div`
 
 export default function Profile() {
   const { network, address } = useParams();
-  const [tab, setTab] = useState("posts");
+  const dispatch = useDispatch();
+  const [tab, setTab] = useState("funds");
+  const [overview, setOverview] = useState();
+
+  useEffect(() => {
+    serverApi
+      .fetch(`/network/${network}/address/${address}`)
+      .then(({ result, error }) => {
+        setOverview(result);
+        if (error) {
+          dispatch(
+            addToast({
+              type: ToastTypes.Error,
+              message: error?.message || "Failed to load profile",
+            })
+          );
+        }
+      });
+  }, [dispatch, network, address]);
 
   return (
     <div>
-      <Header network={network} address={address} tab={tab} setTab={setTab} />
+      <Header
+        network={network}
+        address={address}
+        tab={tab}
+        setTab={setTab}
+        overview={overview}
+      />
       <Container>
         <ContentWrapper>
-          {tab === "posts" && (
+          {tab === "topics" && (
             <TopicsList network={network} address={address} />
           )}
           {tab === "replies" && (
-            <AnswerList network={network} address={address} />
+            <AnswersList network={network} address={address} />
           )}
+          {tab === "funds" && <FundsList network={network} address={address} />}
         </ContentWrapper>
       </Container>
     </div>
