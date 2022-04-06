@@ -44,7 +44,7 @@ const TextAccessory = styled.div`
 
 const Process = styled(Flex)`
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
   > div {
     flex-basis: 100%;
   }
