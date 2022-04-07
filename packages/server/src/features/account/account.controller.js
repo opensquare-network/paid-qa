@@ -24,6 +24,108 @@ async function getAccountTopics(ctx) {
   };
 }
 
+async function getAccountPromisedTopics(ctx) {
+  const { address } = ctx.params;
+  const { page, pageSize } = extractPage(ctx);
+
+  const signerPublicKey = toPublicKey(address);
+  const [{ items: promises, total: [{ count: total = 0 } = {}] = [] } = {}] =
+    await Reward.aggregate([
+      { $match: { sponsorPublicKey: signerPublicKey } },
+      {
+        $group: {
+          _id: "$topicCid",
+          promises: {
+            $push: { value: { $toString: "$value" }, symbol: "$symbol" },
+          },
+          blockTime: { $first: "$blockTime" },
+        },
+      },
+      {
+        $lookup: {
+          from: "answers",
+          localField: "_id",
+          foreignField: "topicCid",
+          as: "answers",
+        },
+      },
+      {
+        $lookup: {
+          from: "funds",
+          let: { topicCid: "$_id", answerCid: "$answers.cid" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $or: [
+                    { $eq: ["$ipfsCid", "$$topicCid"] },
+                    { $in: ["$ipfsCid", "$$answerCid"] },
+                  ],
+                },
+              },
+            },
+            {
+              $group: {
+                _id: "$symbol",
+                value: { $sum: "$value" },
+              },
+            },
+            {
+              $project: {
+                value: { $toString: "$value" },
+                symbol: "$_id",
+              },
+            },
+          ],
+          as: "funds",
+        },
+      },
+      {
+        $lookup: {
+          from: "topics",
+          localField: "_id",
+          foreignField: "cid",
+          as: "topic",
+        },
+      },
+      {
+        $project: {
+          topicCid: 1,
+          topic: { $arrayElemAt: ["$topic", 0] },
+          promises: 1,
+          funds: 1,
+          blockTime: 1,
+        },
+      },
+      {
+        $facet: {
+          total: [
+            {
+              $count: "count",
+            },
+          ],
+          items: [
+            {
+              $sort: {
+                "topic.status": 1,
+                blockTime: -1,
+              },
+            },
+            { $skip: (page - 1) * pageSize },
+            { $limit: pageSize },
+          ],
+        },
+      },
+    ]);
+
+  ctx.body = {
+    items: promises,
+    page,
+    pageSize,
+    total,
+  };
+}
+
 async function getAccountFunds(ctx) {
   const { address } = ctx.params;
   const { page, pageSize } = extractPage(ctx);
@@ -137,14 +239,24 @@ async function getAccountOverview(ctx) {
   const { address } = ctx.params;
   const signerPublicKey = toPublicKey(address);
   const q = { signerPublicKey };
-  const [promisesCount, fundsCount, rewardsCount, topicsCount, answersCount] =
-    await Promise.all([
-      Reward.countDocuments({ sponsorPublicKey: signerPublicKey }),
-      Fund.countDocuments({ sponsorPublicKey: signerPublicKey }),
-      Fund.countDocuments({ beneficiaryPublicKey: signerPublicKey }),
-      Topic.countDocuments(q),
-      Answer.countDocuments(q),
-    ]);
+  const promisesCountPromise = Reward.aggregate([
+    { $match: { sponsorPublicKey: signerPublicKey } },
+    { $group: { _id: "$topicCid" } },
+    { $count: "total" },
+  ]);
+  const [
+    [{ total: promisesCount } = { total: 0 }] = [],
+    fundsCount,
+    rewardsCount,
+    topicsCount,
+    answersCount,
+  ] = await Promise.all([
+    promisesCountPromise,
+    Fund.countDocuments({ sponsorPublicKey: signerPublicKey }),
+    Fund.countDocuments({ beneficiaryPublicKey: signerPublicKey }),
+    Topic.countDocuments(q),
+    Answer.countDocuments(q),
+  ]);
 
   ctx.body = {
     promisesCount,
@@ -158,6 +270,7 @@ async function getAccountOverview(ctx) {
 module.exports = {
   getAccountTopics,
   getAccountPromises,
+  getAccountPromisedTopics,
   getAccountFunds,
   getAccountRewards,
   getAccountAnswers,

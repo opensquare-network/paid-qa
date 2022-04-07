@@ -112,7 +112,12 @@ export default function Header({ network, address, tab, setTab, overview }) {
                 <div>
                   <div>
                     <span>Promises</span>
-                    <Tooltip content={`Promised ${overview?.promisesCount || 0}, Keep ${overview?.promiseFulfilledCount || 0}`} size="fit">
+                    <Tooltip
+                      content={`Promised ${
+                        overview?.promisesCount || 0
+                      }, Keep ${overview?.promiseFulfilledCount || 0}`}
+                      size="fit"
+                    >
                       <div>
                         <FlexCenter>
                           <img src="/imgs/icons/info.svg" alt="" />
@@ -128,7 +133,10 @@ export default function Header({ network, address, tab, setTab, overview }) {
                 <div>
                   <div>
                     <span>Rewards</span>
-                    <Tooltip content={`Received ${overview?.rewardsCount || 0} funds`} size="fit">
+                    <Tooltip
+                      content={`Received ${overview?.rewardsCount || 0} funds`}
+                      size="fit"
+                    >
                       <div>
                         <FlexCenter>
                           <img src="/imgs/icons/info.svg" alt="" />

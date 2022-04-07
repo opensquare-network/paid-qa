@@ -9,6 +9,11 @@ router.get(
 );
 
 router.get(
+  "/network/:network/address/:address/promisedtopics",
+  accountController.getAccountPromisedTopics
+);
+
+router.get(
   "/network/:network/address/:address/answers",
   accountController.getAccountAnswers
 );

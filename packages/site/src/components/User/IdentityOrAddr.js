@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
 import styled, { css } from "styled-components";
 import IdentityIcon from "./IdentityIcon";
-import { addressEllipsis, encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import {
+  addressEllipsis,
+  encodeNetworkAddress,
+} from "@osn/common-ui/lib/utils/address";
 
 const IdentityWrapper = styled.a`
   display: flex;
@@ -42,7 +45,7 @@ export default function IdentityOrAddr({
 
   let ss58Address = address;
   if (address && network) {
-    ss58Address = encodeNetworkAddress(address, network)
+    ss58Address = encodeNetworkAddress(address, network);
   }
 
   useEffect(() => {
