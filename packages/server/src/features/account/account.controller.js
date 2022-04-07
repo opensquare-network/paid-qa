@@ -36,19 +36,32 @@ async function getAccountPromisedTopics(ctx) {
         $group: {
           _id: "$topicCid",
           promises: {
-            $addToSet: { value: { $toString: "$value" }, symbol: "$symbol" },
+            $push: { value: { $toString: "$value" }, symbol: "$symbol" },
           },
           blockTime: { $first: "$blockTime" },
         },
       },
       {
         $lookup: {
+          from: "answers",
+          localField: "_id",
+          foreignField: "topicCid",
+          as: "answers",
+        },
+      },
+      {
+        $lookup: {
           from: "funds",
-          let: { topicCid: "$_id" },
+          let: { topicCid: "$_id", answerCid: "$answers.cid" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ["$ipfsCid", "$$topicCid"] },
+                $expr: {
+                  $or: [
+                    { $eq: ["$ipfsCid", "$$topicCid"] },
+                    { $in: ["$ipfsCid", "$$answerCid"] },
+                  ],
+                },
               },
             },
             {
