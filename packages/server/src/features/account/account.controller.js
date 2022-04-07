@@ -106,7 +106,12 @@ async function getAccountPromisedTopics(ctx) {
             },
           ],
           items: [
-            { $sort: { blockTime: -1 } },
+            {
+              $sort: {
+                "topic.status": 1,
+                blockTime: -1,
+              },
+            },
             { $skip: (page - 1) * pageSize },
             { $limit: pageSize },
           ],
