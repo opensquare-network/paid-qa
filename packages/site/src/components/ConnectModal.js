@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   isWeb3Injected,
-  web3Accounts,
   web3Enable,
 } from "@polkadot/extension-dapp";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +18,7 @@ import {
   p_16_semibold,
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
+import { polkadotWeb3Accounts } from "@osn/common-ui/lib/utils/extension";
 
 function useIsMounted() {
   const isMounted = useRef(true);
@@ -91,7 +91,7 @@ export default function ConnectModal() {
   const availableNetworks = AVAILABLE_NETWORKS;
 
   const getAddresses = useCallback(async () => {
-    const extensionAccounts = await web3Accounts();
+    const extensionAccounts = await polkadotWeb3Accounts();
     const accounts = (extensionAccounts || []).map((item) => {
       const {
         address,
