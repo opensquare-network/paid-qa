@@ -94,7 +94,6 @@ async function getAccountPromisedTopics(ctx) {
           topic: { $arrayElemAt: ["$topic", 0] },
           promises: 1,
           funds: 1,
-          symbols: 1,
           blockTime: 1,
         },
       },
