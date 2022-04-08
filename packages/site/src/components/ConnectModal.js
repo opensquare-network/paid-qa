@@ -19,18 +19,7 @@ import {
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import { polkadotWeb3Accounts } from "@osn/common-ui/lib/utils/extension";
-
-function useIsMounted() {
-  const isMounted = useRef(true);
-
-  useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  return isMounted;
-}
+import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 
 const Wrapper = styled.div``;
 
