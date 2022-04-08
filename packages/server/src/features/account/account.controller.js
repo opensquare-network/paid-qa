@@ -106,7 +106,7 @@ async function getAccountPromisedTopics(ctx) {
       {
         $project: {
           topicCid: 1,
-          topic: { $arrayElemAt: ["$topic", 0] },
+          topic: { $first: "$topic" },
           promises: 1,
           funds: 1,
           promiseTime: 1,
@@ -265,15 +265,15 @@ async function getAccountAnswers(ctx) {
 async function getAccountOverview(ctx) {
   const { address } = ctx.params;
   const signerPublicKey = toPublicKey(address);
-
-  const promisesCountPromise = Reward.aggregate([
-    { $match: { sponsorPublicKey: signerPublicKey } },
+  const q = { sponsorPublicKey: signerPublicKey };
+  const promisesCountQuery = Reward.aggregate([
+    { $match: q },
     { $group: { _id: "$topicCid" } },
     { $count: "total" },
   ]);
 
-  const notFulfilledPromiseCountPromise = Reward.aggregate([
-    { $match: { sponsorPublicKey: signerPublicKey } },
+  const notFulfilledPromiseCountQuery = Reward.aggregate([
+    { $match: q },
     {
       $group: {
         _id: {
@@ -328,7 +328,7 @@ async function getAccountOverview(ctx) {
     },
     {
       $addFields: {
-        fundAmount: { $arrayElemAt: ["$fundAmount.value", 0] },
+        fundAmount: { $first: "$fundAmount.value" },
       },
     },
     {
@@ -350,8 +350,8 @@ async function getAccountOverview(ctx) {
     topicsCount,
     answersCount,
   ] = await Promise.all([
-    promisesCountPromise,
-    notFulfilledPromiseCountPromise,
+    promisesCountQuery,
+    notFulfilledPromiseCountQuery,
     Fund.countDocuments({ sponsorPublicKey: signerPublicKey }),
     Fund.countDocuments({ beneficiaryPublicKey: signerPublicKey }),
     Topic.countDocuments({ signerPublicKey }),
