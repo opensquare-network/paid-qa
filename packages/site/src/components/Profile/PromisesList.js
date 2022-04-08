@@ -23,13 +23,9 @@ const Wrapper = styled.div`
 
 const PromiseWrapper = styled(Flex)`
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   > div {
     flex-basis: 100%;
-  }
-
-  > :first-child {
-    margin-bottom: 4px;
   }
 `;
 
@@ -44,9 +40,12 @@ const TextAccessory = styled.div`
 
 const Process = styled(Flex)`
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 4px;
   > div {
     flex-basis: 100%;
+  }
+  > :nth-child(2) {
+    line-height: 24px;
   }
 `;
 
@@ -85,7 +84,7 @@ export default function PromisesList({ network, address }) {
       ) : (
         promises?.items?.map((promise, index) => {
           return (
-            <Card key={index}>
+            <Card key={index} style={{ padding: 24 }}>
               <PromiseWrapper>
                 <FlexBetween>
                   <Flex>
