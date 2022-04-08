@@ -189,3 +189,5 @@ export const tabRouterMap = new Map([
   ["discussions", "notifications/discussion"],
   ["rewards", "notifications/reward"],
 ]);
+
+export const PROJECT_NAME = "OpenSquare-Paid-QA";
