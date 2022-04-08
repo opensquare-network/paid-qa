@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import FundButton from "../../FundButton";
 import FundModel from "../../FundModel";
@@ -15,6 +15,7 @@ import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import More from "../../Icon/More";
 import ReportModal from "../../ReportModal";
+import { useOnClickOutside } from "@osn/common-ui/lib/utils/hooks";
 
 const Wrapper = styled.div`
   position: relative;
@@ -86,6 +87,9 @@ export default function ActionBar({
   const account = useSelector(accountSelector);
   const isOwner = account && isSamePublicKey(account.address, answerOwner);
 
+  const buttonRef = useRef(null);
+  useOnClickOutside(buttonRef, () => setShowMoreActions(false));
+
   const toggleShowMoreActions = () => setShowMoreActions(!showMoreActions);
 
   const onReplyClick = useCallback(() => {
@@ -112,19 +116,23 @@ export default function ActionBar({
             disabled={!account || isOwner}
           />
         </Flex>
-        <More className="more" onClick={toggleShowMoreActions} />
-        {showMoreActions && (
-          <MoreActions>
-            <MoreActionItem
-              onClick={() => {
-                setShowMoreActions(false);
-                setShowReport(true);
-              }}
-            >
-              <span>Report</span>
-              <img src="/imgs/icons/exclamation.svg" alt="" />
-            </MoreActionItem>
-          </MoreActions>
+        {account && (
+          <div ref={buttonRef}>
+            <More className="more" onClick={toggleShowMoreActions} />
+            {showMoreActions && (
+              <MoreActions>
+                <MoreActionItem
+                  onClick={() => {
+                    setShowMoreActions(false);
+                    setShowReport(true);
+                  }}
+                >
+                  <span>Report</span>
+                  <img src="/imgs/icons/exclamation.svg" alt="" />
+                </MoreActionItem>
+              </MoreActions>
+            )}
+          </div>
         )}
       </FlexBetween>
       {expand && <Funders funds={funds} />}
@@ -134,7 +142,11 @@ export default function ActionBar({
         open={showFund}
         setOpen={setShowFund}
       />
-      <ReportModal open={showReport} setOpen={setShowReport} />
+      <ReportModal
+        open={showReport}
+        setOpen={setShowReport}
+        ipfsCid={answerCid}
+      />
     </Wrapper>
   );
 }

@@ -10,6 +10,7 @@ const featureRouters = [
   require("./features/fund/routes"),
   require("./features/resolve/routes"),
   require("./features/notification/routes"),
+  require("./features/report/routes"),
 ];
 
 for (const r of featureRouters) {
