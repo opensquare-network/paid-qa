@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 import { Dropdown } from "../index";
 
-const Wrapper = styled.div`
-  margin-bottom: 8px;
-`;
+const Wrapper = styled.div``;
 
 const DropdownWrapper = styled.div`
   position: relative;
@@ -41,7 +39,7 @@ const DropdownSelector = ({ options = [], value, onSelect = () => {} }) => {
             onSelect(value);
           }}
         />
-        <Header>{options.find(item => item.value === value)?.content}</Header>
+        <Header>{options.find((item) => item.value === value)?.content}</Header>
       </DropdownWrapper>
     </Wrapper>
   );
