@@ -160,6 +160,10 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
       return showErrorToast("Please connect wallet");
     }
 
+    if (!offTopic && !inappropriate && !spam && !duplicate && !somethingElse) {
+      return showErrorToast("Please select at least one reason");
+    }
+
     const toastId = newToastId();
     dispatch(
       addToast({
