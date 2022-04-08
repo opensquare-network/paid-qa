@@ -85,19 +85,21 @@ export default function PromisesList({ network, address }) {
         <NoPost message={"No current topics"} />
       ) : (
         promises?.items?.map((promise, index) => {
-          const symbols = Array.from(
-            new Set(promise.promises.map((p) => p.symbol))
-          );
           return (
             <Card key={index}>
               <PromiseWrapper>
                 <FlexBetween>
                   <Flex>
                     <span>Promised</span>
-                    &nbsp;
-                    <TextMajor>
-                      {promise.value} {promise.symbol}
-                    </TextMajor>
+                    {promise.promises?.length === 1 && (
+                      <>
+                        &nbsp;
+                        <TextMajor>
+                          {promise.promises[0].value}{" "}
+                          {promise.promises[0].symbol}
+                        </TextMajor>
+                      </>
+                    )}
                     &nbsp;in&nbsp;
                     <Link to={`/topic/${promise.topic.cid}`}>
                       <TextMajor>{promise.topic.title}</TextMajor>
@@ -105,23 +107,21 @@ export default function PromisesList({ network, address }) {
                   </Flex>
                   <Tag>{promise.topic.status}</Tag>
                 </FlexBetween>
-                {symbols?.map((symbol, index) => {
-                  const filter = (p) => p.symbol === symbol;
-                  const sum = (a, b) => parseFloat(a) + parseFloat(b);
-                  const promisedAmount = promise.promises
-                    .filter(filter)
-                    .map((p) => p.value)
-                    .reduce(sum, 0);
+                {promise.promises?.map(({ symbol, value }, index) => {
+                  const promisedAmount = value;
                   const fundedAmount =
-                    promise.funds
-                      ?.filter(filter)
-                      ?.map((p) => p.value)
-                      ?.reduce(sum, 0) ?? 0;
+                    promise.funds.find((item) => item.symbol === symbol)
+                      ?.value || 0;
+                  const percentage = Math.max(
+                    0,
+                    Math.min(
+                      100,
+                      parseInt((fundedAmount / promisedAmount) * 100)
+                    )
+                  );
                   return (
                     <Process key={index}>
-                      <ProgressBar
-                        percent={(fundedAmount / promisedAmount) * 100}
-                      />
+                      <ProgressBar percent={percentage} />
                       <FlexBetween>
                         <TextAccessory>Fund</TextAccessory>
                         <span>

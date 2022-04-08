@@ -34,11 +34,24 @@ async function getAccountPromisedTopics(ctx) {
       { $match: { sponsorPublicKey: signerPublicKey } },
       {
         $group: {
-          _id: "$topicCid",
-          promises: {
-            $push: { value: { $toString: "$value" }, symbol: "$symbol" },
+          _id: {
+            topicCid: "$topicCid",
+            symbol: "$symbol",
           },
-          blockTime: { $first: "$blockTime" },
+          value: { $sum: "$value" },
+          promiseTime: { $max: "$blockTime" },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id.topicCid",
+          promises: {
+            $push: {
+              value: { $toString: "$value" },
+              symbol: "$_id.symbol",
+            },
+          },
+          promiseTime: { $max: "$promiseTime" },
         },
       },
       {
@@ -56,6 +69,7 @@ async function getAccountPromisedTopics(ctx) {
           pipeline: [
             {
               $match: {
+                sponsorPublicKey: signerPublicKey,
                 $expr: {
                   $or: [
                     { $eq: ["$ipfsCid", "$$topicCid"] },
@@ -72,6 +86,7 @@ async function getAccountPromisedTopics(ctx) {
             },
             {
               $project: {
+                _id: 0,
                 value: { $toString: "$value" },
                 symbol: "$_id",
               },
@@ -94,7 +109,7 @@ async function getAccountPromisedTopics(ctx) {
           topic: { $arrayElemAt: ["$topic", 0] },
           promises: 1,
           funds: 1,
-          blockTime: 1,
+          promiseTime: 1,
         },
       },
       {
@@ -106,9 +121,21 @@ async function getAccountPromisedTopics(ctx) {
           ],
           items: [
             {
+              $addFields: {
+                statusSort: {
+                  $switch: {
+                    branches: [
+                      { case: { $eq: ["$topic.status", "active"] }, then: 1 },
+                    ],
+                    default: 2,
+                  },
+                },
+              },
+            },
+            {
               $sort: {
-                "topic.status": 1,
-                blockTime: -1,
+                statusSort: 1,
+                promiseTime: -1,
               },
             },
             { $skip: (page - 1) * pageSize },
@@ -238,28 +265,102 @@ async function getAccountAnswers(ctx) {
 async function getAccountOverview(ctx) {
   const { address } = ctx.params;
   const signerPublicKey = toPublicKey(address);
-  const q = { signerPublicKey };
+
   const promisesCountPromise = Reward.aggregate([
     { $match: { sponsorPublicKey: signerPublicKey } },
     { $group: { _id: "$topicCid" } },
     { $count: "total" },
   ]);
+
+  const notFulfilledPromiseCountPromise = Reward.aggregate([
+    { $match: { sponsorPublicKey: signerPublicKey } },
+    {
+      $group: {
+        _id: {
+          topicCid: "$topicCid",
+          symbol: "$symbol",
+        },
+        promiseAmount: { $sum: "$value" },
+      },
+    },
+    {
+      $lookup: {
+        from: "answers",
+        localField: "_id.topicCid",
+        foreignField: "topicCid",
+        as: "answers",
+      },
+    },
+    {
+      $lookup: {
+        from: "funds",
+        let: {
+          topicCid: "$_id.topicCid",
+          answerCid: "$answers.cid",
+          symbol: "$_id.symbol",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$sponsorPublicKey", signerPublicKey] },
+                  { $eq: ["$symbol", "$$symbol"] },
+                  {
+                    $or: [
+                      { $eq: ["$ipfsCid", "$$topicCid"] },
+                      { $in: ["$ipfsCid", "$$answerCid"] },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              value: { $sum: "$value" },
+            },
+          },
+        ],
+        as: "fundAmount",
+      },
+    },
+    {
+      $addFields: {
+        fundAmount: { $arrayElemAt: ["$fundAmount.value", 0] },
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $lt: ["$fundAmount", "$promiseAmount"],
+        },
+      },
+    },
+    { $group: { _id: "$_id.topicCid" } },
+    { $count: "count" },
+  ]);
+
   const [
-    [{ total: promisesCount } = { total: 0 }] = [],
+    [{ total: promisesCount = 0 } = {}] = [],
+    [{ count: notFulfilledPromiseCount = 0 } = {}] = [],
     fundsCount,
     rewardsCount,
     topicsCount,
     answersCount,
   ] = await Promise.all([
     promisesCountPromise,
+    notFulfilledPromiseCountPromise,
     Fund.countDocuments({ sponsorPublicKey: signerPublicKey }),
     Fund.countDocuments({ beneficiaryPublicKey: signerPublicKey }),
-    Topic.countDocuments(q),
-    Answer.countDocuments(q),
+    Topic.countDocuments({ signerPublicKey }),
+    Answer.countDocuments({ signerPublicKey }),
   ]);
 
   ctx.body = {
     promisesCount,
+    fulfilledPromiseCount: promisesCount - notFulfilledPromiseCount,
     fundsCount,
     rewardsCount,
     topicsCount,

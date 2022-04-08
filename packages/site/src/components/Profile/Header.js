@@ -3,11 +3,6 @@ import styled from "styled-components";
 import Container from "@osn/common-ui/lib/styled/Container";
 import User from "components/Profile/User";
 import Tabs from "./Tabs";
-import { useEffect, useState } from "react";
-
-import serverApi from "services/serverApi";
-import { addToast, ToastTypes } from "store/reducers/toastSlice";
-import { useDispatch } from "react-redux";
 import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 import {
   p_14_normal,
@@ -73,33 +68,7 @@ const AboutWrapper = styled(FlexCenter)`
   }
 `;
 
-const sum = (arr) => arr.reduce((acc, cur) => acc + cur, 0);
-const avg = (arr) => (arr?.length > 0 ? sum(arr) / arr.length : undefined);
-
 export default function Header({ network, address, tab, setTab, overview }) {
-  const dispatch = useDispatch();
-  const [promises, setPromises] = useState({});
-  const percentages = Object.values(promises).map(
-    ({ fund, promise }) => fund / promise
-  );
-  const avgPercentage = avg(percentages) || 0;
-
-  useEffect(() => {
-    serverApi
-      .fetch(`/network/${network}/address/${address}/promises`)
-      .then(({ result, error }) => {
-        setPromises(result ?? {});
-        if (error) {
-          dispatch(
-            addToast({
-              type: ToastTypes.Error,
-              message: error?.message || "Failed to load promises",
-            })
-          );
-        }
-      });
-  }, [dispatch, network, address]);
-
   return (
     <Wrapper>
       <Container>
@@ -115,7 +84,7 @@ export default function Header({ network, address, tab, setTab, overview }) {
                     <Tooltip
                       content={`Promised ${
                         overview?.promisesCount || 0
-                      }, Keep ${overview?.promiseFulfilledCount || 0}`}
+                      }, Keep ${overview?.fulfilledPromiseCount || 0}`}
                       size="fit"
                     >
                       <div>
@@ -125,7 +94,10 @@ export default function Header({ network, address, tab, setTab, overview }) {
                       </div>
                     </Tooltip>
                   </div>
-                  <div>{parseInt(avgPercentage * 100)}%</div>
+                  <div>
+                    {overview?.fulfilledPromiseCount || 0}/
+                    {overview?.promisesCount || 0}
+                  </div>
                 </div>
               </div>
               <div>
