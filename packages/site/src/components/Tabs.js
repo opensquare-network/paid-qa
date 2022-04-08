@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
+import { no_scroll_bar } from "@osn/common-ui/lib/styles/componentCss";
 
 const Wrapper = styled.div`
+  overflow-x: scroll;
+  ${no_scroll_bar};
   display: flex;
 
   > :not(:first-child) {
