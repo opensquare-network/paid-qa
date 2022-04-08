@@ -206,7 +206,8 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
           updateToast({
             id: toastId,
             type: ToastTypes.Success,
-            message: "Reported successfully",
+            title: "Thanks for reporting",
+            message: "We will review your report and take action if there is a violation of Paid QA Guidelines.",
           })
         );
       }

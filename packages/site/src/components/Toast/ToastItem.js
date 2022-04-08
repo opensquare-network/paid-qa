@@ -83,7 +83,7 @@ const getToastColor = (type) => {
   }
 };
 
-const ToastItem = ({ type, message, id, sticky }) => {
+const ToastItem = ({ type, title, message, id, sticky }) => {
   const dispatch = useDispatch();
   const color = getToastColor(type);
   const isMounted = useIsMounted();
@@ -110,7 +110,7 @@ const ToastItem = ({ type, message, id, sticky }) => {
   return (
     <Wrapper color={color} className={tranClass}>
       <LeftWrapper>
-        <Title>{type}</Title>
+        <Title>{title || type}</Title>
         <Content>{message}</Content>
       </LeftWrapper>
       <RightWrapper>
