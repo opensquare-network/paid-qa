@@ -20,6 +20,7 @@ import {
 } from "@osn/common-ui/lib/styles/textStyles";
 import { polkadotWeb3Accounts } from "@osn/common-ui/lib/utils/extension";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import { PROJECT_NAME } from "utils/constants";
 
 const Wrapper = styled.div``;
 
@@ -99,7 +100,7 @@ export default function ConnectModal() {
 
   useEffect(() => {
     (async () => {
-      const web3Apps = await web3Enable("PaidQA");
+      const web3Apps = await web3Enable(PROJECT_NAME);
       if (isMounted.current) {
         setHasExtension(isWeb3Injected);
       }

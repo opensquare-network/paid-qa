@@ -5,7 +5,7 @@ import getApi from "ui/lib/services/chain/api";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import serverApi from "../services/serverApi";
-import { EmptyList, tabRouterMap } from "./constants";
+import { EmptyList, PROJECT_NAME, tabRouterMap } from "./constants";
 
 export function useApi() {
   const account = useSelector(accountSelector);
@@ -22,7 +22,7 @@ export function useApi() {
     const signal = abortController.signal;
 
     (async (signal) => {
-      await web3Enable("paidQA");
+      await web3Enable(PROJECT_NAME);
       const injector = await web3FromAddress(account.address);
       const api = await getApi(account.network, nodeUrl);
       api.setSigner(injector.signer);

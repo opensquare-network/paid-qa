@@ -4,6 +4,7 @@ import {
   web3FromAddress,
 } from "@polkadot/extension-dapp";
 import { stringToHex } from "@polkadot/util";
+import { PROJECT_NAME } from "utils/constants";
 
 export const signMessage = async (text, address) => {
   if (!isWeb3Injected) {
@@ -14,7 +15,7 @@ export const signMessage = async (text, address) => {
     throw new Error("Sign addres is missing");
   }
 
-  await web3Enable("paidQA");
+  await web3Enable(PROJECT_NAME);
   const injector = await web3FromAddress(address);
 
   const data = stringToHex(text);
