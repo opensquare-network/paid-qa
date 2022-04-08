@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   isWeb3Injected,
   web3Enable,
@@ -99,13 +99,13 @@ export default function ConnectModal() {
 
   useEffect(() => {
     (async () => {
+      const web3Apps = await web3Enable("PaidQA");
       if (isMounted.current) {
         setHasExtension(isWeb3Injected);
       }
       if (!isWeb3Injected) {
         return;
       }
-      const web3Apps = await web3Enable("PaidQA");
       const polkadotEnabled = web3Apps?.length > 0;
       if (isMounted.current) {
         setIsPolkadotAccessible(polkadotEnabled);
