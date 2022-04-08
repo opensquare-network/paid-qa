@@ -4,6 +4,7 @@ const Wrapper = styled.span`
   padding: 2px 12px;
   text-transform: capitalize;
   color: white;
+  line-height: 18px;
 `;
 
 const getColor = (tag) => {

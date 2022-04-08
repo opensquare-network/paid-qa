@@ -14,28 +14,52 @@ import Card from "@osn/common-ui/lib/styled/Card";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import Tag from "../Tag";
 import ProgressBar from "../ProgressBar";
+import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
 
 const Wrapper = styled.div`
   > div {
     margin-bottom: 20px;
+    padding: 24px;
+    @media screen and (max-width: ${MOBILE_SIZE}px) {
+      padding: 16px;
+    }
   }
+`;
+
+const NoWrap = styled.span`
+  white-space: nowrap;
+`;
+const TextWrap = styled.span`
+  white-space: pre-wrap;
+  word-break: break-all;
 `;
 
 const PromiseWrapper = styled(Flex)`
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   > div {
     flex-basis: 100%;
   }
+`;
 
-  > :first-child {
-    margin-bottom: 4px;
+const HeadLine = styled(FlexBetween)`
+  line-height: 24px;
+  gap: 12px;
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    flex-wrap: wrap;
+    justify-content: end;
+    > :first-child {
+      flex-basis: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
   }
 `;
 
 const TextMajor = styled.span`
   font-weight: 500;
   color: #1e2134;
+  white-space: nowrap;
 `;
 
 const TextAccessory = styled.div`
@@ -44,9 +68,12 @@ const TextAccessory = styled.div`
 
 const Process = styled(Flex)`
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 4px;
   > div {
     flex-basis: 100%;
+  }
+  > :nth-child(2) {
+    line-height: 24px;
   }
 `;
 
@@ -76,7 +103,6 @@ export default function PromisesList({ network, address }) {
         setIsLoading(false);
       });
   }, [dispatch, network, address, page]);
-
   return (
     <Wrapper>
       {isLoading ? (
@@ -88,25 +114,24 @@ export default function PromisesList({ network, address }) {
           return (
             <Card key={index}>
               <PromiseWrapper>
-                <FlexBetween>
-                  <Flex>
-                    <span>Promised</span>
-                    {promise.promises?.length === 1 && (
-                      <>
-                        &nbsp;
-                        <TextMajor>
-                          {promise.promises[0].value}{" "}
-                          {promise.promises[0].symbol}
-                        </TextMajor>
-                      </>
-                    )}
-                    &nbsp;in&nbsp;
+                <HeadLine>
+                  <TextWrap>
+                    <NoWrap>Promised&nbsp;</NoWrap>
+                    <TextMajor>
+                      {promise.promises
+                        ?.map((p) => `${p.value} ${p.symbol}`)
+                        .join(", ")}
+                    </TextMajor>
+                    <NoWrap>&nbsp;in&nbsp;</NoWrap>
                     <Link to={`/topic/${promise.topic.cid}`}>
-                      <TextMajor>{promise.topic.title}</TextMajor>
+                      <TextMajor style={{ whiteSpace: "pre-wrap" }}>
+                        {promise.topic.title}
+                        {promise.topic.title}
+                      </TextMajor>
                     </Link>
-                  </Flex>
+                  </TextWrap>
                   <Tag>{promise.topic.status}</Tag>
-                </FlexBetween>
+                </HeadLine>
                 {promise.promises?.map(({ symbol, value }, index) => {
                   const promisedAmount = value;
                   const fundedAmount =
