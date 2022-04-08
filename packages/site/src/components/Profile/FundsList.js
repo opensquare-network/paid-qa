@@ -1,9 +1,6 @@
 import styled from "styled-components";
-
 import Card from "@osn/common-ui/lib/styled/Card";
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import { useEffect, useState } from "react";
-
 import NoPost from "components/NoPost";
 import ListLoader from "components/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
@@ -18,26 +15,21 @@ import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { Link } from "react-router-dom";
 import IdentityOrAddr from "../User/IdentityOrAddr";
+import Wrapper from "./styled/ListWrapper";
 
-const Wrapper = styled.div`
-  > :not(:first-child) {
-    margin-top: 20px;
-  }
-  a {
-    :hover {
-      text-decoration: underline;
-    }
-    cursor: pointer;
-  }
-`;
-
-const StyledDividerWrapper = styled(DividerWrapper)`
+const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
   color: #506176;
 
   > :nth-child(2) {
     font-weight: 500;
     color: #1e2134;
+  }
+
+  > :nth-child(6)::after {
+    content: "·";
+    margin: 0 8px;
+    color: #a1a8b3;
   }
 `;
 
@@ -93,26 +85,26 @@ export default function FundsList({ network, address }) {
           return (
             <Card key={index}>
               <StyledDividerWrapper>
-                Funded
-                <Flex>
-                  <MarginX8>
-                    <Avatar address={fund.beneficiary} />
-                  </MarginX8>
-                  <ChainIcon chainName={fund.network} size={16} />
-                  &nbsp;
-                  <IdentityOrAddr
-                    address={fund.beneficiary}
-                    network={fund.network}
-                  />
-                  &nbsp;with&nbsp;
-                  <TextMajor>
-                    {fund.value} {fund.symbol}
-                  </TextMajor>
-                  &nbsp;in&nbsp;
-                  <Link to={`/topic/${topic?.cid}`}>
-                    <TextMajor>{topic?.title}</TextMajor>
-                  </Link>
-                </Flex>
+                <span>Funded</span>
+                {/*<Flex>*/}
+                <MarginX8>
+                  <Avatar address={fund.beneficiary} />
+                </MarginX8>
+                <ChainIcon chainName={fund.network} size={16} />
+                &nbsp;
+                <IdentityOrAddr
+                  address={fund.beneficiary}
+                  network={fund.network}
+                />
+                &nbsp;with&nbsp;
+                <TextMajor>
+                  {fund.value} {fund.symbol}
+                </TextMajor>
+                &nbsp;in&nbsp;
+                <Link to={`/topic/${topic?.cid}`}>
+                  <TextMajor>{topic?.title}</TextMajor>
+                </Link>
+                {/*</Flex>*/}
                 <TextAccessory>
                   <Time time={fund.blockTime} />
                 </TextAccessory>

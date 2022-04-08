@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-
-import styled from "styled-components";
 import Topic from "components/Topic";
 import NoPost from "components/NoPost";
 import ListLoader from "components/Skeleton/ListLoader";
@@ -9,8 +7,7 @@ import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
 import { addToast, ToastTypes } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
-
-const Wrapper = styled.div``;
+import Wrapper from "./styled/ListWrapper";
 
 export default function TopicsList({ network, address }) {
   const dispatch = useDispatch();

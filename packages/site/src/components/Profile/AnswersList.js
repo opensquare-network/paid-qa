@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import Card from "@osn/common-ui/lib/styled/Card";
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import { useEffect, useState } from "react";
 
 import NoPost from "components/NoPost";
@@ -15,19 +14,20 @@ import Time from "@osn/common-ui/lib/Time";
 import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
 import { Link } from "react-router-dom";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import Flex from "@osn/common-ui/lib/styled/Flex";
+import Wrapper from "./styled/ListWrapper";
 
-const Wrapper = styled.div`
-  > :not(:first-child) {
-    margin-top: 20px;
-  }
-`;
-
-const StyledDividerWrapper = styled(DividerWrapper)`
+const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
   color: #506176;
   > :nth-child(2) {
     font-weight: 500;
     color: #1e2134;
+  }
+  > :nth-child(2)::after {
+    content: "·";
+    margin: 0 8px;
+    color: #a1a8b3;
   }
 `;
 
@@ -81,12 +81,10 @@ export default function AnswersList({ network, address }) {
           return (
             <Card key={index}>
               <StyledDividerWrapper>
-                <div>Reply to</div>
-                <div>
-                  <TitleLink to={`/topic/${answer.topic.cid}`}>
-                    {answer.topic.title}
-                  </TitleLink>
-                </div>
+                <span>Reply to&nbsp;</span>
+                <TitleLink to={`/topic/${answer.topic.cid}`}>
+                  {answer.topic.title}&nbsp;
+                </TitleLink>
                 <Time time={answer.createdAt} />
               </StyledDividerWrapper>
               <Divider />
