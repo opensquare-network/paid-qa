@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import styled from "styled-components";
 import NoPost from "components/NoPost";
 import ListLoader from "components/Skeleton/ListLoader";
@@ -14,17 +13,8 @@ import Card from "@osn/common-ui/lib/styled/Card";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import Tag from "../Tag";
 import ProgressBar from "../ProgressBar";
+import Wrapper from "./styled/ListWrapper";
 import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
-
-const Wrapper = styled.div`
-  > div {
-    margin-bottom: 20px;
-    padding: 24px;
-    @media screen and (max-width: ${MOBILE_SIZE}px) {
-      padding: 16px;
-    }
-  }
-`;
 
 const NoWrap = styled.span`
   white-space: nowrap;
