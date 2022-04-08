@@ -76,7 +76,6 @@ export default function PromisesList({ network, address }) {
         setIsLoading(false);
       });
   }, [dispatch, network, address, page]);
-
   return (
     <Wrapper>
       {isLoading ? (
@@ -90,16 +89,12 @@ export default function PromisesList({ network, address }) {
               <PromiseWrapper>
                 <FlexBetween>
                   <Flex>
-                    <span>Promised</span>
-                    {promise.promises?.length === 1 && (
-                      <>
-                        &nbsp;
-                        <TextMajor>
-                          {promise.promises[0].value}{" "}
-                          {promise.promises[0].symbol}
-                        </TextMajor>
-                      </>
-                    )}
+                    <span>Promised&nbsp;</span>
+                    <TextMajor>
+                      {promise.promises
+                        ?.map((p) => `${p.value} ${p.symbol}`)
+                        .join(", ")}
+                    </TextMajor>
                     &nbsp;in&nbsp;
                     <Link to={`/topic/${promise.topic.cid}`}>
                       <TextMajor>{promise.topic.title}</TextMajor>
