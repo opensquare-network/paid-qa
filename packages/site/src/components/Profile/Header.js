@@ -84,7 +84,7 @@ export default function Header({ network, address, tab, setTab, overview }) {
                     <Tooltip
                       content={`Promised ${
                         overview?.promisesCount || 0
-                      }, Keep ${overview?.fulfilledPromiseCount || 0}`}
+                      }, Kept ${overview?.fulfilledPromiseCount || 0}`}
                       size="fit"
                     >
                       <div>
