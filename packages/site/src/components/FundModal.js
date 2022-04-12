@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
@@ -17,7 +17,6 @@ import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
 import AssetInput from "./AssetInput";
 import { useApi } from "utils/hooks";
-import { hexToString } from "@polkadot/util";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitFund } from "services/chainApi";
 import {
@@ -26,7 +25,6 @@ import {
   ToastTypes,
   updateToast,
 } from "store/reducers/toastSlice";
-import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import serverApi from "services/serverApi";
