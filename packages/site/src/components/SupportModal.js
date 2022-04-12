@@ -34,6 +34,7 @@ import {
 } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
+import BalanceInfo from "./BalanceInfo";
 
 const { InteractionEncoder } = encoder;
 const { SupportInteraction } = interactions;
@@ -312,10 +313,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
           </ChainWrapper>
 
           <ItemTitle>
-            <FlexBetween style={{ flexBasis: "100%" }}>
-              <StyledText>Asset</StyledText>
-              <ValueDisplay value={balance} chain={account.network} showAEM />
-            </FlexBetween>
+            <StyledText>Asset</StyledText>
             {account?.network === "statemine" && (
               <ManualSwitch>
                 <span>Manual</span>
@@ -343,6 +341,8 @@ export default function SupportModal({ open, setOpen, topicCid }) {
             symbol={loadingSymbol ? <Loading /> : symbol}
             onChange={(e) => setInputAmount(e.target.value)}
           />
+
+          <BalanceInfo account={account} tokenIdentifier={tokenIdentifier} />
 
           <ActionBar>
             <Button primary onClick={doConfirm}>

@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import FundButton from "../../FundButton";
-import FundModel from "../../FundModel";
+import FundModal from "../../FundModal";
 import Funders from "../../Funders";
 import { ReactComponent as ReplyIcon } from "imgs/icons/reply.svg";
 import {
@@ -136,7 +136,7 @@ export default function ActionBar({
         )}
       </FlexBetween>
       {expand && <Funders funds={funds} />}
-      <FundModel
+      <FundModal
         ipfsCid={answerCid}
         beneficiary={answerOwner}
         open={showFund}

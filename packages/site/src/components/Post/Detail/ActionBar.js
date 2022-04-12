@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import FundButton from "../../FundButton";
-import FundModel from "../../FundModel";
+import FundModal from "../../FundModal";
 import Funders from "../../Funders";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -95,7 +95,7 @@ export default function ActionBar({ topicCid, topicOwner, funds }) {
         )}
       </FlexBetween>
       {expand && <Funders funds={funds} />}
-      <FundModel
+      <FundModal
         ipfsCid={topicCid}
         beneficiary={topicOwner}
         open={showFund}
