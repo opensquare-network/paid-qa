@@ -11,7 +11,7 @@ import Toggle from "@osn/common-ui/lib/Toggle";
 import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
 import AssetInput from "./AssetInput";
-import { useApi } from "utils/hooks";
+import { useApi, useBalance } from "utils/hooks";
 import { hexToString } from "@polkadot/util";
 import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
@@ -32,6 +32,8 @@ import {
   p_16_semibold,
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
+import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 
 const { InteractionEncoder } = encoder;
 const { SupportInteraction } = interactions;
@@ -130,9 +132,9 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [loadingSymbol, setLoadingSymbol] = useState(false);
-  const isMounted = useIsMounted();
-
   const api = useApi();
+  const balance = useBalance(account, api);
+  const isMounted = useIsMounted();
 
   const fetchAssetSymbol = useMemo(() => {
     return debounce(async (assetId) => {
@@ -310,7 +312,10 @@ export default function SupportModal({ open, setOpen, topicCid }) {
           </ChainWrapper>
 
           <ItemTitle>
-            <StyledText>Asset</StyledText>
+            <FlexBetween style={{ flexBasis: "100%" }}>
+              <StyledText>Asset</StyledText>
+              <ValueDisplay value={balance} chain={account.network} showAEM />
+            </FlexBetween>
             {account?.network === "statemine" && (
               <ManualSwitch>
                 <span>Manual</span>
