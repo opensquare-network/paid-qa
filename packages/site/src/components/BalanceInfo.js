@@ -7,13 +7,7 @@ import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import styled from "styled-components";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
-import { useSelector } from "react-redux";
-import { accountSelector } from "../store/reducers/accountSlice";
-import BigNumber from "bignumber.js";
-import {
-  getDecimalByChain,
-  getSymbolByChain,
-} from "@osn/common-ui/lib/utils/tokenValue";
+import { getSymbolByChain } from "@osn/common-ui/lib/utils/tokenValue";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 
 const Wrapper = styled(FlexBetween)`
@@ -86,7 +80,7 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
         setLoadingBalance(false);
       }
     }, 300);
-  }, [api, account?.address, account?.network, isMounted, decimals]);
+  }, [api, account?.address, isMounted]);
 
   useEffect(() => {
     setLoadingBalance(true);
