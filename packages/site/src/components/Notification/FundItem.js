@@ -1,16 +1,15 @@
 import styled from "styled-components";
 import Time from "@osn/common-ui/lib/Time";
-import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
-import { Avatar } from "@osn/common-ui/lib";
 import Flex from "@osn/common-ui/lib/styled/Flex";
-import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import { Link } from "react-router-dom";
+import NetworkUser from "../User/NetworkUser";
 
 const FlexWrapper = styled(Flex)`
   flex-wrap: wrap;
-  > :nth-child(5)::after {
+  gap: 8px;
+  > :nth-child(4)::before {
     content: "·";
-    margin: 0 8px;
+    margin-right: 8px;
     color: #a1a8b3;
   }
 `;
@@ -18,11 +17,6 @@ const FlexWrapper = styled(Flex)`
 const TextMajor = styled.span`
   font-weight: 500;
   color: #1e2134;
-`;
-
-const MarginX8 = styled(Flex)`
-  margin-left: 8px;
-  margin-right: 8px;
 `;
 
 export default function FundItem({ notification, type = "Funded" }) {
@@ -38,18 +32,17 @@ export default function FundItem({ notification, type = "Funded" }) {
     <>
       <FlexWrapper>
         {type} by
-        <MarginX8>
-          <Avatar address={funder} />
-        </MarginX8>
-        <ChainIcon chainName={network} size={16} />
-        <TextMajor style={{ marginLeft: 4 }}>
-          {addressEllipsis(funder)}
-        </TextMajor>
-        &nbsp;with&nbsp;
+        <NetworkUser
+          address={funder}
+          network={network}
+          iconSize={16}
+          tooltipPosition="down"
+        />
+        with
         <TextMajor>
           {fund.value} {fund.symbol}
         </TextMajor>
-        &nbsp;in&nbsp;
+        in
         <Link to={`/topic/${topic.cid}`}>
           <TextMajor>{topic.title}</TextMajor>
         </Link>
