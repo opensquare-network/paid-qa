@@ -16,11 +16,12 @@ import { useNotifications } from "../utils/hooks";
 
 const Wrapper = styled.div`
   position: relative;
-  padding: 40px 0 64px;
+  padding: 0 0 64px;
 `;
 
 const ContentWrapper = styled.div`
-  margin: 20px 0;
+  position: relative;
+  margin-bottom: 20px;
   .markdown-content {
     max-width: initial;
     display: -webkit-box;
@@ -51,9 +52,9 @@ export default function Notifications() {
 
   return (
     <Wrapper>
+      <Header tab={tab} setTab={setTab} />
       <Container>
         <ContentWrapper>
-          <Header tab={tab} setTab={setTab} />
           {isLoading && <ListLoader style={{ marginTop: 20 }} />}
           {tab === "notifications" && (
             <NotificationList {...{ notifications }} />
