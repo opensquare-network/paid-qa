@@ -169,6 +169,7 @@ export default function Appendants({
           })
         );
         dispatch(fetchTopic(topicCid));
+        setEditing(false);
       }
 
       if (error) {
