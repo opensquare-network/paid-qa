@@ -8,7 +8,7 @@ import ListLoader from "components/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
-import { addToast, ToastTypes } from "store/reducers/toastSlice";
+import { newErrorToast } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
 import Time from "@osn/common-ui/lib/Time";
 import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
@@ -57,12 +57,7 @@ export default function AnswersList({ network, address }) {
       .then(({ result, error }) => {
         setAnswers(result ?? EmptyList);
         if (error) {
-          dispatch(
-            addToast({
-              type: ToastTypes.Error,
-              message: error?.message || "Failed to load replies",
-            })
-          );
+          dispatch(newErrorToast(error?.message || "Failed to load replies"));
         }
       })
       .finally(() => {

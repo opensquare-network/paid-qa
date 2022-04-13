@@ -11,9 +11,12 @@ import serverApi from "services/serverApi";
 import { accountSelector } from "store/reducers/accountSlice";
 import {
   addToast,
+  newErrorToast,
+  newPendingToast,
   newToastId,
+  removeToast,
   ToastTypes,
-  updateToast,
+  updatePendingToast,
 } from "store/reducers/toastSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -144,14 +147,7 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
     />
   );
 
-  const showErrorToast = (message) => {
-    dispatch(
-      addToast({
-        type: ToastTypes.Error,
-        message,
-      })
-    );
-  };
+  const showErrorToast = (message) => dispatch(newErrorToast(message));
 
   const report = async () => {
     setOpen(false);
@@ -165,14 +161,7 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
     }
 
     const toastId = newToastId();
-    dispatch(
-      addToast({
-        type: ToastTypes.Pending,
-        message: "Waiting for signing...",
-        id: toastId,
-        sticky: true,
-      })
-    );
+    dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
       const data = {
@@ -193,49 +182,27 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
         signature,
       };
 
-      dispatch(
-        updateToast({
-          id: toastId,
-          message: "Reporting...",
-        })
-      );
+      dispatch(updatePendingToast(toastId, "Reporting..."));
 
       const { result, error } = await serverApi.post("/report", payload);
       if (result) {
         dispatch(
-          updateToast({
-            id: toastId,
+          addToast({
             type: ToastTypes.Success,
             title: "Thanks for reporting",
-            message: "We will review your report and take action if there is a violation of Paid QA Guidelines.",
+            message:
+              "We will review your report and take action if there is a violation of Paid QA Guidelines.",
           })
         );
       }
 
       if (error) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(
-        updateToast({
-          id: toastId,
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      dispatch(newErrorToast(e.message));
     } finally {
-      dispatch(
-        updateToast({
-          id: toastId,
-          sticky: false,
-        })
-      );
+      dispatch(removeToast(toastId));
     }
   };
 

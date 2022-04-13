@@ -17,10 +17,12 @@ import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import {
-  addToast,
+  newErrorToast,
+  newPendingToast,
+  newSuccessToast,
   newToastId,
-  ToastTypes,
-  updateToast,
+  removeToast,
+  updatePendingToast,
 } from "store/reducers/toastSlice";
 import { fetchTopic } from "store/reducers/topicSlice";
 import debounce from "lodash.debounce";
@@ -173,12 +175,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   }, [selectedAsset, manualOn]);
 
   const showErrorToast = (message) => {
-    dispatch(
-      addToast({
-        type: ToastTypes.Error,
-        message,
-      })
-    );
+    dispatch(newErrorToast(message));
     if (isMounted.current) {
       setOpen(false);
     }
@@ -218,14 +215,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
     const remark = new InteractionEncoder(interaction).getRemark();
 
     const toastId = newToastId();
-    dispatch(
-      addToast({
-        type: ToastTypes.Pending,
-        message: "Waiting for signing...",
-        id: toastId,
-        sticky: true,
-      })
-    );
+    dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
       const { blockHash, extrinsicIndex } = await submitRemark(
@@ -233,12 +223,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         remark,
         account,
         (status) => {
-          dispatch(
-            updateToast({
-              id: toastId,
-              message: status,
-            })
-          );
+          dispatch(updatePendingToast(toastId, status));
         }
       );
       const payload = {
@@ -252,39 +237,16 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         payload
       );
       if (result) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Success,
-            message: "Support added",
-          })
-        );
+        dispatch(newSuccessToast("Support added"));
         dispatch(fetchTopic(topicCid));
       }
       if (error) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(
-        updateToast({
-          id: toastId,
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      dispatch(newErrorToast(e.message));
     } finally {
-      dispatch(
-        updateToast({
-          id: toastId,
-          sticky: false,
-        })
-      );
+      dispatch(removeToast(toastId));
     }
   };
 

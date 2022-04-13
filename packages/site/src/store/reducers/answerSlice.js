@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addToast, ToastTypes } from "./toastSlice";
+import { newErrorToast } from "./toastSlice";
 import serverApi from "services/serverApi";
 
 const answerSlice = createSlice({
@@ -26,12 +26,7 @@ export const fetchAnswers = (topicCid, page) => async (dispatch) => {
         dispatch(setAnswers(result));
       }
       if (error) {
-        dispatch(
-          addToast({
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     });
 };

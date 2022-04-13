@@ -7,7 +7,7 @@ import TopicsList from "components/Profile/TopicsList";
 import AnswersList from "components/Profile/AnswersList";
 import { useParams } from "react-router";
 import serverApi from "../services/serverApi";
-import { addToast, ToastTypes } from "../store/reducers/toastSlice";
+import { newErrorToast } from "../store/reducers/toastSlice";
 import { useDispatch } from "react-redux";
 import FundsList from "../components/Profile/FundsList";
 import PromisesList from "../components/Profile/PromisesList";
@@ -36,12 +36,7 @@ export default function Profile() {
       .then(({ result, error }) => {
         setOverview(result);
         if (error) {
-          dispatch(
-            addToast({
-              type: ToastTypes.Error,
-              message: error?.message || "Failed to load profile",
-            })
-          );
+          dispatch(newErrorToast(error?.message || "Failed to load profile"));
         }
       });
   }, [dispatch, network, address]);

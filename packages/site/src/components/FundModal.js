@@ -20,10 +20,12 @@ import { useApi } from "utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitFund } from "services/chainApi";
 import {
-  addToast,
+  newErrorToast,
+  newPendingToast,
+  newSuccessToast,
   newToastId,
-  ToastTypes,
-  updateToast,
+  removeToast,
+  updatePendingToast,
 } from "store/reducers/toastSlice";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
@@ -149,12 +151,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   }, [selectedAsset, manualOn]);
 
   const showErrorToast = (message) => {
-    dispatch(
-      addToast({
-        type: ToastTypes.Error,
-        message,
-      })
-    );
+    dispatch(newErrorToast(message));
     if (isMounted.current) {
       setOpen(false);
     }
@@ -190,14 +187,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
     const remark = new InteractionEncoder(interaction).getRemark();
 
     const toastId = newToastId();
-    dispatch(
-      addToast({
-        type: ToastTypes.Pending,
-        message: "Waiting for signing...",
-        id: toastId,
-        sticky: true,
-      })
-    );
+    dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
       const { blockHash, extrinsicIndex } = await submitFund(
@@ -212,12 +202,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         },
         account,
         (status) => {
-          dispatch(
-            updateToast({
-              id: toastId,
-              message: status,
-            })
-          );
+          dispatch(updatePendingToast(toastId, status));
         }
       );
       const payload = {
@@ -228,13 +213,8 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
       const { result, error } = await serverApi.post(`/funds`, payload);
       if (result) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Success,
-            message: "Funded",
-          })
-        );
+        dispatch(newSuccessToast("Funded"));
+
         // After fund is added, update the topic
         dispatch(fetchTopic(topic.cid));
         dispatch(fetchAnswers(topic.cid, answers.page));
@@ -242,29 +222,12 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
       }
 
       if (error) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(
-        updateToast({
-          id: toastId,
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      dispatch(newErrorToast(e.toString()));
     } finally {
-      dispatch(
-        updateToast({
-          id: toastId,
-          sticky: false,
-        })
-      );
+      dispatch(removeToast(toastId));
     }
   };
 

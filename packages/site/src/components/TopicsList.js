@@ -14,7 +14,7 @@ import {
   topicsSelector,
 } from "../store/reducers/topicSlice";
 import serverApi from "../services/serverApi";
-import { addToast, ToastTypes } from "../store/reducers/toastSlice";
+import { newErrorToast } from "../store/reducers/toastSlice";
 import { EmptyList } from "../utils/constants";
 import { useSearchParams } from "react-router-dom";
 
@@ -49,12 +49,7 @@ export default function TopicsList() {
       .then(({ result, error }) => {
         dispatch(setTopics(result ?? EmptyList));
         if (error) {
-          dispatch(
-            addToast({
-              type: ToastTypes.Error,
-              message: error?.message || "Failed to load topics",
-            })
-          );
+          dispatch(newErrorToast(error?.message || "Failed to load topics"));
         }
       })
       .finally(() => {

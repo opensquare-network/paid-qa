@@ -7,10 +7,12 @@ import Card from "@osn/common-ui/lib/styled/Card";
 import Item from "./Item";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import {
-  addToast,
+  newErrorToast,
+  newPendingToast,
+  newSuccessToast,
   newToastId,
-  ToastTypes,
-  updateToast,
+  removeToast,
+  updatePendingToast,
 } from "store/reducers/toastSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
@@ -73,14 +75,7 @@ export default function Answers({ topicCid }) {
   const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();
 
-  const showErrorToast = (message) => {
-    dispatch(
-      addToast({
-        type: ToastTypes.Error,
-        message,
-      })
-    );
-  };
+  const showErrorToast = (message) => dispatch(newErrorToast(message));
 
   useEffect(() => {
     if (topicCid) {
@@ -107,14 +102,7 @@ export default function Answers({ topicCid }) {
     const msg = JSON.stringify(answer);
 
     const toastId = newToastId();
-    dispatch(
-      addToast({
-        type: ToastTypes.Pending,
-        message: "Waiting for signing...",
-        id: toastId,
-        sticky: true,
-      })
-    );
+    dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
       setLoading(true);
@@ -127,12 +115,7 @@ export default function Answers({ topicCid }) {
         signature,
       };
 
-      dispatch(
-        updateToast({
-          id: toastId,
-          message: "Posting...",
-        })
-      );
+      dispatch(updatePendingToast(toastId, "Posting..."));
 
       const { result, error } = await serverApi.post(
         `/topics/${topicCid}/answers`,
@@ -140,42 +123,19 @@ export default function Answers({ topicCid }) {
       );
       if (result) {
         setContent("");
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Success,
-            message: "Answer posted",
-          })
-        );
+        dispatch(newSuccessToast("Answer posted"));
         dispatch(fetchAnswers(topicCid, page));
       }
       if (error) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(
-        updateToast({
-          id: toastId,
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      dispatch(newErrorToast(e.message));
     } finally {
+      dispatch(removeToast(toastId));
       if (isMounted.current) {
         setLoading(false);
       }
-      dispatch(
-        updateToast({
-          id: toastId,
-          sticky: false,
-        })
-      );
     }
   };
 

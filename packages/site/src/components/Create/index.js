@@ -14,10 +14,12 @@ import { useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import {
-  addToast,
-  ToastTypes,
   newToastId,
-  updateToast,
+  newErrorToast,
+  newPendingToast,
+  updatePendingToast,
+  newSuccessToast,
+  removeToast,
 } from "../../store/reducers/toastSlice";
 import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
@@ -123,14 +125,7 @@ export default function Create() {
   const balance = useBalance(account, api);
   const isMounted = useIsMounted();
 
-  const showErrorToast = (message) => {
-    dispatch(
-      addToast({
-        type: ToastTypes.Error,
-        message,
-      })
-    );
-  };
+  const showErrorToast = (message) => dispatch(newErrorToast(message));
 
   const onPublish = async () => {
     if (!account) {
@@ -162,14 +157,7 @@ export default function Create() {
     setLoading(true);
 
     const toastId = newToastId();
-    dispatch(
-      addToast({
-        type: ToastTypes.Pending,
-        message: "Waiting for signing...",
-        id: toastId,
-        sticky: true,
-      })
-    );
+    dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
       const { blockHash, extrinsicIndex } = await submitRemark(
@@ -177,12 +165,7 @@ export default function Create() {
         remark,
         account,
         (status) => {
-          dispatch(
-            updateToast({
-              id: toastId,
-              message: status,
-            })
-          );
+          dispatch(updatePendingToast(toastId, status));
         }
       );
 
@@ -195,42 +178,19 @@ export default function Create() {
 
       const { result, error } = await serverApi.post(`/topics/`, payload);
       if (result) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Success,
-            message: "Topic created successfully",
-          })
-        );
+        dispatch(newSuccessToast("Topic created successfully"));
         navigate(`/topic/${result.cid}`);
       }
       if (error) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(
-        updateToast({
-          id: toastId,
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      dispatch(newErrorToast(e.message));
     } finally {
+      dispatch(removeToast(toastId));
       if (isMounted.current) {
         setLoading(false);
       }
-      dispatch(
-        updateToast({
-          id: toastId,
-          sticky: false,
-        })
-      );
     }
   };
 
