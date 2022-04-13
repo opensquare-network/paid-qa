@@ -53,7 +53,7 @@ export const newPendingToast = (id, message) =>
   });
 
 export const updatePendingToast = (id, message) =>
-  addToast({
+  updateToast({
     id,
     message,
   });
