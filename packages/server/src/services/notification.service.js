@@ -6,6 +6,7 @@ async function getNotifications(network, address, page, pageSize) {
   const q = { publicKey };
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
+    .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("data.topic")
@@ -28,6 +29,7 @@ async function getDiscussionNotifications(network, address, page, pageSize) {
   };
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
+    .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("data.topic")
@@ -48,6 +50,7 @@ async function getRewardNotifications(network, address, page, pageSize) {
   };
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
+    .sort({ createdAt: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("data.topic")

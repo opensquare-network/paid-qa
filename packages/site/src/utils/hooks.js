@@ -75,3 +75,23 @@ export function useNotifications(page, account, tab, setPage) {
   }, [account?.network, account?.address, page, tab, notifications.total]);
   return [isLoading, notifications];
 }
+
+export const useBalance = (account, api) => {
+  const [balance, setBalance] = useState();
+
+  useEffect(() => {
+    (async () => {
+      setBalance(undefined);
+      if (api) {
+        const lastHdr = await api.rpc.chain.getHeader();
+        const { data: balanceNow } = await api.query.system.account.at(
+          lastHdr.hash,
+          account.address
+        );
+        setBalance(balanceNow?.toJSON()?.free);
+      }
+    })();
+  }, [account?.address, account?.network, api]);
+
+  return balance;
+};

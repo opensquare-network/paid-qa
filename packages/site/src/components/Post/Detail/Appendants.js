@@ -146,6 +146,7 @@ export default function Appendants({
         setContent("");
         dispatch(newSuccessToast("Appendant added"));
         dispatch(fetchTopic(topicCid));
+        setEditing(false);
       }
 
       if (error) {
@@ -173,9 +174,11 @@ export default function Appendants({
           <span>Appendants</span>
           <Count>{appendantsCount}</Count>
         </DividerWrapper>
-        <AddButton onClick={() => setEditing(!editing)}>
-          <AddIcon />
-        </AddButton>
+        {isOwner && (
+          <AddButton onClick={() => setEditing(!editing)}>
+            <AddIcon />
+          </AddButton>
+        )}
       </FlexBetween>
       {appendants?.map((item, index) => (
         <ItemWrapper key={index}>

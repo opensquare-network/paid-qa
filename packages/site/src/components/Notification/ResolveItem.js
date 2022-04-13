@@ -22,11 +22,11 @@ export default function ResolveItem({ notification }) {
   return (
     <>
       <FlexWrapper>
-        Topic&nbsp;
+        Topic
         <Link to={`/topic/${topic.cid}`}>
           <TextMajor>{topic.title}</TextMajor>
         </Link>
-        <span>&nbsp;has been resolved</span>
+        <span>has been resolved</span>
         <Time time={notification.updatedAt} />
       </FlexWrapper>
     </>

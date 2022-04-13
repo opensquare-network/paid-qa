@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import Card from "@osn/common-ui/lib/styled/Card";
 import Title from "./Title";
-import Rewards from "./Rewards";
 import Description from "./Description";
 import Appendants from "./Appendants";
 import Share from "./Share";
@@ -37,7 +36,6 @@ export default function Detail({ topic }) {
   return (
     <Wrapper>
       <Title topic={topic} />
-      <Rewards />
       <Description topic={topic} />
       <Appendants
         topicCid={topic.cid}

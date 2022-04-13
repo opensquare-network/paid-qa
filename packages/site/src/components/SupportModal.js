@@ -34,6 +34,7 @@ import {
   p_16_semibold,
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
+import BalanceInfo from "./BalanceInfo";
 
 const { InteractionEncoder } = encoder;
 const { SupportInteraction } = interactions;
@@ -54,6 +55,7 @@ const StyledCard = styled.div`
 
 const StyledTitle = styled.header`
   ${p_20_semibold};
+  line-height: 28px;
   color: #1e2134;
   margin-bottom: 8px;
 `;
@@ -61,11 +63,12 @@ const StyledTitle = styled.header`
 const StyledText = styled.p`
   ${p_16_semibold};
   color: #1e2134;
-  margin-bottom: 8px;
+  margin-bottom: 8px !important;
 `;
 
 const StyledDescription = styled.p`
   ${p_14_normal};
+  margin-bottom: 0.5rem;
   color: #506176;
 `;
 
@@ -132,9 +135,8 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [loadingSymbol, setLoadingSymbol] = useState(false);
-  const isMounted = useIsMounted();
-
   const api = useApi();
+  const isMounted = useIsMounted();
 
   const fetchAssetSymbol = useMemo(() => {
     return debounce(async (assetId) => {
@@ -300,6 +302,12 @@ export default function SupportModal({ open, setOpen, topicCid }) {
             symbol={loadingSymbol ? <Loading /> : symbol}
             onChange={(e) => setInputAmount(e.target.value)}
           />
+
+          <BalanceInfo account={account} tokenIdentifier={tokenIdentifier} />
+
+          <StyledDescription>
+            Promise amount is not limited by the balance.
+          </StyledDescription>
 
           <ActionBar>
             <Button primary onClick={doConfirm}>

@@ -1,5 +1,5 @@
 import { encodeAddress } from "@polkadot/util-crypto";
-import { ChainSS58Format } from "../utils/constants";
+import { ChainSS58Format } from "./constants";
 
 export function addressEllipsis(address, start = 4, end = 4) {
   if (!address) return;

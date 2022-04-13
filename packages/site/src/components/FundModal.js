@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
@@ -17,7 +17,6 @@ import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
 import AssetInput from "./AssetInput";
 import { useApi } from "utils/hooks";
-import { hexToString } from "@polkadot/util";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitFund } from "services/chainApi";
 import {
@@ -28,7 +27,6 @@ import {
   removeToast,
   updatePendingToast,
 } from "store/reducers/toastSlice";
-import debounce from "lodash.debounce";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import serverApi from "services/serverApi";
@@ -40,6 +38,7 @@ import {
 import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import Flex from "@osn/common-ui/lib/styled/Flex";
+import BalanceInfo from "./BalanceInfo";
 
 const { InteractionEncoder } = encoder;
 const { FundInteraction } = interactions;
@@ -111,22 +110,6 @@ const ItemTitle = styled(FlexBetween)`
   margin-top: 8px;
 `;
 
-const BalanceInfo = styled(FlexBetween)`
-  margin-top: 8px;
-  ${p_14_medium};
-  line-height: 25px;
-
-  > :first-child {
-    color: #506176;
-  }
-
-  > :last-child {
-    display: flex;
-    align-items: center;
-    color: #1e2134;
-  }
-`;
-
 const StyledTitle = styled.header`
   ${p_20_semibold};
   color: #1e2134;
@@ -140,67 +123,14 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [symbol, setSymbol] = useState("");
   const [decimals, setDecimals] = useState(0);
-  const [balance, setBalance] = useState("0");
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [loadingSymbol, setLoadingSymbol] = useState(false);
-  const [loadingBalance, setLoadingBalance] = useState(false);
   const isMounted = useIsMounted();
   const answers = useSelector(answersSelector);
   const topic = useSelector(topicSelector);
 
   const api = useApi();
-
-  const fetchAssetSymbol = useMemo(() => {
-    return debounce(async (assetId) => {
-      if (!api || assetId === "N" || assetId === "") {
-        setSymbol("");
-        setDecimals(0);
-        setLoadingSymbol(false);
-        return;
-      }
-      const metadata = await api.query.assets.metadata(assetId);
-      const { symbol: hexSymbol, decimals } = metadata.toJSON();
-      const symbol = hexToString(hexSymbol);
-      if (isMounted.current) {
-        setSymbol(symbol);
-        setDecimals(decimals);
-        setLoadingSymbol(false);
-      }
-    }, 300);
-  }, [api, isMounted]);
-
-  const fetchAssetBalance = useMemo(() => {
-    return debounce(async (assetId) => {
-      if (!api || assetId === "" || !account?.address) {
-        setBalance("0");
-        setLoadingBalance(false);
-        return;
-      }
-
-      let balance = "0";
-      if (assetId === "N") {
-        const systemBalance = await api.query.system.account(account.address);
-        const {
-          data: { free },
-        } = systemBalance.toJSON();
-        balance = new BigNumber(free).div(Math.pow(10, decimals)).toFixed();
-      } else {
-        const assetAccount = await api.query.assets.account(
-          assetId,
-          account.address
-        );
-        const { balance: hexBalance } = assetAccount.toJSON();
-        balance = new BigNumber(hexBalance)
-          .div(Math.pow(10, decimals))
-          .toFixed();
-      }
-      if (isMounted.current) {
-        setBalance(balance);
-        setLoadingBalance(false);
-      }
-    }, 300);
-  }, [api, account?.address, decimals, isMounted]);
 
   useEffect(() => {
     if (manualOn) {
@@ -208,18 +138,9 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         setTokenIdentifier("");
         return;
       }
-
       setLoadingSymbol(true);
-      fetchAssetSymbol(tokenIdentifier);
     }
-  }, [fetchAssetSymbol, manualOn, tokenIdentifier]);
-
-  useEffect(() => {
-    if (open) {
-      setLoadingBalance(true);
-      fetchAssetBalance(tokenIdentifier);
-    }
-  }, [tokenIdentifier, fetchAssetBalance, open]);
+  }, [manualOn, tokenIdentifier]);
 
   useEffect(() => {
     if (!manualOn && selectedAsset) {
@@ -358,16 +279,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
             onChange={(e) => setInputAmount(e.target.value)}
           />
 
-          <BalanceInfo>
-            <span>Balance</span>
-            <div>
-              {loadingBalance || loadingSymbol ? (
-                <Loading />
-              ) : (
-                `${balance} ${symbol}`
-              )}
-            </div>
-          </BalanceInfo>
+          <BalanceInfo account={account} tokenIdentifier={tokenIdentifier} />
 
           <ActionBar>
             <Button primary onClick={doConfirm}>

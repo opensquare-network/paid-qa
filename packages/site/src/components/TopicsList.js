@@ -32,6 +32,11 @@ export default function TopicsList() {
   const filterAsset = useSelector(filterAssetSelector);
   const filterStatus = useSelector(filterStatusSelector);
   const filterTitle = useSelector(filterTitleSelector);
+
+  useEffect(() => {
+    setSearchParams({ page: 1 });
+  }, [filterAsset, filterStatus, filterTitle, setSearchParams]);
+
   useEffect(() => {
     setIsLoading(true);
     serverApi

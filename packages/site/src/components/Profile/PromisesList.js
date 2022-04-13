@@ -111,7 +111,6 @@ export default function PromisesList({ network, address }) {
                     <Link to={`/topic/${promise.topic.cid}`}>
                       <TextMajor style={{ whiteSpace: "pre-wrap" }}>
                         {promise.topic.title}
-                        {promise.topic.title}
                       </TextMajor>
                     </Link>
                   </TextWrap>

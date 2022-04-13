@@ -10,7 +10,7 @@ import SubTitle from "@osn/common-ui/lib/styled/SubTitle";
 import ChainItem from "@osn/common-ui/lib/Chain/ChainSelectItem";
 import AmountInput from "../AmountInput";
 import FlexBetween from "ui/lib/styled/FlexBetween";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import {
@@ -26,7 +26,7 @@ import { useNavigate } from "react-router-dom";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 import { getSymbolByChain } from "@osn/common-ui/lib/utils/tokenValue";
 import Preview from "@osn/common-ui/lib/Preview";
-import { useApi } from "../../utils/hooks";
+import { useApi, useBalance } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
@@ -121,23 +121,9 @@ export default function Create() {
   const api = useApi();
   const navigate = useNavigate();
   const symbol = getSymbolByChain(account?.network);
-  const [balance, setBalance] = useState();
   const [showPreview, setShowPreview] = useState(false);
+  const balance = useBalance(account, api);
   const isMounted = useIsMounted();
-
-  useEffect(() => {
-    (async () => {
-      setBalance(undefined);
-      if (api) {
-        const lastHdr = await api.rpc.chain.getHeader();
-        const { data: balanceNow } = await api.query.system.account.at(
-          lastHdr.hash,
-          account.address
-        );
-        setBalance(balanceNow?.toJSON()?.free);
-      }
-    })();
-  }, [account?.address, account?.network, api]);
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 

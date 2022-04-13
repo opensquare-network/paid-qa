@@ -122,7 +122,10 @@ export default function Explorer() {
             onChange={(e) => debouncedSetTitle(e.target.value)}
           />
         </ItemWrapper>
-        <ItemWrapper className={collapsed && "mobile-invisible"}>
+        <ItemWrapper
+          className={collapsed && "mobile-invisible"}
+          style={{ zIndex: 11 }}
+        >
           <div>
             <div>Status</div>
             <img src="/imgs/icons/sort-by.svg" alt="" />

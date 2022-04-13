@@ -35,35 +35,19 @@ export default function timeDuration(time) {
   let mm = now.diff(time, "months");
   let yy = now.diff(time, "years");
   if (yy) {
-    mm %= 12;
-    if (mm) {
-      return `${yy}y ${mm}mo${mm > 1 ? "s" : ""} ago`;
-    }
     return `${yy}y ago`;
   }
   if (mm) {
-    return `${mm}mo${mm > 1 ? "s" : ""} ago`;
+    return `${mm}mo ago`;
   }
   if (dd) {
-    hh %= 24;
-    if (hh) {
-      return `${dd}d ${hh}h${hh > 1 ? "rs" : ""} ago`;
-    }
     return `${dd}d ago`;
   }
   if (hh) {
-    ii %= 60;
-    if (ii) {
-      return `${hh}h${hh > 1 ? "rs" : ""} ${ii}min${ii > 1 ? "s" : ""} ago`;
-    }
-    return `${hh}h${hh > 1 ? "rs" : ""} ago`;
+    return `${hh}h ago`;
   }
   if (ii) {
-    ss %= 60;
-    if (ss) {
-      return `${ii}min${ii > 1 ? "s" : ""} ${ss}s ago`;
-    }
-    return `${ii}min${ii > 1 ? "s" : ""} ago`;
+    return `${ii}min ago`;
   }
   return `${ss}s ago`;
 }
