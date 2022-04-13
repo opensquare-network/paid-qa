@@ -10,10 +10,12 @@ import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { useApi } from "utils/hooks";
 import {
-  addToast,
+  newErrorToast,
+  newPendingToast,
+  newSuccessToast,
   newToastId,
-  ToastTypes,
-  updateToast,
+  removeToast,
+  updatePendingToast,
 } from "store/reducers/toastSlice";
 import { cidOf } from "services/ipfs";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -92,14 +94,7 @@ export default function Appendants({
   const dispatch = useDispatch();
   const isMounted = useIsMounted();
 
-  const showErrorToast = (message) => {
-    dispatch(
-      addToast({
-        type: ToastTypes.Error,
-        message,
-      })
-    );
-  };
+  const showErrorToast = (message) => dispatch(newErrorToast(message));
 
   const onSubmit = async () => {
     if (!account) {
@@ -125,14 +120,7 @@ export default function Appendants({
     setLoading(true);
 
     const toastId = newToastId();
-    dispatch(
-      addToast({
-        type: ToastTypes.Pending,
-        message: "Waiting for signing...",
-        id: toastId,
-        sticky: true,
-      })
-    );
+    dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
       const { blockHash, extrinsicIndex } = await submitRemark(
@@ -140,12 +128,7 @@ export default function Appendants({
         remark,
         account,
         (status) => {
-          dispatch(
-            updateToast({
-              id: toastId,
-              message: status,
-            })
-          );
+          dispatch(updatePendingToast(toastId, status));
         }
       );
       const payload = {
@@ -161,43 +144,20 @@ export default function Appendants({
       );
       if (result) {
         setContent("");
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Success,
-            message: "Appendant added",
-          })
-        );
+        dispatch(newSuccessToast("Appendant added"));
         dispatch(fetchTopic(topicCid));
       }
 
       if (error) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(
-        updateToast({
-          id: toastId,
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      dispatch(newErrorToast(e.message));
     } finally {
+      dispatch(removeToast(toastId));
       if (isMounted.current) {
         setLoading(false);
       }
-      dispatch(
-        updateToast({
-          id: toastId,
-          sticky: false,
-        })
-      );
     }
   };
 

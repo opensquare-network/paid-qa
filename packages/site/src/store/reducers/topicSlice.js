@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addToast, ToastTypes } from "./toastSlice";
+import { newErrorToast } from "./toastSlice";
 import serverApi from "services/serverApi";
 
 const topicSlice = createSlice({
@@ -56,12 +56,7 @@ export const fetchTopic = (topicCid) => async (dispatch) => {
       dispatch(setTopic(result));
     }
     if (error) {
-      dispatch(
-        addToast({
-          type: ToastTypes.Error,
-          message: error.message,
-        })
-      );
+      dispatch(newErrorToast(error.message));
     }
   });
 };
@@ -74,12 +69,7 @@ export const fetchFundSummary = (topicCid) => async (dispatch) => {
         dispatch(setFundSummary(result));
       }
       if (error) {
-        dispatch(
-          addToast({
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     });
 };

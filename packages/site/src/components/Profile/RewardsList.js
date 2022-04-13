@@ -6,7 +6,7 @@ import ListLoader from "components/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
-import { addToast, ToastTypes } from "store/reducers/toastSlice";
+import { newErrorToast } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
 import Time from "@osn/common-ui/lib/Time";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
@@ -60,12 +60,7 @@ export default function RewardsList({ network, address }) {
       .then(({ result, error }) => {
         setFunds(result ?? EmptyList);
         if (error) {
-          dispatch(
-            addToast({
-              type: ToastTypes.Error,
-              message: error?.message || "Failed to load rewards",
-            })
-          );
+          dispatch(newErrorToast(error?.message || "Failed to load rewards"));
         }
       })
       .finally(() => {

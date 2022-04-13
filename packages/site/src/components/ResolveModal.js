@@ -13,10 +13,12 @@ import { useApi } from "utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import {
-  addToast,
+  newErrorToast,
+  newPendingToast,
+  newSuccessToast,
   newToastId,
-  ToastTypes,
-  updateToast,
+  removeToast,
+  updatePendingToast,
 } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
 import PromiseItem, { useFulfillment } from "./Post/Promises/Item";
@@ -88,12 +90,7 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
   const [, precent] = useFulfillment(reward);
 
   const showErrorToast = (message) => {
-    dispatch(
-      addToast({
-        type: ToastTypes.Error,
-        message,
-      })
-    );
+    dispatch(newErrorToast(message));
     if (isMounted.current) {
       setOpen(false);
     }
@@ -117,14 +114,7 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
     const remark = new InteractionEncoder(interaction).getRemark();
 
     const toastId = newToastId();
-    dispatch(
-      addToast({
-        type: ToastTypes.Pending,
-        message: "Waiting for signing...",
-        id: toastId,
-        sticky: true,
-      })
-    );
+    dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
       const { blockHash, extrinsicIndex } = await submitRemark(
@@ -132,12 +122,7 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
         remark,
         account,
         (status) => {
-          dispatch(
-            updateToast({
-              id: toastId,
-              message: status,
-            })
-          );
+          dispatch(updatePendingToast(toastId, status));
         }
       );
       const payload = {
@@ -148,40 +133,17 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
 
       const { result, error } = await serverApi.post(`/resolve`, payload);
       if (result) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Success,
-            message: "Resolved successfully",
-          })
-        );
+        dispatch(newSuccessToast("Successfully resolved"));
         dispatch(fetchTopic(topicCid));
       }
 
       if (error) {
-        dispatch(
-          updateToast({
-            id: toastId,
-            type: ToastTypes.Error,
-            message: error.message,
-          })
-        );
+        dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(
-        updateToast({
-          id: toastId,
-          type: ToastTypes.Error,
-          message: e.toString(),
-        })
-      );
+      dispatch(newErrorToast(e.message));
     } finally {
-      dispatch(
-        updateToast({
-          id: toastId,
-          sticky: false,
-        })
-      );
+      dispatch(removeToast(toastId));
     }
   };
 

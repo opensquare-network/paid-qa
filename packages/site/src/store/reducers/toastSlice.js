@@ -44,4 +44,30 @@ export const ToastTypes = {
 
 export const newToastId = () => count++;
 
+export const newPendingToast = (id, message) =>
+  addToast({
+    id,
+    type: ToastTypes.Pending,
+    message,
+    sticky: true,
+  });
+
+export const updatePendingToast = (id, message) =>
+  addToast({
+    id,
+    message,
+  });
+
+export const newSuccessToast = (message) =>
+  addToast({
+    type: ToastTypes.Success,
+    message,
+  });
+
+export const newErrorToast = (message) =>
+  addToast({
+    type: ToastTypes.Error,
+    message,
+  });
+
 export default toastSlice.reducer;
