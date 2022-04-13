@@ -53,6 +53,7 @@ const StyledCard = styled.div`
 
 const StyledTitle = styled.header`
   ${p_20_semibold};
+  line-height: 28px;
   color: #1e2134;
   margin-bottom: 8px;
 `;
@@ -60,11 +61,12 @@ const StyledTitle = styled.header`
 const StyledText = styled.p`
   ${p_16_semibold};
   color: #1e2134;
-  margin-bottom: 8px;
+  margin-bottom: 8px !important;
 `;
 
 const StyledDescription = styled.p`
   ${p_14_normal};
+  margin-bottom: 0.5rem;
   color: #506176;
 `;
 
@@ -340,6 +342,10 @@ export default function SupportModal({ open, setOpen, topicCid }) {
           />
 
           <BalanceInfo account={account} tokenIdentifier={tokenIdentifier} />
+
+          <StyledDescription>
+            Promise amount is not limited by the balance.
+          </StyledDescription>
 
           <ActionBar>
             <Button primary onClick={doConfirm}>
