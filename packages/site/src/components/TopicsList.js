@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Topic from "components/Topic";
 import NoPost from "./NoPost";
-import ListLoader from "./Skeleton/ListLoader";
+import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import {
