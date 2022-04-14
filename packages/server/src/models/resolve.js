@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const ResolveSchema = new mongoose.Schema(
   {
+    blockHash: String,
+    extrinsicIndex: Number,
     blockTime: Number,
     topicCid: String,
     network: String,

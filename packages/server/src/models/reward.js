@@ -3,6 +3,8 @@ const { Schema } = require("mongoose");
 
 const RewardSchema = new mongoose.Schema(
   {
+    blockHash: String,
+    extrinsicIndex: Number,
     blockTime: Number,
     topicCid: String,
     network: String,

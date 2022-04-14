@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const TopicSchema = new mongoose.Schema(
   {
+    blockHash: String,
+    extrinsicIndex: Number,
     blockTime: Number,
     network: String,
     title: String,
