@@ -9,7 +9,7 @@ import Resolve from "./Resolve";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
-import DetailLoader from "../../Skeleton/DetailLoader";
+import DetailLoader from "@osn/common-ui/lib/Skeleton/DetailLoader";
 
 const Wrapper = styled(Card)`
   > :not(:first-child) {
