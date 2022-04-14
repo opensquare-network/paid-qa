@@ -195,7 +195,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
                   statusSort: {
                     $switch: {
                       branches: [
-                        { case: { $eq: ["$topic.status", "active"] }, then: 1 },
+                        { case: { $eq: ["$status", "active"] }, then: 1 },
                       ],
                       default: 2
                     }
@@ -250,7 +250,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
         statusSort: {
           $switch: {
             branches: [
-              { case: { $eq: ["$topic.status", "active"] }, then: 1 },
+              { case: { $eq: ["$status", "active"] }, then: 1 },
             ],
             default: 2
           }
