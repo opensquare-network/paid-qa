@@ -74,6 +74,8 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     await Topic.create(
       [
         {
+          blockHash,
+          extrinsicIndex,
           blockTime,
           cid,
           title,
@@ -329,6 +331,8 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   }
 
   await Appendant.create({
+    blockHash,
+    extrinsicIndex,
     blockTime,
     topicCid: interaction.topicIpfsCid,
     cid,

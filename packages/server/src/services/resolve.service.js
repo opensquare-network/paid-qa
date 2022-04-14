@@ -37,6 +37,8 @@ async function resolve(network, blockHash, extrinsicIndex) {
   }
 
   await Resolve.create({
+    blockHash,
+    extrinsicIndex,
     blockTime,
     topicCid,
     network,

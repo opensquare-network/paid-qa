@@ -66,6 +66,8 @@ async function addFund(network, blockHash, extrinsicIndex) {
   const beneficiaryPublicKey = toPublicKey(beneficiary);
 
   const fundObj = await Fund.create({
+    blockHash,
+    extrinsicIndex,
     blockTime,
     ipfsCid: interaction.ipfsCid,
     network,

@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const AnswerSchema = new mongoose.Schema(
   {
+    blockHash: String,
+    extrinsicIndex: Number,
     network: String,
     topicCid: String,
     content: String,

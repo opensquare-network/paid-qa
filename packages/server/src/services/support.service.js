@@ -63,6 +63,8 @@ async function addSupport(network, blockHash, extrinsicIndex) {
 
   const sponsorPublicKey = toPublicKey(signer);
   const support = await Reward.create({
+    blockHash,
+    extrinsicIndex,
     blockTime,
     topicCid,
     network,
