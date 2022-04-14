@@ -9,7 +9,7 @@ import { isSamePublicKey } from "@osn/common-ui/lib/utils/address";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { useOnClickOutside } from "@osn/common-ui/lib/utils/hooks";
 import ReportModal from "../../ReportModal";
-import More from "../../Icon/More";
+import More from "@osn/common-ui/lib/Icon/More";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 
 const Wrapper = styled.div`
