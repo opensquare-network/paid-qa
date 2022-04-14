@@ -12,7 +12,7 @@ const uniq = require("lodash.uniq");
 async function resolve(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, signer, blockTime } = await getRemark(
+  const { remark, signer, blockTime, blockHeight } = await getRemark(
     api,
     blockHash,
     extrinsicIndex
@@ -38,6 +38,7 @@ async function resolve(network, blockHash, extrinsicIndex) {
 
   await Resolve.create({
     blockHash,
+    blockHeight,
     extrinsicIndex,
     blockTime,
     topicCid,

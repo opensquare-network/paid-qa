@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const AnswerSchema = new mongoose.Schema(
   {
     blockHash: String,
+    blockHeight: Number,
     extrinsicIndex: Number,
     network: String,
     topicCid: String,

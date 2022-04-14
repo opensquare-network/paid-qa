@@ -4,6 +4,7 @@ const { Schema } = require("mongoose");
 const FundSchema = new mongoose.Schema(
   {
     blockHash: String,
+    blockHeight: Number,
     extrinsicIndex: Number,
     blockTime: Number,
     ipfsCid: String,

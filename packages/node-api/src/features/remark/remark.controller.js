@@ -93,10 +93,12 @@ async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
 
   const signer = extrinsic.signer.toString();
   const blockTime = extractBlockTime(block.block.extrinsics);
+  const blockHeight = block.block.header.number.toNumber();
 
   return {
     blockHash,
     extrinsicIndex,
+    blockHeight,
     blockTime,
     signer,
     ...data,
