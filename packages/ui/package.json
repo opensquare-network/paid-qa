@@ -4,7 +4,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production babel lib --out-dir dist --copy-files",
-    "test": "craco test"
+    "test": "craco test",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "jest": {
     "transformIgnorePatterns": []
@@ -22,11 +24,11 @@
     ]
   },
   "dependencies": {
-    "@craco/craco": "^6.4.3",
     "@acala-network/api-derive": "4.0.2-15",
     "@acala-network/type-definitions": "4.0.2-15",
     "@acala-network/types": "4.0.2-15",
     "@bifrost-finance/types": "1.4.0",
+    "@craco/craco": "^6.4.3",
     "@interlay/interbtc-types": "1.5.10",
     "@interlay/monetary-js": "0.5.4",
     "@open-web3/orml-api-derive": "1.0.2-3",
@@ -47,6 +49,13 @@
     "@babel/core": "^7.17.5",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.7.0",
+    "@storybook/addon-actions": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-interactions": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/react": "^6.4.22",
+    "@storybook/testing-library": "^0.0.9",
+    "babel-loader": "^8.2.4",
     "react": "^17.0.2"
   }
 }
