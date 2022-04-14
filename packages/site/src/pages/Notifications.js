@@ -11,7 +11,7 @@ import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import NoPost from "../components/NoPost";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
-import ListLoader from "../components/Skeleton/ListLoader";
+import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { useNotifications } from "../utils/hooks";
 
 const Wrapper = styled.div`
