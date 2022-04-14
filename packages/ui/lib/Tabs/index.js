@@ -1,3 +1,4 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";

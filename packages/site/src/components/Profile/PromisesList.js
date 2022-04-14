@@ -11,7 +11,7 @@ import Flex from "@osn/common-ui/lib/styled/Flex";
 import { Link } from "react-router-dom";
 import Card from "@osn/common-ui/lib/styled/Card";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import Tag from "../Tag";
+import Tag from "@osn/common-ui/lib/Tag";
 import ProgressBar from "../ProgressBar";
 import Wrapper from "./styled/ListWrapper";
 import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";

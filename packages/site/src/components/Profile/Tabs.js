@@ -1,4 +1,4 @@
-import Tabs from "../Tabs";
+import Tabs from "@osn/common-ui/lib/Tabs";
 
 export default function ProfileTabs({ value, setValue, overview }) {
   const items = [
