@@ -24,6 +24,12 @@ const Wrapper = styled.div`
   > :last-child {
     margin-right: 0;
   }
+  a {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
 `;
 
 const Header = styled.span`
@@ -56,9 +62,13 @@ export default function Funders({ funds }) {
                 noIcon
               />
             </Flex>
-            <span>
+            <a
+              href={`https://${fund.network}.subscan.io/extrinsic/${fund.blockHeight}-${fund.extrinsicIndex}`}
+              target="_blank"
+              rel="noreferrer"
+            >
               {fund.value} {fund.symbol}
-            </span>
+            </a>
           </Item>
         );
       })}
