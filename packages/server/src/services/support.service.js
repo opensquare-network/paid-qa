@@ -18,7 +18,7 @@ const { toPublicKey } = require("../utils/address");
 async function addSupport(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, signer, blockTime } = await getRemark(
+  const { remark, signer, blockTime, blockHeight } = await getRemark(
     api,
     blockHash,
     extrinsicIndex
@@ -64,6 +64,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   const sponsorPublicKey = toPublicKey(signer);
   const support = await Reward.create({
     blockHash,
+    blockHeight,
     extrinsicIndex,
     blockTime,
     topicCid,

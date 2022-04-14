@@ -22,7 +22,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
 
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, signer, blockTime } = await getRemark(
+  const { remark, signer, blockTime, blockHeight } = await getRemark(
     api,
     blockHash,
     extrinsicIndex
@@ -75,6 +75,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
       [
         {
           blockHash,
+          blockHeight,
           extrinsicIndex,
           blockTime,
           cid,
@@ -95,6 +96,9 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     await Reward.create(
       [
         {
+          blockHash,
+          blockHeight,
+          extrinsicIndex,
           blockTime,
           topicCid: cid,
           network,
@@ -281,7 +285,7 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
 
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, signer, blockTime } = await getRemark(
+  const { remark, signer, blockTime, blockHeight } = await getRemark(
     api,
     blockHash,
     extrinsicIndex
@@ -332,6 +336,7 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
 
   await Appendant.create({
     blockHash,
+    blockHeight,
     extrinsicIndex,
     blockTime,
     topicCid: interaction.topicIpfsCid,

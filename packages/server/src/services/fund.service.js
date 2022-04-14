@@ -18,7 +18,7 @@ const { toPublicKey } = require("../utils/address");
 async function addFund(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
-  const { remark, transfer, signer, blockTime } = await getRemark(
+  const { remark, transfer, signer, blockTime, blockHeight } = await getRemark(
     api,
     blockHash,
     extrinsicIndex
@@ -67,6 +67,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
 
   const fundObj = await Fund.create({
     blockHash,
+    blockHeight,
     extrinsicIndex,
     blockTime,
     ipfsCid: interaction.ipfsCid,

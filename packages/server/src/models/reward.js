@@ -4,6 +4,7 @@ const { Schema } = require("mongoose");
 const RewardSchema = new mongoose.Schema(
   {
     blockHash: String,
+    blockHeight: Number,
     extrinsicIndex: Number,
     blockTime: Number,
     topicCid: String,
