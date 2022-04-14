@@ -1,4 +1,4 @@
-import { useWindowSize } from "@osn/common-ui/lib/utils/hooks";
+import { useWindowSize } from "../utils/hooks";
 import ContentLoader from "react-content-loader";
 import styled from "styled-components";
 
