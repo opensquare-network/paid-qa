@@ -190,7 +190,19 @@ async function getTopics(symbol, status, title, page, pageSize) {
               },
             ],
             items: [
-              { $sort: { blockTime: -1 } },
+              {
+                $addFields: {
+                  statusSort: {
+                    $switch: {
+                      branches: [
+                        { case: { $eq: ["$topic.status", "active"] }, then: 1 },
+                      ],
+                      default: 2
+                    }
+                  }
+                }
+              },
+              { $sort: { statusSort: 1, blockTime: -1 } },
               { $skip: (page - 1) * pageSize },
               { $limit: pageSize },
               {
@@ -232,12 +244,26 @@ async function getTopics(symbol, status, title, page, pageSize) {
     };
   } else {
     const total = await Topic.countDocuments(q);
-    const topics = await Topic.find(q)
-      .sort({ createdAt: -1 })
+    const topics = await Topic.aggregate()
+      .match(q)
+      .addFields({
+        statusSort: {
+          $switch: {
+            branches: [
+              { case: { $eq: ["$topic.status", "active"] }, then: 1 },
+            ],
+            default: 2
+          }
+        }
+      })
+      .sort({ statusSort: 1, blockTime: -1 })
       .skip((page - 1) * pageSize)
-      .limit(pageSize)
-      .populate("answersCount")
-      .populate("rewards");
+      .limit(pageSize);
+
+    await Promise.all([
+      Topic.populate(topics, { path: "answersCount" } ),
+      Topic.populate(topics, { path: "rewards" } ),
+    ]);
 
     return {
       items: topics,
