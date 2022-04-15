@@ -28,7 +28,7 @@ import {
   addressEllipsis,
   encodeNetworkAddress,
 } from "@osn/common-ui/lib/utils/address";
-import { fetchIdentity } from "@osn/common-ui/lib/services/identity";
+import { fetchIdentity } from "@osn/common/services/identity";
 import uniqWith from "lodash.uniqwith";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
