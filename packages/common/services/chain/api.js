@@ -1,7 +1,7 @@
 import { ApiPromise, WsProvider } from "@polkadot/api";
 // import { khala } from "@phala/typedefs";
 import { basilisk } from "./bundle/basilisk";
-import { Chains } from "../../utils/constants";
+import { Chains } from "@osn/common-ui/lib/utils/constants";
 import interbtc from "./kintsugi/definitions";
 import bifrostOptions from "./bifrost/options";
 import karuraOptions from "./karura/options";
@@ -22,8 +22,8 @@ export default async function getApi(chain, endpoint) {
         ...options,
       };
       //TODO: comment out because of error "Failed to parse source map"
-    // } else if (chain === "khala") {
-    //   options.types = khala;
+      // } else if (chain === "khala") {
+      //   options.types = khala;
     } else if (chain === "basilisk") {
       options.typesBundle = { spec: { basilisk } };
     } else if (chain === "bifrost") {
