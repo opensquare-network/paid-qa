@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 
 import { removeToast, ToastTypes } from "store/reducers/toastSlice";
-import { ReactComponent as Close } from "./icons/close.svg";
-import { ReactComponent as Sticky } from "./icons/sticky.svg";
+import { ReactComponent as Close } from "../imgs/icons/close.svg";
+import { ReactComponent as Sticky } from "../imgs/icons/sticky.svg";
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import {
   p_14_normal,
