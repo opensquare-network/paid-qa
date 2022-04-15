@@ -5,4 +5,5 @@ export default {
   title: "Tag",
 };
 
-export const basic = () => <Tag />;
+export const active = () => <Tag>active</Tag>;
+export const basic = () => <Tag>hello</Tag>;

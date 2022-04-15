@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Tabs from "../../lib/Tabs";
 
 export default {
@@ -13,4 +13,8 @@ const items = [
   { value: "replies", suffix: 7 },
 ];
 
-export const basic = () => <Tabs items={items} />;
+export const basic = () => {
+  const [value, setValue] = useState("funds");
+
+  return <Tabs items={items} value={value} setValue={setValue} />;
+};
