@@ -13,7 +13,7 @@ const items = [
   { value: "replies", suffix: 7 },
 ];
 
-export const basic = () => {
+export const primary = () => {
   const [value, setValue] = useState("funds");
 
   return <Tabs items={items} value={value} setValue={setValue} />;
