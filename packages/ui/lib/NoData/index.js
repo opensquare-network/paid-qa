@@ -10,6 +10,6 @@ const Wrapper = styled(FlexCenter)`
   color: #9da9bb;
 `;
 
-export default function NoData({ message = "data" }) {
-  return <Wrapper>No current {message}</Wrapper>;
+export default function NoData({ message = "No current data" }) {
+  return <Wrapper>{message}</Wrapper>;
 }

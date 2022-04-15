@@ -7,4 +7,4 @@ export default {
 
 export const primary = () => <NoData />;
 
-export const withMessagePosts = () => <NoData message="posts" />;
+export const withMessagePosts = () => <NoData message="No current posts" />;
