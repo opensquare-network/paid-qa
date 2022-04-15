@@ -69,7 +69,7 @@ export default function TopicsList() {
       {isLoading ? (
         <ListLoader />
       ) : topics?.items?.length === 0 ? (
-        <NoPost message="No current topics" />
+        <NoPost message={"No current topics"} />
       ) : (
         topics?.items?.map((topic, index) => (
           <Topic key={index} topic={topic} />
