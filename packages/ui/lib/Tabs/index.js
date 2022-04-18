@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import { no_scroll_bar } from "@osn/common-ui/lib/styles/componentCss";
+import { p_16_semibold } from "../styles/textStyles";
+import DividerWrapper from "../styled/DividerWrapper";
+import { no_scroll_bar } from "../styles/componentCss";
 
 const Wrapper = styled.div`
   overflow-x: scroll;
