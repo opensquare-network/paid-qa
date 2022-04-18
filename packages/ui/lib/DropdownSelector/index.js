@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Dropdown } from "../index";
+import Dropdown from "../styled/Dropdown";
 
 const Wrapper = styled.div``;
 
