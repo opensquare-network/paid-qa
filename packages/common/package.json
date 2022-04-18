@@ -1,6 +1,6 @@
 {
   "name": "@osn/common",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production babel ./src --out-dir dist --copy-files"
@@ -27,16 +27,16 @@
     ]
   },
   "dependencies": {
-    "@osn/common-ui": "^0.0.9",
     "@osn/provider-options": "^1.0.1"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "react": "^17.0.2"
+  },
   "devDependencies": {
     "@babel/cli": "^7.17.3",
     "@babel/core": "^7.17.5",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.7.0",
-    "babel-loader": "^8.2.4",
-    "react": "^17.0.2"
+    "babel-loader": "^8.2.4"
   }
 }

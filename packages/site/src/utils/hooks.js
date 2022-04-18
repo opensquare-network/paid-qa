@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
-import getApi from "@osn/common/services/chain/api";
+import getApi from "@osn/common/src/services/chain/api";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import serverApi from "../services/serverApi";
