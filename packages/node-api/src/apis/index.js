@@ -1,12 +1,14 @@
 const { nodeTimeoutSeconds } = require("../constants");
 const { statusLogger } = require("../logger");
-const { khalaOptions } = require("./khala");
-const { karuraOptions } = require("./karura");
-const { bifrostOptions } = require("./bifrost");
-const { kintsugiOptions } = require("./kintsugi");
 const { Chains } = require("../constants");
 const { ApiPromise, WsProvider } = require("@polkadot/api");
 const { getEndpoints } = require("../env");
+const {
+  bifrostOptions,
+  karuraOptions,
+  khalaOptions,
+  kintsugiOptions,
+} = require("@osn/provider-options");
 
 /**
  * { polkadot: { apis: [ { endpoint: 'wss:...', api } ] } }

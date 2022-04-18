@@ -30,6 +30,7 @@
     "@osn/common-ui": "^0.0.9",
     "@acala-network/api-derive": "4.0.2-15",
     "@open-web3/orml-api-derive": "1.0.2-3"
+    "@osn/provider-options": "^1.0.1"
   },
   "peerDependencies": {},
   "devDependencies": {
