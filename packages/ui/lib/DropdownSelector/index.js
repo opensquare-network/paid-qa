@@ -24,7 +24,7 @@ const Header = styled(OptionWrapper)`
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 10;
   padding: 0 16px;
 `;
 
