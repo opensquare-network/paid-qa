@@ -1,16 +1,22 @@
 {
   "name": "@osn/common",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production babel ./ --out-dir dist --copy-files"
+    "build": "rm -rf dist && NODE_ENV=production babel ./src --out-dir dist --copy-files"
   },
   "jest": {
     "transformIgnorePatterns": []
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
   "files": [
     "dist"
   ],
@@ -21,6 +27,7 @@
     ]
   },
   "dependencies": {
+    "@osn/common-ui": "^0.0.9",
     "@acala-network/api-derive": "4.0.2-15",
     "@open-web3/orml-api-derive": "1.0.2-3"
   },

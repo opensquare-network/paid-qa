@@ -1,6 +1,6 @@
 {
   "name": "@osn/common-ui",
-  "version": "0.0.1",
+  "version": "0.0.10",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production babel lib --out-dir dist --copy-files",
@@ -12,8 +12,14 @@
     "transformIgnorePatterns": []
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "osn team",
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
   "files": [
     "dist"
   ],
@@ -28,12 +34,13 @@
     "@craco/craco": "^6.4.3",
     "@interlay/interbtc-types": "1.5.10",
     "@interlay/monetary-js": "0.5.4",
+    "@osn/common": "^0.0.2",
     "@phala/typedefs": "^0.2.30",
-    "@polkadot/api": "7.8.1",
     "dayjs": "^1.10.8",
     "lodash.debounce": "^4.0.8",
     "micromark": "^3.0.10",
     "micromark-extension-gfm": "^2.0.1",
+    "react-router-dom": "^6.3.0",
     "sanitize-html": "^2.7.0",
     "styled-components": "4.3.2"
   },

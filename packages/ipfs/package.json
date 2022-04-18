@@ -2,7 +2,13 @@
   "name": "@paid-qa/ipfs",
   "version": "1.0.0",
   "main": "src/index.js",
-  "private": true,
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
   "scripts": {},
   "dependencies": {
     "dotenv": "^16.0.0",
