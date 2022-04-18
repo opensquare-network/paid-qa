@@ -6,8 +6,8 @@ module.exports = {
     "@storybook/addon-interactions",
   ],
   staticDirs: [
-    // mark `site` as public folder
-    // `preview-head.html` uses the css
+    // make `site` as public folder for storybook
+    // used in `preview-head.html`
     "../../site",
   ],
   framework: "@storybook/react",
