@@ -1,11 +1,12 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import { p_14_medium } from "../styles/textStyles";
 
-const Wrapper = styled.button`
-  all: unset;
-  font-family: Inter, sans-serif;
-  ${p_14_medium};
+const Wrapper = styled.div`
+  display: flex;
   text-align: center;
+  ${p_14_medium};
+  justify-content: center;
   padding: 7px 15px;
   border: 1px solid #b7c0cc;
   cursor: pointer;
