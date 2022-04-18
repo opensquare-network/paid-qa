@@ -1,6 +1,6 @@
 import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
 import { useEffect, useState } from "react";
-import { fetchIdentity } from "@osn/common/services/identity";
+import { fetchIdentity } from "@osn/common/src/services/identity";
 import styled, { css } from "styled-components";
 import IdentityIcon from "./IdentityIcon";
 import {
