@@ -1,6 +1,6 @@
 {
   "name": "@osn/common-ui",
-  "version": "0.0.10",
+  "version": "0.0.16",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production babel lib --out-dir dist --copy-files",
@@ -33,7 +33,7 @@
     "@craco/craco": "^6.4.3",
     "@interlay/interbtc-types": "1.5.10",
     "@interlay/monetary-js": "0.5.4",
-    "@osn/common": "^0.0.2",
+    "@osn/common": "^0.0.5",
     "@phala/typedefs": "^0.2.30",
     "dayjs": "^1.10.8",
     "micromark": "^3.0.10",
