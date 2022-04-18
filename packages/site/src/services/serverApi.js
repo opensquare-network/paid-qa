@@ -1,4 +1,4 @@
-import Api from "@osn/common/services/api";
+import Api from "@osn/common/src/services/api";
 
 class ServerApi extends Api {}
 
