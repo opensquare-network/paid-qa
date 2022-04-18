@@ -5,6 +5,11 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
   ],
+  staticDirs: [
+    // mark `site` as public folder
+    // `preview-head.html` uses the css
+    "../../site",
+  ],
   framework: "@storybook/react",
   // https://github.com/storybookjs/storybook/issues/6188#issuecomment-822924831
   babel: (options) => {
