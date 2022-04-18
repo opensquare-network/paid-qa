@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "private": true,
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
   "dependencies": {
     "bignumber.js": "^9.0.2",
     "multiformats": "^9.6.4"

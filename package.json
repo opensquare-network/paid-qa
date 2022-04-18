@@ -7,7 +7,8 @@
       "packages/*"
     ],
     "nohoist": [
-      "**/semantic-ui-css"
+      "**/semantic-ui-css",
+      "@osn/**"
     ]
   },
   "husky": {
@@ -31,5 +32,11 @@
   "main": "index.js",
   "repository": "https://github.com/opensquare-network/paid-qa.git",
   "author": "OpenSquare <https://www.opensquare.network/>",
-  "license": "MIT"
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
 }
