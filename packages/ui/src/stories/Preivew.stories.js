@@ -1,3 +1,5 @@
+import styled from "styled-components";
+import { useState } from "react";
 import Preview from "../../lib/Preview";
 
 export default {
@@ -21,6 +23,29 @@ _italic text_
 
 1. numbered 1
 2. numbered 2
+`.trim();
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
 `;
 
-export const primary = () => <Preview content={markdown} />;
+const Textarea = styled.textarea`
+  width: 300px;
+  margin-right: 48px;
+`;
+
+export const primary = () => {
+  const [content, setContent] = useState(markdown);
+
+  return (
+    <Wrapper>
+      <Textarea
+        value={content}
+        onChange={(evt) => setContent(evt.target.value)}
+      ></Textarea>
+
+      <Preview content={content} />
+    </Wrapper>
+  );
+};
