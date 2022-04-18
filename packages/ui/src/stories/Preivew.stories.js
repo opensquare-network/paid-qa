@@ -42,7 +42,7 @@ export const primary = () => {
     <Wrapper>
       <Textarea
         value={content}
-        onChange={(evt) => setContent(evt.target.value)}
+        onChange={(e) => setContent(e.target.value)}
       ></Textarea>
 
       <Preview content={content} />
