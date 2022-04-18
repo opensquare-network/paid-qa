@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import ExternalLink from "../../lib/ExternalLink";
 
 export default {
@@ -5,12 +6,18 @@ export default {
   component: ExternalLink,
 };
 
+const LinkWrapper = styled.span`
+  color: #0070f3;
+`;
+
 export const primary = () => (
   <span>
-    Open
-    <ExternalLink href="https://www.opensquare.network">
-      OpenSquare
-    </ExternalLink>
+    Open{" "}
+    <LinkWrapper>
+      <ExternalLink href="https://www.opensquare.network">
+        OpenSquare
+      </ExternalLink>
+    </LinkWrapper>{" "}
     in new tab.
   </span>
 );
