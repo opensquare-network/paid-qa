@@ -24,14 +24,8 @@
     ]
   },
   "dependencies": {
-    "@bifrost-finance/types": "1.4.0",
     "@craco/craco": "^6.4.3",
-    "@interlay/interbtc-types": "1.5.10",
-    "@interlay/monetary-js": "0.5.4",
-    "@phala/typedefs": "^0.2.30",
-    "@polkadot/api": "7.8.1",
     "dayjs": "^1.10.8",
-    "lodash.debounce": "^4.0.8",
     "micromark": "^3.0.10",
     "micromark-extension-gfm": "^2.0.1",
     "sanitize-html": "^2.7.0",

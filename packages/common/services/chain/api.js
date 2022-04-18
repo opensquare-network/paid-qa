@@ -1,10 +1,11 @@
 import { ApiPromise, WsProvider } from "@polkadot/api";
-// import { khala } from "@phala/typedefs";
-import { basilisk } from "./bundle/basilisk";
 import { Chains } from "@osn/common-ui/lib/utils/constants";
-import interbtc from "./kintsugi/definitions";
-import bifrostOptions from "./bifrost/options";
-import karuraOptions from "./karura/options";
+import {
+  bifrostOptions,
+  karuraOptions,
+  khalaOptions,
+  kintsugiOptions,
+} from "@osn/provider-options";
 
 const apiInstanceMap = new Map();
 
@@ -15,35 +16,25 @@ export default async function getApi(chain, endpoint) {
 
   if (!apiInstanceMap.has(endpoint)) {
     const provider = new WsProvider(endpoint, 1000);
-    let options = { provider };
+    const options = { provider };
+    let customOptions = {};
     if (chain === "karura" || chain === "acala") {
-      options = {
-        ...karuraOptions,
-        ...options,
-      };
-      //TODO: comment out because of error "Failed to parse source map"
-      // } else if (chain === "khala") {
-      //   options.types = khala;
-    } else if (chain === "basilisk") {
-      options.typesBundle = { spec: { basilisk } };
+      customOptions = karuraOptions;
+    } else if (chain === "khala") {
+      customOptions = khalaOptions;
     } else if (chain === "bifrost") {
-      options = {
-        ...bifrostOptions,
-        ...options,
-      };
+      customOptions = bifrostOptions;
     } else if (chain === Chains.kintsugi) {
-      options = {
-        ...options,
-        typesBundle: {
-          spec: {
-            "interbtc-parachain": interbtc,
-          },
-        },
-        rpc: interbtc.providerRpc,
-      };
+      customOptions = kintsugiOptions;
     }
 
-    apiInstanceMap.set(endpoint, ApiPromise.create(options));
+    apiInstanceMap.set(
+      endpoint,
+      ApiPromise.create({
+        ...options,
+        ...customOptions,
+      })
+    );
   }
   return apiInstanceMap.get(endpoint);
 }
