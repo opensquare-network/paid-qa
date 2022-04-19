@@ -18,7 +18,7 @@ import {
 } from "../store/reducers/showConnectSlice";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
-import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
+import { MOBILE_SIZE } from "@osn/consts";
 
 const RightWrapper = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Tabs from "./Tabs";
 import Container from "@osn/common-ui/lib/styled/Container";
-import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
+import { MOBILE_SIZE } from "@osn/consts";
 
 const Wrapper = styled.div`
   background: #ffffff;

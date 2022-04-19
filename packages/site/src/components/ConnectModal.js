@@ -8,7 +8,7 @@ import Button from "@osn/common-ui/lib/styled/Button";
 import AccountSelector from "@osn/common-ui/lib/Account/AccountSelector";
 import styled from "styled-components";
 import ChainSelector from "@osn/common-ui/lib/Chain/ChainSelector";
-import { AVAILABLE_NETWORKS } from "@osn/common/src/utils/constants";
+import { AVAILABLE_NETWORKS } from "@osn/consts";
 import { closeConnect } from "../store/reducers/showConnectSlice";
 import {
   p_14_normal,

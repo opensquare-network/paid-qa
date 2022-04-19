@@ -6,7 +6,7 @@ import {
   clearCookie,
 } from "@osn/common/src/utils/cookie";
 import { encodeAddress } from "@polkadot/util-crypto";
-import { AVAILABLE_NETWORKS } from "@osn/common/src/utils/constants";
+import { AVAILABLE_NETWORKS } from "@osn/consts";
 
 const accountSlice = createSlice({
   name: "account",

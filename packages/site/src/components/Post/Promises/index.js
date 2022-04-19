@@ -8,7 +8,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { popUpConnect } from "store/reducers/showConnectSlice";
 import SupportModal from "components/SupportModal";
 import { calcSponserRewards } from "utils/rewards";
-import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
+import { MOBILE_SIZE } from "@osn/consts";
 import { isSamePublicKey } from "@osn/common/src/utils/address";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
