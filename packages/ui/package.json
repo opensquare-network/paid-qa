@@ -37,7 +37,7 @@
     "react-router-dom": "^6.3.0",
     "sanitize-html": "^2.7.0",
     "styled-components": "4.3.2",
-    "@osn/constants": "^0.0.1"
+    "@osn/consts": "^0.0.1"
   },
   "peerDependencies": {
     "react": "^17.0.2",

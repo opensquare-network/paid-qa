@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MOBILE_SIZE } from "@osn/constants";
+import { MOBILE_SIZE } from "@osn/consts/src/index.js";
 
 const MobileVisible = styled.div`
   display: flex;

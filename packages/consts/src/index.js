@@ -34,3 +34,8 @@ if (process.env.REACT_APP_SHOW_WESTEND === "TRUE") {
 }
 
 export const MOBILE_SIZE = 900;
+
+export default {
+  Chains,
+  ChainSS58Format,
+};

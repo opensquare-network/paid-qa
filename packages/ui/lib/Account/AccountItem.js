@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import Avatar from "./Avatar";
 import Address from "./Address";
 import { encodeAddress } from "@polkadot/util-crypto";
-import { ChainSS58Format } from "@osn/constants";
+import { ChainSS58Format } from "@osn/consts/src";
 import { fetchIdentity } from "@osn/common/src/services/identity";
 import IdentityIcon from "../Identity/IdentityIcon";
 import { p_16_semibold } from "../styles/textStyles";
