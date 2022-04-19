@@ -2,7 +2,7 @@ import {
   addressEllipsis,
   encodeNetworkAddress,
   isSamePublicKey,
-} from "../lib/utils/address";
+} from "./address";
 
 test("addressEllipsis", () => {
   expect(addressEllipsis("hahaxxxxxxxxxhoho")).toBe(`haha...hoho`);

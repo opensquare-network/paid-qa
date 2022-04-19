@@ -1,4 +1,4 @@
-import timeDuration from "../lib/utils/timeDuration";
+import timeDuration from "./timeDuration";
 
 test("timeDuration", () => {
   const now = Math.floor(new Date().getTime() / 1000) * 1000;

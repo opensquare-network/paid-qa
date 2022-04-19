@@ -1,14 +1,12 @@
 import styled from "styled-components";
-import timeDuration from "../utils/timeDuration";
+import timeDuration from "@osn/common/src/utils/timeDuration";
 
 const Wrapper = styled.div`
   font-size: 14px;
   line-height: 24px;
-  color: #A1A8B3;
+  color: #a1a8b3;
 `;
 
 export default function Time({ time }) {
-  return (
-    <Wrapper>{timeDuration(time)}</Wrapper>
-  );
+  return <Wrapper>{timeDuration(time)}</Wrapper>;
 }

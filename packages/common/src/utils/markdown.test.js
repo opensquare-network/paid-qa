@@ -1,4 +1,4 @@
-import { matchMdLink, replaceMentionLinks } from "../lib/utils/markdown";
+import { matchMdLink, replaceMentionLinks } from "./markdown";
 
 test("matchMdLink", () => {
   expect(
