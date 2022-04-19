@@ -12,7 +12,7 @@ import ConnectedAccount from "./User/ConnectedAccount";
 import {
   useOnClickOutside,
   useWindowSize,
-} from "@osn/common-ui/lib/utils/hooks";
+} from "@osn/common-ui/dist/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
 import {
   popUpConnect,

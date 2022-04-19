@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@craco/craco": "^6.4.3",
-    "@osn/common": "^0.0.6",
     "dayjs": "^1.10.8",
     "micromark": "^3.0.10",
     "micromark-extension-gfm": "^2.0.1",
@@ -52,10 +51,12 @@
     "@storybook/addon-essentials": "^6.4.22",
     "@storybook/addon-interactions": "^6.4.22",
     "@storybook/addon-links": "^6.4.22",
+    "@storybook/builder-webpack5": "^6.4.22",
+    "@storybook/manager-webpack5": "^6.4.22",
     "@storybook/react": "^6.4.22",
     "@storybook/testing-library": "^0.0.9",
+    "@svgr/webpack": "^6.2.1",
     "babel-loader": "^8.2.4",
-    "babel-plugin-inline-react-svg": "^2.0.1",
     "semantic-ui-css": "^2.4.1"
   }
 }
