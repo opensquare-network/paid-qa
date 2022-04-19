@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ProgressBar from "components/ProgressBar";
+import ProgressBar from "@osn/common-ui/lib/styled/ProgressBar";
 import NetworkUser from "../../User/NetworkUser";
 import { useSelector } from "react-redux";
 import { fundSummarySelector } from "store/reducers/topicSlice";
