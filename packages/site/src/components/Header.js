@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import OsnHeader from "@osn/common-ui/lib/Header";
 import NotificationBell from "./NotificationBell";
 import ConnectModal from "./ConnectModal";
 import { accountSelector } from "../store/reducers/accountSlice";
@@ -18,59 +19,9 @@ import {
   popUpConnect,
   showConnectSelector,
 } from "../store/reducers/showConnectSlice";
-import { NavLink } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
 import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
-
-const Wrapper = styled.header`
-  position: relative;
-  flex: 0 0 auto;
-  background: #ffffff;
-  border-bottom: solid 1px #f0f3f8;
-`;
-
-const ContentWrapper = styled.div`
-  max-width: 1440px;
-  margin: 0 auto;
-  min-height: 80px;
-  padding: 20px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
-    min-height: 62px;
-    padding: 15px 20px;
-  }
-`;
-
-const LeftWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Logo = styled.div`
-  width: 200px;
-  height: 36px;
-  background-image: url("/imgs/opensquare-logo.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  cursor: pointer;
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
-    width: 48px;
-    height: 32px;
-    background-image: url("/imgs/opensquare-logo-icon.svg");
-  }
-`;
-
-const Divider = styled.div`
-  width: 1px;
-  height: 16px;
-  margin: 0 16px;
-  background: #e2e8f0;
-`;
 
 const RightWrapper = styled.div`
   display: flex;
@@ -78,6 +29,12 @@ const RightWrapper = styled.div`
   > :not(:first-child) {
     margin-left: 16px;
   }
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export default function Header() {
@@ -97,15 +54,10 @@ export default function Header() {
   useUpdateNodesDelay(account?.network);
 
   return (
-    <Wrapper>
+    <OsnHeader>
       <ContentWrapper>
-        <LeftWrapper>
-          <NavLink to="/">
-            <Logo />
-          </NavLink>
-          <Divider />
-          <ProductSwitch />
-        </LeftWrapper>
+        <ProductSwitch />
+
         <RightWrapper ref={ref}>
           {windowSize.width > MOBILE_SIZE ? (
             account ? (
@@ -128,6 +80,6 @@ export default function Header() {
           {showConnect && <ConnectModal />}
         </RightWrapper>
       </ContentWrapper>
-    </Wrapper>
+    </OsnHeader>
   );
 }
