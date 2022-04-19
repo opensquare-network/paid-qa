@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import ExternalLink from "../ExternalLink";
-import { FOOTER_ITEMS } from "@osn/common/src/utils/constants";
 import FooterLogoSvg from "../imgs/opensquare-footer-logo.svg";
 import GithubSvg from "../imgs/icons/github.svg";
 import TelegramSvg from "../imgs/icons/telegram.svg";
 import TwitterSvg from "../imgs/icons/twitter.svg";
 import SubsocialSvg from "../imgs/icons/subsocial.svg";
 import MailSvg from "../imgs/icons/mail.svg";
+import footerItems from "./items";
 
 const SvgMap = new Map([
   ["github.svg", GithubSvg],
@@ -126,18 +126,23 @@ const BottomWrapper = styled.div`
   text-align: center;
 `;
 
-export default function Footer() {
+export default function Footer({ github }) {
   return (
     <Wrapper>
       <Container>
         <ContentWrapper>
           <LeftWrapper>
-            {FOOTER_ITEMS.map((item, index) => (
+            {footerItems.map((item, index) => (
               <List key={index}>
                 <Label>{item.label}</Label>
                 <ItemsWrapper>
                   {item.items.map((item, index) => (
-                    <ExternalLink href={item.link} key={index}>
+                    <ExternalLink
+                      href={
+                        item.key === "github" && github ? github : item.link
+                      }
+                      key={index}
+                    >
                       <Item>
                         {item.icon && (
                           <img src={SvgMap.get(item.icon)} alt="" />
