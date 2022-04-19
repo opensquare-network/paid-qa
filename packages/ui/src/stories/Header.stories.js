@@ -7,24 +7,26 @@ export default {
   component: Header,
 };
 
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
-
 export const primary = () => (
   <BrowserRouter>
     <Header />
   </BrowserRouter>
 );
-export const content = () => (
-  <BrowserRouter>
-    <Header>
-      <Content>
-        <div>left content</div>
-        <div>right content</div>
-      </Content>
-    </Header>
-  </BrowserRouter>
-);
+export const content = () => {
+  const Content = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  `;
+
+  return (
+    <BrowserRouter>
+      <Header>
+        <Content>
+          <div>left content</div>
+          <div>right content</div>
+        </Content>
+      </Header>
+    </BrowserRouter>
+  );
+};
