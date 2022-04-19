@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 import Flex from "../styled/Flex";
 import { MOBILE_SIZE } from "../utils/constants";
@@ -59,18 +60,14 @@ const ChildWrapper = styled(Flex)`
   flex: 1;
 `;
 
-export default function Header({ children, WrapLogoComponent }) {
+export default function Header({ children }) {
   return (
     <Wrapper>
       <ContentWrapper>
         <LogoWrapper>
-          {WrapLogoComponent ? (
-            <WrapLogoComponent>
-              <Logo />
-            </WrapLogoComponent>
-          ) : (
+          <NavLink to="/">
             <Logo />
-          )}
+          </NavLink>
           {children && <Divider />}
         </LogoWrapper>
 
