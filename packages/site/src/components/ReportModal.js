@@ -21,7 +21,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { signMessage } from "services/chainApi";
-import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 
 const Wrapper = styled.div``;
 

@@ -8,7 +8,7 @@ import Share from "./Share";
 import Resolve from "./Resolve";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
-import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 import DetailLoader from "@osn/common-ui/lib/Skeleton/DetailLoader";
 
 const Wrapper = styled(Card)`

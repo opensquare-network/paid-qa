@@ -5,7 +5,7 @@ import Explorer from "components/Explorer";
 import NewTopicAnchor from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
-import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
 const Wrapper = styled.div`

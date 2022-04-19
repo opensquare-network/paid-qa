@@ -13,7 +13,7 @@ import {
   setFilterStatus,
   setFilterTitle,
 } from "store/reducers/topicSlice";
-import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
 import {
   h3_36_bold,
   p_16_semibold,

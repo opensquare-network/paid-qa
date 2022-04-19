@@ -26,7 +26,7 @@ import {
 } from "store/reducers/toastSlice";
 import { fetchTopic } from "store/reducers/topicSlice";
 import debounce from "lodash.debounce";
-import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import {
   p_14_medium,

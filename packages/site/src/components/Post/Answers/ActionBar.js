@@ -7,7 +7,7 @@ import { ReactComponent as ReplyIcon } from "imgs/icons/reply.svg";
 import {
   encodeNetworkAddress,
   isSamePublicKey,
-} from "@osn/common-ui/lib/utils/address";
+} from "@osn/common/src/utils/address";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -15,7 +15,7 @@ import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import More from "@osn/common-ui/lib/Icon/More";
 import ReportModal from "../../ReportModal";
-import { useOnClickOutside } from "@osn/common-ui/lib/utils/hooks";
+import { useOnClickOutside } from "@osn/common/src/utils/hooks";
 
 const Wrapper = styled.div`
   position: relative;

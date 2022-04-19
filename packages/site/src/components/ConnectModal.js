@@ -1,8 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import {
-  isWeb3Injected,
-  web3Enable,
-} from "@polkadot/extension-dapp";
+import { isWeb3Injected, web3Enable } from "@polkadot/extension-dapp";
 import { useDispatch, useSelector } from "react-redux";
 import { accountSelector, setAccount } from "../store/reducers/accountSlice";
 
@@ -11,15 +8,15 @@ import Button from "@osn/common-ui/lib/styled/Button";
 import AccountSelector from "@osn/common-ui/lib/Account/AccountSelector";
 import styled from "styled-components";
 import ChainSelector from "@osn/common-ui/lib/Chain/ChainSelector";
-import { AVAILABLE_NETWORKS } from "@osn/common-ui/lib/utils/constants";
+import { AVAILABLE_NETWORKS } from "@osn/common/src/utils/constants";
 import { closeConnect } from "../store/reducers/showConnectSlice";
 import {
   p_14_normal,
   p_16_semibold,
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import { polkadotWeb3Accounts } from "@osn/common-ui/lib/utils/extension";
-import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import { polkadotWeb3Accounts } from "@osn/common/src/utils/extension";
+import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { PROJECT_NAME } from "utils/constants";
 
 const Wrapper = styled.div``;
