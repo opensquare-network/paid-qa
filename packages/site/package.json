@@ -13,6 +13,7 @@
     "@osn/common": "0.0.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@craco/craco": "^6.4.3",
+    "react-scripts": "^5.0.1",
     "@osn/polkadot-react-identicon": "^1.0.7",
     "@polkadot/extension-dapp": "^0.42.7",
     "@polkadot/react-identicon": "^1.1.1",
