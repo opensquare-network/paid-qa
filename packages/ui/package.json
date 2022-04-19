@@ -31,10 +31,7 @@
   },
   "dependencies": {
     "@craco/craco": "^6.4.3",
-    "@interlay/interbtc-types": "1.5.10",
-    "@interlay/monetary-js": "0.5.4",
     "@osn/common": "^0.0.6",
-    "@phala/typedefs": "^0.2.30",
     "dayjs": "^1.10.8",
     "micromark": "^3.0.10",
     "micromark-extension-gfm": "^2.0.1",
@@ -58,6 +55,7 @@
     "@storybook/react": "^6.4.22",
     "@storybook/testing-library": "^0.0.9",
     "babel-loader": "^8.2.4",
-    "babel-plugin-inline-react-svg": "^2.0.1"
+    "babel-plugin-inline-react-svg": "^2.0.1",
+    "semantic-ui-css": "^2.4.1"
   }
 }
