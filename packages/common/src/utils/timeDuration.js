@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import updateLocale from "dayjs/plugin/updateLocale";
 dayjs.extend(updateLocale);
 
-export default function timeDuration(time) {
+export function timeDuration(time) {
   if (!time) {
     return "Unknown time";
   }

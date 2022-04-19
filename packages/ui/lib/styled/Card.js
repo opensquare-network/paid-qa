@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MOBILE_SIZE } from "@osn/consts/src";
+import { MOBILE_SIZE } from "@osn/consts";
 
 const Card = styled.div`
   background: #ffffff;

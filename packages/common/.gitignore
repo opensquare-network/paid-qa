@@ -1,1 +1,3 @@
 dist
+bundle.js
+*.js.map

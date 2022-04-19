@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import timeDuration from "@osn/common/src/utils/timeDuration";
+import { timeDuration } from "@osn/common";
 
 const Wrapper = styled.div`
   font-size: 14px;
