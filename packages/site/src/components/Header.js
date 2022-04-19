@@ -9,10 +9,7 @@ import ConnectWallet from "./ConnectWallet";
 import NodeSelect from "./NodeSelect";
 import { useDispatch, useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
-import {
-  useOnClickOutside,
-  useWindowSize,
-} from "@osn/common-ui/lib/utils/hooks";
+import { useOnClickOutside, useWindowSize } from "@osn/common/src/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
 import {
   popUpConnect,
@@ -21,7 +18,7 @@ import {
 import { NavLink } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
-import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
 
 const Wrapper = styled.header`
   position: relative;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
 
 const Wrapper = styled.div`
   > :not(:first-child) {

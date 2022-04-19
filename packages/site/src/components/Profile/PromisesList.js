@@ -14,7 +14,7 @@ import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import Tag from "@osn/common-ui/lib/Tag";
 import ProgressBar from "../ProgressBar";
 import Wrapper from "./styled/ListWrapper";
-import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
 
 const NoWrap = styled.span`
   white-space: nowrap;

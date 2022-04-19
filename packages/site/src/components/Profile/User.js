@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import Name from "../User/Name";
 import ExternalLink from "@osn/common-ui/lib/ExternalLink";
-import { MOBILE_SIZE } from "@osn/common-ui/lib/utils/constants";
+import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { ReactComponent as CopyIcon } from "../Post/Detail/icons/copy.svg";
@@ -11,7 +11,7 @@ import Tooltip from "@osn/common-ui/lib/Tooltip";
 import { useCallback, useState } from "react";
 import copy from "copy-to-clipboard";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
-import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
+import { addressEllipsis } from "@osn/common/src/utils/address";
 
 const Wrapper = styled(Flex)`
   flex-wrap: wrap;

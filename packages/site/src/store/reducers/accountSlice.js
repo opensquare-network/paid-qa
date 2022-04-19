@@ -4,9 +4,9 @@ import {
   setCookie,
   getCookie,
   clearCookie,
-} from "@osn/common-ui/lib/utils/cookie";
+} from "@osn/common/src/utils/cookie";
 import { encodeAddress } from "@polkadot/util-crypto";
-import { AVAILABLE_NETWORKS } from "@osn/common-ui/lib/utils/constants";
+import { AVAILABLE_NETWORKS } from "@osn/common/src/utils/constants";
 
 const accountSlice = createSlice({
   name: "account",

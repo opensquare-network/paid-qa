@@ -3,7 +3,7 @@ import styled from "styled-components";
 import IdentityOrAddr from "./User/IdentityOrAddr";
 import { p_12_normal } from "@osn/common-ui/lib/styles/textStyles";
 import Flex from "@osn/common-ui/lib/styled/Flex";
-import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 
 const Wrapper = styled.div`
   display: flex;

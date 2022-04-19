@@ -24,12 +24,12 @@ import {
 import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
-import { getSymbolByChain } from "@osn/common-ui/lib/utils/tokenValue";
+import { getSymbolByChain } from "@osn/common/src/utils/tokenValue";
 import Preview from "@osn/common-ui/lib/Preview";
 import { useApi, useBalance } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
-import { useIsMounted } from "@osn/common-ui/lib/utils/hooks";
+import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 
 const { InteractionEncoder } = encoder;

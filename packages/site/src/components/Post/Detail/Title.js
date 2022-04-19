@@ -5,7 +5,7 @@ import TagList from "components/TagList";
 import Time from "@osn/common-ui/lib/Time";
 import MobileInvisible from "@osn/common-ui/lib/styled/MobileInvisible";
 import NetworkUser from "../../User/NetworkUser";
-import { encodeNetworkAddress } from "@osn/common-ui/lib/utils/address";
+import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 import { useSelector } from "react-redux";
 import { answersSelector } from "../../../store/reducers/answerSlice";
 import { p_18_semibold } from "@osn/common-ui/lib/styles/textStyles";

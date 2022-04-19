@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Card from "@osn/common-ui/lib/styled/Card";
 import Time from "@osn/common-ui/lib/Time";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
-import { addressEllipsis } from "@osn/common-ui/lib/utils/address";
+import { addressEllipsis } from "@osn/common/src/utils/address";
 import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
 import { Avatar } from "@osn/common-ui/lib";
 import Flex from "@osn/common-ui/lib/styled/Flex";

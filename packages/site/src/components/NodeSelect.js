@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   useWindowSize,
   useOnClickOutside,
-} from "@osn/common-ui/lib/utils/hooks.js";
+} from "@osn/common/src/utils/hooks.js";
 import {
   setCurrentNode,
   chainNodesSelector,
