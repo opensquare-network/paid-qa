@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 import ExternalLink from "../ExternalLink";
-import FooterLogoSvg from "../imgs/opensquare-footer-logo.svg";
-import GithubSvg from "../imgs/icons/github.svg";
-import TelegramSvg from "../imgs/icons/telegram.svg";
-import TwitterSvg from "../imgs/icons/twitter.svg";
-import SubsocialSvg from "../imgs/icons/subsocial.svg";
-import MailSvg from "../imgs/icons/mail.svg";
+import { ReactComponent as FooterLogoSvg } from "../imgs/opensquare-footer-logo.svg";
+import { ReactComponent as GithubSvg } from "../imgs/icons/github.svg";
+import { ReactComponent as TelegramSvg } from "../imgs/icons/telegram.svg";
+import { ReactComponent as TwitterSvg } from "../imgs/icons/twitter.svg";
+import { ReactComponent as SubsocialSvg } from "../imgs/icons/subsocial.svg";
+import { ReactComponent as MailSvg } from "../imgs/icons/mail.svg";
 import footerItems from "./items";
 
 const SvgMap = new Map([
@@ -144,9 +144,11 @@ export default function Footer({ github }) {
                       key={index}
                     >
                       <Item>
-                        {item.icon && (
-                          <img src={SvgMap.get(item.icon)} alt="" />
-                        )}
+                        {item.icon &&
+                          (() => {
+                            const SvgTag = SvgMap.get(item.icon);
+                            return <SvgTag />;
+                          })()}
                         {item.name}
                       </Item>
                     </ExternalLink>
@@ -156,7 +158,7 @@ export default function Footer({ github }) {
             ))}
           </LeftWrapper>
           <RightWrapper>
-            <img src={FooterLogoSvg} alt="" />
+            <FooterLogoSvg />
           </RightWrapper>
         </ContentWrapper>
         <BottomWrapper>
