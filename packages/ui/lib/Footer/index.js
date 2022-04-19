@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import ExternalLink from "../ExternalLink";
-import { FOOTER_ITEMS } from "../utils/constants";
+import { FOOTER_ITEMS } from "@osn/common/src/utils/constants";
 import FooterLogoSvg from "../imgs/opensquare-footer-logo.svg";
 import GithubSvg from "../imgs/icons/github.svg";
 import TelegramSvg from "../imgs/icons/telegram.svg";

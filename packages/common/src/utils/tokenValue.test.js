@@ -5,7 +5,7 @@ import {
   getEffectiveNumbers,
   getSymbolByChain,
   toPrecision,
-} from "../lib/utils/tokenValue";
+} from "./tokenValue";
 
 test("bnAdd", () => {
   expect(bnAdd("1.2345689", "987654321")).toBe("987654322.2345689");

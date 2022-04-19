@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { micromark } from "micromark";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
-import { matchMdLink, replaceMentionLinks } from "../utils/markdown";
+import {
+  matchMdLink,
+  replaceMentionLinks,
+} from "@osn/common/src/utils/markdown";
 import sanitizeHtml from "sanitize-html";
 import markdownStyle from "../styles/markdown";
 
