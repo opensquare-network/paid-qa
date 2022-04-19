@@ -1,5 +1,5 @@
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { Chains } from "../../utils/constants";
+import { Chains } from "@osn/consts";
 import {
   bifrostOptions,
   karuraOptions,

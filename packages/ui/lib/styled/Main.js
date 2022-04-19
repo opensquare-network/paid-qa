@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MOBILE_SIZE } from "@osn/common/src/utils/constants";
+import { MOBILE_SIZE } from "@osn/consts";
 
 const maxWidth = 1080;
 

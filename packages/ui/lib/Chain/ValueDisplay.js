@@ -5,7 +5,7 @@ import {
   toPrecision,
   getSymbolByChain,
   getDecimalByChain,
-} from "@osn/common/src/utils/tokenValue";
+} from "@osn/common";
 import { ReactComponent as Loading } from "../imgs/icons/loading.svg";
 
 /**

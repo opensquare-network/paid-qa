@@ -26,7 +26,8 @@
   },
   "scripts": {
     "prepare": "husky install && husky set .husky/pre-commit \"npx lint-staged\"",
-    "start": "yarn workspace @paid-qa/site start"
+    "build": "yarn workspace @osn/common build && yarn workspace @osn/consts build",
+    "start": "yarn build && yarn workspace @paid-qa/site start"
   },
   "main": "index.js",
   "repository": "https://github.com/opensquare-network/paid-qa.git",

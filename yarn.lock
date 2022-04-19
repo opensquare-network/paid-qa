@@ -1850,6 +1850,13 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@osn/common@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npmjs.org/@osn/common/-/common-0.0.6.tgz#2d6bf9066cb1d25890e41f93abbda90ff3e66490"
+  integrity sha512-kNstBC0lStN0kdvxKUN0e6udaNdPqnvxjDc4lOwvqqcBwJaPm9Gixa5YsEXK8/Asq5Xk3K9AcdsE12IW3P78oQ==
+  dependencies:
+    "@osn/provider-options" "^1.0.1"
+
 "@osn/polkadot-react-identicon@^1.0.7":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@osn/polkadot-react-identicon/-/polkadot-react-identicon-1.0.8.tgz#c4da14f5122057ff72cba1724467cb1455e4377c"
@@ -1867,7 +1874,7 @@
     util "npm:util"
     web-vitals "^2.1.4"
 
-"@osn/provider-options@^1.0.2":
+"@osn/provider-options@^1.0.1", "@osn/provider-options@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@osn/provider-options/-/provider-options-1.0.2.tgz#0577c26ebcc41ac773b9718d47f9637bbb4cd952"
   integrity sha512-1buGMpp5eD/sL3UFb6Fjqo+3KjWNao2MM/RqjR4NKdAeTxVaJmEkdid6BVN9FBVmYYZ2kBIbOTTXEl5uzy6wGg==
@@ -15119,9 +15126,9 @@ rollup-plugin-terser@^7.0.0:
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
 
-rollup@^2.43.1:
+rollup@^2.43.1, rollup@^2.70.2:
   version "2.70.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.70.2.tgz#808d206a8851628a065097b7ba2053bd83ba0c0d"
+  resolved "https://registry.npmjs.org/rollup/-/rollup-2.70.2.tgz#808d206a8851628a065097b7ba2053bd83ba0c0d"
   integrity sha512-EitogNZnfku65I1DD5Mxe8JYRUCy0hkK5X84IlDtUs+O6JRMpRciXTzyCUuX11b5L5pvjH+OmFXiQ3XjabcXgg==
   optionalDependencies:
     fsevents "~2.3.2"

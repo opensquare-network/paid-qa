@@ -1,0 +1,12 @@
+{
+  "name": "@osn/consts",
+  "version": "0.0.2",
+  "main": "bundle.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "rollup": "^2.70.2"
+  }
+}

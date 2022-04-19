@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 import Flex from "../styled/Flex";
-import { MOBILE_SIZE } from "@osn/constants";
+import { MOBILE_SIZE } from "@osn/consts";
 import LogoImg from "../imgs/opensquare-logo.svg";
 import LogoIcon from "../imgs/opensquare-logo-icon.svg";
 
