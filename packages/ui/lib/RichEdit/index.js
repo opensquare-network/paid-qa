@@ -39,7 +39,7 @@ function RichEdit(
   {
     content,
     setContent,
-    onSubmit,
+    onSubmit = () => {},
     showButtons = true,
     submitting = false,
     disabled = false,

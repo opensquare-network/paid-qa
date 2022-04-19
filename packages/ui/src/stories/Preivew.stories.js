@@ -5,6 +5,13 @@ import Preview from "../../lib/Preview";
 export default {
   title: "Preview",
   component: Preview,
+  parameters: {
+    docs: {
+      description: {
+        component: "Please visit the `Rich Editor` for better experience.",
+      },
+    },
+  },
 };
 
 const markdown = `
