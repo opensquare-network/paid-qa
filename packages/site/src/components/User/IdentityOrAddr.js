@@ -2,7 +2,7 @@ import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { useEffect, useState } from "react";
 import { fetchIdentity } from "@osn/common/src/services/identity";
 import styled, { css } from "styled-components";
-import IdentityIcon from "./IdentityIcon";
+import IdentityIcon from "@osn/common-ui/lib/User/IdentityIcon";
 import {
   addressEllipsis,
   encodeNetworkAddress,
