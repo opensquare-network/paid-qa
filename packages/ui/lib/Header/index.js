@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import Flex from "../styled/Flex";
-import { NavLink } from "react-router-dom";
 import { MOBILE_SIZE } from "../utils/constants";
 import LogoImg from "../imgs/opensquare-logo.svg";
 import LogoIcon from "../imgs/opensquare-logo-icon.svg";
@@ -60,14 +59,18 @@ const ChildWrapper = styled(Flex)`
   flex: 1;
 `;
 
-export default function Header({ children }) {
+export default function Header({ children, WrapLogoComponent }) {
   return (
     <Wrapper>
       <ContentWrapper>
         <LogoWrapper>
-          <NavLink to="/">
+          {WrapLogoComponent ? (
+            <WrapLogoComponent>
+              <Logo />
+            </WrapLogoComponent>
+          ) : (
             <Logo />
-          </NavLink>
+          )}
           {children && <Divider />}
         </LogoWrapper>
 
