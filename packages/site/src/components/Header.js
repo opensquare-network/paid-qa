@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import { NavLink } from "react-router-dom";
 import OsnHeader from "@osn/common-ui/lib/Header";
 import NotificationBell from "./NotificationBell";
 import ConnectModal from "./ConnectModal";
@@ -53,8 +54,12 @@ export default function Header() {
   const account = useSelector(accountSelector);
   useUpdateNodesDelay(account?.network);
 
+  const WrapLogoComponent = ({ children }) => (
+    <NavLink to="/">{children}</NavLink>
+  );
+
   return (
-    <OsnHeader>
+    <OsnHeader WrapLogoComponent={WrapLogoComponent}>
       <ContentWrapper>
         <ProductSwitch />
 
