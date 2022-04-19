@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@craco/craco": "^6.4.3",
-    "@osn/common": "^0.0.6",
     "dayjs": "^1.10.8",
     "micromark": "^3.0.10",
     "micromark-extension-gfm": "^2.0.1",
