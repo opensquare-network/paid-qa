@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Link } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 import { ReactComponent as CaretLeft } from "../imgs/icons/caret-left.svg";
 
 const Wrapper = styled.div`
@@ -53,15 +53,17 @@ const LeftIconLink = styled(CursorLink)`
 
 export default function Breadcrumb({ value }) {
   return (
-    <Wrapper>
-      <LeftIconLink to="/">
-        <CaretLeft />
-      </LeftIconLink>
-      <Crumbs>
-        <CursorLink to="/">Explorer</CursorLink>
-        <span>/</span>
-        <DisabledCrumb>{value}</DisabledCrumb>
-      </Crumbs>
-    </Wrapper>
+    <BrowserRouter>
+      <Wrapper>
+        <LeftIconLink to="/">
+          <CaretLeft />
+        </LeftIconLink>
+        <Crumbs>
+          <CursorLink to="/">Explorer</CursorLink>
+          <span>/</span>
+          <DisabledCrumb>{value}</DisabledCrumb>
+        </Crumbs>
+      </Wrapper>
+    </BrowserRouter>
   );
 }

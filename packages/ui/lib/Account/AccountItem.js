@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 
 import Avatar from "./Avatar";
 import Address from "./Address";
 import { encodeAddress } from "@polkadot/util-crypto";
 import { ChainSS58Format } from "../utils/constants";
-import { fetchIdentity } from "@osn/common/dist/services/identity";
 import IdentityIcon from "../Identity/IdentityIcon";
 import { p_16_semibold } from "../styles/textStyles";
 import ChainIcon from "../Chain/ChainIcon";
@@ -64,19 +63,18 @@ const IdentityDisplay = ({ identity, displayAccountName, chain }) => {
   );
 };
 
-const AccountItem = ({ header, accountName, accountAddress, chain }) => {
-  const [identity, setIdentity] = useState();
+const AccountItem = ({
+  header,
+  accountName,
+  accountAddress,
+  chain,
+  identity,
+}) => {
   const ss58Format = ChainSS58Format[chain];
   let address = accountAddress;
   if (typeof ss58Format === "number") {
     address = encodeAddress(accountAddress, ss58Format);
   }
-  let displayAccountName = accountName;
-  useEffect(() => {
-    fetchIdentity(chain, accountAddress).then((identity) => {
-      setIdentity(identity);
-    });
-  }, []);
 
   return (
     <ItemWrapper header={header}>
@@ -84,7 +82,7 @@ const AccountItem = ({ header, accountName, accountAddress, chain }) => {
       <div>
         <IdentityDisplay
           identity={identity}
-          displayAccountName={displayAccountName}
+          displayAccountName={accountName}
           chain={chain}
         />
         <TextMinor>

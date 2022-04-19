@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StyledDropdown from "../styled/Dropdown";
 import AccountItem from "./AccountItem";
+import { fetchIdentity } from "@osn/common/src/services/identity";
 
 const Wrapper = styled.div`
   .ui.selection.dropdown .menu {
@@ -30,6 +31,7 @@ const AccountSelector = ({
   onSelect = () => {},
   selected = "",
 }) => {
+  const identityMap = new Map();
   const [selectedIndex, setSelectedIndex] = useState(
     (() => {
       for (let index in accounts) {
@@ -40,6 +42,16 @@ const AccountSelector = ({
       return 0;
     })()
   );
+
+  accounts.forEach((account) => {
+    fetchIdentity(chain.network, account.address).then((identity) => {
+      if (!identity) {
+        return;
+      }
+      identityMap.set(account.address, identity);
+    });
+  });
+
   useEffect(() => {
     onSelect(accounts[selectedIndex]);
   }, [accounts, onSelect, selectedIndex]);
@@ -52,6 +64,7 @@ const AccountSelector = ({
         accountName={item.name}
         accountAddress={item.address}
         chain={chain.network}
+        identity={identityMap.get(item.address)}
       />
     ),
   }));
@@ -72,6 +85,7 @@ const AccountSelector = ({
           accountAddress={accounts?.[selectedIndex]?.address}
           chain={chain.network}
           header
+          identity={identityMap.get(accounts?.[selectedIndex]?.address)}
         />
       </DropdownWrapper>
     </Wrapper>
