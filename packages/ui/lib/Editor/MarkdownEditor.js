@@ -2,6 +2,28 @@ import styled, { css } from "styled-components";
 import ReactMde from "react-mde";
 import { useRef } from "react";
 
+import HeaderIcon from "../../lib/imgs/icons/markdown/header.svg";
+import BoldIcon from "../../lib/imgs/icons/markdown/bold.svg";
+import ItalicIcon from "../../lib/imgs/icons/markdown/italic.svg";
+import QuoteIcon from "../../lib/imgs/icons/markdown/quote.svg";
+import OrderedListIcon from "../../lib/imgs/icons/markdown/ordered-list.svg";
+import UnorderedListIcon from "../../lib/imgs/icons/markdown/unordered-list.svg";
+import LinkIcon from "../../lib/imgs/icons/markdown/link.svg";
+import ImageIcon from "../../lib/imgs/icons/markdown/image.svg";
+import CodeIcon from "../../lib/imgs/icons/markdown/code.svg";
+
+const iconMap = {
+  header: HeaderIcon,
+  bold: BoldIcon,
+  italic: ItalicIcon,
+  quote: QuoteIcon,
+  "ordered-list": OrderedListIcon,
+  "unordered-list": UnorderedListIcon,
+  link: LinkIcon,
+  image: ImageIcon,
+  code: CodeIcon,
+};
+
 const p_14_normal = css`
   font-style: normal;
   font-weight: normal;
@@ -104,7 +126,7 @@ export default function MarkdownEditor({
           ],
         ]}
         getIcon={(commandName) => {
-          return <img src={`/imgs/icons/markdown/${commandName}.svg`} alt="" />;
+          return <img src={iconMap[commandName]} alt="" />;
         }}
         loadSuggestions={loadSuggestions}
         childProps={{
