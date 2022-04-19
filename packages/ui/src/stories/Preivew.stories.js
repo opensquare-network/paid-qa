@@ -23,6 +23,19 @@ _italic text_
 
 1. numbered 1
 2. numbered 2
+
+|table|example|index|
+|-|-|-|
+|table|column|1|
+|table|column|2|
+
+\`\`\`bash
+echo "hello"
+\`\`\`
+
+\`inline code\`
+
+> quote text
 `.trim();
 
 const Wrapper = styled.div`
@@ -31,7 +44,7 @@ const Wrapper = styled.div`
 `;
 
 const Textarea = styled.textarea`
-  width: 300px;
+  width: 400px;
   margin-right: 48px;
 `;
 
