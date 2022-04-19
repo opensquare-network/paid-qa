@@ -18,7 +18,7 @@ const StyledDropdown = styled(Dropdown)`
     min-height: 48px !important;
   }
   &.ui.dropdown .menu > .item {
-    padding: 0 !important;
+    // padding: 0 !important;
   }
   .icon {
     top: 50% !important;
