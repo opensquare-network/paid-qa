@@ -1,6 +1,6 @@
 import debounce from "lodash.debounce";
 import { Chains } from "@osn/consts";
-import { encodeNetworkAddress } from "../utils";
+import { encodeNetworkAddress } from "../utils/address";
 
 export const identityChainMap = Object.freeze({
   [Chains.kintsugi]: [Chains.kusama],
