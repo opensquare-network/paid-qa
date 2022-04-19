@@ -95,7 +95,9 @@ export const hideButtons = () => {
 };
 
 export const loadSuggestions = () => {
-  const [content, setContent] = useState("type `@` to get suggestions\n\n");
+  const [content, setContent] = useState(
+    "type `@` to get suggestions here 👇\n\n"
+  );
   const loadSuggestions = () => {
     return [
       {
