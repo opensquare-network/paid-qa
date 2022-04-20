@@ -4,8 +4,6 @@ import Dropdown from "./styled/Dropdown";
 import ChainIcon from "./Chain/ChainIcon";
 import ChainSelectItem from "./Chain/ChainSelectItem";
 import ChainSelector from "./Chain/ChainSelector";
-import AccountItem from "./Account/AccountItem";
-import AccountSelector from "./Account/AccountSelector";
 import Address from "./Account/Address";
 import Avatar from "./Account/Avatar";
 import MarkdownEditor from "./Editor/MarkdownEditor";
@@ -20,8 +18,6 @@ export {
   Dropdown,
   ChainSelectItem,
   ChainSelector,
-  AccountItem,
-  AccountSelector,
   Address,
   Avatar,
   MarkdownEditor,

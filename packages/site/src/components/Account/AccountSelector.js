@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import StyledDropdown from "../styled/Dropdown";
+import StyledDropdown from "@osn/common-ui/lib/styled/Dropdown";
 import AccountItem from "./AccountItem";
 
 const Wrapper = styled.div`
