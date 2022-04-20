@@ -177,6 +177,7 @@ export default function ConnectModal() {
         open={hasExtension && isPolkadotAccessible === false}
         onClose={closeModal}
         okText="Got it."
+        onOk={closeModal}
         okButtonProps={{ primary: false, color: "orange" }}
       >
         <StyledTitle>Connect Wallet</StyledTitle>
