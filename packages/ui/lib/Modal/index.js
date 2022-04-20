@@ -12,7 +12,7 @@ const StyledModal = styled(SemanticModal)`
   border-radius: 0 !important;
 `;
 
-const StyledCard = styled.div`
+const ContentWrapper = styled.div`
   margin: 0 !important;
   padding: 24px !important;
   position: relative !important;
@@ -69,13 +69,13 @@ export default function Modal({
         size="tiny"
         closeOnDimmerClick={closeOnClickOutside}
       >
-        <StyledCard>
+        <ContentWrapper>
           {closeBar && <CloseBar>{closeButton}</CloseBar>}
 
           {children}
 
           {footer && <FooterWrapper>{footer}</FooterWrapper>}
-        </StyledCard>
+        </ContentWrapper>
       </StyledModal>
     </Wrapper>
   );
