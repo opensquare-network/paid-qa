@@ -76,7 +76,7 @@ const AccountItem = ({ header, accountName, accountAddress, chain }) => {
     fetchIdentity(chain, accountAddress).then((identity) => {
       setIdentity(identity);
     });
-  }, []);
+  }, [accountAddress, chain]);
 
   return (
     <ItemWrapper header={header}>
