@@ -40,22 +40,27 @@ const FooterWrapper = styled.div`
 
 export default function Modal({
   open,
-  setOpen,
+  setOpen = () => {},
   children,
   footer,
   onOk = () => {},
+  onClose = () => {},
   okText = "OK",
+  okButtonProps = {},
   closeBar = true,
   closeOnClickOutside = true,
 }) {
-  const closeModal = () => setOpen(false);
+  const closeModal = () => {
+    onClose();
+    setOpen(false);
+  };
 
   const closeButton = (
     <CloseButton onClick={closeModal} src={CloseIcon} width={24} alt="" />
   );
 
   footer = footer || (
-    <Button primary onClick={onOk}>
+    <Button primary onClick={onOk} {...okButtonProps}>
       {okText}
     </Button>
   );
