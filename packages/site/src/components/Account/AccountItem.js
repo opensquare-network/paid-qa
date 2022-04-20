@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
-import Avatar from "./Avatar";
-import Address from "./Address";
+import Avatar from "@osn/common-ui/lib/Account/Avatar";
+import Address from "@osn/common-ui/lib/Account/Address";
 import { encodeAddress } from "@polkadot/util-crypto";
 import { ChainSS58Format } from "@osn/consts";
-import { fetchIdentity } from "@osn/common";
-import IdentityIcon from "../Identity/IdentityIcon";
-import { p_16_semibold } from "../styles/textStyles";
-import ChainIcon from "../Chain/ChainIcon";
+import { fetchIdentity } from "@osn/common/src/services/identity";
+import IdentityIcon from "@osn/common-ui/lib/Identity/IdentityIcon";
+import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 
 const Text = styled.p`
   color: #1e2134;

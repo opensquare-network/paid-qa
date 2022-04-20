@@ -5,7 +5,7 @@ import { accountSelector, setAccount } from "../store/reducers/accountSlice";
 
 import { Modal } from "semantic-ui-react";
 import Button from "@osn/common-ui/lib/styled/Button";
-import AccountSelector from "@osn/common-ui/lib/Account/AccountSelector";
+import AccountSelector from "./Account/AccountSelector";
 import styled from "styled-components";
 import ChainSelector from "@osn/common-ui/lib/Chain/ChainSelector";
 import { AVAILABLE_NETWORKS } from "@osn/consts";
