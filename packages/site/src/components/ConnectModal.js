@@ -3,8 +3,7 @@ import { isWeb3Injected, web3Enable } from "@polkadot/extension-dapp";
 import { useDispatch, useSelector } from "react-redux";
 import { accountSelector, setAccount } from "../store/reducers/accountSlice";
 
-import { Modal } from "semantic-ui-react";
-import Button from "@osn/common-ui/lib/styled/Button";
+import Modal from "@osn/common-ui/lib/Modal";
 import AccountSelector from "./Account/AccountSelector";
 import styled from "styled-components";
 import ChainSelector from "@osn/common-ui/lib/Chain/ChainSelector";
@@ -21,18 +20,6 @@ import { PROJECT_NAME } from "utils/constants";
 
 const Wrapper = styled.div``;
 
-const StyledModal = styled(Modal)`
-  max-width: 400px !important;
-  border-radius: 0 !important;
-`;
-
-const StyledCard = styled.div`
-  margin: 0 !important;
-  padding: 24px !important;
-  position: relative !important;
-  width: 100% !important;
-`;
-
 const StyledTitle = styled.header`
   ${p_20_semibold};
   color: #1e2134;
@@ -47,23 +34,6 @@ const StyledText = styled.p`
 const StyledDescription = styled.p`
   ${p_14_normal};
   color: #506176;
-`;
-
-const CloseBar = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-
-  > svg path {
-    fill: #9da9bb;
-  }
-
-  cursor: pointer;
-`;
-
-const ActionBar = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  margin-top: 28px;
 `;
 
 export default function ConnectModal() {
@@ -131,136 +101,92 @@ export default function ConnectModal() {
 
   const closeModal = () => dispatch(closeConnect());
 
-  const closeButton = (
-    <img onClick={closeModal} src="/imgs/icons/close.svg" width={24} alt="" />
-  );
-
   return (
     <Wrapper>
-      <StyledModal
+      <Modal
         open={isPolkadotAccessible && accounts.length > 0}
-        dimmer
+        okText="Connect"
+        onOk={doConnect}
         onClose={closeModal}
-        size="tiny"
       >
-        <StyledCard>
-          <CloseBar>{closeButton}</CloseBar>
-          <StyledTitle>Connect Wallet</StyledTitle>
+        <StyledTitle>Connect Wallet</StyledTitle>
 
-          <StyledText>Chain</StyledText>
-          <ChainSelector
-            chains={availableNetworks}
-            onSelect={(chain) => setChain(chain)}
-            selected={account?.network}
-          />
+        <StyledText>Chain</StyledText>
+        <ChainSelector
+          chains={availableNetworks}
+          onSelect={(chain) => setChain(chain)}
+          selected={account?.network}
+        />
 
-          <StyledText>Account</StyledText>
-          <AccountSelector
-            accounts={accounts}
-            onSelect={(account) => setAddress(account?.address)}
-            chain={chain}
-            selected={account?.address}
-          />
+        <StyledText>Account</StyledText>
+        <AccountSelector
+          accounts={accounts}
+          onSelect={(account) => setAddress(account?.address)}
+          chain={chain}
+          selected={account?.address}
+        />
+      </Modal>
 
-          <ActionBar>
-            <Button primary onClick={doConnect}>
-              Connect
-            </Button>
-          </ActionBar>
-        </StyledCard>
-      </StyledModal>
-
-      <StyledModal
+      <Modal
         open={isPolkadotAccessible && accounts.length === 0}
-        dimmer
         onClose={closeModal}
-        size="tiny"
+        okText="Create/Import addresses"
+        okButtonProps={{ primary: false, color: "orange" }}
+        onOk={() => {
+          closeModal();
+          const newWindow = window.open(
+            "https://polkadot.js.org/extension/",
+            "_blank",
+            "noopener,noreferrer"
+          );
+          if (newWindow) newWindow.opener = null;
+        }}
       >
-        <StyledCard>
-          <CloseBar>{closeButton}</CloseBar>
-          <StyledTitle>Connect Wallet</StyledTitle>
+        <StyledTitle>Connect Wallet</StyledTitle>
 
-          <StyledDescription>
-            Polkadot-js extension is connected, but no account found. Please
-            create or import some accounts first.
-          </StyledDescription>
+        <StyledDescription>
+          Polkadot-js extension is connected, but no account found. Please
+          create or import some accounts first.
+        </StyledDescription>
+      </Modal>
 
-          <ActionBar>
-            <Button
-              color="orange"
-              onClick={() => {
-                closeModal();
-                const newWindow = window.open(
-                  "https://polkadot.js.org/extension/",
-                  "_blank",
-                  "noopener,noreferrer"
-                );
-                if (newWindow) newWindow.opener = null;
-              }}
-            >
-              Create/Import addresses
-            </Button>
-          </ActionBar>
-        </StyledCard>
-      </StyledModal>
-
-      <StyledModal
+      <Modal
         open={hasExtension === false}
-        dimmer
         onClose={closeModal}
-        size="tiny"
+        okText={`Polkadot{.js} Extension`}
+        okButtonProps={{ primary: false, color: "orange" }}
+        onOk={() => {
+          closeModal();
+          const newWindow = window.open(
+            "https://polkadot.js.org/extension/",
+            "_blank",
+            "noopener,noreferrer"
+          );
+          if (newWindow) newWindow.opener = null;
+        }}
       >
-        <StyledCard>
-          <CloseBar>{closeButton}</CloseBar>
-          <StyledTitle>Connect Wallet</StyledTitle>
+        <StyledTitle>Connect Wallet</StyledTitle>
 
-          <StyledDescription>
-            Polkadot-js extension not detected. No web3 account could be found.
-            Visit this page on a computer with polkadot-js extension.
-          </StyledDescription>
+        <StyledDescription>
+          Polkadot-js extension not detected. No web3 account could be found.
+          Visit this page on a computer with polkadot-js extension.
+        </StyledDescription>
+      </Modal>
 
-          <ActionBar>
-            <Button
-              color="orange"
-              onClick={() => {
-                closeModal();
-                const newWindow = window.open(
-                  "https://polkadot.js.org/extension/",
-                  "_blank",
-                  "noopener,noreferrer"
-                );
-                if (newWindow) newWindow.opener = null;
-              }}
-            >
-              Polkadot{`{.js}`} Extension
-            </Button>
-          </ActionBar>
-        </StyledCard>
-      </StyledModal>
-
-      <StyledModal
+      <Modal
         open={hasExtension && isPolkadotAccessible === false}
-        dimmer
         onClose={closeModal}
-        size="tiny"
+        okText="Got it."
+        okButtonProps={{ primary: false, color: "orange" }}
       >
-        <StyledCard>
-          <CloseBar></CloseBar>
-          <StyledTitle>Connect Wallet</StyledTitle>
+        <StyledTitle>Connect Wallet</StyledTitle>
 
-          <StyledDescription>
-            Polkadot-js extension is detected but unaccessible, please go to
-            Polkadot-js extension, settings, and check Manage Website Access
-            section.
-          </StyledDescription>
-
-          <ActionBar>
-            <Button color="orange" onClick={closeModal}>
-              Got it.
-            </Button>
-          </ActionBar>
-        </StyledCard>
-      </StyledModal>
+        <StyledDescription>
+          Polkadot-js extension is detected but unaccessible, please go to
+          Polkadot-js extension, settings, and check Manage Website Access
+          section.
+        </StyledDescription>
+      </Modal>
     </Wrapper>
   );
 }
