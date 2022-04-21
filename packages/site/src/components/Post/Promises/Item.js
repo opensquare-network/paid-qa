@@ -39,6 +39,24 @@ const ResolvedTag = styled(FlexCenter)`
   color: #a1a8b3;
 `;
 
+export function useAverageFulfillment(rewards) {
+  const fundSummary = useSelector(fundSummarySelector);
+  if (!rewards.length > 0) {
+    return 0;
+  }
+  let fulfillment = 0;
+  rewards.forEach((reward) => {
+    const paidValue =
+      fundSummary?.statsBySponsors?.[reward.sponsor]?.[reward.symbol] || 0;
+    const percent = new BigNumber(paidValue)
+      .div(reward.value)
+      .times(100)
+      .integerValue();
+    fulfillment += Math.max(0, Math.min(percent, 100));
+  });
+  return fulfillment / rewards.length;
+}
+
 export function useFulfillment(reward) {
   const fundSummary = useSelector(fundSummarySelector);
   if (!reward) {
