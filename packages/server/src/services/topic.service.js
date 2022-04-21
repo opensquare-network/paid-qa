@@ -40,7 +40,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
 
   const cid = await cidOf(data);
 
-  // Verfify if ipfs cid is the same as the one in the system remark
+  // Verify if ipfs cid is the same as the one in the system remark
   if (interaction.topicIpfsCid !== cid) {
     throw new HttpError(
       500,
@@ -203,10 +203,10 @@ async function getTopics(symbol, status, title, page, pageSize) {
                       branches: [
                         { case: { $eq: ["$status", "active"] }, then: 1 },
                       ],
-                      default: 2
-                    }
-                  }
-                }
+                      default: 2,
+                    },
+                  },
+                },
               },
               { $sort: { statusSort: 1, blockTime: -1 } },
               { $skip: (page - 1) * pageSize },
@@ -255,20 +255,18 @@ async function getTopics(symbol, status, title, page, pageSize) {
       .addFields({
         statusSort: {
           $switch: {
-            branches: [
-              { case: { $eq: ["$status", "active"] }, then: 1 },
-            ],
-            default: 2
-          }
-        }
+            branches: [{ case: { $eq: ["$status", "active"] }, then: 1 }],
+            default: 2,
+          },
+        },
       })
       .sort({ statusSort: 1, blockTime: -1 })
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 
     await Promise.all([
-      Topic.populate(topics, { path: "answersCount" } ),
-      Topic.populate(topics, { path: "rewards" } ),
+      Topic.populate(topics, { path: "answersCount" }),
+      Topic.populate(topics, { path: "rewards" }),
     ]);
 
     return {
