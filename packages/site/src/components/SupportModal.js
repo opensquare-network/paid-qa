@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
 
-import { Modal } from "semantic-ui-react";
-import Button from "@osn/common-ui/lib/styled/Button";
+import Modal from "@osn/common-ui/lib/Modal";
 import styled from "styled-components";
 import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
 import Toggle from "@osn/common-ui/lib/Toggle";
@@ -41,18 +40,6 @@ const { SupportInteraction } = interactions;
 
 const Wrapper = styled.div``;
 
-const StyledModal = styled(Modal)`
-  max-width: 400px !important;
-  border-radius: 0 !important;
-`;
-
-const StyledCard = styled.div`
-  margin: 0 !important;
-  padding: 24px !important;
-  position: relative !important;
-  width: 100% !important;
-`;
-
 const StyledTitle = styled.header`
   ${p_20_semibold};
   line-height: 28px;
@@ -72,28 +59,11 @@ const StyledDescription = styled.p`
   color: #506176;
 `;
 
-const CloseBar = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-
-  > svg path {
-    fill: #9da9bb;
-  }
-
-  cursor: pointer;
-`;
-
 const Text = styled.p`
   ${p_14_medium};
   text-transform: capitalize;
   color: #1e2134;
   margin: 0;
-`;
-
-const ActionBar = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  margin-top: 28px;
 `;
 
 const ChainWrapper = styled.div`
@@ -250,72 +220,57 @@ export default function SupportModal({ open, setOpen, topicCid }) {
     }
   };
 
-  const closeModal = () => setOpen(false);
-
-  const closeButton = (
-    <img onClick={closeModal} src="/imgs/icons/close.svg" width={24} alt="" />
-  );
-
   return (
     <Wrapper>
-      <StyledModal open={open} dimmer onClose={closeModal} size="tiny">
-        <StyledCard>
-          <CloseBar>{closeButton}</CloseBar>
-          <StyledTitle>Promise</StyledTitle>
-          <StyledDescription>
-            Support the topic and promise rewards for answers. No need to deduct
-            or lock up assets.
-          </StyledDescription>
+      <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
+        <StyledTitle>Promise</StyledTitle>
+        <StyledDescription>
+          Support the topic and promise rewards for answers. No need to deduct
+          or lock up assets.
+        </StyledDescription>
 
-          <StyledText>Network</StyledText>
-          <ChainWrapper>
-            <ChainIcon chainName={account?.network} />
-            <Text>{account?.network}</Text>
-          </ChainWrapper>
+        <StyledText>Network</StyledText>
+        <ChainWrapper>
+          <ChainIcon chainName={account?.network} />
+          <Text>{account?.network}</Text>
+        </ChainWrapper>
 
-          <ItemTitle>
-            <StyledText>Asset</StyledText>
-            {account?.network === "statemine" && (
-              <ManualSwitch>
-                <span>Manual</span>
-                <Toggle on={manualOn} setOn={setManualOn} />
-              </ManualSwitch>
-            )}
-          </ItemTitle>
-          {manualOn ? (
-            <AssetInput
-              value={tokenIdentifier}
-              onChange={(e) => setTokenIdentifier(e.target.value)}
-            />
-          ) : (
-            <AssetSelector
-              network={account?.network}
-              setAsset={setSelectedAsset}
-            />
+        <ItemTitle>
+          <StyledText>Asset</StyledText>
+          {account?.network === "statemine" && (
+            <ManualSwitch>
+              <span>Manual</span>
+              <Toggle on={manualOn} setOn={setManualOn} />
+            </ManualSwitch>
           )}
-
-          <ItemTitle>
-            <StyledText>Amount</StyledText>
-          </ItemTitle>
-          <AmountInput
-            value={inputAmount}
-            symbol={loadingSymbol ? <Loading /> : symbol}
-            onChange={(e) => setInputAmount(e.target.value)}
+        </ItemTitle>
+        {manualOn ? (
+          <AssetInput
+            value={tokenIdentifier}
+            onChange={(e) => setTokenIdentifier(e.target.value)}
           />
+        ) : (
+          <AssetSelector
+            network={account?.network}
+            setAsset={setSelectedAsset}
+          />
+        )}
 
-          <BalanceInfo account={account} tokenIdentifier={tokenIdentifier} />
+        <ItemTitle>
+          <StyledText>Amount</StyledText>
+        </ItemTitle>
+        <AmountInput
+          value={inputAmount}
+          symbol={loadingSymbol ? <Loading /> : symbol}
+          onChange={(e) => setInputAmount(e.target.value)}
+        />
 
-          <StyledDescription>
-            Promise amount is not limited by the balance.
-          </StyledDescription>
+        <BalanceInfo account={account} tokenIdentifier={tokenIdentifier} />
 
-          <ActionBar>
-            <Button primary onClick={doConfirm}>
-              Confirm
-            </Button>
-          </ActionBar>
-        </StyledCard>
-      </StyledModal>
+        <StyledDescription>
+          Promise amount is not limited by the balance.
+        </StyledDescription>
+      </Modal>
     </Wrapper>
   );
 }
