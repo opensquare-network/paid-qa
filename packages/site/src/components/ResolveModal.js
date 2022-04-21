@@ -125,14 +125,16 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
       <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
         <StyledTitle>Resolve</StyledTitle>
 
-        {precent !== 100 && (
+        {percentage !== 100 && (
           <Info>If promise is not kept, credit score will be affected.</Info>
         )}
 
         <ItemTitle>
           <StyledText>My promise</StyledText>
         </ItemTitle>
-        {reward && <PromiseItem reward={reward} />}
+        {rewards?.map((reward, index) => (
+          <PromiseItem key={index} reward={reward} />
+        ))}
       </Modal>
     </Wrapper>
   );
