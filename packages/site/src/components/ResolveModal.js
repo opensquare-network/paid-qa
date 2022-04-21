@@ -21,10 +21,14 @@ import {
   updatePendingToast,
 } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
-import PromiseItem, { useFulfillment } from "./Post/Promises/Item";
+import PromiseItem, {
+  useAverageFulfillment,
+  useFulfillment,
+} from "./Post/Promises/Item";
 import { fetchTopic } from "store/reducers/topicSlice";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import { useEffect, useState } from "react";
 
 const { InteractionEncoder } = encoder;
 const { ResolveInteraction } = interactions;
@@ -81,13 +85,12 @@ const StyledText = styled.p`
   margin-bottom: 8px;
 `;
 
-export default function ResolveModal({ open, setOpen, reward, topicCid }) {
+export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const isMounted = useIsMounted();
   const api = useApi();
-
-  const [, precent] = useFulfillment(reward);
+  const percentage = useAverageFulfillment(rewards);
 
   const showErrorToast = (message) => {
     dispatch(newErrorToast(message));
@@ -160,14 +163,16 @@ export default function ResolveModal({ open, setOpen, reward, topicCid }) {
           <CloseBar>{closeButton}</CloseBar>
           <StyledTitle>Resolve</StyledTitle>
 
-          {precent !== 100 && (
+          {percentage !== 100 && (
             <Info>If promise is not kept, credit score will be affected.</Info>
           )}
 
           <ItemTitle>
             <StyledText>My promise</StyledText>
           </ItemTitle>
-          {reward && <PromiseItem reward={reward} />}
+          {rewards?.map((reward, index) => (
+            <PromiseItem key={index} reward={reward} />
+          ))}
           <ActionBar>
             <Button primary onClick={doConfirm}>
               Confirm

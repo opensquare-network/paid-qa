@@ -20,9 +20,8 @@ export default function Resolve({ topic }) {
   const sumUpRewards = calcSponserRewards(
     topic.rewards.filter((item) => item.sponsor === account?.address)
   );
-  const reward = sumUpRewards[0];
 
-  if (!reward) {
+  if (!sumUpRewards?.length > 0) {
     return null;
   }
 
@@ -41,7 +40,7 @@ export default function Resolve({ topic }) {
       <ResolveModal
         open={open}
         setOpen={setOpen}
-        reward={reward}
+        rewards={sumUpRewards}
         topicCid={topic.cid}
       />
     </Wrapper>
