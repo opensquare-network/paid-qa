@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Modal as SemanticModal } from "semantic-ui-react";
 
-import Button from "../../lib/styled/Button";
+import Button from "../styled/Button";
 import CloseIcon from "../imgs/icons/close.svg";
 
 const Wrapper = styled.div``;
