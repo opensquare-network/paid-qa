@@ -42,7 +42,7 @@ export default function Title({ topic }) {
             />
           </MobileInvisible>
           <RepliesCount>{answers?.total || 0} Replies</RepliesCount>
-          <Time time={topic.blockTime} />
+          <Time time={topic.indexer.blockTime} />
         </DividerWrapper>
         <TagList topic={topic} />
       </div>

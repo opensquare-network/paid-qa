@@ -74,10 +74,12 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     await Topic.create(
       [
         {
-          blockHash,
-          blockHeight,
-          extrinsicIndex,
-          blockTime,
+          indexer: {
+            blockHash,
+            blockHeight,
+            extrinsicIndex,
+            blockTime,
+          },
           cid,
           title,
           content,
