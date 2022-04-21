@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Card from "@osn/common-ui/lib/styled/Card";
 import { useEffect, useState } from "react";
-import NoPost from "components/NoPost";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
+import NoData from "@osn/common-ui/lib/NoData";
 import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
 import { newErrorToast } from "store/reducers/toastSlice";
@@ -73,7 +73,7 @@ export default function FundsList({ network, address }) {
       {isLoading ? (
         <ListLoader />
       ) : funds?.items?.length === 0 ? (
-        <NoPost message={"No current funds"} />
+        <NoData message={"No current funds"} />
       ) : (
         funds?.items?.map((fund, index) => {
           const topic = fund.topic ?? fund.answer?.topic;
