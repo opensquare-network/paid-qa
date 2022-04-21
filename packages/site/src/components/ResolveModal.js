@@ -20,14 +20,10 @@ import {
   updatePendingToast,
 } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
-import PromiseItem, {
-  useAverageFulfillment,
-  useFulfillment,
-} from "./Post/Promises/Item";
+import PromiseItem, { useAverageFulfillment } from "./Post/Promises/Item";
 import { fetchTopic } from "store/reducers/topicSlice";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import { useEffect, useState } from "react";
 
 const { InteractionEncoder } = encoder;
 const { ResolveInteraction } = interactions;
