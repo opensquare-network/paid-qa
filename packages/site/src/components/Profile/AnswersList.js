@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Card from "@osn/common-ui/lib/styled/Card";
 import { useEffect, useState } from "react";
 
-import NoPost from "components/NoPost";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import { useDispatch } from "react-redux";
@@ -16,6 +15,7 @@ import { Link } from "react-router-dom";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import Wrapper from "./styled/ListWrapper";
+import NoData from "@osn/common-ui/lib/NoData";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -70,7 +70,7 @@ export default function AnswersList({ network, address }) {
       {isLoading ? (
         <ListLoader />
       ) : answers?.items?.length === 0 ? (
-        <NoPost message={"No current replies"} />
+        <NoData message={"No current replies"} />
       ) : (
         answers?.items?.map((answer, index) => {
           return (

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import Topic from "components/Topic";
-import NoPost from "./NoPost";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +16,7 @@ import serverApi from "../services/serverApi";
 import { newErrorToast } from "../store/reducers/toastSlice";
 import { EmptyList } from "../utils/constants";
 import { useSearchParams } from "react-router-dom";
+import NoData from "@osn/common-ui/lib/NoData";
 
 const Wrapper = styled.div``;
 
@@ -69,7 +69,7 @@ export default function TopicsList() {
       {isLoading ? (
         <ListLoader />
       ) : topics?.items?.length === 0 ? (
-        <NoPost message={"No current topics"} />
+        <NoData message={"No current topics"} />
       ) : (
         topics?.items?.map((topic, index) => (
           <Topic key={index} topic={topic} />

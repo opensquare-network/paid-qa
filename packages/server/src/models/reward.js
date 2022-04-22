@@ -3,22 +3,25 @@ const { Schema } = require("mongoose");
 
 const RewardSchema = new mongoose.Schema(
   {
-    blockHash: String,
-    blockHeight: Number,
-    extrinsicIndex: Number,
-    blockTime: Number,
+    indexer: {
+      blockHash: String,
+      blockHeight: Number,
+      extrinsicIndex: Number,
+      blockTime: Number,
+    },
     topicCid: String,
     network: String,
-    currencyType: String, // "native", "asset"
-    assetId: Number,
-    symbol: String,
-    decimals: Number,
-    value: {
-      type: Schema.Types.Decimal128,
-      get: (v) => v?.toString(),
-    },
     sponsor: String,
     sponsorPublicKey: String,
+    bounty: {
+      tokenIdentifier: String,
+      symbol: String,
+      decimals: Number,
+      value: {
+        type: Schema.Types.Decimal128,
+        get: (v) => v?.toString(),
+      },
+    },
   },
   {
     timestamps: true,

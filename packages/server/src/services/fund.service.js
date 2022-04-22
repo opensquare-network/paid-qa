@@ -4,7 +4,6 @@ const {
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
 const { Topic, Fund, Notification, Answer } = require("../models");
-const { RewardCurrencyType } = require("../utils/constants");
 const {
   getApi,
   getRemark,
@@ -45,12 +44,10 @@ async function addFund(network, blockHash, extrinsicIndex) {
     throw new HttpError(500, "Not allow to fund self");
   }
 
-  let symbol, decimals, rewardCurrencyType;
+  let symbol, decimals;
   if (tokenIdentifier === "N") {
-    rewardCurrencyType = RewardCurrencyType.Native;
     ({ symbol, decimals } = await getNativeTokenInfo(api));
   } else {
-    rewardCurrencyType = RewardCurrencyType.Asset;
     ({ symbol, decimals } = await getAssetTokenInfo(
       api,
       tokenIdentifier,
@@ -66,23 +63,24 @@ async function addFund(network, blockHash, extrinsicIndex) {
   const beneficiaryPublicKey = toPublicKey(beneficiary);
 
   const fundObj = await Fund.create({
-    blockHash,
-    blockHeight,
-    extrinsicIndex,
-    blockTime,
-    ipfsCid: interaction.ipfsCid,
+    indexer: {
+      blockHash,
+      blockHeight,
+      extrinsicIndex,
+      blockTime,
+    },
+    refCid: interaction.ipfsCid,
     network,
     sponsor: signer,
     sponsorPublicKey,
     beneficiary,
     beneficiaryPublicKey,
-    currencyType: rewardCurrencyType,
-    value: tokenAmount,
-    ...(rewardCurrencyType === RewardCurrencyType.Asset
-      ? { assetId: tokenIdentifier }
-      : {}),
-    symbol,
-    decimals,
+    bounty: {
+      tokenAmount,
+      tokenIdentifier,
+      symbol,
+      decimals,
+    },
   });
 
   let topic = await Topic.findOne({ cid: interaction.ipfsCid });
@@ -116,7 +114,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
 }
 
 function accumulateSymbolFunds(stats, fund) {
-  const { symbol, value } = fund;
+  const { bounty: { symbol, value } } = fund;
   stats[symbol] = bnAdd(stats[symbol] || 0, value);
 }
 

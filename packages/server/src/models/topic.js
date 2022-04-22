@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 
 const TopicSchema = new mongoose.Schema(
   {
-    cid: String,
     indexer: {
       blockHash: String,
       blockHeight: Number,
       extrinsicIndex: Number,
       blockTime: Number,
     },
+    cid: String,
     network: String,
     title: String,
     content: String,
@@ -37,7 +37,7 @@ TopicSchema.virtual("rewards", {
 TopicSchema.virtual("funds", {
   ref: "Fund",
   localField: "cid",
-  foreignField: "ipfsCid",
+  foreignField: "refCid",
 });
 
 TopicSchema.virtual("appendants", {

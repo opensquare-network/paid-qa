@@ -36,9 +36,9 @@ async function getAccountPromisedTopics(ctx) {
         $group: {
           _id: {
             topicCid: "$topicCid",
-            symbol: "$symbol",
+            symbol: "$bounty.symbol",
           },
-          value: { $sum: "$value" },
+          value: { $sum: "$bounty.value" },
           promiseTime: { $max: "$blockTime" },
         },
       },
@@ -80,8 +80,8 @@ async function getAccountPromisedTopics(ctx) {
             },
             {
               $group: {
-                _id: "$symbol",
-                value: { $sum: "$value" },
+                _id: "$bounty.symbol",
+                value: { $sum: "$bounty.value" },
               },
             },
             {
@@ -187,8 +187,8 @@ async function getAccountPromises(ctx) {
     { $match: q },
     {
       $group: {
-        _id: "$symbol",
-        value: { $sum: "$value" },
+        _id: "$bounty.symbol",
+        value: { $sum: "$bounty.value" },
       },
     },
   ]);
@@ -197,8 +197,8 @@ async function getAccountPromises(ctx) {
     { $match: q },
     {
       $group: {
-        _id: "$symbol",
-        value: { $sum: "$value" },
+        _id: "$bounty.symbol",
+        value: { $sum: "$bounty.value" },
       },
     },
   ]);
@@ -278,9 +278,9 @@ async function getAccountOverview(ctx) {
       $group: {
         _id: {
           topicCid: "$topicCid",
-          symbol: "$symbol",
+          symbol: "$bounty.symbol",
         },
-        promiseAmount: { $sum: "$value" },
+        promiseAmount: { $sum: "$bounty.value" },
       },
     },
     {
@@ -305,7 +305,7 @@ async function getAccountOverview(ctx) {
               $expr: {
                 $and: [
                   { $eq: ["$sponsorPublicKey", signerPublicKey] },
-                  { $eq: ["$symbol", "$$symbol"] },
+                  { $eq: ["$bounty.symbol", "$$symbol"] },
                   {
                     $or: [
                       { $eq: ["$ipfsCid", "$$topicCid"] },
@@ -319,7 +319,7 @@ async function getAccountOverview(ctx) {
           {
             $group: {
               _id: null,
-              value: { $sum: "$value" },
+              value: { $sum: "$bounty.value" },
             },
           },
         ],

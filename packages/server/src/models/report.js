@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ReportSchema = new mongoose.Schema(
   {
-    ipfsCid: String,
+    refCid: String,
     offTopic: Boolean,
     inappropriate: Boolean,
     spam: Boolean,

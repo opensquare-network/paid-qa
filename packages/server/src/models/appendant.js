@@ -2,10 +2,12 @@ const mongoose = require("mongoose");
 
 const AppendantSchema = new mongoose.Schema(
   {
-    blockHash: String,
-    blockHeight: Number,
-    extrinsicIndex: Number,
-    blockTime: Number,
+    indexer: {
+      blockHash: String,
+      blockHeight: Number,
+      extrinsicIndex: Number,
+      blockTime: Number,
+    },
     network: String,
     content: String,
     data: Object,

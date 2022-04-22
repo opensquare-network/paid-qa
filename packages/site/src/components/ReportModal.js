@@ -1,12 +1,10 @@
-import { Modal } from "semantic-ui-react";
+import Modal from "@osn/common-ui/lib/Modal";
 import styled from "styled-components";
 import {
   p_12_normal,
   p_14_medium,
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import Flex from "@osn/common-ui/lib/styled/Flex";
-import Button from "@osn/common-ui/lib/styled/Button";
 import serverApi from "services/serverApi";
 import { accountSelector } from "store/reducers/accountSlice";
 import {
@@ -25,21 +23,10 @@ import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 
 const Wrapper = styled.div``;
 
-const StyledModal = styled(Modal)`
-  max-width: 400px !important;
-  border-radius: 0 !important;
-`;
-
-const StyledCard = styled.div`
-  margin: 0 !important;
-  padding: 24px !important;
-  position: relative !important;
-  width: 100% !important;
-
-  p {
-    ${p_20_semibold};
-    margin-bottom: 8px;
-  }
+const StyledTitle = styled.header`
+  ${p_20_semibold};
+  color: #1e2134;
+  margin-bottom: 8px;
 `;
 
 const Form = styled.div`
@@ -115,17 +102,6 @@ const Description = styled.span`
   ${p_12_normal}
 `;
 
-const CloseBar = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-
-  > svg path {
-    fill: #9da9bb;
-  }
-
-  cursor: pointer;
-`;
-
 export default function ReportModal({ open, setOpen, ipfsCid }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
@@ -135,17 +111,6 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
   const [spam, setSpam] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
   const [somethingElse, setSomethingElse] = useState(false);
-
-  const closeButton = (
-    <img
-      onClick={() => {
-        setOpen(false);
-      }}
-      src="/imgs/icons/close.svg"
-      width={24}
-      alt=""
-    />
-  );
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
@@ -208,53 +173,44 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
 
   return (
     <Wrapper>
-      <StyledModal open={open} dimmer size="tiny">
-        <StyledCard>
-          <CloseBar>{closeButton}</CloseBar>
-          <p>Report</p>
-          <Form>
-            <input
-              type="checkbox"
-              id="checkbox_1"
-              onChange={(e) => setOffTopic(e.target.value === "on")}
-            />
-            <label htmlFor="checkbox_1">Off-topic</label>
-            <input
-              type="checkbox"
-              id="checkbox_2"
-              onChange={(e) => setInappropriate(e.target.value === "on")}
-            />
-            <label htmlFor="checkbox_2">Inappropriate</label>
-            <input
-              type="checkbox"
-              id="checkbox_3"
-              onChange={(e) => setSpam(e.target.value === "on")}
-            />
-            <label htmlFor="checkbox_3">Spam</label>
-            <input
-              type="checkbox"
-              id="checkbox_4"
-              onChange={(e) => setDuplicate(e.target.value === "on")}
-            />
-            <label htmlFor="checkbox_4">Duplicate</label>
-            <input
-              type="checkbox"
-              id="checkbox_5"
-              onChange={(e) => setSomethingElse(e.target.value === "on")}
-            />
-            <label htmlFor="checkbox_5">Something else</label>
-            <Description>
-              This content requires attention for another reason not listed
-              above.
-            </Description>
-            <Flex style={{ justifyContent: "end" }}>
-              <Button primary onClick={report}>
-                Submit
-              </Button>
-            </Flex>
-          </Form>
-        </StyledCard>
-      </StyledModal>
+      <Modal open={open} setOpen={setOpen} okText="Submit" onOk={report}>
+        <StyledTitle>Report</StyledTitle>
+        <Form>
+          <input
+            type="checkbox"
+            id="checkbox_1"
+            onChange={(e) => setOffTopic(e.target.value === "on")}
+          />
+          <label htmlFor="checkbox_1">Off-topic</label>
+          <input
+            type="checkbox"
+            id="checkbox_2"
+            onChange={(e) => setInappropriate(e.target.value === "on")}
+          />
+          <label htmlFor="checkbox_2">Inappropriate</label>
+          <input
+            type="checkbox"
+            id="checkbox_3"
+            onChange={(e) => setSpam(e.target.value === "on")}
+          />
+          <label htmlFor="checkbox_3">Spam</label>
+          <input
+            type="checkbox"
+            id="checkbox_4"
+            onChange={(e) => setDuplicate(e.target.value === "on")}
+          />
+          <label htmlFor="checkbox_4">Duplicate</label>
+          <input
+            type="checkbox"
+            id="checkbox_5"
+            onChange={(e) => setSomethingElse(e.target.value === "on")}
+          />
+          <label htmlFor="checkbox_5">Something else</label>
+          <Description>
+            This content requires attention for another reason not listed above.
+          </Description>
+        </Form>
+      </Modal>
     </Wrapper>
   );
 }

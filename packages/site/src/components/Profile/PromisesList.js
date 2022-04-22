@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import NoPost from "components/NoPost";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import { useDispatch } from "react-redux";
@@ -15,6 +14,7 @@ import Tag from "@osn/common-ui/lib/Tag";
 import ProgressBar from "@osn/common-ui/lib/styled/ProgressBar";
 import Wrapper from "./styled/ListWrapper";
 import { MOBILE_SIZE } from "@osn/consts";
+import NoData from "@osn/common-ui/lib/NoData";
 
 const NoWrap = styled.span`
   white-space: nowrap;
@@ -93,7 +93,7 @@ export default function PromisesList({ network, address }) {
       {isLoading ? (
         <ListLoader />
       ) : promises?.items?.length === 0 ? (
-        <NoPost message={"No current topics"} />
+        <NoData message={"No current topics"} />
       ) : (
         promises?.items?.map((promise, index) => {
           return (

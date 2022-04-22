@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Topic from "components/Topic";
-import NoPost from "components/NoPost";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import { useDispatch } from "react-redux";
@@ -8,6 +7,7 @@ import serverApi from "services/serverApi";
 import { newErrorToast } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
 import Wrapper from "./styled/ListWrapper";
+import NoData from "@osn/common-ui/lib/NoData";
 
 export default function TopicsList({ network, address }) {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function TopicsList({ network, address }) {
       {isLoading ? (
         <ListLoader />
       ) : topics?.items?.length === 0 ? (
-        <NoPost message={"No current topics"} />
+        <NoData message={"No current topics"} />
       ) : (
         topics?.items?.map((topic, index) => (
           <Topic key={index} topic={topic} />

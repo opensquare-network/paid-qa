@@ -1,8 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 
-import { Modal } from "semantic-ui-react";
-import Button from "@osn/common-ui/lib/styled/Button";
+import Modal from "@osn/common-ui/lib/Modal";
 import styled from "styled-components";
 import {
   p_14_normal,
@@ -21,48 +20,15 @@ import {
   updatePendingToast,
 } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
-import PromiseItem, {
-  useAverageFulfillment,
-  useFulfillment,
-} from "./Post/Promises/Item";
+import PromiseItem, { useAverageFulfillment } from "./Post/Promises/Item";
 import { fetchTopic } from "store/reducers/topicSlice";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import { useEffect, useState } from "react";
 
 const { InteractionEncoder } = encoder;
 const { ResolveInteraction } = interactions;
 
 const Wrapper = styled.div``;
-
-const StyledModal = styled(Modal)`
-  max-width: 400px !important;
-  border-radius: 0 !important;
-`;
-
-const StyledCard = styled.div`
-  margin: 0 !important;
-  padding: 24px !important;
-  position: relative !important;
-  width: 100% !important;
-`;
-
-const CloseBar = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-
-  > svg path {
-    fill: #9da9bb;
-  }
-
-  cursor: pointer;
-`;
-
-const ActionBar = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  margin-top: 28px;
-`;
 
 const StyledTitle = styled.header`
   ${p_20_semibold};
@@ -150,36 +116,22 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
     }
   };
 
-  const closeModal = () => setOpen(false);
-
-  const closeButton = (
-    <img onClick={closeModal} src="/imgs/icons/close.svg" width={24} alt="" />
-  );
-
   return (
     <Wrapper>
-      <StyledModal open={open} dimmer onClose={closeModal} size="tiny">
-        <StyledCard>
-          <CloseBar>{closeButton}</CloseBar>
-          <StyledTitle>Resolve</StyledTitle>
+      <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
+        <StyledTitle>Resolve</StyledTitle>
 
-          {percentage !== 100 && (
-            <Info>If promise is not kept, credit score will be affected.</Info>
-          )}
+        {percentage !== 100 && (
+          <Info>If promise is not kept, credit score will be affected.</Info>
+        )}
 
-          <ItemTitle>
-            <StyledText>My promise</StyledText>
-          </ItemTitle>
-          {rewards?.map((reward, index) => (
-            <PromiseItem key={index} reward={reward} />
-          ))}
-          <ActionBar>
-            <Button primary onClick={doConfirm}>
-              Confirm
-            </Button>
-          </ActionBar>
-        </StyledCard>
-      </StyledModal>
+        <ItemTitle>
+          <StyledText>My promise</StyledText>
+        </ItemTitle>
+        {rewards?.map((reward, index) => (
+          <PromiseItem key={index} reward={reward} />
+        ))}
+      </Modal>
     </Wrapper>
   );
 }

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Topic, Reward, Appendant } = require("../models");
-const { PostStatus, RewardCurrencyType } = require("../utils/constants");
+const { PostStatus } = require("../utils/constants");
 const {
   getApi,
   getRemark,
@@ -51,12 +51,10 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
   // Get reward currency type and amount from system remark
   const { tokenIdentifier, tokenAmount } = interaction.toJSON();
 
-  let symbol, decimals, rewardCurrencyType;
+  let symbol, decimals;
   if (tokenIdentifier === "N") {
-    rewardCurrencyType = RewardCurrencyType.Native;
     ({ symbol, decimals } = await getNativeTokenInfo(api));
   } else {
-    rewardCurrencyType = RewardCurrencyType.Asset;
     ({ symbol, decimals } = await getAssetTokenInfo(
       api,
       tokenIdentifier,
@@ -98,19 +96,20 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     await Reward.create(
       [
         {
-          blockHash,
-          blockHeight,
-          extrinsicIndex,
-          blockTime,
+          indexer: {
+            blockHash,
+            blockHeight,
+            extrinsicIndex,
+            blockTime,
+          },
           topicCid: cid,
           network,
-          currencyType: rewardCurrencyType,
-          value: tokenAmount,
-          ...(rewardCurrencyType === RewardCurrencyType.Asset
-            ? { assetId: tokenIdentifier }
-            : {}),
-          symbol,
-          decimals,
+          bounty: {
+            value: tokenAmount,
+            tokenIdentifier,
+            symbol,
+            decimals,
+          },
           sponsor: signer,
           sponsorPublicKey: signerPublicKey,
         },
@@ -178,7 +177,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
               },
               {
                 $addFields: {
-                  value: { $toString: "$value" },
+                  "bounty.value": { $toString: "$bounty.value" },
                 },
               },
             ],
@@ -187,7 +186,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
         },
         {
           $match: {
-            "rewards.symbol": symbol,
+            "rewards.bounty.symbol": symbol,
           },
         },
         {
@@ -335,10 +334,12 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   }
 
   await Appendant.create({
-    blockHash,
-    blockHeight,
-    extrinsicIndex,
-    blockTime,
+    indexer: {
+      blockHash,
+      blockHeight,
+      extrinsicIndex,
+      blockTime,
+    },
     topicCid: interaction.topicIpfsCid,
     cid,
     content,
