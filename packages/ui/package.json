@@ -2,6 +2,7 @@
   "name": "@osn/common-ui",
   "version": "0.0.30",
   "main": "dist/index.js",
+  "module": "es/index.js",
   "scripts": {
     "build:lib": "rm -rf dist && NODE_ENV=production BABEL_ENV=lib babel lib --out-dir dist --copy-files",
     "build:esm": "rm -rf es && NODE_ENV=production BABEL_ENV=esm babel lib --out-dir es --copy-files",
