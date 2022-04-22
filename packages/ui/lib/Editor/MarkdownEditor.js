@@ -1,16 +1,17 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import ReactMde from "react-mde";
 import { useRef } from "react";
 
-import HeaderIcon from "../../lib/imgs/icons/markdown/header.svg";
-import BoldIcon from "../../lib/imgs/icons/markdown/bold.svg";
-import ItalicIcon from "../../lib/imgs/icons/markdown/italic.svg";
-import QuoteIcon from "../../lib/imgs/icons/markdown/quote.svg";
-import OrderedListIcon from "../../lib/imgs/icons/markdown/ordered-list.svg";
-import UnorderedListIcon from "../../lib/imgs/icons/markdown/unordered-list.svg";
-import LinkIcon from "../../lib/imgs/icons/markdown/link.svg";
-import ImageIcon from "../../lib/imgs/icons/markdown/image.svg";
-import CodeIcon from "../../lib/imgs/icons/markdown/code.svg";
+import HeaderIcon from "../imgs/icons/markdown/header.svg";
+import BoldIcon from "../imgs/icons/markdown/bold.svg";
+import ItalicIcon from "../imgs/icons/markdown/italic.svg";
+import QuoteIcon from "../imgs/icons/markdown/quote.svg";
+import OrderedListIcon from "../imgs/icons/markdown/ordered-list.svg";
+import UnorderedListIcon from "../imgs/icons/markdown/unordered-list.svg";
+import LinkIcon from "../imgs/icons/markdown/link.svg";
+import ImageIcon from "../imgs/icons/markdown/image.svg";
+import CodeIcon from "../imgs/icons/markdown/code.svg";
 
 const iconMap = {
   header: HeaderIcon,
