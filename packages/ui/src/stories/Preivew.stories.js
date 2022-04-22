@@ -69,3 +69,19 @@ export const primary = () => {
     </Wrapper>
   );
 };
+export const toggleBorder = () => {
+  const [bordered, setBordered] = useState(true);
+
+  return (
+    <>
+      <button
+        style={{ marginBottom: 20 }}
+        onClick={() => setBordered(!bordered)}
+      >
+        {bordered ? "hide" : "show"} border
+      </button>
+
+      <Preview content={markdown} bordered={bordered} />
+    </>
+  );
+};

@@ -1,15 +1,20 @@
+import React from "react";
 import MicromarkMd from "./MicromarkMd";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const PreviewWrapper = styled.div`
   padding-left: 12px;
-  border-left: 4px solid #e2e8f0;
+  ${(p) =>
+    p.bordered &&
+    css`
+      border-left: 4px solid #e2e8f0;
+    `}
   min-height: 159px;
 `;
 
-function Preview({ content }) {
+function Preview({ content, bordered = true }) {
   return (
-    <PreviewWrapper>
+    <PreviewWrapper bordered={bordered}>
       <MicromarkMd md={content} />
     </PreviewWrapper>
   );
