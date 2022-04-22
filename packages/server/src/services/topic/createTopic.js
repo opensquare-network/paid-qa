@@ -68,52 +68,48 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
 
   const session = await mongoose.startSession();
   await session.withTransaction(async () => {
-    await Topic.create(
-      [
-        {
-          indexer: {
-            blockHash,
-            blockHeight,
-            extrinsicIndex,
-            blockTime,
-          },
-          cid,
-          title,
-          content,
-          language,
-          data,
-          pinned: false,
-          network,
-          signer,
-          signerPublicKey,
-          status: PostStatus.Published,
+    await Topic.updateOne(
+      { cid },
+      {
+        indexer: {
+          blockHash,
+          blockHeight,
+          extrinsicIndex,
+          blockTime,
         },
-      ],
-      { session }
+        title,
+        content,
+        language,
+        data,
+        pinned: false,
+        network,
+        signer,
+        signerPublicKey,
+        status: PostStatus.Published,
+      },
+      { upsert: true, session }
     );
 
-    await Reward.create(
-      [
-        {
-          indexer: {
-            blockHash,
-            blockHeight,
-            extrinsicIndex,
-            blockTime,
-          },
-          topicCid: cid,
-          network,
-          bounty: {
-            value: tokenAmount,
-            tokenIdentifier,
-            symbol,
-            decimals,
-          },
-          sponsor: signer,
-          sponsorPublicKey: signerPublicKey,
+    await Reward.updateOne(
+      {
+        "indexer.blockHash": blockHash,
+        "indexer.extrinsicIndex": extrinsicIndex,
+      },
+      {
+        "indexer.blockHeight": blockHeight,
+        "indexer.blockTime": blockTime,
+        topicCid: cid,
+        network,
+        bounty: {
+          value: tokenAmount,
+          tokenIdentifier,
+          symbol,
+          decimals,
         },
-      ],
-      { session }
+        sponsor: signer,
+        sponsorPublicKey: signerPublicKey,
+      },
+      { upsert: true, session }
     );
   });
 

@@ -25,8 +25,7 @@ const AppendantSchema = new mongoose.Schema(
   }
 );
 
-AppendantSchema.index({ cid: 1 }, { unique: true });
-AppendantSchema.index({ topicCid: 1 });
+AppendantSchema.index({ topicCid: 1, cid: 1 }, { unique: true });
 
 const Appendant = mongoose.model("Appendant", AppendantSchema);
 

@@ -61,26 +61,28 @@ async function addFund(network, blockHash, extrinsicIndex) {
   const sponsorPublicKey = toPublicKey(signer);
   const beneficiaryPublicKey = toPublicKey(beneficiary);
 
-  const fundObj = await Fund.create({
-    indexer: {
-      blockHash,
-      blockHeight,
-      extrinsicIndex,
-      blockTime,
+  const fundObj = await Fund.updateOne(
+    {
+      "indexer.blockHash": blockHash,
+      "indexer.extrinsicIndex": extrinsicIndex,
     },
-    refCid: interaction.ipfsCid,
-    network,
-    sponsor: signer,
-    sponsorPublicKey,
-    beneficiary,
-    beneficiaryPublicKey,
-    bounty: {
-      value: tokenAmount,
-      tokenIdentifier,
-      symbol,
-      decimals,
-    },
-  });
+    {
+      "indexer.blockHeight": blockHeight,
+      "indexer.blockTime": blockTime,
+      refCid: interaction.ipfsCid,
+      network,
+      sponsor: signer,
+      sponsorPublicKey,
+      beneficiary,
+      beneficiaryPublicKey,
+      bounty: {
+        value: tokenAmount,
+        tokenIdentifier,
+        symbol,
+        decimals,
+      },
+    }
+  );
 
   let topic = await Topic.findOne({ cid: interaction.ipfsCid });
   let answer = await Answer.findOne({ cid: interaction.ipfsCid });

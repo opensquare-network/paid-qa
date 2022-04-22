@@ -59,24 +59,27 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   validateTokenAmount(tokenAmount, decimals);
 
   const sponsorPublicKey = toPublicKey(signer);
-  const support = await Reward.create({
-    indexer: {
-      blockHash,
-      blockHeight,
-      extrinsicIndex,
-      blockTime,
+  const support = await Reward.updateOne(
+    {
+      "indexer.blockHash": blockHash,
+      "indexer.extrinsicIndex": extrinsicIndex,
     },
-    topicCid,
-    network,
-    sponsor: signer,
-    sponsorPublicKey,
-    bounty: {
-      value: tokenAmount,
-      tokenIdentifier,
-      symbol,
-      decimals,
+    {
+      "indexer.blockHeight": blockHeight,
+      "indexer.blockTime": blockTime,
+      topicCid,
+      network,
+      sponsor: signer,
+      sponsorPublicKey,
+      bounty: {
+        value: tokenAmount,
+        tokenIdentifier,
+        symbol,
+        decimals,
+      },
     },
-  });
+    { upsert: true }
+  );
 
   await updateTopicResolve(topicCid);
 

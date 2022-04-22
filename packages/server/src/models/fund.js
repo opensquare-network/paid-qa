@@ -47,6 +47,11 @@ FundSchema.virtual("answer", {
   justOne: true,
 });
 
+FundSchema.index({ refCid: 1 });
+FundSchema.index({ sponsorPublicKey: 1 });
+FundSchema.index({ beneficiaryPublicKey: 1 });
+FundSchema.index({ "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 }, { unique: true });
+
 const Fund = mongoose.model("Fund", FundSchema);
 
 module.exports = Fund;

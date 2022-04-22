@@ -36,18 +36,25 @@ async function resolve(network, blockHash, extrinsicIndex) {
     throw new HttpError(500, "Topic does not exist");
   }
 
-  await Resolve.create({
-    indexer: {
-      blockHash,
-      blockHeight,
-      extrinsicIndex,
-      blockTime,
+  await Resolve.updateOne(
+    {
+      topicCid,
+      sponsorPublicKey: signerPublicKey,
     },
-    topicCid,
-    network,
-    sponsor: signer,
-    sponsorPublicKey: signerPublicKey,
-  });
+    {
+      indexer: {
+        blockHash,
+        blockHeight,
+        extrinsicIndex,
+        blockTime,
+      },
+      network,
+      sponsor: signer,
+    },
+    {
+      upsert: true,
+    }
+  );
 
   await updateTopicResolve(topicCid);
 

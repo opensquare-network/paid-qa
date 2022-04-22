@@ -30,6 +30,8 @@ const RewardSchema = new mongoose.Schema(
 );
 
 RewardSchema.index({ topicCid: 1 });
+RewardSchema.index({ sponsorPublicKey: 1 });
+RewardSchema.index({ "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 }, { unique: true });
 
 const Reward = mongoose.model("Reward", RewardSchema);
 
