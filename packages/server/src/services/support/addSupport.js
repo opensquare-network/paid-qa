@@ -2,17 +2,17 @@ const {
   parser: { InteractionParser },
   interactions: { SupportInteraction },
 } = require("@paid-qa/spec");
-const { HttpError } = require("../utils/exc");
-const { Topic, Reward, Notification } = require("../models");
+const { HttpError } = require("../../utils/exc");
+const { Topic, Reward, Notification } = require("../../models");
 const {
   getApi,
   getRemark,
   getAssetTokenInfo,
   getNativeTokenInfo,
-} = require("./node.service");
-const { validateTokenAmount } = require("./common");
-const { updateTopicResolve } = require("./resolve.service");
-const { toPublicKey } = require("../utils/address");
+} = require("../node.service");
+const { validateTokenAmount } = require("../common");
+const { updateTopicResolve } = require("../resolve");
+const { toPublicKey } = require("../../utils/address");
 
 async function addSupport(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -102,6 +102,4 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   };
 }
 
-module.exports = {
-  addSupport,
-};
+module.exports = addSupport;

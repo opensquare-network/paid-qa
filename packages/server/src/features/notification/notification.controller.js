@@ -1,5 +1,5 @@
 const { extractPage } = require("../../utils/pagination");
-const notificationService = require("../../services/notification.service");
+const notificationService = require("../../services/notification");
 
 async function getNotifications(ctx) {
   const { network, address } = ctx.params;

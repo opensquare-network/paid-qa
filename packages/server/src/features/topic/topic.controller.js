@@ -1,5 +1,5 @@
 const { extractPage } = require("../../utils/pagination");
-const topicService = require("../../services/topic.service");
+const topicService = require("../../services/topic");
 const { HttpError } = require("../../utils/exc");
 
 async function getTopics(ctx) {
