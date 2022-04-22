@@ -23,12 +23,6 @@
   "files": [
     "dist"
   ],
-  "babel": {
-    "presets": [
-      "@babel/react",
-      "@babel/env"
-    ]
-  },
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@osn/common": "^0.0.8",

@@ -1,0 +1,18 @@
+{
+  "env": {
+    "lib": {
+      "presets": ["@babel/react", "@babel/env"]
+    },
+    "esm": {
+      "presets": [
+        "@babel/react",
+        [
+          "@babel/env",
+          {
+            "modules": false
+          }
+        ]
+      ]
+    }
+  }
+}
