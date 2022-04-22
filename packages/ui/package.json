@@ -4,11 +4,13 @@
   "main": "dist/index.js",
   "module": "es/index.js",
   "scripts": {
+    "build": "npm run build:lib && npm run build:es",
     "build:lib": "rm -rf dist && NODE_ENV=production BABEL_ENV=lib babel lib --out-dir dist --copy-files",
-    "build:esm": "rm -rf es && NODE_ENV=production BABEL_ENV=esm babel lib --out-dir es --copy-files",
+    "build:es": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel lib --out-dir es --copy-files",
     "test": "craco test",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepublishOnly": "npm run build"
   },
   "jest": {
     "transformIgnorePatterns": []

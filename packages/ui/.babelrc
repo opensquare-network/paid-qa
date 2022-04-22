@@ -3,7 +3,7 @@
     "lib": {
       "presets": ["@babel/react", "@babel/env"]
     },
-    "esm": {
+    "es": {
       "presets": [
         "@babel/react",
         [
