@@ -111,7 +111,7 @@ async function getAccountPromisedTopics(ctx) {
           pipeline: [
             {
               $match: {
-                sponsor: encodeAddress(address, 42), //todo: ss58format is hard-coded here, is this OK?
+                sponsorPublicKey: signerPublicKey,
                 $expr: { $eq: ["$topicCid", "$$topicCid"] },
               },
             },
