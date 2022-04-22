@@ -69,3 +69,16 @@ export const primary = () => {
     </Wrapper>
   );
 };
+export const showOrHideBorder = () => {
+  const [border, setBorder] = useState(true);
+
+  return (
+    <>
+      <button style={{ marginBottom: 20 }} onClick={() => setBorder(!border)}>
+        {border ? "hide" : "show"} border
+      </button>
+
+      <Preview content={markdown} border={border} />
+    </>
+  );
+};
