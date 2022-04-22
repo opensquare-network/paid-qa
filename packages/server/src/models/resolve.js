@@ -11,6 +11,7 @@ const ResolveSchema = new mongoose.Schema(
     topicCid: String,
     network: String,
     sponsor: String,
+    sponsorPublicKey: String,
   },
   {
     timestamps: true,

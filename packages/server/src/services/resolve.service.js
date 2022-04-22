@@ -17,6 +17,7 @@ async function resolve(network, blockHash, extrinsicIndex) {
     blockHash,
     extrinsicIndex
   );
+  const signerPublicKey = toPublicKey(signer);
 
   // Parse system remark to verify if it is RESOLVE instruction
   const interaction = new InteractionParser(remark).getInteraction();
@@ -46,6 +47,7 @@ async function resolve(network, blockHash, extrinsicIndex) {
     topicCid,
     network,
     sponsor: signer,
+    sponsorPublicKey: signerPublicKey,
   });
 
   await updateTopicResolve(topicCid);
