@@ -8,19 +8,46 @@ const AnswerSchema = new mongoose.Schema(
       extrinsicIndex: Number,
       blockTime: Number,
     },
-    network: String,
-    topicCid: String,
-    content: String,
-    signer: String,
-    signerPublicKey: String,
-    signature: String,
-    data: Object,
-    cid: String,
+    network: {
+      type: String,
+      required: true,
+    },
+    topicCid: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    signer: {
+      type: String,
+      required: true,
+    },
+    signerPublicKey: {
+      type: String,
+      required: true,
+    },
+    signature: {
+      type: String,
+      required: true,
+    },
+    data: {
+      type: Object,
+      required: true,
+    },
+    cid: {
+      type: String,
+      required: true,
+    },
     pinned: {
       type: Boolean,
       default: false,
     },
-    status: String, // "reserved", "published", "active", "resolved"
+    status: {
+      type: String,
+      required: true,
+    }, // "reserved", "published", "active", "resolved"
   },
   {
     timestamps: true,

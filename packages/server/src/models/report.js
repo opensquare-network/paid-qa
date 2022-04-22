@@ -2,17 +2,35 @@ const mongoose = require("mongoose");
 
 const ReportSchema = new mongoose.Schema(
   {
-    refCid: String,
+    refCid: {
+      type: String,
+      required: true,
+    },
     offTopic: Boolean,
     inappropriate: Boolean,
     spam: Boolean,
     duplicate: Boolean,
     somethingElse: Boolean,
-    data: Object,
-    network: String,
-    signer: String,
-    signature: String,
-    signerPublicKey: String,
+    data: {
+      type: Object,
+      required: true,
+    },
+    network: {
+      type: String,
+      required: true,
+    },
+    signer: {
+      type: String,
+      required: true,
+    },
+    signature: {
+      type: String,
+      required: true,
+    },
+    signerPublicKey: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

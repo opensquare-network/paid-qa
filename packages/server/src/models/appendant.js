@@ -3,22 +3,55 @@ const mongoose = require("mongoose");
 const AppendantSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: String,
-      blockHeight: Number,
-      extrinsicIndex: Number,
-      blockTime: Number,
+      blockHash: {
+        type: String,
+        required: true,
+      },
+      blockHeight: {
+        type: Number,
+        required: true,
+      },
+      extrinsicIndex: {
+        type: Number,
+        required: true,
+      },
+      blockTime: {
+        type: Number,
+        required: true,
+      },
     },
-    network: String,
-    content: String,
-    data: Object,
-    topicCid: String,
-    cid: String,
+    network: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    data: {
+      type: Object,
+      required: true,
+    },
+    topicCid: {
+      type: String,
+      required: true,
+    },
+    cid: {
+      type: String,
+      required: true,
+    },
     pinned: {
       type: Boolean,
       default: false,
     },
-    status: String, // "published", "active", "resolved"
-    signer: String,
+    status: {
+      type: String,
+      required: true,
+    }, // "published", "active", "resolved"
+    signer: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

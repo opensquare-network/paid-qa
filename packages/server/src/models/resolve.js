@@ -3,15 +3,39 @@ const mongoose = require("mongoose");
 const ResolveSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: String,
-      blockHeight: Number,
-      extrinsicIndex: Number,
-      blockTime: Number,
+      blockHash: {
+        type: String,
+        required: true,
+      },
+      blockHeight: {
+        type: Number,
+        required: true,
+      },
+      extrinsicIndex: {
+        type: Number,
+        required: true,
+      },
+      blockTime: {
+        type: Number,
+        required: true,
+      },
     },
-    topicCid: String,
-    network: String,
-    sponsor: String,
-    sponsorPublicKey: String,
+    topicCid: {
+      type: String,
+      required: true,
+    },
+    network: {
+      type: String,
+      required: true,
+    },
+    sponsor: {
+      type: String,
+      required: true,
+    },
+    sponsorPublicKey: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
