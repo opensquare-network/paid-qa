@@ -70,15 +70,18 @@ export const primary = () => {
   );
 };
 export const toggleBorder = () => {
-  const [border, setBorder] = useState(true);
+  const [bordered, setBordered] = useState(true);
 
   return (
     <>
-      <button style={{ marginBottom: 20 }} onClick={() => setBorder(!border)}>
-        {border ? "hide" : "show"} border
+      <button
+        style={{ marginBottom: 20 }}
+        onClick={() => setBordered(!bordered)}
+      >
+        {bordered ? "hide" : "show"} border
       </button>
 
-      <Preview content={markdown} border={border} />
+      <Preview content={markdown} bordered={bordered} />
     </>
   );
 };
