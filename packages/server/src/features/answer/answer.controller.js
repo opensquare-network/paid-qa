@@ -1,5 +1,5 @@
 const { extractPage } = require("../../utils/pagination");
-const answerService = require("../../services/answer.service");
+const answerService = require("../../services/answer");
 const { HttpError } = require("../../utils/exc");
 
 async function getAnswers(ctx) {

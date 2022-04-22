@@ -1,10 +1,10 @@
-const { Topic, Answer, Notification } = require("../models");
-const { HttpError } = require("../utils/exc");
-const { isValidSignature } = require("../utils/signature");
-const { PostStatus } = require("../utils/constants");
-const { cidOf } = require("./ipfs.service");
-const { extractMentions } = require("../utils/mention");
-const { toPublicKey, isSamePublicKey } = require("../utils/address");
+const { Topic, Answer, Notification } = require("../../models");
+const { HttpError } = require("../../utils/exc");
+const { isValidSignature } = require("../../utils/signature");
+const { PostStatus } = require("../../utils/constants");
+const { cidOf } = require("../ipfs.service");
+const { extractMentions } = require("../../utils/mention");
+const { toPublicKey, isSamePublicKey } = require("../../utils/address");
 
 async function postAnswer(data) {
   const { answer, address: signer, network, signature } = data;
@@ -84,24 +84,4 @@ async function postAnswer(data) {
   };
 }
 
-async function getAnswers(topicCid, page, pageSize) {
-  const q = { topicCid };
-  const total = await Answer.countDocuments(q);
-  const answers = await Answer.find(q)
-    .sort({ createdAt: 1 })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize)
-    .populate("funds");
-
-  return {
-    items: answers,
-    page,
-    pageSize,
-    total,
-  };
-}
-
-module.exports = {
-  getAnswers,
-  postAnswer,
-};
+module.exports = postAnswer;

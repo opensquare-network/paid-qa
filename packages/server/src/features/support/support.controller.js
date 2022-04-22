@@ -1,4 +1,4 @@
-const supportService = require("../../services/support.service");
+const supportService = require("../../services/support");
 const { HttpError } = require("../../utils/exc");
 
 async function addSupport(ctx) {

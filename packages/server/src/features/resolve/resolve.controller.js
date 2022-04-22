@@ -1,4 +1,4 @@
-const resolveService = require("../../services/resolve.service");
+const resolveService = require("../../services/resolve");
 const { HttpError } = require("../../utils/exc");
 
 async function resolve(ctx) {

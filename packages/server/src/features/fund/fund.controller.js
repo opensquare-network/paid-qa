@@ -1,4 +1,4 @@
-const fundService = require("../../services/fund.service");
+const fundService = require("../../services/fund");
 const { HttpError } = require("../../utils/exc");
 
 async function addFund(ctx) {
