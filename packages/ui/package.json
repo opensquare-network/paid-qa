@@ -2,11 +2,15 @@
   "name": "@osn/common-ui",
   "version": "0.0.30",
   "main": "dist/index.js",
+  "module": "es/index.js",
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production babel lib --out-dir dist --copy-files",
+    "build": "npm run build:lib && npm run build:es",
+    "build:lib": "rm -rf dist && NODE_ENV=production BABEL_ENV=lib babel lib --out-dir dist --copy-files",
+    "build:es": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel lib --out-dir es --copy-files",
     "test": "craco test",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepublishOnly": "npm run build"
   },
   "jest": {
     "transformIgnorePatterns": []
@@ -21,14 +25,9 @@
     }
   ],
   "files": [
-    "dist"
+    "dist",
+    "es"
   ],
-  "babel": {
-    "presets": [
-      "@babel/react",
-      "@babel/env"
-    ]
-  },
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@osn/common": "^0.0.8",
