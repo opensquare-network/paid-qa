@@ -3,7 +3,8 @@
   "version": "0.0.30",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production babel lib --out-dir dist --copy-files",
+    "build:lib": "rm -rf dist && NODE_ENV=production BABEL_ENV=lib babel lib --out-dir dist --copy-files",
+    "build:esm": "rm -rf es && NODE_ENV=production BABEL_ENV=esm babel lib --out-dir es --copy-files",
     "test": "craco test",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
