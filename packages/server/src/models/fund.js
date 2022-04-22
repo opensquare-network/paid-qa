@@ -3,24 +3,27 @@ const { Schema } = require("mongoose");
 
 const FundSchema = new mongoose.Schema(
   {
-    blockHash: String,
-    blockHeight: Number,
-    extrinsicIndex: Number,
-    blockTime: Number,
-    ipfsCid: String,
-    network: String,
-    currencyType: String, // "native", "asset"
-    assetId: Number,
-    symbol: String,
-    decimals: Number,
-    value: {
-      type: Schema.Types.Decimal128,
-      get: (v) => v?.toString(),
+    indexer: {
+      blockHash: String,
+      blockHeight: Number,
+      extrinsicIndex: Number,
+      blockTime: Number,
     },
+    refCid: String,
+    network: String,
     sponsor: String,
     sponsorPublicKey: String,
     beneficiary: String,
     beneficiaryPublicKey: String,
+    bounty: {
+      tokenIdentifier: String,
+      symbol: String,
+      decimals: Number,
+      value: {
+        type: Schema.Types.Decimal128,
+        get: (v) => v?.toString(),
+      },
+    },
   },
   {
     timestamps: true,
