@@ -96,6 +96,7 @@ export default function PromisesList({ network, address }) {
         <NoData message={"No current topics"} />
       ) : (
         promises?.items?.map((promise, index) => {
+          const resolved = promise.resolves?.length > 0;
           return (
             <Card key={index}>
               <PromiseWrapper>
@@ -114,7 +115,7 @@ export default function PromisesList({ network, address }) {
                       </TextMajor>
                     </Link>
                   </TextWrap>
-                  <Tag>{promise.topic.status}</Tag>
+                  <Tag>{resolved ? "resolved" : "active"}</Tag>
                 </HeadLine>
                 {promise.promises?.map(({ symbol, value }, index) => {
                   const promisedAmount = value;

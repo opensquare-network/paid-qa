@@ -1,6 +1,7 @@
 const { Topic, Reward, Fund, Answer } = require("../../models");
 const { toPublicKey } = require("../../utils/address");
 const { extractPage } = require("../../utils/pagination");
+const { encodeAddress } = require("@polkadot/util-crypto");
 
 async function getAccountTopics(ctx) {
   const { address } = ctx.params;
@@ -104,9 +105,25 @@ async function getAccountPromisedTopics(ctx) {
         },
       },
       {
+        $lookup: {
+          from: "resolves",
+          let: { topicCid: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                sponsorPublicKey: signerPublicKey,
+                $expr: { $eq: ["$topicCid", "$$topicCid"] },
+              },
+            },
+          ],
+          as: "resolves",
+        },
+      },
+      {
         $project: {
           topicCid: 1,
           topic: { $first: "$topic" },
+          resolves: 1,
           promises: 1,
           funds: 1,
           promiseTime: 1,
@@ -122,19 +139,12 @@ async function getAccountPromisedTopics(ctx) {
           items: [
             {
               $addFields: {
-                statusSort: {
-                  $switch: {
-                    branches: [
-                      { case: { $eq: ["$topic.status", "active"] }, then: 1 },
-                    ],
-                    default: 2,
-                  },
-                },
+                resolveCount: { $size: "$resolves" },
               },
             },
             {
               $sort: {
-                statusSort: 1,
+                resolveCount: 1,
                 promiseTime: -1,
               },
             },

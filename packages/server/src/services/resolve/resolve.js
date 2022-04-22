@@ -6,6 +6,7 @@ const { HttpError } = require("../../utils/exc");
 const { Topic, Resolve } = require("../../models");
 const { getApi, getRemark } = require("../node.service");
 const updateTopicResolve = require("./updateTopicResolve");
+const { toPublicKey } = require("../../utils/address");
 
 async function resolve(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -15,6 +16,7 @@ async function resolve(network, blockHash, extrinsicIndex) {
     blockHash,
     extrinsicIndex
   );
+  const signerPublicKey = toPublicKey(signer);
 
   // Parse system remark to verify if it is RESOLVE instruction
   const interaction = new InteractionParser(remark).getInteraction();
@@ -44,6 +46,7 @@ async function resolve(network, blockHash, extrinsicIndex) {
     topicCid,
     network,
     sponsor: signer,
+    sponsorPublicKey: signerPublicKey,
   });
 
   await updateTopicResolve(topicCid);
