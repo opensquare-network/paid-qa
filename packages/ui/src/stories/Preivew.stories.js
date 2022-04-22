@@ -69,7 +69,7 @@ export const primary = () => {
     </Wrapper>
   );
 };
-export const showOrHideBorder = () => {
+export const toggleBorder = () => {
   const [border, setBorder] = useState(true);
 
   return (
