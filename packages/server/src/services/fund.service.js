@@ -76,7 +76,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
     beneficiary,
     beneficiaryPublicKey,
     bounty: {
-      tokenAmount,
+      value: tokenAmount,
       tokenIdentifier,
       symbol,
       decimals,

@@ -6,11 +6,11 @@ const { toPublicKey } = require("../../utils/address");
 async function report(ctx) {
   const { data, address, network, signature } = ctx.request.body;
 
-  const { ipfsCid, offTopic, inappropriate, spam, duplicate, somethingElse } =
+  const { refCid, offTopic, inappropriate, spam, duplicate, somethingElse } =
     data || {};
 
-  if (!ipfsCid) {
-    throw new HttpError(400, { ipfsCid: ["IPFS CID is missing"] });
+  if (!refCid) {
+    throw new HttpError(400, { refCid: ["IPFS CID is missing"] });
   }
 
   if (!address) {
@@ -33,13 +33,13 @@ async function report(ctx) {
   }
 
   const signerPublicKey = toPublicKey(address);
-  const exists = await Report.exists({ ipfsCid, signerPublicKey });
+  const exists = await Report.exists({ refCid, signerPublicKey });
   if (exists) {
     throw new HttpError(400, "You have already reported this post");
   }
 
   await Report.create({
-    ipfsCid,
+    refCid,
     offTopic,
     inappropriate,
     spam,

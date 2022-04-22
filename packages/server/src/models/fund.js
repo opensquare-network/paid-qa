@@ -35,14 +35,14 @@ FundSchema.index({ topicCid: 1 });
 
 FundSchema.virtual("topic", {
   ref: "Topic",
-  localField: "ipfsCid",
+  localField: "refCid",
   foreignField: "cid",
   justOne: true,
 });
 
 FundSchema.virtual("answer", {
   ref: "Answer",
-  localField: "ipfsCid",
+  localField: "refCid",
   foreignField: "cid",
   justOne: true,
 });

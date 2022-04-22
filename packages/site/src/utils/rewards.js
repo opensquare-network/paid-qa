@@ -20,7 +20,7 @@ export function calcSponserRewards(rewards) {
     tokenValues[key] = bnAdd(tokenValues[key] ?? "0", reward.bounty.value);
   });
   return Object.keys(tokenValues).map((key) => {
-    const [network, sponsor, symbol] = key.split(":")[0];
+    const [network, sponsor, symbol] = key.split(":");
     const value = tokenValues[key];
     return { network, sponsor, symbol, value };
   });

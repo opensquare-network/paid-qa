@@ -31,7 +31,7 @@ const AnswerSchema = new mongoose.Schema(
 AnswerSchema.virtual("funds", {
   ref: "Fund",
   localField: "cid",
-  foreignField: "ipfsCid",
+  foreignField: "refCid",
 });
 
 AnswerSchema.virtual("topic", {

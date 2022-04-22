@@ -24,7 +24,12 @@ module.exports = () => {
     expect(topic?.toJSON()).toMatchObject({
       resolves: [
         {
-          blockTime: 1648444080001,
+          indexer: {
+            blockHash: "0x0000000000000000000000000000000000000000000000000000000000000004",
+            blockHeight: 4,
+            extrinsicIndex: 1,
+            blockTime: 1648444080001,
+          },
           network: "statemine",
           sponsor: "5C5C24tLgXg973FRixpzTYTJq9r443LVwjceDvnVErdXgNfn",
           topicCid:

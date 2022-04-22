@@ -72,8 +72,8 @@ async function getAccountPromisedTopics(ctx) {
                 sponsorPublicKey: signerPublicKey,
                 $expr: {
                   $or: [
-                    { $eq: ["$ipfsCid", "$$topicCid"] },
-                    { $in: ["$ipfsCid", "$$answerCid"] },
+                    { $eq: ["$refCid", "$$topicCid"] },
+                    { $in: ["$refCid", "$$answerCid"] },
                   ],
                 },
               },
@@ -308,8 +308,8 @@ async function getAccountOverview(ctx) {
                   { $eq: ["$bounty.symbol", "$$symbol"] },
                   {
                     $or: [
-                      { $eq: ["$ipfsCid", "$$topicCid"] },
-                      { $in: ["$ipfsCid", "$$answerCid"] },
+                      { $eq: ["$refCid", "$$topicCid"] },
+                      { $in: ["$refCid", "$$answerCid"] },
                     ],
                   },
                 ],
