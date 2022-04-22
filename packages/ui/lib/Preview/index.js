@@ -3,10 +3,10 @@ import MicromarkMd from "./MicromarkMd";
 import styled, { css } from "styled-components";
 
 const PreviewWrapper = styled.div`
-  padding-left: 12px;
   ${(p) =>
     p.bordered &&
     css`
+      padding-left: 12px;
       border-left: 4px solid #e2e8f0;
     `}
   min-height: 159px;
