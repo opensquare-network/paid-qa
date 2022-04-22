@@ -33,7 +33,7 @@ app.use(router.routes());
 
 const server = http.createServer(app.callback());
 
-const port = process.env.PORT || 5050;
+const port = parseInt(process.env.PORT) || 5050;
 
 server.listen(port, () =>
   console.log(`✅  The server is running at http://localhost:${port}/`)

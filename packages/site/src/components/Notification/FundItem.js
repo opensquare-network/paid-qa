@@ -40,7 +40,7 @@ export default function FundItem({ notification, type = "Funded" }) {
         />
         with
         <TextMajor>
-          {fund?.value} {fund?.symbol}
+          {fund?.bounty.value} {fund?.bounty.symbol}
         </TextMajor>
         in
         <Link to={`/topic/${topic.cid}`}>

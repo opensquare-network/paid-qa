@@ -30,20 +30,27 @@ module.exports = () => {
         {
           funds: [
             {
+              indexer: {
+                blockHash: "0x0000000000000000000000000000000000000000000000000000000000000003",
+                blockHeight: 3,
+                extrinsicIndex: 1,
+                blockTime: 1648444080001,
+              },
               beneficiary: "5C5C24tLgXg973FRixpzTYTJq9r443LVwjceDvnVErdXgNfn",
               beneficiaryPublicKey:
                 "005ecd4a9d270cf26b7b5cd1656a91684df6c0d0c1586dbdd3110ca45cc90a5e",
-              blockTime: 1648444080001,
-              currencyType: "native",
-              decimals: 12,
-              ipfsCid:
+              refCid:
                 "bafybeid7rubeeu4vyrivdgkpiwgyruvybcriwth7pjn5k5syznpgzegavy",
               network: "statemine",
               sponsor: "5C7RcsPnPLZNjdZFqPxSMTRVMiHLNafgTUN5h51nGQD8yGa1",
               sponsorPublicKey:
                 "021313138fa11ed4217d3443c335176c6ab231bdbb2c61c10751cccc1dfc407c",
-              symbol: "KSM",
-              value: "1E-12",
+              bounty: {
+                tokenIdentifier: "N",
+                symbol: "KSM",
+                decimals: 12,
+                value: "1E-12",
+              },
             },
           ],
         },

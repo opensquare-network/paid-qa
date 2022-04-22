@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ReportSchema = new mongoose.Schema(
   {
-    ipfsCid: String,
+    refCid: String,
     offTopic: Boolean,
     inappropriate: Boolean,
     spam: Boolean,
@@ -19,7 +19,7 @@ const ReportSchema = new mongoose.Schema(
   }
 );
 
-ReportSchema.index({ ipfsCid: 1, signerPublicKey: 1 }, { unique: true });
+ReportSchema.index({ refCid: 1, signerPublicKey: 1 }, { unique: true });
 
 const Report = mongoose.model("Report", ReportSchema);
 

@@ -81,7 +81,6 @@ export default function FundsList({ network, address }) {
             <Card key={index}>
               <StyledDividerWrapper>
                 <span>Funded</span>
-                {/*<Flex>*/}
                 <MarginX8>
                   <Avatar address={fund.beneficiary} />
                 </MarginX8>
@@ -93,13 +92,12 @@ export default function FundsList({ network, address }) {
                 />
                 &nbsp;with&nbsp;
                 <TextMajor>
-                  {fund.value} {fund.symbol}
+                  {fund.bounty.value} {fund.bounty.symbol}
                 </TextMajor>
                 &nbsp;in&nbsp;
                 <Link to={`/topic/${topic?.cid}`}>
                   <TextMajor>{topic?.title}</TextMajor>
                 </Link>
-                {/*</Flex>*/}
                 <TextAccessory>
                   <Time time={fund.blockTime} />
                 </TextAccessory>

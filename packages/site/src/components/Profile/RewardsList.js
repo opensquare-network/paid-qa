@@ -89,7 +89,7 @@ export default function RewardsList({ network, address }) {
                 <IdentityOrAddr address={fund.sponsor} network={fund.network} />
                 &nbsp;with&nbsp;
                 <TextMajor>
-                  {fund.value} {fund.symbol}
+                  {fund.bounty.value} {fund.bounty.symbol}
                 </TextMajor>
                 &nbsp;in&nbsp;
                 <Link to={`/topic/${topic?.cid}`}>

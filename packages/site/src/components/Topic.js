@@ -96,7 +96,7 @@ export default function Topic({ topic }) {
             <MobileVisible>
               <RepliesCount>{topic.answersCount || 0} Replies</RepliesCount>
             </MobileVisible>
-            <Time time={topic.blockTime} />
+            <Time time={topic.indexer.blockTime} />
           </DividerWrapper>
           <TagList topic={topic} />
         </div>

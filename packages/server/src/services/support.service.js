@@ -4,7 +4,6 @@ const {
 } = require("@paid-qa/spec");
 const { HttpError } = require("../utils/exc");
 const { Topic, Reward, Notification } = require("../models");
-const { RewardCurrencyType } = require("../utils/constants");
 const {
   getApi,
   getRemark,
@@ -45,12 +44,10 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   // Get reward currency type and amount from system remark
   const { tokenIdentifier, tokenAmount } = interaction.toJSON();
 
-  let symbol, decimals, rewardCurrencyType;
+  let symbol, decimals;
   if (tokenIdentifier === "N") {
-    rewardCurrencyType = RewardCurrencyType.Native;
     ({ symbol, decimals } = await getNativeTokenInfo(api));
   } else {
-    rewardCurrencyType = RewardCurrencyType.Asset;
     ({ symbol, decimals } = await getAssetTokenInfo(
       api,
       tokenIdentifier,
@@ -63,21 +60,22 @@ async function addSupport(network, blockHash, extrinsicIndex) {
 
   const sponsorPublicKey = toPublicKey(signer);
   const support = await Reward.create({
-    blockHash,
-    blockHeight,
-    extrinsicIndex,
-    blockTime,
+    indexer: {
+      blockHash,
+      blockHeight,
+      extrinsicIndex,
+      blockTime,
+    },
     topicCid,
     network,
     sponsor: signer,
     sponsorPublicKey,
-    currencyType: rewardCurrencyType,
-    value: tokenAmount,
-    ...(rewardCurrencyType === RewardCurrencyType.Asset
-      ? { assetId: tokenIdentifier }
-      : {}),
-    symbol,
-    decimals,
+    bounty: {
+      value: tokenAmount,
+      tokenIdentifier,
+      symbol,
+      decimals,
+    },
   });
 
   await updateTopicResolve(topicCid);

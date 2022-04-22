@@ -63,11 +63,11 @@ export default function Funders({ funds }) {
               />
             </Flex>
             <a
-              href={`https://${fund.network}.subscan.io/extrinsic/${fund.blockHeight}-${fund.extrinsicIndex}`}
+              href={`https://${fund.network}.subscan.io/extrinsic/${fund.indexer.blockHeight}-${fund.indexer.extrinsicIndex}`}
               target="_blank"
               rel="noreferrer"
             >
-              {fund.value} {fund.symbol}
+              {fund.bounty.value} {fund.bounty.symbol}
             </a>
           </Item>
         );

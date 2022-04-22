@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Topic, Reward, Appendant } = require("../models");
-const { PostStatus, RewardCurrencyType } = require("../utils/constants");
+const { PostStatus } = require("../utils/constants");
 const {
   getApi,
   getRemark,
@@ -40,7 +40,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
 
   const cid = await cidOf(data);
 
-  // Verfify if ipfs cid is the same as the one in the system remark
+  // Verify if ipfs cid is the same as the one in the system remark
   if (interaction.topicIpfsCid !== cid) {
     throw new HttpError(
       500,
@@ -51,12 +51,10 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
   // Get reward currency type and amount from system remark
   const { tokenIdentifier, tokenAmount } = interaction.toJSON();
 
-  let symbol, decimals, rewardCurrencyType;
+  let symbol, decimals;
   if (tokenIdentifier === "N") {
-    rewardCurrencyType = RewardCurrencyType.Native;
     ({ symbol, decimals } = await getNativeTokenInfo(api));
   } else {
-    rewardCurrencyType = RewardCurrencyType.Asset;
     ({ symbol, decimals } = await getAssetTokenInfo(
       api,
       tokenIdentifier,
@@ -74,10 +72,12 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     await Topic.create(
       [
         {
-          blockHash,
-          blockHeight,
-          extrinsicIndex,
-          blockTime,
+          indexer: {
+            blockHash,
+            blockHeight,
+            extrinsicIndex,
+            blockTime,
+          },
           cid,
           title,
           content,
@@ -96,19 +96,20 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
     await Reward.create(
       [
         {
-          blockHash,
-          blockHeight,
-          extrinsicIndex,
-          blockTime,
+          indexer: {
+            blockHash,
+            blockHeight,
+            extrinsicIndex,
+            blockTime,
+          },
           topicCid: cid,
           network,
-          currencyType: rewardCurrencyType,
-          value: tokenAmount,
-          ...(rewardCurrencyType === RewardCurrencyType.Asset
-            ? { assetId: tokenIdentifier }
-            : {}),
-          symbol,
-          decimals,
+          bounty: {
+            value: tokenAmount,
+            tokenIdentifier,
+            symbol,
+            decimals,
+          },
           sponsor: signer,
           sponsorPublicKey: signerPublicKey,
         },
@@ -176,7 +177,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
               },
               {
                 $addFields: {
-                  value: { $toString: "$value" },
+                  "bounty.value": { $toString: "$bounty.value" },
                 },
               },
             ],
@@ -185,7 +186,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
         },
         {
           $match: {
-            "rewards.symbol": symbol,
+            "rewards.bounty.symbol": symbol,
           },
         },
         {
@@ -203,10 +204,10 @@ async function getTopics(symbol, status, title, page, pageSize) {
                       branches: [
                         { case: { $eq: ["$status", "active"] }, then: 1 },
                       ],
-                      default: 2
-                    }
-                  }
-                }
+                      default: 2,
+                    },
+                  },
+                },
               },
               { $sort: { statusSort: 1, blockTime: -1 } },
               { $skip: (page - 1) * pageSize },
@@ -255,20 +256,18 @@ async function getTopics(symbol, status, title, page, pageSize) {
       .addFields({
         statusSort: {
           $switch: {
-            branches: [
-              { case: { $eq: ["$status", "active"] }, then: 1 },
-            ],
-            default: 2
-          }
-        }
+            branches: [{ case: { $eq: ["$status", "active"] }, then: 1 }],
+            default: 2,
+          },
+        },
       })
       .sort({ statusSort: 1, blockTime: -1 })
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 
     await Promise.all([
-      Topic.populate(topics, { path: "answersCount" } ),
-      Topic.populate(topics, { path: "rewards" } ),
+      Topic.populate(topics, { path: "answersCount" }),
+      Topic.populate(topics, { path: "rewards" }),
     ]);
 
     return {
@@ -335,10 +334,12 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   }
 
   await Appendant.create({
-    blockHash,
-    blockHeight,
-    extrinsicIndex,
-    blockTime,
+    indexer: {
+      blockHash,
+      blockHeight,
+      extrinsicIndex,
+      blockTime,
+    },
     topicCid: interaction.topicIpfsCid,
     cid,
     content,

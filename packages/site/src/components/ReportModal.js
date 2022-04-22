@@ -130,7 +130,7 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
 
     try {
       const data = {
-        ipfsCid,
+        refCid: ipfsCid,
         offTopic,
         inappropriate,
         spam,

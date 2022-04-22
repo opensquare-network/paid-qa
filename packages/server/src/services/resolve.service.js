@@ -37,10 +37,12 @@ async function resolve(network, blockHash, extrinsicIndex) {
   }
 
   await Resolve.create({
-    blockHash,
-    blockHeight,
-    extrinsicIndex,
-    blockTime,
+    indexer: {
+      blockHash,
+      blockHeight,
+      extrinsicIndex,
+      blockTime,
+    },
     topicCid,
     network,
     sponsor: signer,

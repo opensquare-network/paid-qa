@@ -2,9 +2,12 @@ const mongoose = require("mongoose");
 
 const AnswerSchema = new mongoose.Schema(
   {
-    blockHash: String,
-    blockHeight: Number,
-    extrinsicIndex: Number,
+    indexer: {
+      blockHash: String,
+      blockHeight: Number,
+      extrinsicIndex: Number,
+      blockTime: Number,
+    },
     network: String,
     topicCid: String,
     content: String,
@@ -28,7 +31,7 @@ const AnswerSchema = new mongoose.Schema(
 AnswerSchema.virtual("funds", {
   ref: "Fund",
   localField: "cid",
-  foreignField: "ipfsCid",
+  foreignField: "refCid",
 });
 
 AnswerSchema.virtual("topic", {
