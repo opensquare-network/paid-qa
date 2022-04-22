@@ -1,11 +1,12 @@
-const { decodeAddress, signatureVerify } = require("@polkadot/util-crypto");
-const { u8aToHex } = require("@polkadot/util");
+const { encodeAddress, signatureVerify } = require("@polkadot/util-crypto");
 
 function isValidSignature(signedMessage, signature, address) {
-  const publicKey = decodeAddress(address);
-  const hexPublicKey = u8aToHex(publicKey);
-  const result = signatureVerify(signedMessage, signature, hexPublicKey);
-  return result.isValid;
+  const result = signatureVerify(signedMessage, signature, address);
+  try {
+    return encodeAddress(result.publicKey, 42) === encodeAddress(address, 42);
+  } catch (e) {
+    return false;
+  }
 }
 
 module.exports = {
