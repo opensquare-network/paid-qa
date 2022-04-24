@@ -62,7 +62,7 @@ function RichEdit(
             loadSuggestions={loadSuggestions}
           />
         </MarkdownEditorWrapper>
-        {preview && <Preview content={content} />}
+        {preview && <Preview minHeight={159} content={content} />}
       </MarkdownWrapper>
       {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
       {showButtons && (
