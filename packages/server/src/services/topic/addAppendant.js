@@ -68,7 +68,6 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   await Appendant.updateOne(
     {
       cid,
-      topicCid: interaction.topicIpfsCid,
     },
     {
       indexer: {
@@ -77,6 +76,7 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
         extrinsicIndex,
         blockTime,
       },
+      topicCid: interaction.topicIpfsCid,
       content,
       data,
       pinned: false,
