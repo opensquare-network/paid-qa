@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css";
@@ -101,17 +101,27 @@ export default function MarkdownEditor({
   loadSuggestions,
 }) {
   const ref = useRef();
+  const resetTextareaHeight = () => {
+    const textarea = ref?.current?.finalRefs?.textarea?.current;
+    if (textarea) {
+      textarea.style.height = "116px";
+      textarea.style.height = textarea.scrollHeight + "px";
+    }
+  };
+
+  useEffect(() => {
+    if (content === "") {
+      resetTextareaHeight();
+    }
+  }, [content]);
+
   return (
     <Wrapper>
       <ReactMde
         ref={ref}
         value={content}
         onChange={(content) => {
-          const textarea = ref?.current?.finalRefs?.textarea?.current;
-          if (textarea) {
-            textarea.style.height = "116px";
-            textarea.style.height = textarea.scrollHeight + "px";
-          }
+          resetTextareaHeight();
           !disabled && setContent(content);
         }}
         toolbarCommands={[
