@@ -9,12 +9,16 @@ const PreviewWrapper = styled.div`
       padding-left: 12px;
       border-left: 4px solid #e2e8f0;
     `}
-  min-height: 159px;
+  ${(p) =>
+    p.minHeight &&
+    css`
+      min-height: ${p.minHeight}px;
+    `}
 `;
 
-function Preview({ content, bordered = true }) {
+function Preview({ content, bordered = true, minHeight }) {
   return (
-    <PreviewWrapper bordered={bordered}>
+    <PreviewWrapper bordered={bordered} minHeight={minHeight}>
       <MicromarkMd md={content} />
     </PreviewWrapper>
   );
