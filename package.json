@@ -27,6 +27,7 @@
   "scripts": {
     "prepare": "husky install && husky set .husky/pre-commit \"npx lint-staged\"",
     "build": "yarn workspace @osn/common build && yarn workspace @osn/consts build && yarn workspace @osn/common-ui build ",
+    "build-storybook": "yarn build && yarn workspace @osn/common-ui build-storybook",
     "start": "yarn build && yarn workspace @paid-qa/site start"
   },
   "main": "index.js",
