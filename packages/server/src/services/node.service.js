@@ -12,10 +12,10 @@ function getApi(chain) {
   return cachedApis[chain];
 }
 
-async function getRemark(api, blockHash, extrinsicHash) {
+async function getRemark(api, blockHash, extrinsicIndex) {
   try {
-    const result = await api.get(`remark/${blockHash}/${extrinsicHash}`);
-    return result.data;
+    const result = await api.get(`remark/block/${blockHash}/extrinsic/${extrinsicIndex}`);
+    return result;
   } catch (err) {
     throw new HttpError(500, "Failed to get remark");
   }
@@ -23,8 +23,8 @@ async function getRemark(api, blockHash, extrinsicHash) {
 
 async function getNativeTokenInfo(api) {
   try {
-    const result = await api.get("tokeninfo/native");
-    return result.data;
+    const result = await api.get("token/native/info");
+    return result;
   } catch (err) {
     throw new HttpError(500, "Failed to get native token info");
   }
@@ -32,8 +32,11 @@ async function getNativeTokenInfo(api) {
 
 async function getAssetTokenInfo(api, assetId, blockHash) {
   try {
-    const result = await api.get(`tokeninfo/asset/${assetId}/${blockHash}`);
-    return result.data;
+    const url = blockHash
+      ? `token/${assetId}/${blockHash}/info`
+      : `token/${assetId}/info`;
+    const result = await api.get(url);
+    return result;
   } catch (err) {
     throw new HttpError(500, "Failed to get asset token info");
   }
@@ -42,7 +45,7 @@ async function getAssetTokenInfo(api, assetId, blockHash) {
 async function submitRemarks(api, remarks) {
   try {
     const result = await api.post("remark/batchsend", { remarks });
-    return result.data;
+    return result;
   } catch (err) {
     throw new HttpError(500, "Failed to submit remarks");
   }

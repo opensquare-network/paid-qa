@@ -3,9 +3,10 @@ const tokenInfoController = require("./tokeninfo.controller");
 
 const router = new Router();
 
-router.get("/tokeninfo/native", tokenInfoController.getNativeTokenInfo);
+router.get("/token/native/info", tokenInfoController.getNativeTokenInfo);
+router.get("/token/:assetId/info", tokenInfoController.getAssetTokenInfo);
 router.get(
-  "/tokeninfo/asset/:assetId/:blockHash",
+  "/token/:assetId/:blockHash/info",
   tokenInfoController.getAssetTokenInfo
 );
 
