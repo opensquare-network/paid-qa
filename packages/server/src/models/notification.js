@@ -1,13 +1,20 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 const { RequiredString } = require("./utils");
+const { NotificationType } = require("../utils/constants");
 
 const NotificationSchema = new mongoose.Schema(
   {
     owner: RequiredString, // public key of owner address
     type: {
       type: [String],
-      enum: ["reply", "mention", "support", "fund", "topicResolved"],
+      enum: [
+        NotificationType.Reply,
+        NotificationType.Mention,
+        NotificationType.Support,
+        NotificationType.Fund,
+        NotificationType.TopicResolved,
+      ],
       required: true,
     },
     read: {
