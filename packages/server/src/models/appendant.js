@@ -30,6 +30,7 @@ const AppendantSchema = new mongoose.Schema(
 );
 
 AppendantSchema.index({ cid: 1 }, { unique: true });
+AppendantSchema.index({ topicCid: 1 });
 
 const Appendant = mongoose.model("Appendant", AppendantSchema);
 
