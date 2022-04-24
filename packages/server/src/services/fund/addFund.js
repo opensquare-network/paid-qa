@@ -94,7 +94,8 @@ async function addFund(network, blockHash, extrinsicIndex) {
         symbol,
         decimals,
       },
-    }
+    },
+    { upsert: true }
   );
 
   const fundTo = answer?.signer || topic?.signer;
