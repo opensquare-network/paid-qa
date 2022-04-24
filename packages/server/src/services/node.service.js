@@ -14,7 +14,7 @@ function getApi(chain) {
 
 async function getRemark(api, blockHash, extrinsicIndex) {
   try {
-    const result = await api.get(`remark/${blockHash}/${extrinsicIndex}`);
+    const result = await api.get(`remark/block/${blockHash}/extrinsic/${extrinsicIndex}`);
     return result;
   } catch (err) {
     throw new HttpError(500, "Failed to get remark");
