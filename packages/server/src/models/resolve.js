@@ -1,24 +1,25 @@
 const mongoose = require("mongoose");
+const { RequiredString, RequiredNumber } = require("./utils");
 
 const ResolveSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: String,
-      blockHeight: Number,
-      extrinsicIndex: Number,
-      blockTime: Number,
+      blockHash: RequiredString,
+      blockHeight: RequiredNumber,
+      extrinsicIndex: RequiredNumber,
+      blockTime: RequiredNumber,
     },
-    topicCid: String,
-    network: String,
-    sponsor: String,
-    sponsorPublicKey: String,
+    topicCid: RequiredString,
+    network: RequiredString,
+    sponsor: RequiredString,
+    sponsorPublicKey: RequiredString,
   },
   {
     timestamps: true,
   }
 );
 
-ResolveSchema.index({ topicCid: 1 });
+ResolveSchema.index({ topicCid: 1, sponsorPublicKey: 1 }, { unique: true });
 
 const Resolve = mongoose.model("Resolve", ResolveSchema);
 

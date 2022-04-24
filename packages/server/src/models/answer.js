@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { RequiredPostStatus, RequiredString } = require("./utils");
 
 const AnswerSchema = new mongoose.Schema(
   {
@@ -8,19 +9,22 @@ const AnswerSchema = new mongoose.Schema(
       extrinsicIndex: Number,
       blockTime: Number,
     },
-    network: String,
-    topicCid: String,
-    content: String,
-    signer: String,
-    signerPublicKey: String,
-    signature: String,
-    data: Object,
-    cid: String,
+    network: RequiredString,
+    topicCid: RequiredString,
+    content: RequiredString,
+    signer: RequiredString,
+    signerPublicKey: RequiredString,
+    signature: RequiredString,
+    data: {
+      type: Object,
+      required: true,
+    },
+    cid: RequiredString,
     pinned: {
       type: Boolean,
       default: false,
     },
-    status: String, // "reserved", "published", "active", "resolved"
+    status: RequiredPostStatus,
   },
   {
     timestamps: true,

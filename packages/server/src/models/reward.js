@@ -1,26 +1,23 @@
 const mongoose = require("mongoose");
-const { Schema } = require("mongoose");
+const { RequiredDecimal128, RequiredString, RequiredNumber } = require("./utils");
 
 const RewardSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: String,
-      blockHeight: Number,
-      extrinsicIndex: Number,
-      blockTime: Number,
+      blockHash: RequiredString,
+      blockHeight: RequiredNumber,
+      extrinsicIndex: RequiredNumber,
+      blockTime: RequiredNumber,
     },
-    topicCid: String,
-    network: String,
-    sponsor: String,
-    sponsorPublicKey: String,
+    topicCid: RequiredString,
+    network: RequiredString,
+    sponsor: RequiredString,
+    sponsorPublicKey: RequiredString,
     bounty: {
-      tokenIdentifier: String,
-      symbol: String,
-      decimals: Number,
-      value: {
-        type: Schema.Types.Decimal128,
-        get: (v) => v?.toString(),
-      },
+      tokenIdentifier: RequiredString,
+      symbol: RequiredString,
+      decimals: RequiredNumber,
+      value: RequiredDecimal128,
     },
   },
   {
@@ -30,6 +27,8 @@ const RewardSchema = new mongoose.Schema(
 );
 
 RewardSchema.index({ topicCid: 1 });
+RewardSchema.index({ sponsorPublicKey: 1 });
+RewardSchema.index({ "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 }, { unique: true });
 
 const Reward = mongoose.model("Reward", RewardSchema);
 

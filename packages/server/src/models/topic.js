@@ -1,26 +1,30 @@
 const mongoose = require("mongoose");
+const { RequiredPostStatus, RequiredString, RequiredNumber } = require("./utils");
 
 const TopicSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: String,
-      blockHeight: Number,
-      extrinsicIndex: Number,
-      blockTime: Number,
+      blockHash: RequiredString,
+      blockHeight: RequiredNumber,
+      extrinsicIndex: RequiredNumber,
+      blockTime: RequiredNumber,
     },
-    cid: String,
-    network: String,
-    title: String,
-    content: String,
-    language: String,
-    data: Object,
+    cid: RequiredString,
+    network: RequiredString,
+    title: RequiredString,
+    content: RequiredString,
+    language: RequiredString,
+    data: {
+      type: Object,
+      required: true,
+    },
     pinned: {
       type: Boolean,
       default: false,
     },
-    status: String, // "published", "active", "resolved"
-    signer: String,
-    signerPublicKey: String,
+    status: RequiredPostStatus,
+    signer: RequiredString,
+    signerPublicKey: RequiredString,
   },
   {
     timestamps: true,
@@ -67,6 +71,7 @@ TopicSchema.virtual("resolves", {
 });
 
 TopicSchema.index({ cid: 1 }, { unique: true });
+TopicSchema.index({ signerPublicKey: 1 });
 
 const Topic = mongoose.model("Topic", TopicSchema);
 

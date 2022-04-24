@@ -65,22 +65,27 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
     throw new HttpError(500, "Appendant does not match the topic network");
   }
 
-  await Appendant.create({
-    indexer: {
-      blockHash,
-      blockHeight,
-      extrinsicIndex,
-      blockTime,
+  await Appendant.updateOne(
+    {
+      cid,
     },
-    topicCid: interaction.topicIpfsCid,
-    cid,
-    content,
-    data,
-    pinned: false,
-    network,
-    signer,
-    status: PostStatus.Published,
-  });
+    {
+      indexer: {
+        blockHash,
+        blockHeight,
+        extrinsicIndex,
+        blockTime,
+      },
+      topicCid: interaction.topicIpfsCid,
+      content,
+      data,
+      pinned: false,
+      network,
+      signer,
+      status: PostStatus.Published,
+    },
+    { upsert: true }
+  );
 
   // Upload topic content to IPFS
   try {

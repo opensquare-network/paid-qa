@@ -61,30 +61,44 @@ async function addFund(network, blockHash, extrinsicIndex) {
   const sponsorPublicKey = toPublicKey(signer);
   const beneficiaryPublicKey = toPublicKey(beneficiary);
 
-  const fundObj = await Fund.create({
-    indexer: {
-      blockHash,
-      blockHeight,
-      extrinsicIndex,
-      blockTime,
-    },
-    refCid: interaction.ipfsCid,
-    network,
-    sponsor: signer,
-    sponsorPublicKey,
-    beneficiary,
-    beneficiaryPublicKey,
-    bounty: {
-      value: tokenAmount,
-      tokenIdentifier,
-      symbol,
-      decimals,
-    },
-  });
-
   let topic = await Topic.findOne({ cid: interaction.ipfsCid });
   let answer = await Answer.findOne({ cid: interaction.ipfsCid });
-  const fundTo = topic?.signer || answer?.signer;
+
+  let refCidType;
+  if (topic) {
+    refCidType = "topic";
+  } else if (answer) {
+    refCidType = "answer";
+  } else {
+    throw new HttpError(500, "Invalid ipfsCid");
+  }
+
+  const fundObj = await Fund.updateOne(
+    {
+      "indexer.blockHash": blockHash,
+      "indexer.extrinsicIndex": extrinsicIndex,
+    },
+    {
+      "indexer.blockHeight": blockHeight,
+      "indexer.blockTime": blockTime,
+      refCid: interaction.ipfsCid,
+      refCidType,
+      network,
+      sponsor: signer,
+      sponsorPublicKey,
+      beneficiary,
+      beneficiaryPublicKey,
+      bounty: {
+        value: tokenAmount,
+        tokenIdentifier,
+        symbol,
+        decimals,
+      },
+    },
+    { upsert: true }
+  );
+
+  const fundTo = answer?.signer || topic?.signer;
   if (answer) {
     topic = await Topic.findOne({ cid: answer.topicCid });
   }

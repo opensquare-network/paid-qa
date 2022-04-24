@@ -1,24 +1,28 @@
 const mongoose = require("mongoose");
+const { RequiredPostStatus, RequiredString, RequiredNumber } = require("./utils");
 
 const AppendantSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: String,
-      blockHeight: Number,
-      extrinsicIndex: Number,
-      blockTime: Number,
+      blockHash: RequiredString,
+      blockHeight: RequiredNumber,
+      extrinsicIndex: RequiredNumber,
+      blockTime: RequiredNumber,
     },
-    network: String,
-    content: String,
-    data: Object,
-    topicCid: String,
-    cid: String,
+    network: RequiredString,
+    content: RequiredString,
+    data: {
+      type: Object,
+      required: true,
+    },
+    topicCid: RequiredString,
+    cid: RequiredString,
     pinned: {
       type: Boolean,
       default: false,
     },
-    status: String, // "published", "active", "resolved"
-    signer: String,
+    status: RequiredPostStatus,
+    signer: RequiredString,
   },
   {
     timestamps: true,
