@@ -1,60 +1,23 @@
 const mongoose = require("mongoose");
-const { Schema } = require("mongoose");
+const { RequiredDecimal128, RequiredString, RequiredNumber } = require("./utils");
 
 const RewardSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: {
-        type: String,
-        required: true,
-      },
-      blockHeight: {
-        type: Number,
-        required: true,
-      },
-      extrinsicIndex: {
-        type: Number,
-        required: true,
-      },
-      blockTime: {
-        type: Number,
-        required: true,
-      },
+      blockHash: RequiredString,
+      blockHeight: RequiredNumber,
+      extrinsicIndex: RequiredNumber,
+      blockTime: RequiredNumber,
     },
-    topicCid: {
-      type: String,
-      required: true,
-    },
-    network: {
-      type: String,
-      required: true,
-    },
-    sponsor: {
-      type: String,
-      required: true,
-    },
-    sponsorPublicKey: {
-      type: String,
-      required: true,
-    },
+    topicCid: RequiredString,
+    network: RequiredString,
+    sponsor: RequiredString,
+    sponsorPublicKey: RequiredString,
     bounty: {
-      tokenIdentifier: {
-        type: String,
-        required: true,
-      },
-      symbol: {
-        type: String,
-        required: true,
-      },
-      decimals: {
-        type: Number,
-        required: true,
-      },
-      value: {
-        type: Schema.Types.Decimal128,
-        required: true,
-        get: (v) => v?.toString(),
-      },
+      tokenIdentifier: RequiredString,
+      symbol: RequiredString,
+      decimals: RequiredNumber,
+      value: RequiredDecimal128,
     },
   },
   {

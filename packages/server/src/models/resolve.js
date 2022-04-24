@@ -1,41 +1,18 @@
 const mongoose = require("mongoose");
+const { RequiredString, RequiredNumber } = require("./utils");
 
 const ResolveSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: {
-        type: String,
-        required: true,
-      },
-      blockHeight: {
-        type: Number,
-        required: true,
-      },
-      extrinsicIndex: {
-        type: Number,
-        required: true,
-      },
-      blockTime: {
-        type: Number,
-        required: true,
-      },
+      blockHash: RequiredString,
+      blockHeight: RequiredNumber,
+      extrinsicIndex: RequiredNumber,
+      blockTime: RequiredNumber,
     },
-    topicCid: {
-      type: String,
-      required: true,
-    },
-    network: {
-      type: String,
-      required: true,
-    },
-    sponsor: {
-      type: String,
-      required: true,
-    },
-    sponsorPublicKey: {
-      type: String,
-      required: true,
-    },
+    topicCid: RequiredString,
+    network: RequiredString,
+    sponsor: RequiredString,
+    sponsorPublicKey: RequiredString,
   },
   {
     timestamps: true,

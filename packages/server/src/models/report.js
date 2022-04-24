@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
+const { RequiredRefCid, RequiredString } = require("./utils");
 
 const ReportSchema = new mongoose.Schema(
   {
-    refCid: {
-      type: String,
-      required: true,
-    },
+    refCid: RequiredRefCid,
     offTopic: Boolean,
     inappropriate: Boolean,
     spam: Boolean,
@@ -15,22 +13,10 @@ const ReportSchema = new mongoose.Schema(
       type: Object,
       required: true,
     },
-    network: {
-      type: String,
-      required: true,
-    },
-    signer: {
-      type: String,
-      required: true,
-    },
-    signature: {
-      type: String,
-      required: true,
-    },
-    signerPublicKey: {
-      type: String,
-      required: true,
-    },
+    network: RequiredString,
+    signer: RequiredString,
+    signature: RequiredString,
+    signerPublicKey: RequiredString,
   },
   {
     timestamps: true,

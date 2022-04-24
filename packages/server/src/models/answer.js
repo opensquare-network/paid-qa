@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { RequiredPostStatus, RequiredString } = require("./utils");
 
 const AnswerSchema = new mongoose.Schema(
   {
@@ -8,46 +9,22 @@ const AnswerSchema = new mongoose.Schema(
       extrinsicIndex: Number,
       blockTime: Number,
     },
-    network: {
-      type: String,
-      required: true,
-    },
-    topicCid: {
-      type: String,
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-    signer: {
-      type: String,
-      required: true,
-    },
-    signerPublicKey: {
-      type: String,
-      required: true,
-    },
-    signature: {
-      type: String,
-      required: true,
-    },
+    network: RequiredString,
+    topicCid: RequiredString,
+    content: RequiredString,
+    signer: RequiredString,
+    signerPublicKey: RequiredString,
+    signature: RequiredString,
     data: {
       type: Object,
       required: true,
     },
-    cid: {
-      type: String,
-      required: true,
-    },
+    cid: RequiredString,
     pinned: {
       type: Boolean,
       default: false,
     },
-    status: {
-      type: String,
-      required: true,
-    }, // "reserved", "published", "active", "resolved"
+    status: RequiredPostStatus,
   },
   {
     timestamps: true,
@@ -68,7 +45,7 @@ AnswerSchema.virtual("topic", {
   justOne: true,
 });
 
-AnswerSchema.index({ topicCid: 1, cid: 1 }, { unique: true });
+AnswerSchema.index({ cid: 1 }, { unique: true });
 
 const Answer = mongoose.model("Answer", AnswerSchema);
 
