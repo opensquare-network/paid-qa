@@ -1,6 +1,6 @@
 const { HttpError } = require("../../utils/exc");
 const { isValidSignature } = require("../../utils/signature");
-const { Report } = require("../../models");
+const { Report, Topic, Answer } = require("../../models");
 const { toPublicKey } = require("../../utils/address");
 
 async function report(ctx) {
@@ -38,8 +38,21 @@ async function report(ctx) {
     throw new HttpError(400, "You have already reported this post");
   }
 
+  const isTopic = await Topic.exists({ cid: refCid });
+  const isAnswer = await Answer.exists({ cid: refCid });
+
+  let refCidType;
+  if (isTopic) {
+    refCidType = "topic";
+  } else if (isAnswer) {
+    refCidType = "answer";
+  } else {
+    throw new HttpError(400, "Invalid CID");
+  }
+
   await Report.create({
     refCid,
+    refCidType,
     offTopic,
     inappropriate,
     spam,

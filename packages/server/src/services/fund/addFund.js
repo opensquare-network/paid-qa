@@ -61,6 +61,18 @@ async function addFund(network, blockHash, extrinsicIndex) {
   const sponsorPublicKey = toPublicKey(signer);
   const beneficiaryPublicKey = toPublicKey(beneficiary);
 
+  let topic = await Topic.findOne({ cid: interaction.ipfsCid });
+  let answer = await Answer.findOne({ cid: interaction.ipfsCid });
+
+  let refCidType;
+  if (topic) {
+    refCidType = "topic";
+  } else if (answer) {
+    refCidType = "answer";
+  } else {
+    throw new HttpError(500, "Invalid ipfsCid");
+  }
+
   const fundObj = await Fund.updateOne(
     {
       "indexer.blockHash": blockHash,
@@ -70,6 +82,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
       "indexer.blockHeight": blockHeight,
       "indexer.blockTime": blockTime,
       refCid: interaction.ipfsCid,
+      refCidType,
       network,
       sponsor: signer,
       sponsorPublicKey,
@@ -84,9 +97,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
     }
   );
 
-  let topic = await Topic.findOne({ cid: interaction.ipfsCid });
-  let answer = await Answer.findOne({ cid: interaction.ipfsCid });
-  const fundTo = topic?.signer || answer?.signer;
+  const fundTo = answer?.signer || topic?.signer;
   if (answer) {
     topic = await Topic.findOne({ cid: answer.topicCid });
   }
