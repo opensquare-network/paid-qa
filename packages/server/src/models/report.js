@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-const { RequiredRefCid, RequiredString } = require("./utils");
+const { RequiredRefCidType, RequiredString } = require("./utils");
 
 const ReportSchema = new mongoose.Schema(
   {
-    refCid: RequiredRefCid,
+    refCid: RequiredString,
+    refCidType: RequiredRefCidType,
     offTopic: Boolean,
     inappropriate: Boolean,
     spam: Boolean,

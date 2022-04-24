@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { RequiredRefCid, RequiredDecimal128, RequiredString, RequiredNumber } = require("./utils");
+const { RequiredRefCidType, RequiredDecimal128, RequiredString, RequiredNumber } = require("./utils");
 
 const FundSchema = new mongoose.Schema(
   {
@@ -9,7 +9,8 @@ const FundSchema = new mongoose.Schema(
       extrinsicIndex: RequiredNumber,
       blockTime: RequiredNumber,
     },
-    refCid: RequiredRefCid,
+    refCid: RequiredString,
+    refCidType: RequiredRefCidType,
     network: RequiredString,
     sponsor: RequiredString,
     sponsorPublicKey: RequiredString,

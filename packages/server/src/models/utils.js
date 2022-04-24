@@ -23,7 +23,7 @@ const RequiredDecimal128 = {
   get: (v) => v?.toString(),
 };
 
-const RequiredRefCid = {
+const RequiredRefCidType = {
   type: String,
   enum: ["topic", "answer"],
   required: true,
@@ -34,5 +34,5 @@ module.exports = {
   RequiredString,
   RequiredNumber,
   RequiredDecimal128,
-  RequiredRefCid,
+  RequiredRefCidType,
 };
