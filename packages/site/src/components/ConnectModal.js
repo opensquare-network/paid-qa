@@ -7,7 +7,6 @@ import Modal from "@osn/common-ui/lib/Modal";
 import AccountSelector from "./Account/AccountSelector";
 import styled from "styled-components";
 import ChainSelector from "@osn/common-ui/lib/Chain/ChainSelector";
-import { AVAILABLE_NETWORKS } from "@osn/consts";
 import { closeConnect } from "../store/reducers/showConnectSlice";
 import {
   p_14_normal,
@@ -16,7 +15,7 @@ import {
 } from "@osn/common-ui/lib/styles/textStyles";
 import { polkadotWeb3Accounts } from "@osn/common/src/utils/extension";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
-import { PROJECT_NAME } from "utils/constants";
+import { AVAILABLE_NETWORKS, PROJECT_NAME } from "utils/constants";
 
 const Wrapper = styled.div``;
 

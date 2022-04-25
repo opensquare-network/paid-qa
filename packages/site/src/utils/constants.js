@@ -1,3 +1,26 @@
+import { Chains } from "@osn/consts/src";
+
+const DEVELOPMENT_NETWORK = [
+  { network: Chains.westend },
+  { network: Chains.westmint },
+];
+
+const PRODUCTION_NETWORK = [
+  { network: Chains.polkadot },
+  { network: Chains.kusama },
+  { network: Chains.statemint },
+];
+
+export const AVAILABLE_NETWORKS = [];
+
+if (process.env.REACT_APP_SHOW_DEVELOPMENT_NETWORKS === "TRUE") {
+  AVAILABLE_NETWORKS.push(...DEVELOPMENT_NETWORK);
+}
+
+if (process.env.REACT_APP_SHOW_PRODUCTION_NETWORKS === "TRUE") {
+  AVAILABLE_NETWORKS.push(...PRODUCTION_NETWORK);
+}
+
 export const DEFAULT_POLKADOT_NODES = [
   {
     name: "Parity",

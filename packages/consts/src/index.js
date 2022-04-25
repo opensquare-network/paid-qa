@@ -10,6 +10,8 @@ export const Chains = {
   bifrost: "bifrost",
   kintsugi: "kintsugi",
   westend: "westend",
+  westmint: "westmint",
+  statemint: "statemint",
 };
 
 export const ChainSS58Format = Object.freeze({
@@ -22,16 +24,6 @@ export const ChainSS58Format = Object.freeze({
   [Chains.kintsugi]: 2092,
   [Chains.westend]: 2,
 });
-
-export const AVAILABLE_NETWORKS = [
-  { network: Chains.polkadot },
-  { network: Chains.kusama },
-  { network: Chains.statemine },
-];
-
-if (process.env.REACT_APP_SHOW_WESTEND === "TRUE") {
-  AVAILABLE_NETWORKS.push({ network: Chains.westend });
-}
 
 export const MOBILE_SIZE = 900;
 
