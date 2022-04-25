@@ -1,3 +1,4 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import { useDispatch } from "react-redux";
 import copy from "copy-to-clipboard";
