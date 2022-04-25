@@ -58,6 +58,14 @@ module.exports = {
       plugin: enableImportOutsideSrcDir,
       options: { path: "./public/imgs", name: "imgs" },
     },
+    {
+      // aliasing `@osn/common-ui` to `ui/lib`
+      plugin: enableImportOutsideSrcDir,
+      options: {
+        path: "../ui/lib",
+        name: "@osn/common-ui$",
+      },
+    },
   ],
   webpack: {
     configure: {

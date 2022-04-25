@@ -10,6 +10,7 @@ import MarkdownEditor from "./Editor/MarkdownEditor";
 import IpfsSquare from "./IpfsSquare";
 import Breadcrumb from "./Navi/Breadcrumb";
 import styled from "./styled";
+import Tag from "./Tag";
 
 export {
   Footer,
@@ -24,4 +25,5 @@ export {
   IpfsSquare,
   Breadcrumb,
   styled,
+  Tag,
 };
