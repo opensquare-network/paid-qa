@@ -52,7 +52,7 @@ function RichEdit(
   const [preview, setPreview] = useState(false);
 
   return (
-    <div>
+    <div className="rich-editor">
       <MarkdownWrapper>
         <MarkdownEditorWrapper preview={preview} ref={ref}>
           <MarkdownEditor
@@ -67,10 +67,14 @@ function RichEdit(
       {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
       {showButtons && (
         <ButtonsWrapper>
-          <Button onClick={() => setPreview(!preview)}>
+          <Button
+            className="button-preview"
+            onClick={() => setPreview(!preview)}
+          >
             {preview ? "Edit" : "Preview"}
           </Button>
           <Button
+            className="button-submit"
             primary
             isLoading={submitting}
             disabled={disabled}
