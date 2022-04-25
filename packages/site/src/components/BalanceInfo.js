@@ -7,7 +7,7 @@ import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import styled from "styled-components";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
-import { getSymbolByChain } from "@osn/common/src/utils/tokenValue";
+import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 
 const Wrapper = styled(FlexBetween)`
@@ -99,7 +99,7 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
           <ValueDisplay
             value={balance}
             decimals={decimals}
-            symbol={symbol || getSymbolByChain(account?.network)}
+            symbol={symbol || getSymbolMetaByChain(account?.network)?.symbol}
             showAEM
           />
         )}

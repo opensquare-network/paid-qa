@@ -123,19 +123,18 @@ export default function Appendants({
     dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
-      const { blockHash, extrinsicIndex } = await submitRemark(
-        api,
-        remark,
-        account,
-        (status) => {
+      const { blockHash, extrinsicIndex, blockHeight, blockTime } =
+        await submitRemark(api, remark, account, (status) => {
           dispatch(updatePendingToast(toastId, status));
-        }
-      );
+        });
       const payload = {
         data,
         network: account.network,
         blockHash,
         extrinsicIndex,
+        blockHeight,
+        blockTime,
+        signer: account.address,
       };
 
       const { result, error } = await serverApi.post(
@@ -185,7 +184,7 @@ export default function Appendants({
           <div>
             <StyledDividerWrapper>
               <div>{`#${index + 1}`}</div>
-              <Time time={item.blockTime} />
+              <Time time={item.indexer.blockTime} />
             </StyledDividerWrapper>
             <IpfsSquare
               href={

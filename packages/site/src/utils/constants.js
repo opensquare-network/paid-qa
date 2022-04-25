@@ -9,6 +9,7 @@ const PRODUCTION_NETWORK = [
   { network: Chains.polkadot },
   { network: Chains.kusama },
   { network: Chains.statemint },
+  { network: Chains.statemine },
 ];
 
 export const AVAILABLE_NETWORKS = [];

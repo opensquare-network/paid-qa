@@ -48,46 +48,32 @@ export function getEffectiveNumbers(n) {
   return result.reverse().join();
 }
 
-export function getSymbolByChain(chainName) {
+export function getSymbolMetaByChain(chainName) {
   switch (chainName) {
     case "polkadot":
-      return "DOT";
+      return {
+        symbol: "DOT",
+        decimals: 10,
+      };
     case "kusama":
-      return "KSM";
-    case "karura":
-      return "KAR";
-    case "acala":
-      return "ACA";
-    case "khala":
-      return "PHA";
-    case "basilisk":
-      return "BSX";
-    case "bifrost":
-      return "BFC";
-    case "kintsugi":
-      return "KINT";
+      return {
+        symbol: "KSM",
+        decimals: 12,
+      };
+    case "statemine":
+      return {
+        symbol: "KSM",
+        decimals: 12,
+      };
     case "westend":
-      return "WND";
+      return {
+        symbol: "WND",
+        decimals: 12,
+      };
     default:
-      return "unknown";
-  }
-}
-
-export function getDecimalByChain(chainName) {
-  switch (chainName) {
-    case "polkadot":
-      return 10;
-    case "kusama":
-      return 12;
-    case "karura":
-    case "acala":
-    case "khala":
-    case "basilisk":
-    case "bifrost":
-    case "kintsugi":
-    case "westend":
-      return 12;
-    default:
-      return 12;
+      return {
+        symbol: "unknown",
+        decimals: 12,
+      };
   }
 }
