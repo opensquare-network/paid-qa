@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import ConnectWallet from "../ConnectWallet";
 import Input from "@osn/common-ui/lib/styled/Input";
-import MarkdownEditor from "@osn/common-ui/lib/Editor/MarkdownEditor";
 import Button from "@osn/common-ui/lib/styled/Button";
 import { accountSelector } from "../../store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,12 +24,12 @@ import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 import { getSymbolByChain } from "@osn/common/src/utils/tokenValue";
-import Preview from "@osn/common-ui/lib/Preview";
 import { useApi, useBalance } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import { RichEditor } from "@osn/common-ui";
 
 const { InteractionEncoder } = encoder;
 const { NewInteraction } = interactions;
@@ -111,6 +110,17 @@ const Title = styled.div`
   color: #1e2134;
 `;
 
+const RichEditorWrapper = styled.div`
+  .rich-editor {
+    .button-preview {
+      width: 100%;
+    }
+    .button-submit {
+      display: none;
+    }
+  }
+`;
+
 export default function Create() {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
@@ -121,7 +131,6 @@ export default function Create() {
   const api = useApi();
   const navigate = useNavigate();
   const symbol = getSymbolByChain(account?.network);
-  const [showPreview, setShowPreview] = useState(false);
   const balance = useBalance(account, api);
   const isMounted = useIsMounted();
 
@@ -207,18 +216,13 @@ export default function Create() {
           disabled={loading}
         />
         <Title>Topic</Title>
-        {!showPreview ? (
-          <MarkdownEditor {...{ content, setContent, disabled: loading }} />
-        ) : (
-          <Preview content={content} />
-        )}
-        <Button
-          onClick={() => {
-            setShowPreview(!showPreview);
-          }}
-        >
-          {showPreview ? "Edit" : "Preview"}
-        </Button>
+        <RichEditorWrapper>
+          <RichEditor
+            content={content}
+            setContent={setContent}
+            disabled={loading}
+          />
+        </RichEditorWrapper>
       </Main>
       <Side>
         {account ? (
