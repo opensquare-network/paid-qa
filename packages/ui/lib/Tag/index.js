@@ -21,7 +21,7 @@ const Wrapper = styled.span`
     `}
 `;
 
-export default function Tag({ children, status = "", color }) {
+export default function Tag({ children, status = "", color = "" }) {
   return (
     <Wrapper status={status} color={color}>
       {status || children}
