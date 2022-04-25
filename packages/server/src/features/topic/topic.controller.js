@@ -38,7 +38,7 @@ async function createTopic(ctx) {
     throw new HttpError(400, { network: ["Extrinsic index is missing"] });
   }
 
-  const { title, content, language } = data;
+  const { title, content } = data;
 
   if (!title) {
     throw new HttpError(400, { title: ["Title is missing"] });
@@ -46,10 +46,6 @@ async function createTopic(ctx) {
 
   if (!content) {
     throw new HttpError(400, { content: ["Content is missing"] });
-  }
-
-  if (!language) {
-    throw new HttpError(400, { language: ["Language is missing"] });
   }
 
   ctx.body = await topicService.createTopic(

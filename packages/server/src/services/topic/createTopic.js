@@ -17,7 +17,7 @@ const { validateTokenAmount } = require("../common");
 const { toPublicKey } = require("../../utils/address");
 
 async function createTopic(data, network, blockHash, extrinsicIndex) {
-  const { title, content, language } = data;
+  const { title, content } = data;
 
   // Get system remark from network/blockHash/extrinsicIndex
   const api = await getApi(network);
@@ -79,7 +79,6 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
         },
         title,
         content,
-        language,
         data,
         pinned: false,
         network,
