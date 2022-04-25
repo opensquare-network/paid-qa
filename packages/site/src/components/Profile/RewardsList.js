@@ -96,7 +96,7 @@ export default function RewardsList({ network, address }) {
                   <TextMajor>{topic?.title}</TextMajor>
                 </Link>
                 <TextAccessory>
-                  <Time time={fund.blockTime} />
+                  <Time time={fund.indexer.blockTime} />
                 </TextAccessory>
               </StyledDividerWrapper>
             </Card>

@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const { RequiredPostStatus, RequiredString, RequiredNumber } = require("./utils");
+const {
+  RequiredPostStatus,
+  RequiredString,
+  RequiredNumber,
+} = require("./utils");
 
 const TopicSchema = new mongoose.Schema(
   {
@@ -70,6 +74,10 @@ TopicSchema.virtual("resolves", {
 });
 
 TopicSchema.index({ cid: 1 }, { unique: true });
+TopicSchema.index(
+  { "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 },
+  { unique: true }
+);
 TopicSchema.index({ signerPublicKey: 1 });
 
 const Topic = mongoose.model("Topic", TopicSchema);

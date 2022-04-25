@@ -46,6 +46,10 @@ AnswerSchema.virtual("topic", {
 });
 
 AnswerSchema.index({ cid: 1 }, { unique: true });
+AnswerSchema.index(
+  { "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 },
+  { unique: true, sparse: true }
+);
 AnswerSchema.index({ topicCid: 1 });
 
 const Answer = mongoose.model("Answer", AnswerSchema);

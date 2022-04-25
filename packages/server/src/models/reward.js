@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
-const { RequiredDecimal128, RequiredString, RequiredNumber } = require("./utils");
+const {
+  RequiredPostStatus,
+  RequiredDecimal128,
+  RequiredString,
+  RequiredNumber,
+} = require("./utils");
 
 const RewardSchema = new mongoose.Schema(
   {
@@ -19,6 +24,7 @@ const RewardSchema = new mongoose.Schema(
       decimals: RequiredNumber,
       value: RequiredDecimal128,
     },
+    status: RequiredPostStatus,
   },
   {
     timestamps: true,
@@ -28,7 +34,10 @@ const RewardSchema = new mongoose.Schema(
 
 RewardSchema.index({ topicCid: 1 });
 RewardSchema.index({ sponsorPublicKey: 1 });
-RewardSchema.index({ "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 }, { unique: true });
+RewardSchema.index(
+  { "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 },
+  { unique: true }
+);
 
 const Reward = mongoose.model("Reward", RewardSchema);
 

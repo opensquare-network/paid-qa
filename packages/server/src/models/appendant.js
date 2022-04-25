@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const { RequiredPostStatus, RequiredString, RequiredNumber } = require("./utils");
+const {
+  RequiredPostStatus,
+  RequiredString,
+  RequiredNumber,
+} = require("./utils");
 
 const AppendantSchema = new mongoose.Schema(
   {
@@ -30,6 +34,10 @@ const AppendantSchema = new mongoose.Schema(
 );
 
 AppendantSchema.index({ cid: 1 }, { unique: true });
+AppendantSchema.index(
+  { "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 },
+  { unique: true }
+);
 AppendantSchema.index({ topicCid: 1 });
 
 const Appendant = mongoose.model("Appendant", AppendantSchema);

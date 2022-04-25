@@ -27,7 +27,21 @@ export const ChainSS58Format = Object.freeze({
 
 export const MOBILE_SIZE = 900;
 
-export default {
-  Chains,
-  ChainSS58Format,
+export const ChainSymbols = {
+  polkadot: {
+    symbol: "DOT",
+    decimals: 10,
+  },
+  kusama: {
+    symbol: "KSM",
+    decimals: 12,
+  },
+  statemine: {
+    symbol: "KSM",
+    decimals: 12,
+  },
+  westend: {
+    symbol: "WND",
+    decimals: 12,
+  },
 };

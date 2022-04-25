@@ -20,6 +20,10 @@ const ResolveSchema = new mongoose.Schema(
 );
 
 ResolveSchema.index({ topicCid: 1, sponsorPublicKey: 1 }, { unique: true });
+ResolveSchema.index(
+  { "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 },
+  { unique: true }
+);
 
 const Resolve = mongoose.model("Resolve", ResolveSchema);
 

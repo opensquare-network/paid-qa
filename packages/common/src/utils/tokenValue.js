@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import { ChainSymbols } from "@osn/consts";
 
 export function bnAdd(a, b) {
   return new BigNumber(a).plus(b).toString();
@@ -48,46 +49,11 @@ export function getEffectiveNumbers(n) {
   return result.reverse().join();
 }
 
-export function getSymbolByChain(chainName) {
-  switch (chainName) {
-    case "polkadot":
-      return "DOT";
-    case "kusama":
-      return "KSM";
-    case "karura":
-      return "KAR";
-    case "acala":
-      return "ACA";
-    case "khala":
-      return "PHA";
-    case "basilisk":
-      return "BSX";
-    case "bifrost":
-      return "BFC";
-    case "kintsugi":
-      return "KINT";
-    case "westend":
-      return "WND";
-    default:
-      return "unknown";
-  }
-}
-
-export function getDecimalByChain(chainName) {
-  switch (chainName) {
-    case "polkadot":
-      return 10;
-    case "kusama":
-      return 12;
-    case "karura":
-    case "acala":
-    case "khala":
-    case "basilisk":
-    case "bifrost":
-    case "kintsugi":
-    case "westend":
-      return 12;
-    default:
-      return 12;
-  }
+export function getSymbolMetaByChain(chainName) {
+  return (
+    ChainSymbols[chainName] || {
+      symbol: "unknown",
+      decimals: 12,
+    }
+  );
 }
