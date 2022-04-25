@@ -16,7 +16,7 @@ const { ipfsAdd, cidOf } = require("../ipfs.service");
 const { validateTokenAmount } = require("../common");
 const { toPublicKey } = require("../../utils/address");
 
-async function createTopic(data, network, blockHash, extrinsicIndex) {
+async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content } = data;
 
   // Get system remark from network/blockHash/extrinsicIndex
@@ -107,6 +107,7 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
         },
         sponsor: signer,
         sponsorPublicKey: signerPublicKey,
+        status: PostStatus.Published,
       },
       { upsert: true, session }
     );
@@ -128,6 +129,95 @@ async function createTopic(data, network, blockHash, extrinsicIndex) {
   return {
     cid,
   };
+}
+
+async function saveUnverifiedTopic(
+  data,
+  network,
+  blockHash,
+  extrinsicIndex,
+  blockHeight,
+  blockTime,
+  bounty,
+  signer
+) {
+  const { title, content } = data;
+
+  const signerPublicKey = toPublicKey(signer);
+  const cid = await cidOf(data);
+
+  const session = await mongoose.startSession();
+  await session.withTransaction(async () => {
+    await Topic.updateOne(
+      { cid },
+      {
+        indexer: {
+          blockHash,
+          blockHeight,
+          extrinsicIndex,
+          blockTime,
+        },
+        title,
+        content,
+        data,
+        pinned: false,
+        network,
+        signer,
+        signerPublicKey,
+        status: PostStatus.Reserved,
+      },
+      { upsert: true, session }
+    );
+
+    await Reward.updateOne(
+      {
+        "indexer.blockHash": blockHash,
+        "indexer.extrinsicIndex": extrinsicIndex,
+      },
+      {
+        "indexer.blockHeight": blockHeight,
+        "indexer.blockTime": blockTime,
+        topicCid: cid,
+        network,
+        bounty,
+        sponsor: signer,
+        sponsorPublicKey: signerPublicKey,
+        status: PostStatus.Reserved,
+      },
+      { upsert: true, session }
+    );
+  });
+
+  return {
+    cid,
+  };
+}
+
+async function createTopic(
+  data,
+  network,
+  blockHash,
+  extrinsicIndex,
+  blockHeight,
+  blockTime,
+  bounty,
+  signer
+) {
+  try {
+    return await createVerifiedTopic(data, network, blockHash, extrinsicIndex);
+  } catch (e) {
+    console.error(e);
+    return await saveUnverifiedTopic(
+      data,
+      network,
+      blockHash,
+      extrinsicIndex,
+      blockHeight,
+      blockTime,
+      bounty,
+      signer
+    );
+  }
 }
 
 module.exports = createTopic;

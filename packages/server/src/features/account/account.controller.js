@@ -1,7 +1,6 @@
 const { Topic, Reward, Fund, Answer } = require("../../models");
 const { toPublicKey } = require("../../utils/address");
 const { extractPage } = require("../../utils/pagination");
-const { encodeAddress } = require("@polkadot/util-crypto");
 
 async function getAccountTopics(ctx) {
   const { address } = ctx.params;
@@ -11,7 +10,7 @@ async function getAccountTopics(ctx) {
   const q = { signerPublicKey };
   const total = await Topic.countDocuments(q);
   const topics = await Topic.find(q)
-    .sort({ blockTime: -1 })
+    .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("answersCount")
@@ -171,7 +170,7 @@ async function getAccountFunds(ctx) {
   const q = { sponsorPublicKey };
   const total = await Fund.countDocuments(q);
   const funds = await Fund.find(q)
-    .sort({ blockTime: -1 })
+    .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("topic")
@@ -234,7 +233,7 @@ async function getAccountRewards(ctx) {
   const q = { beneficiaryPublicKey };
   const total = await Fund.countDocuments(q);
   const rewards = await Fund.find(q)
-    .sort({ blockTime: -1 })
+    .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("topic")
@@ -259,7 +258,7 @@ async function getAccountAnswers(ctx) {
   const q = { signerPublicKey };
   const total = await Answer.countDocuments(q);
   const topics = await Answer.find(q)
-    .sort({ blockTime: -1 })
+    .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("topic");

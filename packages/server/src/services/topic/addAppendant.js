@@ -1,9 +1,6 @@
 const { Topic, Appendant } = require("../../models");
 const { PostStatus } = require("../../utils/constants");
-const {
-  getApi,
-  getRemark,
-} = require("../node.service");
+const { getApi, getRemark } = require("../node.service");
 const {
   parser: { InteractionParser },
   interactions: { AppendInteraction },
@@ -11,7 +8,12 @@ const {
 const { HttpError } = require("../../utils/exc");
 const { ipfsAdd, cidOf } = require("../ipfs.service");
 
-async function addAppendant(data, network, blockHash, extrinsicIndex) {
+async function createVerifiedAppendant(
+  data,
+  network,
+  blockHash,
+  extrinsicIndex
+) {
   const { topic, content } = data;
 
   // Get system remark from network/blockHash/extrinsicIndex
@@ -66,9 +68,7 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   }
 
   await Appendant.updateOne(
-    {
-      cid,
-    },
+    { cid },
     {
       indexer: {
         blockHash,
@@ -103,6 +103,74 @@ async function addAppendant(data, network, blockHash, extrinsicIndex) {
   return {
     cid,
   };
+}
+
+async function saveUnverifiedAppendant(
+  data,
+  network,
+  blockHash,
+  extrinsicIndex,
+  blockHeight,
+  blockTime,
+  signer
+) {
+  const { topic, content } = data;
+
+  const cid = await cidOf(data);
+
+  await Appendant.updateOne(
+    { cid },
+    {
+      indexer: {
+        blockHash,
+        blockHeight,
+        extrinsicIndex,
+        blockTime,
+      },
+      topicCid: topic,
+      content,
+      data,
+      pinned: false,
+      network,
+      signer,
+      status: PostStatus.Reserved,
+    },
+    { upsert: true }
+  );
+
+  return {
+    cid,
+  };
+}
+
+async function addAppendant(
+  data,
+  network,
+  blockHash,
+  extrinsicIndex,
+  blockHeight,
+  blockTime,
+  signer
+) {
+  try {
+    return await createVerifiedAppendant(
+      data,
+      network,
+      blockHash,
+      extrinsicIndex
+    );
+  } catch (e) {
+    console.error(e);
+    return await saveUnverifiedAppendant(
+      data,
+      network,
+      blockHash,
+      extrinsicIndex,
+      blockHeight,
+      blockTime,
+      signer
+    );
+  }
 }
 
 module.exports = addAppendant;

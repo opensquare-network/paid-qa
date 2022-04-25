@@ -39,12 +39,13 @@ export default function SupportItem({ notification }) {
           </TextMajor>
           <MarginX8>promises to fund</MarginX8>
           <TextMajor>
-            {notification.data.support.bounty.value} {notification.data.support.bounty.symbol}
+            {notification.data.support.bounty.value}{" "}
+            {notification.data.support.bounty.symbol}
           </TextMajor>
           <MarginX8>to</MarginX8>
           <TextMajor>{notification.data.topic.title}</TextMajor>
         </Flex>
-        <Time time={notification.data.support.blockTime} />
+        <Time time={notification.data.support.indexer.blockTime} />
       </DividerWrapper>
     </Wrapper>
   );

@@ -28,9 +28,33 @@ export const signMessage = async (text, address) => {
   return result.signature;
 };
 
+function extractBlockTime(extrinsics) {
+  const setTimeExtrinsic = extrinsics.find(
+    (ex) => ex.method.section === "timestamp" && ex.method.method === "set"
+  );
+  if (setTimeExtrinsic) {
+    const { args } = setTimeExtrinsic.method.toJSON();
+    return args.now;
+  }
+}
+
 export async function submitRemark(api, remark, account, callback) {
   const tx = api.tx.system.remark(remark);
-  return await signAndSendTx(tx, account, callback);
+  const { blockHash, extrinsicIndex } = await signAndSendTx(
+    tx,
+    account,
+    callback
+  );
+  const block = await api.rpc.chain.getBlock(blockHash);
+  const blockHeight = block.block.header.number.toNumber();
+  const blockTime = extractBlockTime(block.block.extrinsics);
+
+  return {
+    blockHash,
+    extrinsicIndex,
+    blockHeight,
+    blockTime,
+  };
 }
 
 export async function submitFund(api, remark, transfer, account, callback) {

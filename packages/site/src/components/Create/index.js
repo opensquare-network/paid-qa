@@ -24,7 +24,7 @@ import {
 import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
 import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
-import { getSymbolByChain } from "@osn/common/src/utils/tokenValue";
+import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
 import Preview from "@osn/common-ui/lib/Preview";
 import { useApi, useBalance } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
@@ -120,7 +120,7 @@ export default function Create() {
   const [loading, setLoading] = useState(false);
   const api = useApi();
   const navigate = useNavigate();
-  const symbol = getSymbolByChain(account?.network);
+  const { symbol, decimals } = getSymbolMetaByChain(account?.network);
   const [showPreview, setShowPreview] = useState(false);
   const balance = useBalance(account, api);
   const isMounted = useIsMounted();
@@ -150,8 +150,9 @@ export default function Create() {
 
     const data = { title, content };
     const cid = await cidOf(data);
+    const tokenIdentifier = "N";
 
-    const interaction = new NewInteraction("N", rewardAmount, cid);
+    const interaction = new NewInteraction(tokenIdentifier, rewardAmount, cid);
     const remark = new InteractionEncoder(interaction).getRemark();
 
     setLoading(true);
@@ -160,20 +161,25 @@ export default function Create() {
     dispatch(newPendingToast(toastId, "Waiting for signing..."));
 
     try {
-      const { blockHash, extrinsicIndex } = await submitRemark(
-        api,
-        remark,
-        account,
-        (status) => {
+      const { blockHash, extrinsicIndex, blockHeight, blockTime } =
+        await submitRemark(api, remark, account, (status) => {
           dispatch(updatePendingToast(toastId, status));
-        }
-      );
+        });
 
       const payload = {
         data,
         network: account.network,
         blockHash,
+        blockHeight,
         extrinsicIndex,
+        blockTime,
+        bounty: {
+          tokenIdentifier,
+          value: rewardAmount,
+          symbol,
+          decimals,
+        },
+        signer: account.address,
       };
 
       const { result, error } = await serverApi.post(`/topics/`, payload);
