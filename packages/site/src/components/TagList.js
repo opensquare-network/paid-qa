@@ -1,20 +1,12 @@
 import styled from "styled-components";
 import { calcRewards } from "utils/rewards";
-import { p_12_medium } from "@osn/common-ui/lib/styles/textStyles";
+import { Tag } from "@osn/common-ui";
 
 const Wrapper = styled.div`
   display: flex;
   > :not(:first-child) {
     margin-left: 8px;
   }
-`;
-
-const Item = styled.div`
-  padding: 2px 12px;
-  ${p_12_medium};
-  color: #ffffff;
-  background: ${(p) => p.color ?? "#E2E8F0"};
-  text-transform: capitalize;
 `;
 
 function getSymbolColor(symbol) {
@@ -24,20 +16,6 @@ function getSymbolColor(symbol) {
     }
     case "DOT": {
       return "#E6007A";
-    }
-    default: {
-      return "#000000";
-    }
-  }
-}
-
-function getStatusColor(status) {
-  switch (status) {
-    case "resolved": {
-      return "#E2E8F0";
-    }
-    case "active": {
-      return "#6848FF";
     }
     default: {
       return "#000000";
@@ -56,12 +34,13 @@ export default function TagList({ topic }) {
       {
         // Show resolved tag only when the topic is resolved
         topic.status === "resolved" ? (
-          <Item color={getStatusColor(topic.status)}>{topic.status}</Item>
+          <Tag status="resolved" />
         ) : (
           Object.keys(tokenValues).map((symbol) => (
-            <Item key={symbol} color={getSymbolColor(symbol)}>
-              {`${tokenValues[symbol]} ${symbol}`}
-            </Item>
+            <Tag
+              key={symbol}
+              color={getSymbolColor(symbol)}
+            >{`${tokenValues[symbol]} ${symbol}`}</Tag>
           ))
         )
       }
