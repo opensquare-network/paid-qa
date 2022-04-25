@@ -6,10 +6,6 @@ import MarkdownEditor from "@osn/common-ui/lib/Editor/MarkdownEditor";
 import Button from "@osn/common-ui/lib/styled/Button";
 import { accountSelector } from "../../store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
-import SubTitle from "@osn/common-ui/lib/styled/SubTitle";
-import ChainItem from "@osn/common-ui/lib/Chain/ChainSelectItem";
-import AmountInput from "../AmountInput";
-import FlexBetween from "ui/lib/styled/FlexBetween";
 import { useState } from "react";
 import { cidOf } from "../../services/ipfs";
 import { popUpConnect } from "../../store/reducers/showConnectSlice";
@@ -23,14 +19,14 @@ import {
 } from "../../store/reducers/toastSlice";
 import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
-import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
 import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
 import Preview from "@osn/common-ui/lib/Preview";
-import { useApi, useBalance } from "../../utils/hooks";
+import { useApi } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import SupportDetail from "../SupportDetail";
 
 const { InteractionEncoder } = encoder;
 const { NewInteraction } = interactions;
@@ -96,16 +92,6 @@ const Side = styled.div`
   }
 `;
 
-const Grey = styled.div`
-  border: 1px solid #e2e8f0;
-  background: #fbfcfe;
-`;
-
-const Header = styled.span`
-  color: #506176;
-  line-height: 25px;
-`;
-
 const Title = styled.div`
   ${p_16_semibold};
   color: #1e2134;
@@ -116,14 +102,15 @@ export default function Create() {
   const account = useSelector(accountSelector);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [rewardAmount, setRewardAmount] = useState(0);
   const [loading, setLoading] = useState(false);
   const api = useApi();
   const navigate = useNavigate();
   const { symbol, decimals } = getSymbolMetaByChain(account?.network);
   const [showPreview, setShowPreview] = useState(false);
-  const balance = useBalance(account, api);
   const isMounted = useIsMounted();
+
+  const [tokenIdentifier, setTokenIdentifier] = useState("");
+  const [inputAmount, setInputAmount] = useState("");
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
@@ -144,7 +131,7 @@ export default function Create() {
       return showErrorToast("Content must not be empty");
     }
 
-    if (isNaN(rewardAmount) || rewardAmount <= 0) {
+    if (isNaN(inputAmount) || inputAmount <= 0) {
       return showErrorToast("Reward must be a valid number");
     }
 
@@ -152,7 +139,7 @@ export default function Create() {
     const cid = await cidOf(data);
     const tokenIdentifier = "N";
 
-    const interaction = new NewInteraction(tokenIdentifier, rewardAmount, cid);
+    const interaction = new NewInteraction(tokenIdentifier, inputAmount, cid);
     const remark = new InteractionEncoder(interaction).getRemark();
 
     setLoading(true);
@@ -175,7 +162,7 @@ export default function Create() {
         blockTime,
         bounty: {
           tokenIdentifier,
-          value: rewardAmount,
+          value: inputAmount,
           symbol,
           decimals,
         },
@@ -229,26 +216,12 @@ export default function Create() {
       <Side>
         {account ? (
           <Box>
-            <FlexBetween>
-              <SubTitle>Network</SubTitle>
-              <img src="/imgs/icons/network.svg" alt="" />
-            </FlexBetween>
-            <Grey>
-              <ChainItem chainName={account.network} />
-            </Grey>
-            <FlexBetween>
-              <SubTitle>Reward</SubTitle>
-              <img src="/imgs/icons/treasury.svg" alt="" />
-            </FlexBetween>
-            <AmountInput
-              value={rewardAmount}
-              onChange={(e) => setRewardAmount(e.target.value)}
-              symbol={symbol}
+            <SupportDetail
+              tokenIdentifier={tokenIdentifier}
+              setTokenIdentifier={setTokenIdentifier}
+              inputAmount={inputAmount}
+              setInputAmount={setInputAmount}
             />
-            <FlexBetween>
-              <Header>Balance</Header>
-              <ValueDisplay value={balance} chain={account.network} showAEM />
-            </FlexBetween>
             <Button
               onClick={onPublish}
               primary

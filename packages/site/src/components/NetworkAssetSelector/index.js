@@ -62,6 +62,29 @@ const NetworkAssets = {
       tokenIdentifier: "N",
     },
   ],
+  statemint: [
+    {
+      id: "polkadot",
+      name: "Polkadot",
+      symbol: "DOT",
+      decimals: 10,
+      tokenIdentifier: "N",
+    },
+    {
+      id: "rmrk",
+      name: "RMRK",
+      symbol: "RMRK",
+      decimals: 10,
+      tokenIdentifier: "8",
+    },
+    {
+      id: "polarisdao",
+      name: "PolarisDAO",
+      symbol: "ARIS",
+      tokenIdentifier: "16",
+      decimals: 8,
+    },
+  ],
   statemine: [
     {
       id: "kusama",
