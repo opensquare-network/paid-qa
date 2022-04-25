@@ -148,7 +148,7 @@ export default function Create() {
       return showErrorToast("Reward must be a valid number");
     }
 
-    const data = { title, content, language: "en" };
+    const data = { title, content };
     const cid = await cidOf(data);
 
     const interaction = new NewInteraction("N", rewardAmount, cid);

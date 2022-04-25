@@ -13,7 +13,6 @@ const TopicSchema = new mongoose.Schema(
     network: RequiredString,
     title: RequiredString,
     content: RequiredString,
-    language: RequiredString,
     data: {
       type: Object,
       required: true,
