@@ -13,11 +13,9 @@ const PRODUCTION_NETWORK = [
 
 export const AVAILABLE_NETWORKS = [];
 
-if (process.env.REACT_APP_SHOW_DEVELOPMENT_NETWORKS === "TRUE") {
+if (process.env.REACT_APP_ENVIORMENT === "development") {
   AVAILABLE_NETWORKS.push(...DEVELOPMENT_NETWORK);
-}
-
-if (process.env.REACT_APP_SHOW_PRODUCTION_NETWORKS === "TRUE") {
+} else if (process.env.REACT_APP_ENVIORMENT === "production") {
   AVAILABLE_NETWORKS.push(...PRODUCTION_NETWORK);
 }
 
