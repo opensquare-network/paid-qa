@@ -19,6 +19,8 @@ import {
   DEFAULT_BIFROST_NODE_URL,
   DEFAULT_WESTEND_NODES,
   DEFAULT_WESTEND_NODE_URL,
+  DEFAULT_WESTMINT_NODES,
+  DEFAULT_WESTMINT_NODE_URL,
 } from "utils/constants";
 
 let nodeUrl = (() => {
@@ -58,6 +60,9 @@ let nodeUrl = (() => {
     westend:
       DEFAULT_WESTEND_NODES.find((item) => item.url === localNodeUrl?.bifrost)
         ?.url || DEFAULT_WESTEND_NODE_URL,
+    westmint:
+      DEFAULT_WESTMINT_NODES.find((item) => item.url === localNodeUrl?.westmint)
+        ?.url || DEFAULT_WESTMINT_NODE_URL,
   };
 })();
 
@@ -71,6 +76,7 @@ export const defaultNodes = {
   basilisk: DEFAULT_BASILISK_NODES,
   bifrost: DEFAULT_BIFROST_NODES,
   westend: DEFAULT_WESTEND_NODES,
+  westmint: DEFAULT_WESTMINT_NODES,
 };
 
 const nodeSlice = createSlice({

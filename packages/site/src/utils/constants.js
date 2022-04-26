@@ -187,6 +187,19 @@ export const DEFAULT_WESTEND_NODES = [
 
 export const DEFAULT_WESTEND_NODE_URL = DEFAULT_WESTEND_NODES[0]?.url;
 
+export const DEFAULT_WESTMINT_NODES = [
+  {
+    name: "Parity",
+    url: "wss://westmint-rpc.polkadot.io",
+  },
+  {
+    name: "Dwellir",
+    url: "wss://westmint-rpc.dwellir.com",
+  },
+];
+
+export const DEFAULT_WESTMINT_NODE_URL = DEFAULT_WESTMINT_NODES[0]?.url;
+
 export const DEFAULT_NODES = {
   polkadot: DEFAULT_POLKADOT_NODE_URL,
   kusama: DEFAULT_KUSAMA_NODE_URL,
@@ -197,6 +210,7 @@ export const DEFAULT_NODES = {
   bifrost: DEFAULT_BIFROST_NODE_URL,
   kintsugi: DEFAULT_KINTSUGI_NODE_URL,
   westend: DEFAULT_WESTEND_NODE_URL,
+  westmint: DEFAULT_WESTMINT_NODE_URL,
 };
 
 export const EmptyList = {

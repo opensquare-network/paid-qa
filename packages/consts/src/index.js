@@ -44,4 +44,8 @@ export const ChainSymbols = {
     symbol: "WND",
     decimals: 12,
   },
+  westmint: {
+    symbol: "WND",
+    decimals: 12,
+  },
 };
