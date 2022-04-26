@@ -1,4 +1,4 @@
-import React from "react";
+import styled from "styled-components";
 import Tag from "../../lib/Tag";
 
 export default {
@@ -6,7 +6,33 @@ export default {
   component: Tag,
 };
 
-export const primary = () => <Tag>10 KSM</Tag>;
-export const active = () => <Tag status="active" />;
-export const resolved = () => <Tag status="resolved" />;
-export const color = () => <Tag color="orange">10 DOT</Tag>;
+export const primary = () => <Tag>default</Tag>;
+export const presetColors = () => {
+  const Wrapper = styled.div`
+    > * {
+      margin-right: 10px;
+    }
+  `;
+
+  return (
+    <Wrapper>
+      <Tag color="purple">purple</Tag>
+      <Tag color="gray">gray</Tag>
+      <Tag color="turquoise">turquoise</Tag>
+    </Wrapper>
+  );
+};
+export const customColors = () => {
+  const Wrapper = styled.div`
+    > * {
+      margin-right: 10px;
+    }
+  `;
+
+  return (
+    <Wrapper>
+      <Tag color="orange">orange</Tag>
+      <Tag color="#ff0055">#ff0055</Tag>
+    </Wrapper>
+  );
+};
