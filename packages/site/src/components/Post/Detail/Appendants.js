@@ -142,10 +142,12 @@ export default function Appendants({
         payload
       );
       if (result) {
-        setContent("");
         dispatch(newSuccessToast("Appendant added"));
-        dispatch(fetchTopic(topicCid));
-        setEditing(false);
+        if (isMounted.current) {
+          setContent("");
+          dispatch(fetchTopic(topicCid));
+          setEditing(false);
+        }
       }
 
       if (error) {
