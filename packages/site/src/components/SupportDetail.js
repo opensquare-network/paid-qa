@@ -112,8 +112,6 @@ export default function SupportDetail({
     }
   }, [selectedAsset, manualOn, setTokenIdentifier]);
 
-  console.log(account);
-
   return (
     <>
       <StyledText>Network</StyledText>

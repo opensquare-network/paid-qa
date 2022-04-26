@@ -26,7 +26,7 @@ import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
-import SupportDetail from "../SupportDetail";
+import RewardDetail from "./RewardDetail";
 
 const { InteractionEncoder } = encoder;
 const { NewInteraction } = interactions;
@@ -131,7 +131,7 @@ export default function Create() {
       return showErrorToast("Content must not be empty");
     }
 
-    if (isNaN(inputAmount) || inputAmount <= 0) {
+    if (isNaN(inputAmount) || +inputAmount <= 0) {
       return showErrorToast("Reward must be a valid number");
     }
 
@@ -216,7 +216,7 @@ export default function Create() {
       <Side>
         {account ? (
           <Box>
-            <SupportDetail
+            <RewardDetail
               tokenIdentifier={tokenIdentifier}
               setTokenIdentifier={setTokenIdentifier}
               inputAmount={inputAmount}
@@ -225,7 +225,7 @@ export default function Create() {
             <Button
               onClick={onPublish}
               primary
-              disabled={!account}
+              disabled={!account || !(+inputAmount > 0)}
               isLoading={loading}
             >
               Post
