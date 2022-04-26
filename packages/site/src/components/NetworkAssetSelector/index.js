@@ -20,6 +20,7 @@ const IconsMap = {
   karura: "karura.svg",
   rmrk: "rmrk.svg",
   polarisdao: "polarisdao.png",
+  osn: "osn.svg",
 };
 
 function getAssetIcon(assetKey) {
@@ -137,6 +138,22 @@ const NetworkAssets = {
       symbol: "WND",
       decimals: 12,
       tokenIdentifier: "N",
+    },
+  ],
+  westmint: [
+    {
+      id: "westmint",
+      name: "Westmint",
+      symbol: "WND",
+      decimals: 12,
+      tokenIdentifier: "N",
+    },
+    {
+      id: "osn",
+      name: "OpenSquare",
+      symbol: "OSNT",
+      decimals: 12,
+      tokenIdentifier: "0",
     },
   ],
 };

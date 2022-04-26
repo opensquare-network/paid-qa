@@ -72,7 +72,7 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
           assetId,
           account?.address
         );
-        const { balance: hexBalance } = assetAccount.toJSON();
+        const { balance: hexBalance = 0 } = assetAccount.toJSON() || {};
         balance = hexBalance;
       }
       if (isMounted.current) {
