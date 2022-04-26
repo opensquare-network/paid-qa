@@ -110,7 +110,7 @@ export default function Create() {
   const isMounted = useIsMounted();
 
   const [tokenIdentifier, setTokenIdentifier] = useState("");
-  const [inputAmount, setInputAmount] = useState("");
+  const [rewardAmount, setRewardAmount] = useState("");
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
@@ -131,7 +131,7 @@ export default function Create() {
       return showErrorToast("Content must not be empty");
     }
 
-    if (isNaN(inputAmount) || +inputAmount <= 0) {
+    if (isNaN(rewardAmount) || +rewardAmount <= 0) {
       return showErrorToast("Reward must be a valid number");
     }
 
@@ -139,7 +139,7 @@ export default function Create() {
     const cid = await cidOf(data);
     const tokenIdentifier = "N";
 
-    const interaction = new NewInteraction(tokenIdentifier, inputAmount, cid);
+    const interaction = new NewInteraction(tokenIdentifier, rewardAmount, cid);
     const remark = new InteractionEncoder(interaction).getRemark();
 
     setLoading(true);
@@ -162,7 +162,7 @@ export default function Create() {
         blockTime,
         bounty: {
           tokenIdentifier,
-          value: inputAmount,
+          value: rewardAmount,
           symbol,
           decimals,
         },
@@ -219,13 +219,13 @@ export default function Create() {
             <RewardDetail
               tokenIdentifier={tokenIdentifier}
               setTokenIdentifier={setTokenIdentifier}
-              inputAmount={inputAmount}
-              setInputAmount={setInputAmount}
+              inputAmount={rewardAmount}
+              setInputAmount={setRewardAmount}
             />
             <Button
               onClick={onPublish}
               primary
-              disabled={!account || !(+inputAmount > 0)}
+              disabled={!account || !(+rewardAmount > 0)}
               isLoading={loading}
             >
               Post
