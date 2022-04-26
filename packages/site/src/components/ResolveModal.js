@@ -103,7 +103,7 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
       const { result, error } = await serverApi.post(`/resolve`, payload);
       if (result) {
         dispatch(newSuccessToast("Successfully resolved"));
-        dispatch(fetchTopic(topicCid));
+        isMounted.current && dispatch(fetchTopic(topicCid));
       }
 
       if (error) {

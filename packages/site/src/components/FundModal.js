@@ -186,9 +186,11 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         dispatch(newSuccessToast("Funded"));
 
         // After fund is added, update the topic
-        dispatch(fetchTopic(topic.cid));
-        dispatch(fetchAnswers(topic.cid, answers.page));
-        dispatch(fetchFundSummary(topic.cid));
+        if (isMounted.current) {
+          dispatch(fetchTopic(topic.cid));
+          dispatch(fetchAnswers(topic.cid, answers.page));
+          dispatch(fetchFundSummary(topic.cid));
+        }
       }
 
       if (error) {

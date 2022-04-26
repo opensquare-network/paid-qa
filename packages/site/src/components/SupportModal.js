@@ -115,7 +115,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
       );
       if (result) {
         dispatch(newSuccessToast("Support added"));
-        dispatch(fetchTopic(topicCid));
+        isMounted.current && dispatch(fetchTopic(topicCid));
       }
       if (error) {
         dispatch(newErrorToast(error.message));
