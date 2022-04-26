@@ -62,6 +62,15 @@ const NetworkAssets = {
       tokenIdentifier: "N",
     },
   ],
+  statemint: [
+    {
+      id: "polkadot",
+      name: "Polkadot",
+      symbol: "DOT",
+      decimals: 10,
+      tokenIdentifier: "N",
+    },
+  ],
   statemine: [
     {
       id: "kusama",
@@ -132,9 +141,19 @@ const NetworkAssets = {
   ],
 };
 
-export default function NetworkAssetSelector({ network, setAsset }) {
+export default function NetworkAssetSelector({
+  network,
+  setAsset,
+  hiddenOnSingleOption,
+}) {
   const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
-  const assets = NetworkAssets[network];
+  const [assets, setAssets] = useState([]);
+
+  useEffect(() => {
+    setAssets(NetworkAssets[network]);
+    setSelectedAssetIndex(0);
+  }, [network]);
+
   const assetsOptions = assets.map((item, i) => {
     return {
       key: i,
@@ -149,7 +168,7 @@ export default function NetworkAssetSelector({ network, setAsset }) {
     }
   }, [setAsset, assets, selectedAssetIndex]);
 
-  return (
+  return hiddenOnSingleOption && assets.length === 1 ? null : (
     <Wrapper>
       <DropdownSelector
         options={assetsOptions}

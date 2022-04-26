@@ -57,3 +57,11 @@ export function getSymbolMetaByChain(chainName) {
     }
   );
 }
+
+export function getSymbolByChain(chainName) {
+  return getSymbolMetaByChain(chainName).symbol;
+}
+
+export function getDecimalByChain(chainName) {
+  return getSymbolMetaByChain(chainName).decimals;
+}
