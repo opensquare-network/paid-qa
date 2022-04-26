@@ -133,3 +133,18 @@ export const disableCloseOnClickOutside = () => {
     </>
   );
 };
+export const noFooter = () => {
+  const [open, setOpen] = useState(false);
+  const openModal = () => setOpen(true);
+  const closeModal = () => setOpen(false);
+
+  return (
+    <>
+      <Button onClick={openModal}>Open Modal</Button>
+      <Modal open={open} setOpen={setOpen} onOk={closeModal} footer={false}>
+        <h3>Hello World</h3>
+        <p>No footer</p>
+      </Modal>
+    </>
+  );
+};
