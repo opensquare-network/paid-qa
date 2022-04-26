@@ -152,7 +152,7 @@ const NetworkAssets = {
       id: "osn",
       name: "OpenSquare",
       symbol: "OSNT",
-      decimals: 12,
+      decimals: 10,
       tokenIdentifier: "0",
     },
   ],

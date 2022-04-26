@@ -19,6 +19,8 @@ const endpoints = Object.values(Chains).map((chain) => {
     endpoints = (process.env.KINT_ENDPOINTS || "").split(";");
   } else if (Chains.westend === chain) {
     endpoints = (process.env.WND_ENDPOINTS || "").split(";");
+  } else if (Chains.westmint === chain) {
+    endpoints = (process.env.WESTMINT_ENDPOINTS || "").split(";");
   }
 
   return {

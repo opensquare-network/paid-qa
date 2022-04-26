@@ -55,17 +55,20 @@ export default function RewardDetail({
   setTokenIdentifier,
   inputAmount,
   setInputAmount,
+  symbol,
+  setSymbol,
+  setDecimals,
 }) {
   const account = useSelector(accountSelector);
   const [selectedAsset, setSelectedAsset] = useState(null);
-  const [symbol, setSymbol] = useState("");
 
   useEffect(() => {
     if (selectedAsset) {
       setTokenIdentifier(selectedAsset.tokenIdentifier);
       setSymbol(selectedAsset.symbol);
+      setDecimals(selectedAsset.decimals);
     }
-  }, [selectedAsset, setTokenIdentifier]);
+  }, [selectedAsset, setSymbol, setDecimals, setTokenIdentifier]);
 
   return (
     <>
