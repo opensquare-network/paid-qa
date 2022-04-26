@@ -17,6 +17,10 @@ const Wrapper = styled.span`
   background-color: ${(p) => presetColors[p.color] || p.color || "#000"};
 `;
 
-export default function Tag({ children, color = "" }) {
-  return <Wrapper color={color}>{children}</Wrapper>;
+export default function Tag({ children, color = "", ...props }) {
+  return (
+    <Wrapper color={color} {...props}>
+      {children}
+    </Wrapper>
+  );
 }
