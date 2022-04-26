@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { calcRewards } from "utils/rewards";
 import { Tag } from "@osn/common-ui";
+import StatusTag from "./StatusTag";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ export default function TagList({ topic }) {
       {
         // Show resolved tag only when the topic is resolved
         topic.status === "resolved" ? (
-          <Tag status="resolved" />
+          <StatusTag status={topic.status} />
         ) : (
           Object.keys(tokenValues).map((symbol) => (
             <Tag

@@ -10,11 +10,11 @@ import Flex from "@osn/common-ui/lib/styled/Flex";
 import { Link } from "react-router-dom";
 import Card from "@osn/common-ui/lib/styled/Card";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import Tag from "@osn/common-ui/lib/Tag";
 import ProgressBar from "@osn/common-ui/lib/styled/ProgressBar";
 import Wrapper from "./styled/ListWrapper";
 import { MOBILE_SIZE } from "@osn/consts";
 import NoData from "@osn/common-ui/lib/NoData";
+import StatusTag from "components/StatusTag";
 
 const NoWrap = styled.span`
   white-space: nowrap;
@@ -115,7 +115,7 @@ export default function PromisesList({ network, address }) {
                       </TextMajor>
                     </Link>
                   </TextWrap>
-                  <Tag>{resolved ? "resolved" : "active"}</Tag>
+                  <StatusTag status={resolved ? "resolved" : "active"} />
                 </HeadLine>
                 {promise.promises?.map(({ symbol, value }, index) => {
                   const promisedAmount = value;
