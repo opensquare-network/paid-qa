@@ -59,7 +59,7 @@ export default function Modal({
     <CloseButton onClick={closeModal} src={CloseIcon} width={24} alt="" />
   );
 
-  footer = footer || (
+  footer = footer ?? (
     <Button primary onClick={onOk} {...okButtonProps}>
       {okText}
     </Button>
