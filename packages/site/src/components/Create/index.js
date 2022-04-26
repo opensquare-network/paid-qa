@@ -18,7 +18,6 @@ import {
 } from "../../store/reducers/toastSlice";
 import serverApi from "../../services/serverApi";
 import { useNavigate } from "react-router-dom";
-import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
 import { useApi } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
@@ -115,11 +114,12 @@ export default function Create() {
   const [loading, setLoading] = useState(false);
   const api = useApi();
   const navigate = useNavigate();
-  const { symbol, decimals } = getSymbolMetaByChain(account?.network);
   const isMounted = useIsMounted();
 
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [rewardAmount, setRewardAmount] = useState("");
+  const [symbol, setSymbol] = useState();
+  const [decimals, setDecimals] = useState();
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
@@ -146,7 +146,6 @@ export default function Create() {
 
     const data = { title, content };
     const cid = await cidOf(data);
-    const tokenIdentifier = "N";
 
     const interaction = new NewInteraction(tokenIdentifier, rewardAmount, cid);
     const remark = new InteractionEncoder(interaction).getRemark();
@@ -225,6 +224,9 @@ export default function Create() {
               setTokenIdentifier={setTokenIdentifier}
               inputAmount={rewardAmount}
               setInputAmount={setRewardAmount}
+              symbol={symbol}
+              setSymbol={setSymbol}
+              setDecimals={setDecimals}
             />
             <Button
               onClick={onPublish}
