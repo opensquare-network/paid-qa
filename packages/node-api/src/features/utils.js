@@ -51,6 +51,11 @@ function isExtrinsicSuccess(events, extrinsicIndex) {
   return extrinsicEvents.some((e) => e.event.method === "ExtrinsicSuccess");
 }
 
+function isBatchSuccess(events, extrinsicIndex) {
+  const extrinsicEvents = extractExtrinsicEvents(events, extrinsicIndex);
+  return !extrinsicEvents.some((e) => e.event.method === "BatchInterrupted");
+}
+
 function extractBlockTime(extrinsics) {
   const setTimeExtrinsic = extrinsics.find(
     (ex) => ex.method.section === "timestamp" && ex.method.method === "set"
@@ -65,5 +70,6 @@ module.exports = {
   getBlockApi,
   getBlockHash,
   isExtrinsicSuccess,
+  isBatchSuccess,
   extractBlockTime,
 };
