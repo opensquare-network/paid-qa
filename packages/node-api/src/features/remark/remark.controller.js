@@ -1,7 +1,11 @@
 const { Keyring } = require("@polkadot/api");
 const { hexToString } = require("@polkadot/util");
 const { getApis } = require("../../apis");
-const { isExtrinsicSuccess, extractBlockTime } = require("../utils");
+const {
+  isExtrinsicSuccess,
+  extractBlockTime,
+  isBatchSuccess,
+} = require("../utils");
 
 function handleRemarkCall(txRemark) {
   const { section, method } = txRemark;
@@ -86,6 +90,11 @@ async function getRemarkFromOneApi(api, blockHash, extrinsicIndex) {
   if (section === "system" || method === "remark") {
     data = handleRemarkCall(extrinsic.method);
   } else if (section === "utility" && method === "batch") {
+    const isBatchOk = isBatchSuccess(events, extrinsicIndex);
+    if (!isBatchOk) {
+      throw new Error("Batch not success");
+    }
+
     data = handleFundCall(extrinsic.method);
   } else {
     throw new Error("Extrinsic is not a PaidQA instruction");
