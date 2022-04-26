@@ -11,6 +11,7 @@ import IpfsSquare from "./IpfsSquare";
 import Breadcrumb from "./Navi/Breadcrumb";
 import styled from "./styled";
 import Tag from "./Tag";
+import RichEditor from "./RichEdit";
 
 export {
   Footer,
@@ -26,4 +27,5 @@ export {
   Breadcrumb,
   styled,
   Tag,
+  RichEditor,
 };
