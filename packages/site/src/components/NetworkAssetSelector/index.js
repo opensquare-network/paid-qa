@@ -70,20 +70,6 @@ const NetworkAssets = {
       decimals: 10,
       tokenIdentifier: "N",
     },
-    {
-      id: "rmrk",
-      name: "RMRK",
-      symbol: "RMRK",
-      decimals: 10,
-      tokenIdentifier: "8",
-    },
-    {
-      id: "polarisdao",
-      name: "PolarisDAO",
-      symbol: "ARIS",
-      tokenIdentifier: "16",
-      decimals: 8,
-    },
   ],
   statemine: [
     {
@@ -158,7 +144,7 @@ const NetworkAssets = {
 export default function NetworkAssetSelector({
   network,
   setAsset,
-  hideWhenOnlyOneSelection,
+  hiddenOnSingleOption,
 }) {
   const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [assets, setAssets] = useState([]);
@@ -182,7 +168,7 @@ export default function NetworkAssetSelector({
     }
   }, [setAsset, assets, selectedAssetIndex]);
 
-  return hideWhenOnlyOneSelection && assets.length === 1 ? null : (
+  return hiddenOnSingleOption && assets.length === 1 ? null : (
     <Wrapper>
       <DropdownSelector
         options={assetsOptions}

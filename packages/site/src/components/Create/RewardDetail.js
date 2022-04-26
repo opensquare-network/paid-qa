@@ -87,7 +87,7 @@ export default function RewardDetail({
         <AssetSelector
           network={account?.network}
           setAsset={setSelectedAsset}
-          hideWhenOnlyOneSelection={true}
+          hiddenOnSingleOption={true}
         />
 
         <AmountInput
