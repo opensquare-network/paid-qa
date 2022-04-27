@@ -101,9 +101,9 @@ export default function Pagination({
     : 1;
   const PageItem = large ? LargeItem : Item;
 
-  const handleChange = (page) => {
-    setPage(page);
-    onChange(page, pageSize);
+  const handleChange = (currentPage) => {
+    setPage(currentPage);
+    onChange(currentPage, pageSize);
   };
 
   const prevPage = itemRender(page - 1, "prev", <CaretLeft />);
