@@ -91,7 +91,7 @@ export default function Pagination({
   page,
   pageSize,
   total,
-  setPage = () => {},
+  setPage = noop,
   large = false,
   itemRender = defaultItemRender,
   onChange = noop,
