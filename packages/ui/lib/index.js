@@ -12,6 +12,7 @@ import Breadcrumb from "./Navi/Breadcrumb";
 import styled from "./styled";
 import Tag from "./Tag";
 import RichEditor from "./RichEdit";
+import Pagination from "./styled/Pagination";
 
 export {
   Footer,
@@ -28,4 +29,5 @@ export {
   styled,
   Tag,
   RichEditor,
+  Pagination,
 };
