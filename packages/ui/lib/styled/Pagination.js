@@ -1,3 +1,4 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import { ReactComponent as CaretLeft } from "../imgs/icons/caret-left.svg";
 import { ReactComponent as CaretRight } from "../imgs/icons/caret-right.svg";

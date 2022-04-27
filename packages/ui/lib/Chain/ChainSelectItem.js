@@ -1,3 +1,4 @@
+import React from "react";
 import ChainIcon from "./ChainIcon";
 import styled, { css } from "styled-components";
 import { p_14_medium } from "../styles/textStyles";
