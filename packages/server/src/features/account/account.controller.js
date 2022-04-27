@@ -39,7 +39,7 @@ async function getAccountPromisedTopics(ctx) {
             symbol: "$bounty.symbol",
           },
           value: { $sum: "$bounty.value" },
-          promiseTime: { $max: "$blockTime" },
+          promiseTime: { $max: "$indexer.blockTime" },
         },
       },
       {

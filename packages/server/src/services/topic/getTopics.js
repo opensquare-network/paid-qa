@@ -66,7 +66,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
                   },
                 },
               },
-              { $sort: { statusSort: 1, blockTime: -1 } },
+              { $sort: { statusSort: 1, "indexer.blockTime": -1 } },
               { $skip: (page - 1) * pageSize },
               { $limit: pageSize },
               {
@@ -118,7 +118,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
           },
         },
       })
-      .sort({ statusSort: 1, blockTime: -1 })
+      .sort({ statusSort: 1, "indexer.blockTime": -1 })
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 
