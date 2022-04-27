@@ -82,14 +82,23 @@ function signAndSendTx(tx, account, callback = () => {}) {
 
             callback("InBlock");
 
-            const extrinsicIndex = JSON.parse(
-              events[0]?.phase?.toString()
-            )?.applyExtrinsic;
-            const blockHash = status.asInBlock.toString();
-            resolve({
-              blockHash,
-              extrinsicIndex,
-            });
+            events
+              .filter(({ event: { section } }) => section === "system")
+              .forEach(({ event: { method } }) => {
+                if (method === "ExtrinsicFailed") {
+                  callback(method);
+                  reject(new Error(method));
+                } else if (method === "ExtrinsicSuccess") {
+                  const extrinsicIndex = JSON.parse(
+                    events[0]?.phase?.toString()
+                  )?.applyExtrinsic;
+                  const blockHash = status.asInBlock.toString();
+                  resolve({
+                    blockHash,
+                    extrinsicIndex,
+                  });
+                }
+              });
           }
         }
       );
