@@ -17,7 +17,7 @@ class Api {
     return new Promise((resolve, reject) =>
       fetch(url, options)
         .then((resp) =>
-          resp.status !== 200
+          !resp.ok
             ? resp.json().then((data) =>
                 resolve({
                   error: {

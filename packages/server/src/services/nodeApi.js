@@ -1,5 +1,6 @@
 const { HttpError } = require("../utils/exc");
-const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 class NodeApi {
   endpoint = null;
@@ -15,15 +16,15 @@ class NodeApi {
     }
     const resp = await fetch(url, options);
     const data = await resp.json();
-    if (resp.status !== 200) {
-      throw new HttpError(resp.status, data);
+    if (!resp.ok) {
+      throw new HttpError(resp.status, data.message);
     }
     return data;
   };
 
   get = async (path) => {
     return await this.fetch(path);
-  }
+  };
 
   post = async (path, body = null, options = null) => {
     const result = await this.fetch(
