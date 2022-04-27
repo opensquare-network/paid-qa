@@ -130,7 +130,7 @@ export default function Answers({ topicCid }) {
         dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(newErrorToast(e.message));
+      dispatch(newErrorToast(`Failed to add answer. ${e.message}`));
     } finally {
       dispatch(removeToast(toastId));
       if (isMounted.current) {

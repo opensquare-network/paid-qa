@@ -4,7 +4,7 @@ const { toPublicKey } = require("../../utils/address");
 async function getRewardNotifications(network, address, page, pageSize) {
   const publicKey = toPublicKey(address);
   const q = {
-    publicKey,
+    owner: publicKey,
     $or: [{ type: "fund" }, { type: "support" }],
   };
   const total = await Notification.countDocuments(q);
