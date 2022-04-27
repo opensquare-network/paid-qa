@@ -23,16 +23,19 @@ const Nav = styled.div`
   :hover {
     background: #f0f3f8;
   }
-  > svg * {
+  svg * {
     fill: #a1a8b3;
+  }
+  > * {
+    display: flex;
   }
   ${(p) =>
     p.disabled &&
     css`
       cursor: auto;
       pointer-events: none;
-      > svg,
-      > svg * {
+      svg,
+      svg * {
         fill: #e3e7ed;
       }
       :hover {
@@ -41,7 +44,7 @@ const Nav = styled.div`
     `}
 `;
 
-const Item = styled.a`
+const Item = styled.div`
   cursor: pointer;
   min-width: 32px;
   line-height: 32px;
@@ -78,22 +81,38 @@ const Ellipsis = styled.div`
   }
 `;
 
+const noop = () => {};
+
+const defaultItemRender = (_page, _type, element) => {
+  return element;
+};
+
 export default function Pagination({
   page,
   pageSize,
   total,
-  setPage = () => {},
+  setPage = noop,
   large = false,
+  itemRender = defaultItemRender,
+  onChange = noop,
 }) {
   const totalPages = Math.ceil(total / pageSize)
     ? Math.ceil(total / pageSize)
     : 1;
   const PageItem = large ? LargeItem : Item;
 
+  const handleChange = (currentPage) => {
+    setPage(currentPage);
+    onChange(currentPage, pageSize);
+  };
+
+  const prevPage = itemRender(page - 1, "prev", <CaretLeft />);
+  const nextPage = itemRender(page + 1, "next", <CaretRight />);
+
   return (
     <Wrapper>
-      <Nav disabled={page === 1} onClick={() => setPage(page - 1)}>
-        <CaretLeft />
+      <Nav disabled={page === 1} onClick={() => handleChange(page - 1)}>
+        {prevPage}
       </Nav>
       {Array.from(Array(totalPages)).map((_, index) =>
         index + 1 > 1 &&
@@ -104,14 +123,14 @@ export default function Pagination({
           <PageItem
             key={index}
             active={page === index + 1}
-            onClick={() => setPage(index + 1)}
+            onClick={() => handleChange(index + 1)}
           >
-            {index + 1}
+            {itemRender(index + 1, "page", <a>{index + 1}</a>)}
           </PageItem>
         )
       )}
-      <Nav disabled={page === totalPages} onClick={() => setPage(page + 1)}>
-        <CaretRight />
+      <Nav disabled={page >= totalPages} onClick={() => handleChange(page + 1)}>
+        {nextPage}
       </Nav>
     </Wrapper>
   );
