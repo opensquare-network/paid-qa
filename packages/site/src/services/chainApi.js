@@ -80,25 +80,29 @@ function signAndSendTx(tx, account, callback = () => {}) {
           if (status.isInBlock) {
             unsub();
 
+            for (const {
+              event: { method, section },
+            } of events) {
+              if (section === "system" && method === "ExtrinsicFailed") {
+                return reject(new Error("Extrinsic failed"));
+              }
+
+              if (section === "utility" && method === "BatchInterrupted") {
+                return reject(new Error("Batch extrinsic failed"));
+              }
+            }
+
             callback("InBlock");
 
-            events
-              .filter(({ event: { section } }) => section === "system")
-              .forEach(({ event: { method } }) => {
-                if (method === "ExtrinsicFailed") {
-                  callback(method);
-                  reject(new Error(method));
-                } else if (method === "ExtrinsicSuccess") {
-                  const extrinsicIndex = JSON.parse(
-                    events[0]?.phase?.toString()
-                  )?.applyExtrinsic;
-                  const blockHash = status.asInBlock.toString();
-                  resolve({
-                    blockHash,
-                    extrinsicIndex,
-                  });
-                }
-              });
+            const extrinsicIndex = JSON.parse(
+              events[0]?.phase?.toString()
+            )?.applyExtrinsic;
+
+            const blockHash = status.asInBlock.toString();
+            resolve({
+              blockHash,
+              extrinsicIndex,
+            });
           }
         }
       );
