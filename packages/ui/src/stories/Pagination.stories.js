@@ -45,7 +45,7 @@ export const routerLink = () => {
 
   const itemRender = (page, type, originalElement) => {
     if (type === "page") {
-      return <Link to={page}>{page}</Link>;
+      return <Link to={page}>{originalElement}</Link>;
     }
 
     if (type === "prev" || type === "next") {
