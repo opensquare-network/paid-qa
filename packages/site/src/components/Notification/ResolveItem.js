@@ -9,6 +9,7 @@ const TextMajor = styled.span`
 `;
 
 const FlexWrapper = styled(Flex)`
+  gap: 8px;
   flex-wrap: wrap;
   > :nth-child(2)::after {
     content: "·";
