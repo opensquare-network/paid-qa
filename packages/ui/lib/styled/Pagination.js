@@ -81,6 +81,8 @@ const Ellipsis = styled.div`
   }
 `;
 
+const noop = () => {};
+
 const defaultItemRender = (_page, _type, element) => {
   return element;
 };
@@ -92,18 +94,24 @@ export default function Pagination({
   setPage = () => {},
   large = false,
   itemRender = defaultItemRender,
+  onChange = noop,
 }) {
   const totalPages = Math.ceil(total / pageSize)
     ? Math.ceil(total / pageSize)
     : 1;
   const PageItem = large ? LargeItem : Item;
 
+  const handleChange = (page) => {
+    setPage(page);
+    onChange(page);
+  };
+
   const prevPage = itemRender(page - 1, "prev", <CaretLeft />);
   const nextPage = itemRender(page + 1, "next", <CaretRight />);
 
   return (
     <Wrapper>
-      <Nav disabled={page === 1} onClick={() => setPage(page - 1)}>
+      <Nav disabled={page === 1} onClick={() => handleChange(page - 1)}>
         {prevPage}
       </Nav>
       {Array.from(Array(totalPages)).map((_, index) =>
@@ -115,13 +123,16 @@ export default function Pagination({
           <PageItem
             key={index}
             active={page === index + 1}
-            onClick={() => setPage(index + 1)}
+            onClick={() => handleChange(index + 1)}
           >
             {itemRender(index + 1, "page", <a>{index + 1}</a>)}
           </PageItem>
         )
       )}
-      <Nav disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+      <Nav
+        disabled={page === totalPages}
+        onClick={() => handleChange(page + 1)}
+      >
         {nextPage}
       </Nav>
     </Wrapper>
