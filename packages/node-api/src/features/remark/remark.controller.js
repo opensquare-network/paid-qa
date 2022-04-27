@@ -140,7 +140,11 @@ async function getRemark(ctx) {
     ctx.body = remark;
   } catch (e) {
     console.error("Get remark from node fail", e);
-    ctx.throw(500, "Failed to get remark from node");
+    if (e.errors.length > 0) {
+      ctx.throw(500, e.errors[0].message);
+    } else {
+      ctx.throw(500, "Failed to get remark from node");
+    }
   }
 }
 
