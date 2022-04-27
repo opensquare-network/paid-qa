@@ -129,10 +129,7 @@ export default function Pagination({
           </PageItem>
         )
       )}
-      <Nav
-        disabled={page === totalPages}
-        onClick={() => handleChange(page + 1)}
-      >
+      <Nav disabled={page >= totalPages} onClick={() => handleChange(page + 1)}>
         {nextPage}
       </Nav>
     </Wrapper>
