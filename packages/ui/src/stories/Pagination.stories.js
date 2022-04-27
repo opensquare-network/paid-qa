@@ -67,3 +67,19 @@ export const routerLink = () => {
     </BrowserRouter>
   );
 };
+export const onChange = () => {
+  const [page, setPage] = useState(1);
+  const onChange = (page) => {
+    alert(`page: ${page}`);
+  };
+
+  return (
+    <Pagination
+      page={page}
+      pageSize={10}
+      total={128}
+      setPage={setPage}
+      onChange={onChange}
+    />
+  );
+};
