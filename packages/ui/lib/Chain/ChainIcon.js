@@ -1,3 +1,4 @@
+import React from "react";
 import { ReactComponent as Bifrost } from "../imgs/icons/chain/bifrost.svg";
 import { ReactComponent as Statemine } from "../imgs/icons/chain/statemine.svg";
 import { ReactComponent as Polkadot } from "../imgs/icons/chain/polkadot.svg";
