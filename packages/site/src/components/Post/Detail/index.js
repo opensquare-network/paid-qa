@@ -41,7 +41,7 @@ export default function Detail({ topic }) {
         topicCid={topic.cid}
         topicNetwork={topic.network}
         appendants={topic.appendants}
-        isOwner={isOwner}
+        editable={isOwner && topic.status !== "resolved"}
       />
       <Share />
       <Resolve topic={topic} />
