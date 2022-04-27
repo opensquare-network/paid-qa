@@ -3,7 +3,7 @@ const { toPublicKey } = require("../../utils/address");
 
 async function getNotifications(network, address, page, pageSize) {
   const publicKey = toPublicKey(address);
-  const q = { publicKey };
+  const q = { owner: publicKey };
   const total = await Notification.countDocuments(q);
   const notifications = await Notification.find(q)
     .sort({ createdAt: -1 })

@@ -4,7 +4,7 @@ const { toPublicKey } = require("../../utils/address");
 async function clearUnreadNotifications(network, address) {
   const publicKey = toPublicKey(address);
   const q = {
-    publicKey,
+    owner: publicKey,
     read: false,
   };
   const result = await Notification.updateMany(q, { read: true });

@@ -4,7 +4,7 @@ const { toPublicKey } = require("../../utils/address");
 async function getDiscussionNotifications(network, address, page, pageSize) {
   const publicKey = toPublicKey(address);
   const q = {
-    publicKey,
+    owner: publicKey,
     $or: [{ type: "reply" }, { type: "mention" }, { type: "topicResolved" }],
   };
   const total = await Notification.countDocuments(q);
