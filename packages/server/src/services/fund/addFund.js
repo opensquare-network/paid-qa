@@ -73,7 +73,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
     throw new HttpError(500, "Invalid ipfsCid");
   }
 
-  const fundObj = await Fund.updateOne(
+  const fundObj = await Fund.findOneAndUpdate(
     {
       "indexer.blockHash": blockHash,
       "indexer.extrinsicIndex": extrinsicIndex,
@@ -95,7 +95,7 @@ async function addFund(network, blockHash, extrinsicIndex) {
         decimals,
       },
     },
-    { upsert: true }
+    { upsert: true, new: true }
   );
 
   const fundTo = answer?.signer || topic?.signer;

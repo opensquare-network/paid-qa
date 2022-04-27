@@ -110,7 +110,7 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
         dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(newErrorToast(e.message));
+      dispatch(newErrorToast(`Failed to resolve topic. ${e.message}`));
     } finally {
       dispatch(removeToast(toastId));
     }

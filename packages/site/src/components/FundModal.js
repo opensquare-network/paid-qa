@@ -197,7 +197,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(newErrorToast(e.message));
+      dispatch(newErrorToast(`Failed to fund. ${e.message}`));
     } finally {
       dispatch(removeToast(toastId));
     }

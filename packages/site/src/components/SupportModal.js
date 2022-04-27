@@ -121,7 +121,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(newErrorToast(e.message));
+      dispatch(newErrorToast(`Failed to add support. ${e.message}`));
     } finally {
       dispatch(removeToast(toastId));
     }

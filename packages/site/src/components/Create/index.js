@@ -186,7 +186,7 @@ export default function Create() {
         dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(newErrorToast(e.message));
+      dispatch(newErrorToast(`Failed to create topic. ${e.message}`));
     } finally {
       dispatch(removeToast(toastId));
       if (isMounted.current) {
