@@ -80,7 +80,7 @@ export default function Appendants({
   topicCid,
   topicNetwork,
   appendants,
-  isOwner,
+  editable,
 }) {
   const account = useSelector(accountSelector);
 
@@ -164,7 +164,7 @@ export default function Appendants({
   };
 
   const appendantsCount = appendants?.length || 0;
-  if (!isOwner && !appendantsCount) {
+  if (!editable && !appendantsCount) {
     return null;
   }
 
@@ -175,7 +175,7 @@ export default function Appendants({
           <span>Appendants</span>
           <Count>{appendantsCount}</Count>
         </DividerWrapper>
-        {isOwner && (
+        {editable && (
           <AddButton onClick={() => setEditing(!editing)}>
             <AddIcon />
           </AddButton>
@@ -207,7 +207,7 @@ export default function Appendants({
             disabled={isDifferentNetwork}
             submitting={loading}
             errorMsg={
-              isOwner && isDifferentNetwork
+              editable && isDifferentNetwork
                 ? "Please switch to the same network as topic to post."
                 : ""
             }
