@@ -1,9 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { useDispatch } from "react-redux";
 import copy from "copy-to-clipboard";
-
-import { newSuccessToast } from "store/reducers/toastSlice";
 
 const Wrapper = styled.div`
   display: inline-block;
@@ -149,11 +146,8 @@ export default function Tooltip({
   position,
   offset,
 }) {
-  const dispatch = useDispatch();
-
   const onCopy = () => {
     if (isCopy && content && copy(copyText || content)) {
-      dispatch(newSuccessToast("Copied"));
     }
   };
 
