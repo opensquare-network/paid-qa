@@ -113,7 +113,17 @@ async function getTopics(symbol, status, title, page, pageSize) {
       .addFields({
         statusSort: {
           $switch: {
-            branches: [{ case: { $eq: ["$status", "active"] }, then: 1 }],
+            branches: [
+              {
+                case: {
+                  $or: [
+                    { $eq: ["$status", "active"] },
+                    { $eq: ["$status", "published"] },
+                  ],
+                  then: 1,
+                },
+              },
+            ],
             default: 2,
           },
         },
