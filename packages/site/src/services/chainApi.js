@@ -92,7 +92,7 @@ function signAndSendTx(tx, account, callback = () => {}) {
               }
             }
 
-            callback("InBlock");
+            callback("Remarks have been successfully submitted to the chain");
 
             const extrinsicIndex = JSON.parse(
               events[0]?.phase?.toString()

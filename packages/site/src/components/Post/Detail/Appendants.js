@@ -154,7 +154,7 @@ export default function Appendants({
         dispatch(newErrorToast(error.message));
       }
     } catch (e) {
-      dispatch(newErrorToast(e.message));
+      dispatch(newErrorToast(`Failed to add appendant. ${e.message}`));
     } finally {
       dispatch(removeToast(toastId));
       if (isMounted.current) {
