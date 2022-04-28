@@ -4,9 +4,7 @@
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
-    "build": "npm run build:lib && npm run build:es",
-    "build:lib": "rm -rf dist",
-    "build:es": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel lib --out-dir es --copy-files",
+    "build": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel lib --out-dir es --copy-files",
     "test": "craco test",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
