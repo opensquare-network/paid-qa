@@ -49,11 +49,11 @@ const Wrapper = styled.div`
     border-right: none;
     textarea {
       padding: 12px 16px;
-      border-bottom: 1px solid #e2e8f0 !important;
+      border-bottom: 1px solid #e2e8f0;
       :hover,
       :focus,
       :active {
-        border-color: #b7c0cc !important;
+        border-color: #b7c0cc;
       }
       ${p_14_normal};
       outline: none;
