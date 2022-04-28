@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 
 import Flex from "../styled/Flex";
 import { MOBILE_SIZE } from "@osn/consts";
@@ -29,11 +28,6 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const Logo = styled.div`
   width: 200px;
   height: 36px;
@@ -41,7 +35,6 @@ const Logo = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  cursor: pointer;
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     width: 48px;
     height: 32px;
@@ -60,16 +53,19 @@ const ChildWrapper = styled(Flex)`
   flex: 1;
 `;
 
-export default function Header({ children }) {
+const defaultLogoRender = (logo) => {
+  return logo;
+};
+
+export default function Header({ children, logoRender = defaultLogoRender }) {
   return (
     <Wrapper>
       <ContentWrapper>
-        <LogoWrapper>
-          <NavLink to="/">
-            <Logo />
-          </NavLink>
+        <Flex>
+          {logoRender(<Logo />)}
+
           {children && <Divider />}
-        </LogoWrapper>
+        </Flex>
 
         {children && <ChildWrapper>{children}</ChildWrapper>}
       </ContentWrapper>
