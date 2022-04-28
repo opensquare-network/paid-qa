@@ -52,7 +52,13 @@ export default function Header() {
   useUpdateNodesDelay(account?.network);
 
   return (
-    <OsnHeader logoRender={(logo) => <NavLink to="/">{logo}</NavLink>}>
+    <OsnHeader
+      logoRender={(logo) => (
+        <NavLink style={{ cursor: "pointer" }} to="/">
+          {logo}
+        </NavLink>
+      )}
+    >
       <ContentWrapper>
         <ProductSwitch />
 
