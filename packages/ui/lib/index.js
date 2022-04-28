@@ -20,7 +20,6 @@ import Dropdown from "./styled/Dropdown";
 import Flex from "./styled/Flex";
 import FlexBetween from "./styled/FlexBetween";
 import FlexCenter from "./styled/FlexCenter";
-import index from "./styled/index";
 import Input from "./styled/Input";
 import Layout from "./styled/Layout";
 import Main from "./styled/Main";
@@ -52,7 +51,6 @@ export {
   Flex,
   FlexBetween,
   FlexCenter,
-  index,
   Input,
   Layout,
   Main,
