@@ -19,6 +19,7 @@ import {
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";
 import { MOBILE_SIZE } from "@osn/consts";
+import { NavLink } from "react-router-dom";
 
 const RightWrapper = styled.div`
   display: flex;
@@ -51,7 +52,7 @@ export default function Header() {
   useUpdateNodesDelay(account?.network);
 
   return (
-    <OsnHeader>
+    <OsnHeader logoRender={(logo) => <NavLink to="/">{logo}</NavLink>}>
       <ContentWrapper>
         <ProductSwitch />
 
