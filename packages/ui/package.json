@@ -3,6 +3,12 @@
   "version": "0.0.47",
   "main": "es/index.js",
   "module": "es/index.js",
+  "exports": {
+    ".": {
+      "import": "./es/index.js"
+    },
+    "./*": "./*"
+  },
   "scripts": {
     "build": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel lib --out-dir es --copy-files",
     "test": "craco test",

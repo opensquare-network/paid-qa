@@ -4,6 +4,14 @@ import RichEditor from "../../lib/RichEdit";
 export default {
   name: "RichEditor",
   component: RichEditor,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "requires import 'react-mde/lib/styles/css/react-mde-all.css'",
+      },
+    },
+  },
 };
 
 const markdown = `
