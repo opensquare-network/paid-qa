@@ -29,7 +29,6 @@ const ContentWrapper = styled.div`
 `;
 
 const SupportButton = styled(Button)`
-  width: 204px;
   line-height: 32px;
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     width: 100%;
@@ -38,7 +37,6 @@ const SupportButton = styled(Button)`
 `;
 
 const ConnectButton = styled(Button)`
-  width: 204px;
   line-height: 32px;
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     width: 100%;
