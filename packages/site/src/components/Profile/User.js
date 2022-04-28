@@ -12,6 +12,7 @@ import { useCallback, useState } from "react";
 import copy from "copy-to-clipboard";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 import { addressEllipsis } from "@osn/common/src/utils/address";
+import { getAddressLink } from "@osn/common/src/utils/blockExplorer";
 
 const Wrapper = styled(Flex)`
   flex-wrap: wrap;
@@ -93,7 +94,7 @@ export default function Profile({ network, address }) {
     <Wrapper>
       <Avatar address={address} size={64} />
       <div>
-        <ExternalLink href={`https://${network}.subscan.io/account/${address}`}>
+        <ExternalLink href={getAddressLink(network, address)}>
           <object>
             <Name network={network} address={address} noLink={true} />
           </object>

@@ -4,6 +4,7 @@ import IdentityOrAddr from "./User/IdentityOrAddr";
 import { p_12_normal } from "@osn/common-ui/lib/styles/textStyles";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
+import { getExtrinsicLink } from "@osn/common/src/utils/blockExplorer";
 
 const Wrapper = styled.div`
   display: flex;
@@ -63,7 +64,11 @@ export default function Funders({ funds }) {
               />
             </Flex>
             <a
-              href={`https://${fund.network}.subscan.io/extrinsic/${fund.indexer.blockHeight}-${fund.indexer.extrinsicIndex}`}
+              href={getExtrinsicLink(
+                fund.network,
+                fund.indexer.blockHeight,
+                fund.indexer.extrinsicIndex
+              )}
               target="_blank"
               rel="noreferrer"
             >
