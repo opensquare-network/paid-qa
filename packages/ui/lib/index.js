@@ -11,6 +11,7 @@ import Breadcrumb from "./Navi/Breadcrumb";
 import Tag from "./Tag";
 import RichEditor from "./RichEdit";
 import NoData from "./NoData";
+import Header from "./Header";
 //styled
 import Button from "./styled/Button";
 import Card from "./styled/Card";
@@ -43,6 +44,7 @@ export {
   Tag,
   RichEditor,
   NoData,
+  Header,
   Button,
   Card,
   Container,

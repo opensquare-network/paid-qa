@@ -1,8 +1,14 @@
 {
   "name": "@osn/common-ui",
   "version": "0.0.45",
-  "main": "dist/index.js",
-  "module": "es/index.js",
+  "main": "./dist/index.js",
+  "module": "./es/index.js",
+  "exports": {
+    ".": {
+      "import": "./es/index.js"
+    },
+    "./*": "./*"
+  },
   "scripts": {
     "build": "npm run build:lib && npm run build:es",
     "build:lib": "rm -rf dist && NODE_ENV=production BABEL_ENV=lib babel lib --out-dir dist --copy-files",
