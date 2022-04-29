@@ -20,7 +20,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   user-select: none;
 
-  &:hover {
+  :hover {
     border-color: ${netural_grey_800};
   }
 
