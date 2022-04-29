@@ -67,3 +67,17 @@ export const onClick = () => {
     </DemoWrapper>
   );
 };
+export const sizes = () => (
+  <>
+    <DemoWrapper>
+      <Button primary large>
+        primary large
+      </Button>
+      <Button large>detault large</Button>
+    </DemoWrapper>
+    <DemoWrapper>
+      <Button primary>primary</Button>
+      <Button>detault</Button>
+    </DemoWrapper>
+  </>
+);
