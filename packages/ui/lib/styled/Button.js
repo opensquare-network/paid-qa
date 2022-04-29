@@ -1,53 +1,54 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { p_14_medium } from "../styles/textStyles";
+import {
+  netural_grey_300,
+  netural_grey_500,
+  netural_grey_800,
+  netural_grey_900,
+  text_dark_accessory,
+  text_dark_major,
+  text_light_major,
+} from "../styles/colors";
 
-const Wrapper = styled.div`
-  display: flex;
-  text-align: center;
+const StyledButton = styled.button`
   ${p_14_medium};
-  justify-content: center;
-  padding: 7px 15px;
-  border: 1px solid #b7c0cc;
+  color: ${text_dark_major};
+  padding: 8px 16px;
+  border: 1px solid ${netural_grey_500};
+  background-color: #fff;
   cursor: pointer;
-  color: #1e2134;
-  &:hover {
-    border-color: #404753;
+  user-select: none;
+
+  :hover {
+    border-color: ${netural_grey_800};
   }
-  ${(p) =>
-    p?.color === "orange" &&
-    css`
-      color: #ffffff;
-      background: #e37f06;
-      border-color: #e37f06;
-      &:hover {
-        background: #e7932e;
-        border-color: #e7932e;
-      }
-    `}
-  ${(p) =>
-    p.primary &&
-    css`
-      padding: 8px 16px;
-      border: none;
-      color: #ffffff;
-      background: #191e27;
-      &:hover {
-        background: #404753;
-      }
-    `}
+
   ${(p) =>
     p.large &&
     css`
-      padding: 12px 16px;
+      padding: 12px 24px;
     `}
+
   ${(p) =>
-    (p.isLoading || p.disabled) &&
+    p.block &&
     css`
-      background: #e2e8f0;
-      border-color: #e2e8f0;
-      pointer-events: none;
-      color: #ffffff;
+      width: 100%;
+    `}
+
+  ${(p) =>
+    (p.disabled || p.isLoading) &&
+    css`
+      color: ${text_dark_accessory};
+      border-color: ${netural_grey_300};
+
+      > * {
+        pointer-events: none;
+      }
+
+      :hover {
+        border-color: ${netural_grey_300};
+      }
     `}
   ${(p) =>
     p.isLoading &&
@@ -59,8 +60,88 @@ const Wrapper = styled.div`
     css`
       cursor: not-allowed;
     `}
+
+  ${(p) =>
+    p.primary &&
+    css`
+      color: ${text_light_major};
+      border-color: ${netural_grey_900};
+      background-color: ${netural_grey_900};
+
+      :hover {
+        border-color: ${netural_grey_800};
+        background-color: ${netural_grey_800};
+      }
+
+      ${(p.isLoading || p.disabled) &&
+      css`
+        border-color: ${netural_grey_300};
+        background-color: ${netural_grey_300};
+
+        :hover {
+          border-color: ${netural_grey_300};
+          background-color: ${netural_grey_300};
+        }
+      `}
+    `}
+
+  ${(p) =>
+    p?.color === "orange" &&
+    css`
+      color: ${text_light_major};
+      background-color: #e37f06;
+      border-color: #e37f06;
+
+      &:hover {
+        border-color: #e7932e;
+        background-color: #e7932e;
+      }
+
+      ${(p.isLoading || p.disabled) &&
+      css`
+        border-color: #f9e5cd;
+        background-color: #f9e5cd;
+
+        :hover {
+          border-color: #f9e5cd;
+          background-color: #f9e5cd;
+        }
+      `}
+    `}
 `;
 
-export default function Button({ children, ...props }) {
-  return <Wrapper {...props}>{children}</Wrapper>;
+export default function Button({
+  children,
+  disabled,
+  primary,
+  large,
+  color,
+  isLoading,
+  block,
+  onClick = () => {},
+  ...rest
+}) {
+  const handleClick = (e) => {
+    if (isLoading || disabled) {
+      e.preventDefault();
+      return;
+    }
+    onClick(e);
+  };
+
+  return (
+    <StyledButton
+      {...rest}
+      type="button"
+      disabled={disabled}
+      primary={primary}
+      large={large}
+      color={color}
+      isLoading={isLoading}
+      block={block}
+      onClick={handleClick}
+    >
+      {children}
+    </StyledButton>
+  );
 }
