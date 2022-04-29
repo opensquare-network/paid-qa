@@ -86,7 +86,6 @@ const Main = styled(Box)`
 const Side = styled.div`
   button {
     box-sizing: border-box;
-    width: 100%;
   }
 `;
 
@@ -231,6 +230,7 @@ export default function Create() {
             <Button
               onClick={onPublish}
               primary
+              block
               disabled={!account || !(+rewardAmount > 0)}
               isLoading={loading}
             >

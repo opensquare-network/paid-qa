@@ -1,8 +1,8 @@
-import Button from "@osn/common-ui/lib/styled/Button";
+import { Button } from "@osn/common-ui";
 
 export default function ConnectWallet({ ...props }) {
   return (
-    <Button primary {...props}>
+    <Button block primary {...props}>
       Connect Wallet
     </Button>
   );

@@ -4,15 +4,9 @@ import styled from "styled-components";
 import ResolveModal from "../../ResolveModal";
 import { accountSelector } from "store/reducers/accountSlice";
 import { calcSponserRewards } from "utils/rewards";
-import Button from "@osn/common-ui/lib/styled/Button";
+import { Button } from "@osn/common-ui";
 
 const Wrapper = styled.div``;
-
-const ResolveButton = styled(Button)`
-  padding: 11px 24px;
-  width: 100%;
-  box-sizing: border-box;
-`;
 
 export default function Resolve({ topic }) {
   const [open, setOpen] = useState();
@@ -36,7 +30,9 @@ export default function Resolve({ topic }) {
 
   return (
     <Wrapper>
-      <ResolveButton onClick={() => setOpen(true)}>Resolve</ResolveButton>
+      <Button block onClick={() => setOpen(true)}>
+        Resolve
+      </Button>
       <ResolveModal
         open={open}
         setOpen={setOpen}
