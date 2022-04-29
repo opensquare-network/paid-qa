@@ -8,12 +8,12 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { popUpConnect } from "store/reducers/showConnectSlice";
 import SupportModal from "components/SupportModal";
 import { calcSponserRewards } from "utils/rewards";
-import { MOBILE_SIZE } from "@osn/consts";
 import { isSamePublicKey } from "@osn/common/src/utils/address";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
-import Button from "@osn/common-ui/lib/styled/Button";
+import { Button } from "@osn/common-ui";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import ConnectWallet from "components/ConnectWallet";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -25,21 +25,6 @@ const ContentWrapper = styled.div`
   padding: 16px 0 4px;
   > :not(:first-child) {
     margin-top: 12px;
-  }
-`;
-
-const SupportButton = styled(Button)`
-  line-height: 32px;
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
-    width: 100%;
-    box-sizing: border-box;
-  }
-`;
-
-const ConnectButton = styled(Button)`
-  line-height: 32px;
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
-    width: 100%;
   }
 `;
 
@@ -83,13 +68,11 @@ export default function Promises({ topicCid, rewards, resolves }) {
       {!myResolve && !isLoading && (
         <ButtonContainer>
           {account ? (
-            <SupportButton onClick={() => setOpenSupportModel(true)}>
+            <Button block large onClick={() => setOpenSupportModel(true)}>
               Support
-            </SupportButton>
+            </Button>
           ) : (
-            <ConnectButton onClick={() => dispatch(popUpConnect())} primary>
-              Connect Wallet
-            </ConnectButton>
+            <ConnectWallet large onClick={() => dispatch(popUpConnect())} />
           )}
         </ButtonContainer>
       )}
