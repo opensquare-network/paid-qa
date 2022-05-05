@@ -7,7 +7,7 @@ import Address from "./Account/Address";
 import Avatar from "./Account/Avatar";
 import MarkdownEditor from "./Editor/MarkdownEditor";
 import IpfsSquare from "./IpfsSquare";
-import Breadcrumb from "./Navi/Breadcrumb";
+import Breadcrumb from "./Breadcrumb";
 import Tag from "./Tag";
 import RichEditor from "./RichEdit";
 import NoData from "./NoData";
