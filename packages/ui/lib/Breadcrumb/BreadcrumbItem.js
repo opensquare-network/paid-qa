@@ -6,12 +6,13 @@ import { p_16_semibold } from "../styles/textStyles";
 const Item = styled.li`
   list-style: none;
   ${p_16_semibold}
+`;
+
+const BreadcrumbContent = styled.span`
   cursor: pointer;
 
   :hover {
-    .content {
-      text-decoration: underline;
-    }
+    text-decoration: underline;
   }
 
   ${(p) =>
@@ -21,9 +22,7 @@ const Item = styled.li`
       cursor: unset;
 
       :hover {
-        .content {
-          text-decoration: none;
-        }
+        text-decoration: none;
       }
     `}
 `;
@@ -36,8 +35,8 @@ const Separator = styled.span`
 function BreadcrumbItem({ children, disabled, separator = "/", ...rest }) {
   if (children) {
     return (
-      <Item disabled={disabled} {...rest}>
-        <span className="content">{children}</span>
+      <Item {...rest}>
+        <BreadcrumbContent disabled={disabled}>{children}</BreadcrumbContent>
         {separator && <Separator>{separator}</Separator>}
       </Item>
     );
