@@ -43,6 +43,8 @@ function RichEdit(
     showButtons = true,
     showOkButton = true,
     showPreviewButton = true,
+    okButtonProps = {},
+    previewButtonProps = {},
     submitting = false,
     disabled = false,
     submitButtonName = "Post",
@@ -71,6 +73,7 @@ function RichEdit(
         <ButtonsWrapper>
           {showPreviewButton && (
             <Button
+              {...previewButtonProps}
               className="button-preview"
               onClick={() => setPreview(!preview)}
             >
@@ -80,6 +83,7 @@ function RichEdit(
           {showOkButton && (
             <Button
               className="button-submit"
+              {...okButtonProps}
               primary
               isLoading={submitting}
               disabled={disabled}
