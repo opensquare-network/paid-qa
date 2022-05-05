@@ -102,6 +102,28 @@ export const hideButtons = () => {
   );
 };
 
+export const hideOkButton = () => {
+  const [content, setContent] = useState("hide ok button");
+  return (
+    <RichEditor
+      content={content}
+      showOkButton={false}
+      setContent={setContent}
+    />
+  );
+};
+
+export const hidePreviewButton = () => {
+  const [content, setContent] = useState("hide preview button");
+  return (
+    <RichEditor
+      content={content}
+      showPreviewButton={false}
+      setContent={setContent}
+    />
+  );
+};
+
 export const loadSuggestions = () => {
   const [content, setContent] = useState(
     "type `@` to get suggestions here 👇\n\n"
