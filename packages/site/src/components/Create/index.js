@@ -94,17 +94,6 @@ const Title = styled.div`
   color: #1e2134;
 `;
 
-const RichEditorWrapper = styled.div`
-  .rich-editor {
-    .button-preview {
-      width: 100%;
-    }
-    .button-submit {
-      display: none;
-    }
-  }
-`;
-
 export default function Create() {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
@@ -207,13 +196,12 @@ export default function Create() {
           disabled={loading}
         />
         <Title>Topic</Title>
-        <RichEditorWrapper>
-          <RichEditor
-            content={content}
-            setContent={setContent}
-            disabled={loading}
-          />
-        </RichEditorWrapper>
+        <RichEditor
+          content={content}
+          setContent={setContent}
+          disabled={loading}
+          showSubmitButton={false}
+        />
       </Main>
       <Side>
         {account ? (
