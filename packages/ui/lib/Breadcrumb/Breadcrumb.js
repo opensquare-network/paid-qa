@@ -55,6 +55,7 @@ function Breadcrumb({
   backButtonRender = defaultBackButtonRender,
   onBack = noop,
   separator = "/",
+  ...rest
 }) {
   let crumbs;
 
@@ -78,7 +79,7 @@ function Breadcrumb({
   }
 
   return (
-    <Wrapper className="breadcrumb">
+    <Wrapper {...rest} className="breadcrumb">
       {showBackButton &&
         backButtonRender(
           <BackButton onClick={onBack}>
