@@ -58,13 +58,13 @@ export const disabled = () => {
   return <RichEditor disabled content={content} setContent={setContent} />;
 };
 
-export const submitButtonName = () => {
+export const submitButtonText = () => {
   const [content, setContent] = useState(
     "change the submit button name to `Submit`"
   );
   return (
     <RichEditor
-      submitButtonName="Submit"
+      submitButtonText="Submit"
       content={content}
       setContent={setContent}
     />
@@ -102,12 +102,12 @@ export const hideButtons = () => {
   );
 };
 
-export const hideOkButton = () => {
-  const [content, setContent] = useState("hide ok button");
+export const hideSubmitButton = () => {
+  const [content, setContent] = useState("hide submit button");
   return (
     <RichEditor
       content={content}
-      showOkButton={false}
+      showSubmitButton={false}
       setContent={setContent}
     />
   );
@@ -132,7 +132,7 @@ export const previewButtonBlock = () => {
       previewButtonProps={{
         block: true,
       }}
-      showOkButton={false}
+      showSubmitButton={false}
       setContent={setContent}
     />
   );
