@@ -124,6 +124,20 @@ export const hidePreviewButton = () => {
   );
 };
 
+export const previewButtonBlock = () => {
+  const [content, setContent] = useState("hide preview button");
+  return (
+    <RichEditor
+      content={content}
+      previewButtonProps={{
+        block: true,
+      }}
+      showOkButton={false}
+      setContent={setContent}
+    />
+  );
+};
+
 export const loadSuggestions = () => {
   const [content, setContent] = useState(
     "type `@` to get suggestions here 👇\n\n"
