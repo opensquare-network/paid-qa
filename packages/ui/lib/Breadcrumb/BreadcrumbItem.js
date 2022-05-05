@@ -9,20 +9,24 @@ const Wrapper = styled.li`
 `;
 
 const Item = styled.span`
-  cursor: pointer;
+  a {
+    cursor: pointer;
 
-  :hover {
-    text-decoration: underline;
+    :hover {
+      text-decoration: underline;
+    }
   }
 
   ${(p) =>
     p.disabled &&
     css`
       color: ${text_dark_accessory};
-      cursor: unset;
+      a {
+        cursor: unset;
 
-      :hover {
-        text-decoration: none;
+        :hover {
+          text-decoration: none;
+        }
       }
     `}
 `;
