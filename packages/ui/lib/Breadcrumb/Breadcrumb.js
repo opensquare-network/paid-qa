@@ -60,14 +60,14 @@ function Breadcrumb({
 
   if (routes) {
   } else if (children) {
-    crumbs = childrenToArray(children).map((child, index) => {
-      if (!child) {
-        return child;
+    crumbs = childrenToArray(children).map((element, index, elements) => {
+      if (!element) {
+        return element;
       }
 
-      const isLast = index === children.length - 1;
+      const isLast = index === elements.length - 1;
 
-      const crumb = cloneElement(child, {
+      const crumb = cloneElement(element, {
         separator: isLast ? null : separator,
         disabled: isLast,
         key: index,
