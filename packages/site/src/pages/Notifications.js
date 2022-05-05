@@ -4,8 +4,6 @@ import styled from "styled-components";
 import Container from "@osn/common-ui/lib/styled/Container";
 import Header from "../components/Notification/Header";
 import NotificationList from "../components/Notification/NotificationList";
-import DiscussionItemList from "components/Notification/DiscussionItemList";
-import RewardItemList from "components/Notification/RewardItemList";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -56,13 +54,7 @@ export default function Notifications() {
       <Container>
         <ContentWrapper>
           {isLoading && <ListLoader style={{ marginTop: 20 }} />}
-          {tab === "notifications" && (
-            <NotificationList {...{ notifications }} />
-          )}
-          {tab === "discussions" && (
-            <DiscussionItemList {...{ notifications }} />
-          )}
-          {tab === "rewards" && <RewardItemList {...{ notifications }} />}
+          <NotificationList notifications={notifications} />
         </ContentWrapper>
         {notifications?.items?.length === 0 && (
           <NoData message={"No current records"} />
