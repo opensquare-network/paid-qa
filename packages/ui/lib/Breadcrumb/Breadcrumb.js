@@ -12,7 +12,7 @@ const Wrapper = styled.nav`
   color: ${text_dark_major};
 `;
 
-const BackButton = styled.div`
+const BackButton = styled.span`
   width: 36px;
   height: 36px;
   display: flex;
