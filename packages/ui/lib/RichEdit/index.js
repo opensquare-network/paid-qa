@@ -41,13 +41,15 @@ function RichEdit(
     setContent,
     onSubmit = () => {},
     showButtons = true,
-    showOkButton = true,
+    showSubmitButton = true,
     showPreviewButton = true,
-    okButtonProps = {},
+    submitButtonProps = {},
     previewButtonProps = {},
+    // @deprecated use `submitButtonText` instead
+    submitButtonName = "Post",
+    submitButtonText = submitButtonName,
     submitting = false,
     disabled = false,
-    submitButtonName = "Post",
     errorMsg = "",
     loadSuggestions,
   },
@@ -80,10 +82,10 @@ function RichEdit(
               {preview ? "Edit" : "Preview"}
             </Button>
           )}
-          {showOkButton && (
+          {showSubmitButton && (
             <Button
               className="button-submit"
-              {...okButtonProps}
+              {...submitButtonProps}
               primary
               isLoading={submitting}
               disabled={disabled}
@@ -92,7 +94,7 @@ function RichEdit(
                 onSubmit();
               }}
             >
-              {submitButtonName}
+              {submitButtonText || submitButtonName}
             </Button>
           )}
         </ButtonsWrapper>
