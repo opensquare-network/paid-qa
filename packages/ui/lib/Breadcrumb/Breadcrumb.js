@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
+import React, { cloneElement } from "react";
 import styled from "styled-components";
 import BreadcrumbItem from "./BreadcrumbItem";
 import { ReactComponent as CaretLeft } from "../imgs/icons/caret-left.svg";
-import { text_dark_accessory, text_dark_major } from "../styles/colors";
+import { text_dark_major } from "../styles/colors";
 import { p_16_semibold } from "../styles/textStyles";
 
 const Wrapper = styled.nav`
@@ -38,18 +38,19 @@ const CrumbsWrapper = styled.ol`
   display: flex;
 `;
 
-const CrumbLast = styled.li`
-  color: ${text_dark_accessory};
-  cursor: select;
-`;
-
 function noop() {}
 
 function childrenToArray(children) {
   return React.Children.toArray(children);
 }
 
-function Breadcrumb({ children, routes, onBack = noop, separator = "/" }) {
+function Breadcrumb({
+  children,
+  routes,
+  showBackButton = true,
+  onBack = noop,
+  separator = "/",
+}) {
   let crumbs;
 
   if (routes) {
@@ -61,16 +62,11 @@ function Breadcrumb({ children, routes, onBack = noop, separator = "/" }) {
 
       const isLast = index === children.length - 1;
 
-      let crumb;
-      if (!isLast) {
-        crumb = <Fragment key={index}>{child}</Fragment>;
-      } else {
-        crumb = React.cloneElement(child, {
-          separator: isLast ? null : separator,
-          disabled: isLast,
-          key: index,
-        });
-      }
+      const crumb = cloneElement(child, {
+        separator: isLast ? null : separator,
+        disabled: isLast,
+        key: index,
+      });
 
       return crumb;
     });
@@ -78,9 +74,11 @@ function Breadcrumb({ children, routes, onBack = noop, separator = "/" }) {
 
   return (
     <Wrapper className="breadcrumb">
-      <BackButton onClick={onBack}>
-        <CaretLeft />
-      </BackButton>
+      {showBackButton && (
+        <BackButton onClick={onBack}>
+          <CaretLeft />
+        </BackButton>
+      )}
 
       <CrumbsWrapper>{crumbs}</CrumbsWrapper>
     </Wrapper>
