@@ -125,7 +125,7 @@ export const hidePreviewButton = () => {
 };
 
 export const previewButtonBlock = () => {
-  const [content, setContent] = useState("hide preview button");
+  const [content, setContent] = useState("preview button block");
   return (
     <RichEditor
       content={content}
