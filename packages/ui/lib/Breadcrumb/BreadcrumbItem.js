@@ -3,12 +3,12 @@ import styled, { css } from "styled-components";
 import { text_dark_accessory } from "../styles/colors";
 import { p_16_semibold } from "../styles/textStyles";
 
-const Item = styled.li`
+const Wrapper = styled.li`
   list-style: none;
   ${p_16_semibold}
 `;
 
-const BreadcrumbContent = styled.span`
+const Item = styled.span`
   cursor: pointer;
 
   :hover {
@@ -35,10 +35,12 @@ const Separator = styled.span`
 function BreadcrumbItem({ children, disabled, separator = "/", ...rest }) {
   if (children) {
     return (
-      <Item {...rest}>
-        <BreadcrumbContent disabled={disabled}>{children}</BreadcrumbContent>
+      <Wrapper>
+        <Item disabled={disabled} {...rest}>
+          {children}
+        </Item>
         {separator && <Separator>{separator}</Separator>}
-      </Item>
+      </Wrapper>
     );
   }
 
