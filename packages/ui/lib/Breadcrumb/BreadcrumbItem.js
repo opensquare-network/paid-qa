@@ -7,6 +7,7 @@ const Item = styled.li`
   list-style: none;
   ${p_16_semibold}
   cursor: pointer;
+
   :hover {
     .content {
       text-decoration: underline;
@@ -18,6 +19,7 @@ const Item = styled.li`
     css`
       color: ${text_dark_accessory};
       cursor: unset;
+
       :hover {
         .content {
           text-decoration: none;
