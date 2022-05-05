@@ -44,10 +44,15 @@ function childrenToArray(children) {
   return React.Children.toArray(children);
 }
 
+function defaultBackButtonRender(button) {
+  return button;
+}
+
 function Breadcrumb({
   children,
   routes,
   showBackButton = true,
+  backButtonRender = defaultBackButtonRender,
   onBack = noop,
   separator = "/",
 }) {
@@ -74,11 +79,12 @@ function Breadcrumb({
 
   return (
     <Wrapper className="breadcrumb">
-      {showBackButton && (
-        <BackButton onClick={onBack}>
-          <CaretLeft />
-        </BackButton>
-      )}
+      {showBackButton &&
+        backButtonRender(
+          <BackButton onClick={onBack}>
+            <CaretLeft />
+          </BackButton>
+        )}
 
       <CrumbsWrapper>{crumbs}</CrumbsWrapper>
     </Wrapper>
