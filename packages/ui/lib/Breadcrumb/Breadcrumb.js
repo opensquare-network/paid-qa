@@ -15,6 +15,7 @@ const Wrapper = styled.nav`
 const BackButton = styled.span`
   width: 36px;
   height: 36px;
+  margin-right: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,7 +35,6 @@ const BackButton = styled.span`
 
 const CrumbsWrapper = styled.ol`
   padding-left: 0;
-  margin-left: 16px;
   display: flex;
 `;
 
