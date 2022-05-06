@@ -38,3 +38,12 @@ export const separator = () => {
     </Breadcrumb>
   );
 };
+export const onBack = () => {
+  return (
+    <Breadcrumb onBack={() => alert("on back")}>
+      <Breadcrumb.Item>Home</Breadcrumb.Item>
+      <Breadcrumb.Item>Page</Breadcrumb.Item>
+      <Breadcrumb.Item>Topic</Breadcrumb.Item>
+    </Breadcrumb>
+  );
+};
