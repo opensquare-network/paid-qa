@@ -36,11 +36,17 @@ const Separator = styled.span`
   color: ${text_dark_accessory};
 `;
 
-function BreadcrumbItem({ children, disabled, separator = "/", ...rest }) {
+function BreadcrumbItem({
+  children,
+  disabled,
+  separator = "/",
+  onClick = () => {},
+  ...rest
+}) {
   if (children) {
     return (
       <Wrapper>
-        <Item disabled={disabled} {...rest}>
+        <Item disabled={disabled} onClick={onClick} {...rest}>
           {children}
         </Item>
         {separator && <Separator>{separator}</Separator>}
