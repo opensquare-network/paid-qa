@@ -47,3 +47,14 @@ export const onBack = () => {
     </Breadcrumb>
   );
 };
+export const itemOnClick = () => {
+  return (
+    <Breadcrumb>
+      <Breadcrumb.Item onClick={(e) => alert(e)}>Home</Breadcrumb.Item>
+      <Breadcrumb.Item onClick={() => alert("Page clicked")}>
+        Page
+      </Breadcrumb.Item>
+      <Breadcrumb.Item>Topic</Breadcrumb.Item>
+    </Breadcrumb>
+  );
+};
