@@ -3,6 +3,9 @@ import Breadcrumb from "../../lib/Breadcrumb";
 export default {
   title: "Breadcrumb",
   component: Breadcrumb,
+  subcomponents: {
+    BreadcrumbItem: Breadcrumb.Item,
+  },
 };
 
 export const primary = () => {
@@ -57,4 +60,21 @@ export const itemOnClick = () => {
       <Breadcrumb.Item>Topic</Breadcrumb.Item>
     </Breadcrumb>
   );
+};
+export const routes = () => {
+  const routes = [
+    {
+      link: "/",
+      name: "Home",
+    },
+    {
+      link: "/page",
+      name: "Page",
+    },
+    {
+      link: "/topic",
+      name: "Topic",
+    },
+  ];
+  return <Breadcrumb routes={routes}></Breadcrumb>;
 };
