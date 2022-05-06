@@ -1,7 +1,7 @@
 import React from "react";
 
 export type Route = {
-  path: string;
+  link: string;
   name: string;
 };
 
