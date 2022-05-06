@@ -1,11 +1,13 @@
 {
   "name": "@osn/common-ui",
-  "version": "0.0.51",
+  "version": "0.0.52",
   "main": "es/index.js",
   "module": "es/index.js",
+  "types": "es/index.d.ts",
   "exports": {
     ".": {
-      "import": "./es/index.js"
+      "import": "./es/index.js",
+      "types": "./es/index.d.ts"
     },
     "./*": "./*"
   },

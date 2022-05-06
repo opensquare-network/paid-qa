@@ -1,4 +1,5 @@
 // netural
+export const netural_grey_200 = "#F0F3F8";
 export const netural_grey_300 = "#e2e8f0";
 export const netural_grey_500 = "#b7c0cc";
 export const netural_grey_800 = "#404753";
