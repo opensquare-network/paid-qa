@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import React from "react";
 import styled from "styled-components";
 import BreadcrumbItem from "./BreadcrumbItem";
 import { ReactComponent as CaretLeft } from "../imgs/icons/caret-left.svg";
@@ -37,7 +37,7 @@ const BackButton = styled.span`
   }
 `;
 
-const CrumbsWrapper = styled.ol`
+const CrumbsWrapper = styled.ul`
   padding-left: 0;
   display: flex;
 `;
@@ -100,7 +100,7 @@ function Breadcrumb(props) {
 
         const isLast = index === elements.length - 1;
 
-        const crumb = cloneElement(element, {
+        const crumb = React.cloneElement(element, {
           separator,
           disabled: isLast,
           key: index,
