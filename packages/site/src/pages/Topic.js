@@ -2,8 +2,8 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 
 import Background from "components/Background";
-import Container from "@osn/common-ui/lib/styled/Container";
-import Breadcrumb from "@osn/common-ui/lib/Navi/Breadcrumb";
+import { Container } from "@osn/common-ui";
+import Breadcrumb from "../components/Breadcrumb";
 import Post from "components/Post";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
