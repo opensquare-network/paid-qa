@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import Container from "@osn/common-ui/lib/styled/Container";
-import Breadcrumb from "@osn/common-ui/lib/Navi/Breadcrumb";
+import { Container } from "@osn/common-ui";
 import Create from "../components/Create";
+import Breadcrumb from "../components/Breadcrumb";
 
 const Wrapper = styled.div`
   position: relative;
