@@ -48,15 +48,20 @@ function defaultBackButtonRender(button) {
   return button;
 }
 
-function Breadcrumb({
-  children,
-  routes,
-  showBackButton = true,
-  backButtonRender = defaultBackButtonRender,
-  onBack = noop,
-  separator = "/",
-  ...rest
-}) {
+/**
+ * @param {import('./types').BreadcrumbProps} props
+ */
+function Breadcrumb(props) {
+  const {
+    children,
+    routes,
+    showBackButton = true,
+    backButtonRender = defaultBackButtonRender,
+    onBack = noop,
+    separator = "/",
+    ...rest
+  } = props;
+
   let crumbs;
 
   if (routes) {
