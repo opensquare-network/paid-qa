@@ -7,6 +7,8 @@ export type Route = {
 
 export type BreadcrumbProps = {
   children?: React.ReactNode;
+  style?: React.CSSProperties;
+  className?: string;
   routes?: Route[];
   /**
    * @default true
@@ -18,8 +20,12 @@ export type BreadcrumbProps = {
    * @default "/"
    */
   separator?: React.ReactNode;
-  style?: React.CSSProperties;
-  className?: string;
+  itemRender?: (
+    route: Route,
+    index: number,
+    routes: Route[],
+    isLast: boolean
+  ) => React.ReactNode;
 };
 
 export type BreadcrumbItemProps = Pick<
