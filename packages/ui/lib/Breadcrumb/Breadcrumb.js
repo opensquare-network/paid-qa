@@ -40,6 +40,7 @@ const BackButton = styled.span`
 const CrumbsWrapper = styled.ul`
   padding-left: 0;
   display: flex;
+  margin: 0;
 `;
 
 function noop() {}
