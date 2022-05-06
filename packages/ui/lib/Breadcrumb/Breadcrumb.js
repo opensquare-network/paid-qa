@@ -74,7 +74,7 @@ function Breadcrumb(props) {
       const isLast = index === elements.length - 1;
 
       const crumb = cloneElement(element, {
-        separator: isLast ? null : separator,
+        separator,
         disabled: isLast,
         key: index,
       });

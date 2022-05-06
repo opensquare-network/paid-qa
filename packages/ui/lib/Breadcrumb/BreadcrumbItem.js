@@ -6,6 +6,12 @@ import { p_16_semibold } from "../styles/textStyles";
 const Wrapper = styled.li`
   list-style: none;
   ${p_16_semibold}
+
+  :last-child {
+    .separator {
+      display: none;
+    }
+  }
 `;
 
 const Item = styled.span`
@@ -54,7 +60,7 @@ function BreadcrumbItem(props) {
         <Item disabled={disabled} onClick={onClick} {...rest}>
           {children}
         </Item>
-        {separator && <Separator>{separator}</Separator>}
+        {separator && <Separator className="separator">{separator}</Separator>}
       </Wrapper>
     );
   }
