@@ -44,7 +44,7 @@ function defaultBackButtonRender(button) {
   return button;
 }
 
-function defaultItemRender(route, _routes, isLast) {
+function defaultItemRender(route, _routeIndex, _routes, isLast) {
   return isLast ? (
     <span>{route.name}</span>
   ) : (
@@ -74,16 +74,16 @@ function Breadcrumb(props) {
 
   let crumbs;
   if (routes && routes.length > 0) {
-    crumbs = routes.map((route) => {
+    crumbs = routes.map((route, index) => {
       const isLast = routes.indexOf(route) === routes.length - 1;
 
       return (
         <BreadcrumbItem
-          key={route.link}
+          key={route.link || index}
           disabled={isLast}
           separator={separator}
         >
-          {itemRender(route, routes, isLast)}
+          {itemRender(route, index, routes, isLast)}
         </BreadcrumbItem>
       );
     });
