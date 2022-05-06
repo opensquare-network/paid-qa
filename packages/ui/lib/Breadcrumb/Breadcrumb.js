@@ -48,6 +48,19 @@ function defaultBackButtonRender(button) {
   return button;
 }
 
+function defaultItemRender(route, _routes, isLast) {
+  return isLast ? (
+    <span>{route.name}</span>
+  ) : (
+    <a href={`#/${getRouteLink(route.link)}`}>{route.name}</a>
+  );
+}
+
+function getRouteLink(link) {
+  link = link.replace(/^\//, "");
+  return link;
+}
+
 /**
  * @param {import('./types').BreadcrumbProps} props
  */
@@ -59,12 +72,25 @@ function Breadcrumb(props) {
     backButtonRender = defaultBackButtonRender,
     onBack = noop,
     separator = "/",
+    itemRender = defaultItemRender,
     ...rest
   } = props;
 
   let crumbs;
+  if (routes && routes.length > 0) {
+    crumbs = routes.map((route) => {
+      const isLast = routes.indexOf(route) === routes.length - 1;
 
-  if (routes) {
+      return (
+        <BreadcrumbItem
+          key={route.link}
+          disabled={isLast}
+          separator={separator}
+        >
+          {itemRender(route, routes, isLast)}
+        </BreadcrumbItem>
+      );
+    });
   } else if (children) {
     crumbs = childrenToArray(children).map((element, index, elements) => {
       if (!element) {
