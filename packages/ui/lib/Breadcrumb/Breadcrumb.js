@@ -40,10 +40,6 @@ const CrumbsWrapper = styled.ol`
 
 function noop() {}
 
-function childrenToArray(children) {
-  return React.Children.toArray(children);
-}
-
 function defaultBackButtonRender(button) {
   return button;
 }
@@ -92,21 +88,23 @@ function Breadcrumb(props) {
       );
     });
   } else if (children) {
-    crumbs = childrenToArray(children).map((element, index, elements) => {
-      if (!element) {
-        return element;
+    crumbs = React.Children.toArray(children).map(
+      (element, index, elements) => {
+        if (!element) {
+          return element;
+        }
+
+        const isLast = index === elements.length - 1;
+
+        const crumb = cloneElement(element, {
+          separator,
+          disabled: isLast,
+          key: index,
+        });
+
+        return crumb;
       }
-
-      const isLast = index === elements.length - 1;
-
-      const crumb = cloneElement(element, {
-        separator,
-        disabled: isLast,
-        key: index,
-      });
-
-      return crumb;
-    });
+    );
   }
 
   return (
