@@ -19,6 +19,7 @@ const Item = styled.span`
     cursor: pointer;
 
     :hover {
+      color: inherit;
       text-decoration: underline;
     }
   }
