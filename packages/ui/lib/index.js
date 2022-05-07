@@ -14,9 +14,9 @@ import NoData from "./NoData";
 import Header from "./Header";
 import List from "./List";
 import Time from "./Time";
+import Card from "./Card";
 //styled
 import Button from "./styled/Button";
-import Card from "./styled/Card";
 import Container from "./styled/Container";
 import DividerWrapper from "./styled/DividerWrapper";
 import Dropdown from "./styled/Dropdown";
