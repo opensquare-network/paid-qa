@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import Container from "@osn/common-ui/lib/styled/Container";
+import { NoData, Pagination, Container } from "@osn/common-ui";
 import Header from "../components/Notification/Header";
 import NotificationList from "../components/Notification/NotificationList";
 import DiscussionItemList from "components/Notification/DiscussionItemList";
@@ -9,10 +9,8 @@ import RewardItemList from "components/Notification/RewardItemList";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
-import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { useNotifications } from "../utils/hooks";
-import NoData from "@osn/common-ui/lib/NoData";
 
 const Wrapper = styled.div`
   position: relative;
@@ -63,10 +61,11 @@ export default function Notifications() {
             <DiscussionItemList {...{ notifications }} />
           )}
           {tab === "rewards" && <RewardItemList {...{ notifications }} />}
+
+          {notifications?.items?.length === 0 && (
+            <NoData message={"No current records"} />
+          )}
         </ContentWrapper>
-        {notifications?.items?.length === 0 && (
-          <NoData message={"No current records"} />
-        )}
         <Pagination
           {...{ page, setPage, pageSize }}
           total={notifications?.total}
