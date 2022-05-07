@@ -12,6 +12,7 @@ import Tag from "./Tag";
 import RichEditor from "./RichEdit";
 import NoData from "./NoData";
 import Header from "./Header";
+import List from "./List";
 //styled
 import Button from "./styled/Button";
 import Card from "./styled/Card";
@@ -61,4 +62,5 @@ export {
   Pagination,
   ProgressBar,
   SubTitle,
+  List,
 };
