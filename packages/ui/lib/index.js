@@ -13,6 +13,7 @@ import RichEditor from "./RichEdit";
 import NoData from "./NoData";
 import Header from "./Header";
 import List from "./List";
+import Time from "./Time";
 //styled
 import Button from "./styled/Button";
 import Card from "./styled/Card";
@@ -63,4 +64,5 @@ export {
   ProgressBar,
   SubTitle,
   List,
+  Time,
 };
