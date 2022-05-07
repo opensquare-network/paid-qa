@@ -3,9 +3,6 @@ import styled from "styled-components";
 
 import { NoData, Pagination, Container, List } from "@osn/common-ui";
 import Header from "../components/Notification/Header";
-import NotificationList from "../components/Notification/NotificationList";
-import DiscussionItemList from "components/Notification/DiscussionItemList";
-import RewardItemList from "components/Notification/RewardItemList";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
