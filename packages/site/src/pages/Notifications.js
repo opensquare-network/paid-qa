@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { NoData, Pagination, Container } from "@osn/common-ui";
+import { NoData, Pagination, Container, List } from "@osn/common-ui";
 import Header from "../components/Notification/Header";
 import NotificationList from "../components/Notification/NotificationList";
 import DiscussionItemList from "components/Notification/DiscussionItemList";
@@ -11,6 +11,7 @@ import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { useNotifications } from "../utils/hooks";
+import NotificationItem from "../components/Notification/NotificationItem";
 
 const Wrapper = styled.div`
   position: relative;
@@ -19,7 +20,7 @@ const Wrapper = styled.div`
 
 const ContentWrapper = styled.div`
   position: relative;
-  margin-bottom: 20px;
+  margin: 20px 0;
   .markdown-content {
     max-width: initial;
     display: -webkit-box;
@@ -53,19 +54,23 @@ export default function Notifications() {
       <Header tab={tab} setTab={setTab} />
       <Container>
         <ContentWrapper>
-          {isLoading && <ListLoader style={{ marginTop: 20 }} />}
-          {tab === "notifications" && (
-            <NotificationList {...{ notifications }} />
-          )}
-          {tab === "discussions" && (
-            <DiscussionItemList {...{ notifications }} />
-          )}
-          {tab === "rewards" && <RewardItemList {...{ notifications }} />}
+          {isLoading && <ListLoader />}
+
+          <List
+            gap={20}
+            data={notifications?.items}
+            itemRender={(item) => (
+              <List.Item>
+                <NotificationItem data={item}></NotificationItem>
+              </List.Item>
+            )}
+          />
 
           {notifications?.items?.length === 0 && (
-            <NoData message={"No current records"} />
+            <NoData message={"No notifications"} />
           )}
         </ContentWrapper>
+
         <Pagination
           {...{ page, setPage, pageSize }}
           total={notifications?.total}
