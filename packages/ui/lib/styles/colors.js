@@ -11,4 +11,5 @@ export const secondary_red_500 = "#EE4444";
 // text
 export const text_light_major = "#fff";
 export const text_dark_major = "#1e2134";
+export const text_dark_minor = "#506176";
 export const text_dark_accessory = "#a1a8b3";
