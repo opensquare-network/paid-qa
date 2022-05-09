@@ -8,7 +8,7 @@ import { accountSelector } from "store/reducers/accountSlice";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { useNotifications } from "../utils/hooks";
 import NotificationItem from "../components/Notification/NotificationItem";
-import NotificationTabs from "../components/Notification/Tabs";
+import NotificationTabs from "../components/Notification/NotificationTabs";
 
 const Wrapper = styled.div`
   position: relative;
