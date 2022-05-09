@@ -42,9 +42,17 @@ const InfoWrapper = styled(FlexBetween)`
 `;
 const ReplyContent = styled.div`
   color: ${text_dark_minor};
+
+  display: -webkit-box;
+  overflow: hidden;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    -webkit-line-clamp: 3;
+  }
 `;
 const Type = styled.div`
   text-transform: capitalize;
