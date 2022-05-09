@@ -89,10 +89,11 @@ export default function NotificationItem({ data }) {
     data: { topic, answer, support },
   } = data;
 
-  const content = assertType(type, "reply") && answer.content;
+  const isReply = assertType(type, "reply");
+  const isSupport = assertType(type, "support");
 
   let headRender = defaultHeadRender;
-  if (assertType(type, "support")) {
+  if (isSupport) {
     headRender = (type, title) => (
       <>
         {type}
@@ -130,7 +131,7 @@ export default function NotificationItem({ data }) {
         </ItemHeader>
       }
     >
-      {content && <ItemContent>{content}</ItemContent>}
+      {isReply && <ItemContent>{answer.content}</ItemContent>}
     </Card>
   );
 }
