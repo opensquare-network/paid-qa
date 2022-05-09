@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import OsnHeader from "@osn/common-ui/lib/Header";
+import { Header, Flex, FlexBetween } from "@osn/common-ui";
 import NotificationBell from "./NotificationBell";
 import ConnectModal from "./ConnectModal";
 import { accountSelector } from "../store/reducers/accountSlice";
@@ -21,21 +21,19 @@ import ProductSwitch from "./ProductSwitch";
 import { MOBILE_SIZE } from "@osn/consts";
 import { NavLink } from "react-router-dom";
 
-const RightWrapper = styled.div`
-  display: flex;
-
+const RightWrapper = styled(Flex)`
   > :not(:first-child) {
     margin-left: 16px;
   }
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled(FlexBetween)`
   display: flex;
   justify-content: space-between;
   width: 100%;
 `;
 
-export default function Header() {
+export default function PageHeader() {
   const dispatch = useDispatch();
   const windowSize = useWindowSize();
   const showConnect = useSelector(showConnectSelector);
@@ -52,7 +50,7 @@ export default function Header() {
   useUpdateNodesDelay(account?.network);
 
   return (
-    <OsnHeader
+    <Header
       logoRender={(logo) => (
         <NavLink style={{ cursor: "pointer" }} to="/">
           {logo}
@@ -84,6 +82,6 @@ export default function Header() {
           {showConnect && <ConnectModal />}
         </RightWrapper>
       </ContentWrapper>
-    </OsnHeader>
+    </Header>
   );
 }

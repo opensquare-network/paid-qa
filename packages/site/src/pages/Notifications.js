@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import Container from "@osn/common-ui/lib/styled/Container";
-import Header from "../components/Notification/Header";
-import NotificationList from "../components/Notification/NotificationList";
-import DiscussionItemList from "components/Notification/DiscussionItemList";
-import RewardItemList from "components/Notification/RewardItemList";
+import { NoData, Pagination, Container, List, Flex } from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
-import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { useNotifications } from "../utils/hooks";
-import NoData from "@osn/common-ui/lib/NoData";
+import NotificationItem from "../components/Notification/NotificationItem";
+import NotificationTabs from "../components/Notification/NotificationTabs";
+import { ReactComponent as CheckUnderline } from "@osn/common-ui/lib/imgs/icons/check-underline.svg";
+import { text_dark_minor } from "@osn/common-ui/lib/styles/colors";
+import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   position: relative;
@@ -21,7 +20,7 @@ const Wrapper = styled.div`
 
 const ContentWrapper = styled.div`
   position: relative;
-  margin-bottom: 20px;
+  margin: 20px 0;
   .markdown-content {
     max-width: initial;
     display: -webkit-box;
@@ -29,6 +28,12 @@ const ContentWrapper = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+`;
+
+const ReadAllButton = styled(Flex)`
+  color: ${text_dark_minor};
+  ${p_14_medium};
+  cursor: pointer;
 `;
 
 export default function Notifications() {
@@ -52,21 +57,44 @@ export default function Notifications() {
 
   return (
     <Wrapper>
-      <Header tab={tab} setTab={setTab} />
+      <NotificationTabs
+        items={[
+          { value: "notifications", suffix: notifications?.items?.length },
+        ]}
+        value={tab}
+        setValue={setTab}
+        extra={
+          notifications?.items?.length > 0 && (
+            <ReadAllButton
+              role="button"
+              onClick={clearUnread(account.network, account.address)}
+            >
+              <CheckUnderline style={{ marginRight: 11 }} />
+              Mark all as read
+            </ReadAllButton>
+          )
+        }
+      />
+
       <Container>
         <ContentWrapper>
-          {isLoading && <ListLoader style={{ marginTop: 20 }} />}
-          {tab === "notifications" && (
-            <NotificationList {...{ notifications }} />
+          {isLoading && <ListLoader />}
+
+          <List
+            gap={20}
+            data={notifications?.items}
+            itemRender={(item) => (
+              <List.Item>
+                <NotificationItem data={item}></NotificationItem>
+              </List.Item>
+            )}
+          />
+
+          {notifications?.items?.length === 0 && (
+            <NoData message={"No notifications"} />
           )}
-          {tab === "discussions" && (
-            <DiscussionItemList {...{ notifications }} />
-          )}
-          {tab === "rewards" && <RewardItemList {...{ notifications }} />}
         </ContentWrapper>
-        {notifications?.items?.length === 0 && (
-          <NoData message={"No current records"} />
-        )}
+
         <Pagination
           {...{ page, setPage, pageSize }}
           total={notifications?.total}

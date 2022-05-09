@@ -27,6 +27,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.flatten": "^4.4.0",
     "lodash.uniqwith": "^4.5.0",
+    "micromark": "^3.0.10",
     "multiformats": "^9.6.4",
     "react": "^17.0.2",
     "react-content-loader": "^6.2.0",
