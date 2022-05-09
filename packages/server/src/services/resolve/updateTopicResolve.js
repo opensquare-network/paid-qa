@@ -1,5 +1,5 @@
 const { Topic, Resolve, Reward, Notification } = require("../../models");
-const { isSamePublicKey, toPublicKey } = require("../../utils/address");
+const { isSamePublicKey } = require("../../utils/address");
 const { PostStatus } = require("../../utils/constants");
 const uniq = require("lodash.uniq");
 
@@ -20,16 +20,20 @@ async function updateTopicResolve(topicCid) {
   );
 
   if (allResolved) {
-    const topic = await Topic.findOne({ cid: topicCid }).populate("rewards");
-    const sponsors = uniq(
-      topic?.rewards?.map((reward) => toPublicKey(reward.sponsor)) || []
-    );
+    const topic = await Topic.findOne({ cid: topicCid })
+      .populate("rewards")
+      .populate("answers");
+    const sponsors =
+      topic?.rewards?.map((reward) => reward.sponsorPublicKey) || [];
+    const answerers =
+      topic?.answers?.map((answer) => answer.signerPublicKey) || [];
+    const notified = uniq([...sponsors, ...answerers]);
 
-    // Create notification for all sponsors when topic is resolved
-    if (sponsors.length > 0) {
+    // Create notification for participants when topic is resolved
+    if (notified.length > 0) {
       await Notification.create(
-        sponsors.map((sponsor) => ({
-          owner: sponsor,
+        notified.map((publicKey) => ({
+          owner: publicKey,
           type: ["topicResolved"],
           data: {
             topic: topic._id,
