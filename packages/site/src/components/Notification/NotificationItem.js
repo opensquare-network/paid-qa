@@ -1,8 +1,12 @@
 import styled, { css } from "styled-components";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import NetworkUser from "../User/NetworkUser";
-import { Time, Card } from "@osn/common-ui";
-import { text_dark_minor } from "@osn/common-ui/lib/styles/colors";
+import { Time, Card, Flex } from "@osn/common-ui";
+import {
+  text_dark_minor,
+  primary_turquoise_500,
+} from "@osn/common-ui/lib/styles/colors";
+import { ReactComponent as ReadStatus } from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
 
 const dot = css`
@@ -56,6 +60,12 @@ const Title = styled.p`
   }
 `;
 
+const UnreadStatus = styled.div`
+  width: 8px;
+  height: 8px;
+  background-color: ${primary_turquoise_500};
+`;
+
 const TypeMap = {
   topicResolved: "resolved",
   support: "supported",
@@ -75,6 +85,7 @@ function defaultHeadRender(type, title) {
 export default function NotificationItem({ data }) {
   const {
     type,
+    read,
     data: { topic, answer, support },
   } = data;
 
@@ -114,8 +125,7 @@ export default function NotificationItem({ data }) {
               tooltipPosition="down"
             ></NetworkUser>
             <Time time={topic.createdAt} />
-            {/* TODO: read or not? */}
-            <div></div>
+            <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
           </ItemHeaderRight>
         </ItemHeader>
       }
