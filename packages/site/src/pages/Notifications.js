@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { NoData, Pagination, Container, List } from "@osn/common-ui";
+import { NoData, Pagination, Container, List, Flex } from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -9,6 +9,9 @@ import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { useNotifications } from "../utils/hooks";
 import NotificationItem from "../components/Notification/NotificationItem";
 import NotificationTabs from "../components/Notification/NotificationTabs";
+import { ReactComponent as CheckUnderline } from "@osn/common-ui/lib/imgs/icons/check-underline.svg";
+import { text_dark_minor } from "@osn/common-ui/lib/styles/colors";
+import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 
 const Wrapper = styled.div`
   position: relative;
@@ -25,6 +28,12 @@ const ContentWrapper = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+`;
+
+const MarkAllAsReadButton = styled(Flex)`
+  color: ${text_dark_minor};
+  ${p_14_medium};
+  cursor: pointer;
 `;
 
 export default function Notifications() {
@@ -54,6 +63,15 @@ export default function Notifications() {
         ]}
         value={tab}
         setValue={setTab}
+        extra={
+          <MarkAllAsReadButton
+            role="button"
+            onClick={clearUnread(account.network, account.address)}
+          >
+            <CheckUnderline style={{ marginRight: 11 }} />
+            Mark all as read
+          </MarkAllAsReadButton>
+        }
       />
 
       <Container>
