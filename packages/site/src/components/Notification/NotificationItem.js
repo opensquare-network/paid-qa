@@ -1,13 +1,14 @@
 import styled, { css } from "styled-components";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import NetworkUser from "../User/NetworkUser";
-import { Time, Card, Flex } from "@osn/common-ui";
+import { Time, Card, Flex, FlexBetween } from "@osn/common-ui";
 import {
   text_dark_minor,
   primary_turquoise_500,
 } from "@osn/common-ui/lib/styles/colors";
 import { ReactComponent as ReadStatus } from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
+import { MOBILE_SIZE } from "@osn/consts";
 
 const dot = css`
   &::after {
@@ -15,30 +16,44 @@ const dot = css`
     margin: 0 8px;
   }
 `;
-const ItemHeader = styled.div`
-  display: flex;
+const ItemHeader = styled(Flex)`
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    display: block;
+  }
 `;
-const ItemHeaderLeft = styled.div`
+const ItemHeaderLeft = styled(Flex)`
   flex: 1;
   max-width: 50%;
-  display: flex;
-  align-items: center;
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    max-width: 100%;
+    display: block;
+  }
 `;
-const ItemHeaderRight = styled.div`
+const ItemHeaderRight = styled(FlexBetween)`
   flex: 1;
   max-width: 50%;
-  display: flex;
-  justify-content: space-between;
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    max-width: 100%;
+    margin-top: 6px;
+  }
 `;
 const ItemContent = styled.div`
   color: ${text_dark_minor};
 `;
-const Type = styled.span`
+const Type = styled.div`
   text-transform: capitalize;
   color: ${text_dark_minor};
   ${dot}
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    &::after {
+      display: none;
+    }
+  }
 `;
-const Amount = styled.p`
+const Amount = styled.span`
   ${p_14_medium};
   white-space: nowrap;
   margin: 0;
@@ -46,9 +61,6 @@ const Amount = styled.p`
 `;
 const Title = styled.p`
   ${p_14_medium};
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
   margin: 0;
 
   a {
@@ -58,10 +70,24 @@ const Title = styled.p`
 
     cursor: pointer;
   }
+
+  @media screen and (min-width: ${MOBILE_SIZE - 1}px) {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    margin-top: 4px;
+  }
 `;
 
 const StatusWrapper = styled(Flex)`
   width: 18px;
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    display: none;
+  }
 `;
 const UnreadStatus = styled.div`
   width: 8px;
@@ -76,15 +102,6 @@ const TypeMap = {
 
 const assertType = (t, expect) => t.includes(expect);
 
-function defaultHeadRender(type, title) {
-  return (
-    <>
-      {type}
-      {title}
-    </>
-  );
-}
-
 export default function NotificationItem({ data }) {
   const {
     type,
@@ -95,16 +112,12 @@ export default function NotificationItem({ data }) {
   const isReply = assertType(type, "reply");
   const isSupport = assertType(type, "support");
 
-  let headRender = defaultHeadRender;
+  let titlePrefix;
   if (isSupport) {
-    headRender = (type, title) => (
-      <>
-        {type}
-        <Amount>
-          {support?.bounty?.value} {support?.bounty?.symbol}
-        </Amount>
-        {title}
-      </>
+    titlePrefix = (
+      <Amount>
+        {support?.bounty?.value} {support?.bounty?.symbol}
+      </Amount>
     );
   }
 
@@ -114,12 +127,11 @@ export default function NotificationItem({ data }) {
       head={
         <ItemHeader>
           <ItemHeaderLeft>
-            {headRender(
-              <Type>{TypeMap[type] || type}</Type>,
-              <Title>
-                <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
-              </Title>
-            )}
+            <Type>{TypeMap[type] || type}</Type>
+            <Title>
+              {titlePrefix}
+              <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
+            </Title>
           </ItemHeaderLeft>
 
           <ItemHeaderRight>
