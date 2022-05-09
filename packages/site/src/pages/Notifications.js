@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { NoData, Pagination, Container, List } from "@osn/common-ui";
-import Header from "../components/Notification/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { useNotifications } from "../utils/hooks";
 import NotificationItem from "../components/Notification/NotificationItem";
+import NotificationTabs from "../components/Notification/Tabs";
 
 const Wrapper = styled.div`
   position: relative;
@@ -48,7 +48,14 @@ export default function Notifications() {
 
   return (
     <Wrapper>
-      <Header tab={tab} setTab={setTab} />
+      <NotificationTabs
+        items={[
+          { value: "notifications", suffix: notifications?.items?.length },
+        ]}
+        value={tab}
+        setValue={setTab}
+      />
+
       <Container>
         <ContentWrapper>
           {isLoading && <ListLoader />}
