@@ -1,4 +1,3 @@
-// not ready for public
 import React from "react";
 import styled, { css } from "styled-components";
 import { p_14_medium, p_14_normal, p_16_semibold } from "../styles/textStyles";
