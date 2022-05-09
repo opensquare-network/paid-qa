@@ -8,7 +8,6 @@ import FlexBetween from "../styled/FlexBetween";
 const Wrapper = styled(FlexBetween)`
   overflow-x: scroll;
   ${no_scroll_bar};
-  display: flex;
 
   > :not(:first-child) {
     margin-left: 40px;
