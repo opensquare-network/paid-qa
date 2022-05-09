@@ -30,7 +30,7 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const MarkAllAsReadButton = styled(Flex)`
+const ReadAllButton = styled(Flex)`
   color: ${text_dark_minor};
   ${p_14_medium};
   cursor: pointer;
@@ -65,13 +65,13 @@ export default function Notifications() {
         setValue={setTab}
         extra={
           notifications?.items?.length > 0 && (
-            <MarkAllAsReadButton
+            <ReadAllButton
               role="button"
               onClick={clearUnread(account.network, account.address)}
             >
               <CheckUnderline style={{ marginRight: 11 }} />
               Mark all as read
-            </MarkAllAsReadButton>
+            </ReadAllButton>
           )
         }
       />
