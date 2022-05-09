@@ -64,13 +64,15 @@ export default function Notifications() {
         value={tab}
         setValue={setTab}
         extra={
-          <MarkAllAsReadButton
-            role="button"
-            onClick={clearUnread(account.network, account.address)}
-          >
-            <CheckUnderline style={{ marginRight: 11 }} />
-            Mark all as read
-          </MarkAllAsReadButton>
+          notifications?.items?.length > 0 && (
+            <MarkAllAsReadButton
+              role="button"
+              onClick={clearUnread(account.network, account.address)}
+            >
+              <CheckUnderline style={{ marginRight: 11 }} />
+              Mark all as read
+            </MarkAllAsReadButton>
+          )
         }
       />
 
