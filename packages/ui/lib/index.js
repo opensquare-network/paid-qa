@@ -12,9 +12,12 @@ import Tag from "./Tag";
 import RichEditor from "./RichEdit";
 import NoData from "./NoData";
 import Header from "./Header";
+import List from "./List";
+import Time from "./Time";
+import Card from "./Card";
+import Tabs from "./Tabs";
 //styled
 import Button from "./styled/Button";
-import Card from "./styled/Card";
 import Container from "./styled/Container";
 import DividerWrapper from "./styled/DividerWrapper";
 import Dropdown from "./styled/Dropdown";
@@ -61,4 +64,7 @@ export {
   Pagination,
   ProgressBar,
   SubTitle,
+  List,
+  Time,
+  Tabs,
 };

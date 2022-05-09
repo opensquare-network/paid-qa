@@ -3,11 +3,11 @@ import styled, { css } from "styled-components";
 import { p_16_semibold } from "../styles/textStyles";
 import DividerWrapper from "../styled/DividerWrapper";
 import { no_scroll_bar } from "../styles/componentCss";
+import FlexBetween from "../styled/FlexBetween";
 
-const Wrapper = styled.div`
+const Wrapper = styled(FlexBetween)`
   overflow-x: scroll;
   ${no_scroll_bar};
-  display: flex;
 
   > :not(:first-child) {
     margin-left: 40px;
@@ -51,7 +51,7 @@ const Capitalize = styled.span`
   text-transform: capitalize;
 `;
 
-export default function Tabs({ items = [], value, setValue }) {
+export default function Tabs({ items = [], extra, value, setValue }) {
   return (
     <Wrapper>
       {items.map((item, index) => {
@@ -69,6 +69,8 @@ export default function Tabs({ items = [], value, setValue }) {
           </Item>
         );
       })}
+
+      {extra && <div className="tabs-extra">{extra}</div>}
     </Wrapper>
   );
 }
