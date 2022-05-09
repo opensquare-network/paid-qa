@@ -1,9 +1,10 @@
 // not ready for public
 import React from "react";
 import styled, { css } from "styled-components";
-import { p_14_normal } from "../styles/textStyles";
+import { p_14_medium, p_14_normal, p_16_semibold } from "../styles/textStyles";
 import { netural_grey_200 } from "../styles/colors";
 import { MOBILE_SIZE } from "@osn/consts";
+import FlexBetween from "../styled/FlexBetween";
 
 const CardWrapper = styled.div`
   ${p_14_normal};
@@ -29,6 +30,17 @@ const CardWrapper = styled.div`
   }
 `;
 
+const HeadTitle = styled.p`
+  margin: 0;
+  ${p_16_semibold}
+
+  ${(p) =>
+    p.size === "small" &&
+    css`
+      ${p_14_medium}
+    `}
+`;
+
 const Divider = styled.div`
   height: 1px;
   background-color: ${netural_grey_200};
@@ -36,7 +48,26 @@ const Divider = styled.div`
 `;
 
 function Card(props) {
-  const { children, head, size, shadow = true, ...restProps } = props;
+  const {
+    children,
+    title,
+    extra,
+    head: customizeHead,
+    size,
+    shadow = true,
+    ...restProps
+  } = props;
+
+  const head = customizeHead || (
+    <FlexBetween>
+      {title && (
+        <HeadTitle size={size} className="head-title">
+          {title}
+        </HeadTitle>
+      )}
+      {extra && <div className="head-extra">{extra}</div>}
+    </FlexBetween>
+  );
 
   return (
     <CardWrapper {...restProps} size={size} shadow={shadow} className="card">
