@@ -15,6 +15,7 @@ import Header from "./Header";
 import List from "./List";
 import Time from "./Time";
 import Card from "./Card";
+import Tabs from "./Tabs";
 //styled
 import Button from "./styled/Button";
 import Container from "./styled/Container";
@@ -65,4 +66,5 @@ export {
   SubTitle,
   List,
   Time,
+  Tabs,
 };
