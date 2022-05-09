@@ -16,12 +16,12 @@ const dot = css`
     margin: 0 8px;
   }
 `;
-const ItemHeader = styled(Flex)`
+const Head = styled(Flex)`
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     display: block;
   }
 `;
-const ItemHeaderLeft = styled(Flex)`
+const TitleWrapper = styled(Flex)`
   flex: 1;
   max-width: 50%;
 
@@ -30,7 +30,7 @@ const ItemHeaderLeft = styled(Flex)`
     display: block;
   }
 `;
-const ItemHeaderRight = styled(FlexBetween)`
+const InfoWrapper = styled(FlexBetween)`
   flex: 1;
   max-width: 50%;
 
@@ -125,30 +125,32 @@ export default function NotificationItem({ data }) {
     <Card
       size="small"
       head={
-        <ItemHeader>
-          <ItemHeaderLeft>
+        <Head>
+          <TitleWrapper>
             <Type>{TypeMap[type] || type}</Type>
             <Title>
               {titlePrefix}
               <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
             </Title>
-          </ItemHeaderLeft>
+          </TitleWrapper>
 
-          <ItemHeaderRight>
+          <InfoWrapper>
             <NetworkUser
               address={topic.signer}
               network={topic.network}
               iconSize={16}
               tooltipPosition="down"
             ></NetworkUser>
+
             <Time time={topic.createdAt} />
+
             <StatusWrapper>
               {isReply && (
                 <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
               )}
             </StatusWrapper>
-          </ItemHeaderRight>
-        </ItemHeader>
+          </InfoWrapper>
+        </Head>
       }
     >
       {isReply && <ItemContent>{answer.content}</ItemContent>}
