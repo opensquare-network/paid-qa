@@ -1,3 +1,6 @@
+// primary
+export const primary_turquoise_500 = "#04D2C5";
+
 // netural
 export const netural_grey_200 = "#F0F3F8";
 export const netural_grey_300 = "#e2e8f0";
