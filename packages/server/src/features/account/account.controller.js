@@ -1,3 +1,5 @@
+const flatten = require("lodash.flatten");
+const BigNumber = require("bignumber.js");
 const { Topic, Reward, Fund, Answer } = require("../../models");
 const { toPublicKey } = require("../../utils/address");
 const { extractPage } = require("../../utils/pagination");
@@ -30,129 +32,107 @@ async function getAccountPromisedTopics(ctx) {
 
   const signerPublicKey = toPublicKey(address);
 
-  // // Load topics with promise time
-  // const topics = await Reward.aggregate([
-  //   { $match: { sponsorPublicKey: signerPublicKey } },
-  //   {
-  //     $group: {
-  //       _id: "$_id.topicCid",
-  //       promiseTime: { $max: "$indexer.blockTime" },
-  //     },
-  //   },
-  //   {
-  //     $project: {
-  //       _id: 0,
-  //       cid: "$_id",
-  //       promiseTime: "$promiseTime",
-  //     }
-  //   }
-  // ]);
+  // Load topics with promise time
+  const topics = await Reward.aggregate([
+    { $match: { sponsorPublicKey: signerPublicKey } },
+    {
+      $group: {
+        _id: "$topicCid",
+        promiseTime: { $max: "$indexer.blockTime" },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        cid: "$_id",
+        promiseTime: "$promiseTime",
+      },
+    },
+  ]);
 
-  // // Reterive topics resolves
-  // await Topic.populate(topics, {
-  //   path: "resolves",
-  //   match: {
-  //     sponsorPublicKey: signerPublicKey,
-  //   }
-  // });
-
-  // // Sort topics with resolves and promise time
-  // topics.sort((a, b) => {
-  //   const resolvesSort = a.resolves.length - b.resolves.length;
-  //   if (resolvesSort !== 0) {
-  //     return resolvesSort;
-  //   }
-  //   return b.promiseTime - a.promiseTime;
-  // });
-
-  // // Get paginated result
-  // const paginatedTopics = topics.slice((page - 1) * pageSize, page * pageSize);
-
-  // await Topic.populate(paginatedTopics, {
-  //   path: "rewards",
-  //   match: {
-  //     sponsorPublicKey: signerPublicKey,
-  //   }
-  // });
-
-  const rewards = await Reward.find({ sponsorPublicKey: signerPublicKey });
-  const accountPromises = [];
-
-  rewards.forEach((reward) => {
-    let topicPromises = accountPromises.find(
-      (item) => item.topicCid === reward.topicCid
-    );
-    if (!topicPromises) {
-      topicPromises = accountPromises.push({
-        topicCid: reward.topicCid,
-        promises: [],
-        promiseTime: 0,
-      });
-    }
-
-    const item = topicPromises.promises.find(
-      (item) => item.symbol === reward.bounty.symbol
-    );
-    if (item) {
-      item.value = new BigNumber(item.value || 0)
-        .plus(reward.bounty.value)
-        .toFixed();
-    } else {
-      topicPromises.promises.push({
-        symbol: reward.bounty.symbol,
-        value: reward.bounty.value,
-      });
-    }
-
-    topicPromises.promiseTime = Math.max(
-      topicPromises.promiseTime,
-      reward.indexer.blockTime
-    );
+  // Reterive topics resolves
+  await Topic.populate(topics, {
+    path: "resolves",
+    match: {
+      sponsorPublicKey: signerPublicKey,
+    },
   });
 
-  // Reterive topics and resolves
-  for (const topicPromises of accountPromises) {
-    const topic = await Topic.findOne({ cid: topicPromises.topicCid }).populate(
-      {
-        path: "resolves",
-        match: {
-          sponsorPublicKey: signerPublicKey,
-        },
-      }
-    );
-    topicPromises.topic = topic;
-    topicPromises.resolves = topic.resolves;
-  }
-
-  // Sort result with resolve and promise time
-  topicPromises.sort((a, b) => {
-    const resolveCount = b.resolves.length - a.resolves.length;
-    if (resolveCount !== 0) {
-      return resolveCount;
+  // Sort topics with resolves and promise time
+  topics.sort((a, b) => {
+    const resolvesSort = a.resolves.length - b.resolves.length;
+    if (resolvesSort !== 0) {
+      return resolvesSort;
     }
     return b.promiseTime - a.promiseTime;
   });
 
-  // Pick paginated result
-  const paginatedTopicPromises = accountPromises.slice(
-    (page - 1) * pageSize,
-    page * pageSize
-  );
+  // Get paginated result
+  const paginatedTopics = topics.slice((page - 1) * pageSize, page * pageSize);
 
-  // Caculate funds
-  for (const topicPromises of paginatedTopicPromises) {
-    const answers = await Answer.find({ topicCid: topicPromises.topicCid });
-    const refCids = [
-      topicPromises.topicCid,
-      ...answers.map((answer) => answer.refCid),
-    ];
-    const funds = await Fund.find({
+  await Topic.populate(paginatedTopics, {
+    path: "rewards",
+    match: {
       sponsorPublicKey: signerPublicKey,
-      refCid: { $in: refCids },
-    });
-    topicPromises.funds = topicPromises.funds || [];
-    for (const fund of funds) {
-      const item = topicPromises.funds.find(
+    },
+  });
+
+  await Topic.populate(paginatedTopics, {
+    path: "funds",
+    match: {
+      sponsorPublicKey: signerPublicKey,
+    },
+  });
+
+  await Topic.populate(paginatedTopics, {
+    path: "answers",
+    populate: {
+      path: "funds",
+      match: {
+        sponsorPublicKey: signerPublicKey,
+      },
+    },
+  });
+
+  // Load topic details
+  const topicDetails = await Topic.find({
+    cid: { $in: paginatedTopics.map((item) => item.cid) },
+  });
+  for (const topic of paginatedTopics) {
+    topic.topic = topicDetails.find((item) => item.cid === topic.cid);
+  }
+
+  // Calculate supports
+  for (const topic of paginatedTopics) {
+    topic.promiseStats = [];
+
+    for (const reward of topic.rewards) {
+      const item = topic.promiseStats.find(
+        (item) => item.symbol === reward.bounty.symbol
+      );
+      if (item) {
+        item.value = new BigNumber(item.value || 0)
+          .plus(reward.bounty.value)
+          .toFixed();
+      } else {
+        topic.promiseStats.push({
+          symbol: reward.bounty.symbol,
+          value: reward.bounty.value,
+        });
+      }
+    }
+  }
+
+  // Calcuate funds
+  for (const topic of paginatedTopics) {
+    topic.fundStats = [];
+
+    const allFunds = [
+      ...topic.funds,
+      ...flatten(topic.answers.map((answer) => answer.funds)),
+    ];
+    for (const fund of allFunds) {
+      const item = topic.fundStats.find(
         (item) => item.symbol === fund.bounty.symbol
       );
       if (item) {
@@ -160,7 +140,7 @@ async function getAccountPromisedTopics(ctx) {
           .plus(fund.bounty.value)
           .toFixed();
       } else {
-        topicPromises.funds.push({
+        topic.fundStats.push({
           symbol: fund.bounty.symbol,
           value: fund.bounty.value,
         });
@@ -169,143 +149,21 @@ async function getAccountPromisedTopics(ctx) {
   }
 
   ctx.body = {
-    items: paginatedTopicPromises,
+    items: paginatedTopics.map((item) => {
+      return {
+        topicCid: item.cid,
+        resolves: item.resolves,
+        resolvesCount: item.resolves.length,
+        promises: item.promiseStats,
+        funds: item.fundStats,
+        promiseTime: item.promiseTime,
+        topic: item.topic,
+      };
+    }),
     page,
     pageSize,
-    total: accountPromises.length,
+    total: topics.length,
   };
-
-  // const [{ items: promises, total: [{ count: total = 0 } = {}] = [] } = {}] =
-  // await Reward.aggregate([
-  //   { $match: { sponsorPublicKey: signerPublicKey } },
-  //   {
-  //     $group: {
-  //       _id: {
-  //         topicCid: "$topicCid",
-  //         symbol: "$bounty.symbol",
-  //       },
-  //       value: { $sum: "$bounty.value" },
-  //       promiseTime: { $max: "$indexer.blockTime" },
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: "$_id.topicCid",
-  //       promises: {
-  //         $push: {
-  //           value: { $toString: "$value" },
-  //           symbol: "$_id.symbol",
-  //         },
-  //       },
-  //       promiseTime: { $max: "$promiseTime" },
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "answers",
-  //       localField: "_id",
-  //       foreignField: "topicCid",
-  //       as: "answers",
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "funds",
-  //       let: { topicCid: "$_id", answerCid: "$answers.cid" },
-  //       pipeline: [
-  //         {
-  //           $match: {
-  //             sponsorPublicKey: signerPublicKey,
-  //             $expr: {
-  //               $or: [
-  //                 { $eq: ["$refCid", "$$topicCid"] },
-  //                 { $in: ["$refCid", "$$answerCid"] },
-  //               ],
-  //             },
-  //           },
-  //         },
-  //         {
-  //           $group: {
-  //             _id: "$bounty.symbol",
-  //             value: { $sum: "$bounty.value" },
-  //           },
-  //         },
-  //         {
-  //           $project: {
-  //             _id: 0,
-  //             value: { $toString: "$value" },
-  //             symbol: "$_id",
-  //           },
-  //         },
-  //       ],
-  //       as: "funds",
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "topics",
-  //       localField: "_id",
-  //       foreignField: "cid",
-  //       as: "topic",
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "resolves",
-  //       let: { topicCid: "$_id" },
-  //       pipeline: [
-  //         {
-  //           $match: {
-  //             sponsorPublicKey: signerPublicKey,
-  //             $expr: { $eq: ["$topicCid", "$$topicCid"] },
-  //           },
-  //         },
-  //       ],
-  //       as: "resolves",
-  //     },
-  //   },
-  //   {
-  //     $project: {
-  //       topicCid: 1,
-  //       topic: { $first: "$topic" },
-  //       resolves: 1,
-  //       promises: 1,
-  //       funds: 1,
-  //       promiseTime: 1,
-  //     },
-  //   },
-  //   {
-  //     $facet: {
-  //       total: [
-  //         {
-  //           $count: "count",
-  //         },
-  //       ],
-  //       items: [
-  //         {
-  //           $addFields: {
-  //             resolveCount: { $size: "$resolves" },
-  //           },
-  //         },
-  //         {
-  //           $sort: {
-  //             resolveCount: 1,
-  //             promiseTime: -1,
-  //           },
-  //         },
-  //         { $skip: (page - 1) * pageSize },
-  //         { $limit: pageSize },
-  //       ],
-  //     },
-  //   },
-  // ]);
-
-  // ctx.body = {
-  //   items: promises,
-  //   page,
-  //   pageSize,
-  //   total,
-  // };
 }
 
 async function getAccountFunds(ctx) {
