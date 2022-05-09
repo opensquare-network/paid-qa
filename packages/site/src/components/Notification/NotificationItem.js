@@ -121,6 +121,7 @@ export default function NotificationItem({ data }) {
               </Title>
             )}
           </ItemHeaderLeft>
+
           <ItemHeaderRight>
             <NetworkUser
               address={topic.signer}
@@ -129,7 +130,6 @@ export default function NotificationItem({ data }) {
               tooltipPosition="down"
             ></NetworkUser>
             <Time time={topic.createdAt} />
-
             <StatusWrapper>
               {isReply && (
                 <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
