@@ -9,6 +9,7 @@ import {
 import { ReactComponent as ReadStatus } from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/consts";
+import { micromark } from "micromark";
 
 const dot = css`
   &::after {
@@ -39,8 +40,11 @@ const InfoWrapper = styled(FlexBetween)`
     margin-top: 6px;
   }
 `;
-const ItemContent = styled.div`
+const ReplyContent = styled.div`
   color: ${text_dark_minor};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 const Type = styled.div`
   text-transform: capitalize;
@@ -102,6 +106,17 @@ const TypeMap = {
 
 const assertType = (t, expect) => t.includes(expect);
 
+function stripHtml(html = "") {
+  return html.replace(/<\/?[^>]+(>|$)/gi, "");
+}
+
+function extractReplyContent(content) {
+  const html = micromark(content);
+  const text = stripHtml(html);
+
+  return text;
+}
+
 export default function NotificationItem({ data }) {
   const {
     type,
@@ -153,7 +168,9 @@ export default function NotificationItem({ data }) {
         </Head>
       }
     >
-      {isReply && <ItemContent>{answer.content}</ItemContent>}
+      {isReply && (
+        <ReplyContent>{extractReplyContent(answer.content)}</ReplyContent>
+      )}
     </Card>
   );
 }
