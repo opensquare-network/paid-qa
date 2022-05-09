@@ -60,6 +60,9 @@ const Title = styled.p`
   }
 `;
 
+const StatusWrapper = styled(Flex)`
+  width: 18px;
+`;
 const UnreadStatus = styled.div`
   width: 8px;
   height: 8px;
@@ -126,7 +129,12 @@ export default function NotificationItem({ data }) {
               tooltipPosition="down"
             ></NetworkUser>
             <Time time={topic.createdAt} />
-            <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
+
+            <StatusWrapper>
+              {isReply && (
+                <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
+              )}
+            </StatusWrapper>
           </ItemHeaderRight>
         </ItemHeader>
       }
