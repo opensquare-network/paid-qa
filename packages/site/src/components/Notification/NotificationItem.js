@@ -172,9 +172,7 @@ export default function NotificationItem({ data }) {
             <Time time={topic.createdAt} />
 
             <StatusWrapper>
-              {isReply && (
-                <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
-              )}
+              <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
             </StatusWrapper>
           </InfoWrapper>
         </Head>
