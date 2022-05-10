@@ -109,7 +109,8 @@ const UnreadStatus = styled.div`
 
 const TypeMap = {
   topicResolved: "resolved",
-  support: "supported",
+  support: "promised",
+  fund: "funded",
 };
 
 const assertType = (t, expect) => t.includes(expect);
