@@ -4,10 +4,7 @@ import FundButton from "../../FundButton";
 import FundModal from "../../FundModal";
 import Funders from "../../Funders";
 import { ReactComponent as ReplyIcon } from "imgs/icons/reply.svg";
-import {
-  encodeNetworkAddress,
-  isSamePublicKey,
-} from "@osn/common/src/utils/address";
+import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -16,6 +13,7 @@ import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import More from "@osn/common-ui/lib/Icon/More";
 import ReportModal from "../../ReportModal";
 import { useOnClickOutside } from "@osn/common/src/utils/hooks";
+import { useIsOwner } from "../../../utils/hooks";
 
 const Wrapper = styled.div`
   position: relative;
@@ -85,7 +83,7 @@ export default function ActionBar({
   const [showReport, setShowReport] = useState(false);
   const [showMoreActions, setShowMoreActions] = useState(false);
   const account = useSelector(accountSelector);
-  const isOwner = account && isSamePublicKey(account.address, answerOwner);
+  const isOwner = useIsOwner(answerOwner, answerNetwork);
 
   const buttonRef = useRef(null);
   useOnClickOutside(buttonRef, () => setShowMoreActions(false));

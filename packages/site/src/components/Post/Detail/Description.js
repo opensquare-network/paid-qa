@@ -40,6 +40,7 @@ export default function Description({ topic }) {
         topicCid={topic.cid}
         topicOwner={topic.signer}
         funds={topic?.funds}
+        topicNetwork={topic?.network}
       />
     </Wrapper>
   );

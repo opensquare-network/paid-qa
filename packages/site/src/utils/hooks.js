@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
 import getApi from "@osn/common/src/services/chain/api";
@@ -6,6 +6,7 @@ import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import serverApi from "../services/serverApi";
 import { EmptyList, PROJECT_NAME, tabRouterMap } from "./constants";
+import { encodeNetworkAddress } from "@osn/common/src";
 
 export function useApi() {
   const account = useSelector(accountSelector);
@@ -94,4 +95,13 @@ export const useBalance = (account, api) => {
   }, [account?.address, account?.network, api]);
 
   return balance;
+};
+
+export const useIsOwner = (ownerAddress, network) => {
+  const account = useSelector(accountSelector);
+  return (
+    account?.address &&
+    encodeNetworkAddress(account?.address, network) ===
+      encodeNetworkAddress(ownerAddress, network)
+  );
 };

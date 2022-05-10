@@ -5,12 +5,12 @@ import FundModal from "../../FundModal";
 import Funders from "../../Funders";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
-import { isSamePublicKey } from "@osn/common/src/utils/address";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { useOnClickOutside } from "@osn/common/src/utils/hooks";
 import ReportModal from "../../ReportModal";
 import More from "@osn/common-ui/lib/Icon/More";
 import Flex from "@osn/common-ui/lib/styled/Flex";
+import { useIsOwner } from "../../../utils/hooks";
 
 const Wrapper = styled.div`
   position: relative;
@@ -49,11 +49,16 @@ const MoreActionItem = styled(FlexBetween)`
   }
 `;
 
-export default function ActionBar({ topicCid, topicOwner, funds }) {
+export default function ActionBar({
+  topicCid,
+  topicOwner,
+  funds,
+  topicNetwork,
+}) {
   const [expand, setExpand] = useState(false);
   const [showFund, setShowFund] = useState(false);
   const account = useSelector(accountSelector);
-  const isOwner = account && isSamePublicKey(account.address, topicOwner);
+  const isOwner = useIsOwner(topicOwner, topicNetwork);
   const [showReport, setShowReport] = useState(false);
   const [showMoreActions, setShowMoreActions] = useState(false);
 
