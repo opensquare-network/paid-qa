@@ -5,8 +5,9 @@ import { Time, Card, Flex, FlexBetween } from "@osn/common-ui";
 import {
   text_dark_minor,
   primary_turquoise_500,
+  text_dark_accessory,
 } from "@osn/common-ui/lib/styles/colors";
-import Check from "@osn/common-ui/lib/imgs/icons/check.svg";
+import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/consts";
 import { micromark } from "micromark";
@@ -16,6 +17,20 @@ const dot = css`
   &::after {
     content: "·";
     margin: 0 8px;
+  }
+`;
+
+const NotificationItemWrapper = styled.div`
+  &:hover {
+    .unread-dot {
+      display: none;
+    }
+    .check-icon {
+      display: block;
+      path {
+        fill: ${text_dark_accessory};
+      }
+    }
   }
 `;
 const Head = styled(Flex)`
@@ -114,38 +129,28 @@ const MarkAsReadButton = styled.button`
   border: none;
   background-color: transparent;
 
-  ${(p) =>
-    !p.read &&
-    css`
-      &::before {
-        content: "";
-        display: block;
-        width: 8px;
-        height: 8px;
-        background-color: ${primary_turquoise_500};
-      }
-
-      &::after {
-        content: "";
-        display: none;
-        width: 100%;
-        height: 100%;
-        background: url(${Check}) no-repeat center;
-      }
-
-      &:hover {
-        &::before {
-          display: none;
-        }
-        &::after {
-          display: block;
-        }
-      }
-    `}
-
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
+  .check-icon {
     display: none;
   }
+
+  &:hover {
+    .unread-dot {
+      display: none;
+    }
+
+    .check-icon {
+      display: block;
+
+      path {
+        fill: ${text_dark_minor};
+      }
+    }
+  }
+`;
+const UnreadDot = styled.div`
+  width: 8px;
+  height: 8px;
+  background-color: ${primary_turquoise_500};
 `;
 
 const TypeMap = {
@@ -197,44 +202,47 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   }
 
   return (
-    <Card
-      size="small"
-      head={
-        <Head>
-          <TitleWrapper>
-            <Type>{TypeMap[type] || type}</Type>
-            <Title>
-              {titlePrefix}
-              <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
-            </Title>
-          </TitleWrapper>
+    <NotificationItemWrapper>
+      <Card
+        size="small"
+        head={
+          <Head>
+            <TitleWrapper>
+              <Type>{TypeMap[type] || type}</Type>
+              <Title>
+                {titlePrefix}
+                <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
+              </Title>
+            </TitleWrapper>
 
-          <InfoWrapper>
-            <NetworkUser
-              address={topic.signer}
-              network={topic.network}
-              iconSize={16}
-              tooltipPosition="down"
-            />
+            <InfoWrapper>
+              <NetworkUser
+                address={topic.signer}
+                network={topic.network}
+                iconSize={16}
+                tooltipPosition="down"
+              />
 
-            <Time time={topic.createdAt} />
+              <Time time={topic.createdAt} />
 
-            {
               <StatusWrapper>
                 {!read ? (
-                  <MarkAsReadButton onClick={() => handleMarkAsRead(data)} />
+                  <MarkAsReadButton onClick={() => handleMarkAsRead(data)}>
+                    <UnreadDot className="unread-dot" />
+                    <CheckIcon className="check-icon" />
+                  </MarkAsReadButton>
                 ) : (
                   <div />
                 )}
               </StatusWrapper>
-            }
-          </InfoWrapper>
-        </Head>
-      }
-    >
-      {isReply && (
-        <ReplyContent>{extractReplyContent(answer.content)}</ReplyContent>
-      )}
-    </Card>
+            </InfoWrapper>
+          </Head>
+        }
+      >
+        {isReply && (
+          <ReplyContent>{extractReplyContent(answer.content)}</ReplyContent>
+        )}
+      </Card>
+    </NotificationItemWrapper>
   );
 }
