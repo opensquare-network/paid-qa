@@ -11,19 +11,24 @@ import Topic from "pages/Topic";
 import Profile from "pages/Profile";
 import NewTopic from "pages/NewTopic";
 import Notifications from "pages/Notifications";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <HashRouter>
       <Layout>
         <Header />
+        <ScrollToTop />
         <Main>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/new" element={<NewTopic />} />
             <Route path="/topic/:cid" element={<Topic />} />
             <Route path="/notifications" element={<Notifications />} />
-            <Route path="/network/:network/address/:address" element={<Profile />} />
+            <Route
+              path="/network/:network/address/:address"
+              element={<Profile />}
+            />
           </Routes>
         </Main>
         <Footer />
