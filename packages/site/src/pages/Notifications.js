@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { NoData, Pagination, Container, List, Flex } from "@osn/common-ui";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
@@ -37,7 +37,6 @@ const ReadAllButton = styled(Flex)`
 `;
 
 export default function Notifications() {
-  const dispatch = useDispatch();
   const pageSize = 10;
   const [page, setPage] = useState(1);
   const account = useSelector(accountSelector);
@@ -48,12 +47,6 @@ export default function Notifications() {
     tab,
     setPage
   );
-
-  useEffect(() => {
-    if (account?.address && account?.network) {
-      dispatch(clearUnread(account.network, account.address));
-    }
-  }, [dispatch, account?.network, account?.address]);
 
   return (
     <Wrapper>
