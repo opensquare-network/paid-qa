@@ -69,7 +69,12 @@ function Card(props) {
   );
 
   return (
-    <CardWrapper {...restProps} size={size} shadow={shadow} className="card">
+    <CardWrapper
+      {...restProps}
+      size={size}
+      shadow={shadow}
+      className="osn-card"
+    >
       {head}
       {head && children && <Divider />}
       {children}
