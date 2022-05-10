@@ -9,7 +9,12 @@ const CardWrapper = styled.div`
   ${p_14_normal};
   padding: 32px;
   background-color: #fff;
-  border: 1px solid ${netural_grey_200};
+
+  ${(p) =>
+    p.bordered &&
+    css`
+      border: 1px solid ${netural_grey_200};
+    `}
 
   ${(p) =>
     p.size === "small" &&
@@ -54,22 +59,29 @@ function Card(props) {
     head: customizeHead,
     size,
     shadow = true,
+    bordered = true,
     ...restProps
   } = props;
 
-  const head = customizeHead || (
-    <FlexBetween>
-      {title && (
+  const head =
+    customizeHead ||
+    ((title ?? extra) && (
+      <FlexBetween>
         <HeadTitle size={size} className="head-title">
           {title}
         </HeadTitle>
-      )}
-      {extra && <div className="head-extra">{extra}</div>}
-    </FlexBetween>
-  );
+        <div className="head-extra">{extra}</div>
+      </FlexBetween>
+    ));
 
   return (
-    <CardWrapper {...restProps} size={size} shadow={shadow} className="card">
+    <CardWrapper
+      {...restProps}
+      size={size}
+      shadow={shadow}
+      bordered={bordered}
+      className="card"
+    >
       {head}
       {head && children && <Divider />}
       {children}
