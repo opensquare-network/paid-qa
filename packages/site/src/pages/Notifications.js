@@ -42,7 +42,7 @@ export default function Notifications() {
   const [page, setPage] = useState(1);
   const account = useSelector(accountSelector);
   const [tab, setTab] = useState("notifications");
-  const [isLoading, notifications] = useNotifications(
+  const [isLoading, notifications, setNotifications] = useNotifications(
     page,
     account,
     tab,
@@ -59,9 +59,11 @@ export default function Notifications() {
           notifications?.items?.length > 0 && (
             <ReadAllButton
               role="button"
-              onClick={() =>
-                dispatch(clearUnread(account.network, account.address))
-              }
+              onClick={() => {
+                dispatch(clearUnread(account.network, account.address));
+                // do refresh
+                setNotifications({ total: null });
+              }}
             >
               <CheckUnderline style={{ marginRight: 11 }} />
               Mark all as read
