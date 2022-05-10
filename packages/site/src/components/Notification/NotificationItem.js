@@ -113,7 +113,7 @@ const TypeMap = {
   fund: "funded",
 };
 
-const assertType = (t, expect) => t.includes(expect);
+const assertType = (t = [], expect) => t.includes(expect);
 
 function stripHtml(html = "") {
   return html.replace(/<\/?[^>]+(>|$)/gi, "");
@@ -130,17 +130,20 @@ export default function NotificationItem({ data }) {
   const {
     type,
     read,
-    data: { topic, answer, support },
+    data: { topic, answer, support, fund },
   } = data;
 
   const isReply = assertType(type, "reply");
   const isSupport = assertType(type, "support");
+  const isFund = assertType(type, "fund");
 
   let titlePrefix;
-  if (isSupport) {
+  if (isSupport || isFund) {
+    const { bounty } = { ...support, ...fund };
+
     titlePrefix = (
       <Amount>
-        {support?.bounty?.value} {support?.bounty?.symbol}
+        {bounty?.value} {bounty?.symbol}
       </Amount>
     );
   }
