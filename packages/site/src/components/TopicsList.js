@@ -34,6 +34,10 @@ export default function TopicsList() {
   const filterTitle = useSelector(filterTitleSelector);
 
   useEffect(() => {
+    setSearchParams({ page: 1 });
+  }, [filterAsset, filterStatus, filterTitle, setSearchParams]);
+
+  useEffect(() => {
     setIsLoading(true);
     serverApi
       .fetch("/topics", {
