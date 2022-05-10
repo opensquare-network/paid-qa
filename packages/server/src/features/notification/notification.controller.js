@@ -55,11 +55,12 @@ async function getUnreadNotifications(ctx) {
 }
 
 async function clearUnreadNotifications(ctx) {
-  const { network, address } = ctx.params;
+  const { network, address, items } = ctx.params;
 
   const result = await notificationService.clearUnreadNotifications(
     network,
-    address
+    address,
+    items
   );
 
   ctx.body = result;
