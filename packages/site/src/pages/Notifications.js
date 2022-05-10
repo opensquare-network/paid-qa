@@ -81,10 +81,10 @@ export default function Notifications() {
               <List.Item>
                 <NotificationItem
                   data={item}
-                  onMarkAsRead={() =>
+                  onMarkAsRead={(data) =>
                     dispatch(
                       clearUnread(account.network, account.address, {
-                        items: [item._id],
+                        items: [data._id],
                       })
                     )
                   }
