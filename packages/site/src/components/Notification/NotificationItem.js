@@ -6,10 +6,11 @@ import {
   text_dark_minor,
   primary_turquoise_500,
 } from "@osn/common-ui/lib/styles/colors";
-import { ReactComponent as ReadStatus } from "@osn/common-ui/lib/imgs/icons/check.svg";
+import Check from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/consts";
 import { micromark } from "micromark";
+import { useState } from "react";
 
 const dot = css`
   &::after {
@@ -96,15 +97,55 @@ const Title = styled.p`
 
 const StatusWrapper = styled(Flex)`
   width: 18px;
+  height: 18px;
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     display: none;
   }
 `;
-const UnreadStatus = styled.div`
-  width: 8px;
-  height: 8px;
-  background-color: ${primary_turquoise_500};
+const MarkAsReadButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+
+  ${(p) =>
+    !p.read &&
+    css`
+      &::before {
+        content: "";
+        display: block;
+        width: 8px;
+        height: 8px;
+        background-color: ${primary_turquoise_500};
+      }
+
+      &::after {
+        content: "";
+        display: none;
+        width: 100%;
+        height: 100%;
+        background: url(${Check}) no-repeat center;
+      }
+
+      &:hover {
+        &::before {
+          display: none;
+        }
+        &::after {
+          display: block;
+        }
+      }
+    `}
+
+  @media screen and (max-width: ${MOBILE_SIZE}px) {
+    display: none;
+  }
 `;
 
 const TypeMap = {
@@ -129,13 +170,20 @@ function extractReplyContent(content) {
 export default function NotificationItem({ data }) {
   const {
     type,
-    read,
+    read: origRead,
     data: { topic, answer, support, fund },
   } = data;
+
+  const [read, setRead] = useState(origRead);
 
   const isReply = assertType(type, "reply");
   const isSupport = assertType(type, "support");
   const isFund = assertType(type, "fund");
+
+  // TODO: call API
+  function markAsRead() {
+    setRead(true);
+  }
 
   let titlePrefix;
   if (isSupport || isFund) {
@@ -171,9 +219,11 @@ export default function NotificationItem({ data }) {
 
             <Time time={topic.createdAt} />
 
-            <StatusWrapper>
-              <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
-            </StatusWrapper>
+            {
+              <StatusWrapper>
+                {!read ? <MarkAsReadButton onClick={markAsRead} /> : <div />}
+              </StatusWrapper>
+            }
           </InfoWrapper>
         </Head>
       }
