@@ -84,7 +84,7 @@ export default function Notifications() {
                   onMarkAsRead={() =>
                     dispatch(
                       clearUnread(account.network, account.address, {
-                        items: [item],
+                        items: [item._id],
                       })
                     )
                   }
