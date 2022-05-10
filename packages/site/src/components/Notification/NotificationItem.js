@@ -180,8 +180,8 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const isSupport = assertType(type, "support");
   const isFund = assertType(type, "fund");
 
-  // TODO: call API
-  function markAsRead() {
+  function handleMarkAsRead(data) {
+    onMarkAsRead(data);
     setRead(true);
   }
 
@@ -222,7 +222,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
             {
               <StatusWrapper>
                 {!read ? (
-                  <MarkAsReadButton onClick={() => onMarkAsRead(data)} />
+                  <MarkAsReadButton onClick={() => handleMarkAsRead(data)} />
                 ) : (
                   <div />
                 )}
