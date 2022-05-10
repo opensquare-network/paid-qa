@@ -78,7 +78,7 @@ export default function Notifications() {
             data={notifications?.items}
             itemRender={(item) => (
               <List.Item>
-                <NotificationItem data={item}></NotificationItem>
+                <NotificationItem data={item} />
               </List.Item>
             )}
           />
