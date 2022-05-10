@@ -6,10 +6,8 @@ import Description from "./Description";
 import Appendants from "./Appendants";
 import Share from "./Share";
 import Resolve from "./Resolve";
-import { useSelector } from "react-redux";
-import { accountSelector } from "store/reducers/accountSlice";
-import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 import DetailLoader from "@osn/common-ui/lib/Skeleton/DetailLoader";
+import { useIsOwner } from "../../../utils/hooks";
 
 const Wrapper = styled(Card)`
   > :not(:first-child) {
@@ -23,11 +21,7 @@ const Wrapper = styled(Card)`
 `;
 
 export default function Detail({ topic }) {
-  const account = useSelector(accountSelector);
-  const isOwner =
-    account?.address &&
-    encodeNetworkAddress(account?.address, topic?.network) ===
-      encodeNetworkAddress(topic?.signer, topic?.network);
+  const isOwner = useIsOwner(topic?.signer, topic?.network);
 
   if (!topic) {
     return <DetailLoader />;
