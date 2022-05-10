@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { NoData, Pagination, Container, List, Flex } from "@osn/common-ui";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
@@ -37,6 +37,7 @@ const ReadAllButton = styled(Flex)`
 `;
 
 export default function Notifications() {
+  const dispatch = useDispatch();
   const pageSize = 10;
   const [page, setPage] = useState(1);
   const account = useSelector(accountSelector);
@@ -58,7 +59,9 @@ export default function Notifications() {
           notifications?.items?.length > 0 && (
             <ReadAllButton
               role="button"
-              onClick={clearUnread(account.network, account.address)}
+              onClick={() =>
+                dispatch(clearUnread(account.network, account.address))
+              }
             >
               <CheckUnderline style={{ marginRight: 11 }} />
               Mark all as read
@@ -76,7 +79,16 @@ export default function Notifications() {
             data={notifications?.items}
             itemRender={(item) => (
               <List.Item>
-                <NotificationItem data={item} />
+                <NotificationItem
+                  data={item}
+                  onMarkAsRead={() =>
+                    dispatch(
+                      clearUnread(account.network, account.address, {
+                        items: [item],
+                      })
+                    )
+                  }
+                />
               </List.Item>
             )}
           />

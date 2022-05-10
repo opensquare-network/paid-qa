@@ -167,7 +167,7 @@ function extractReplyContent(content) {
   return text;
 }
 
-export default function NotificationItem({ data }) {
+export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
     type,
     read: origRead,
@@ -221,7 +221,11 @@ export default function NotificationItem({ data }) {
 
             {
               <StatusWrapper>
-                {!read ? <MarkAsReadButton onClick={markAsRead} /> : <div />}
+                {!read ? (
+                  <MarkAsReadButton onClick={() => onMarkAsRead(data)} />
+                ) : (
+                  <div />
+                )}
               </StatusWrapper>
             }
           </InfoWrapper>
