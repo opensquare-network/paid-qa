@@ -167,7 +167,7 @@ export default function NotificationItem({ data }) {
               network={topic.network}
               iconSize={16}
               tooltipPosition="down"
-            ></NetworkUser>
+            />
 
             <Time time={topic.createdAt} />
 
