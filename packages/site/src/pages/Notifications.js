@@ -51,9 +51,7 @@ export default function Notifications() {
   return (
     <Wrapper>
       <NotificationTabs
-        items={[
-          { value: "notifications", suffix: notifications?.items?.length },
-        ]}
+        items={[{ value: "notifications", suffix: notifications?.total }]}
         value={tab}
         setValue={setTab}
         extra={
