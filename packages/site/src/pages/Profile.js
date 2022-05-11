@@ -4,14 +4,13 @@ import styled from "styled-components";
 import Header from "components/Profile/Header";
 import Container from "@osn/common-ui/lib/styled/Container";
 import TopicsList from "components/Profile/TopicsList";
-import AnswersList from "components/Profile/AnswersList";
 import { useParams } from "react-router";
 import serverApi from "../services/serverApi";
 import { newErrorToast } from "../store/reducers/toastSlice";
 import { useDispatch } from "react-redux";
 import FundsList from "../components/Profile/FundsList";
-import PromisesList from "../components/Profile/PromisesList";
 import RewardsList from "../components/Profile/RewardsList";
+import ProfileDataList from "../components/Profile/ProfileDataList";
 
 const ContentWrapper = styled.div`
   margin: 20px 0;
@@ -52,16 +51,12 @@ export default function Profile() {
       />
       <Container>
         <ContentWrapper>
+          <ProfileDataList tab={tab} network={network} address={address} />
+
           {tab === "topics" && (
             <TopicsList network={network} address={address} />
           )}
-          {tab === "replies" && (
-            <AnswersList network={network} address={address} />
-          )}
           {tab === "funds" && <FundsList network={network} address={address} />}
-          {tab === "promises" && (
-            <PromisesList network={network} address={address} />
-          )}
           {tab === "rewards" && (
             <RewardsList network={network} address={address} />
           )}
