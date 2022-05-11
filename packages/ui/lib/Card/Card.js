@@ -3,9 +3,10 @@ import styled, { css } from "styled-components";
 import { p_14_medium, p_14_normal, p_16_semibold } from "../styles/textStyles";
 import { netural_grey_200 } from "../styles/colors";
 import { MOBILE_SIZE } from "@osn/consts";
+import Flex from "../styled/Flex";
 import FlexBetween from "../styled/FlexBetween";
 
-const CardWrapper = styled.div`
+const CardWrapper = styled(Flex)`
   ${p_14_normal};
   padding: 32px;
   background-color: #fff;
@@ -34,6 +35,30 @@ const CardWrapper = styled.div`
   }
 `;
 
+const CardPrefix = styled.div`
+  margin-right: 32px;
+
+  ${(p) =>
+    p.size === "small" &&
+    css`
+      margin-right: 24px;
+    `}
+`;
+
+const CardSuffix = styled.div`
+  margin-left: 32px;
+
+  ${(p) =>
+    p.size === "small" &&
+    css`
+      margin-left: 24px;
+    `}
+`;
+
+const CardBody = styled.div`
+  flex: 1;
+`;
+
 const HeadTitle = styled.p`
   margin: 0;
   ${p_16_semibold}
@@ -60,6 +85,8 @@ function Card(props) {
     size,
     shadow = true,
     bordered = true,
+    prefix,
+    suffix,
     ...restProps
   } = props;
 
@@ -82,9 +109,21 @@ function Card(props) {
       bordered={bordered}
       className="osn-card"
     >
-      {head}
-      {head && children && <Divider />}
-      {children}
+      {prefix && (
+        <CardPrefix size={size} className="osn-card-prefix">
+          {prefix}
+        </CardPrefix>
+      )}
+      <CardBody className="osn-card-body">
+        {head}
+        {head && children && <Divider />}
+        {children}
+      </CardBody>
+      {suffix && (
+        <CardSuffix size={size} className="osn-card-suffix">
+          {suffix}
+        </CardSuffix>
+      )}
     </CardWrapper>
   );
 }
