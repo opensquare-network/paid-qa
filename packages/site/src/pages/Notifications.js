@@ -102,6 +102,7 @@ export default function Notifications() {
 
         <Pagination
           {...{ page, setPage, pageSize }}
+          onChange={() => window.scrollTo(0, 0)}
           total={notifications?.total}
         />
       </Container>
