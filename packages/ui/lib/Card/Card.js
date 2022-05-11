@@ -80,7 +80,7 @@ function Card(props) {
       size={size}
       shadow={shadow}
       bordered={bordered}
-      className="card"
+      className="osn-card"
     >
       {head}
       {head && children && <Divider />}
