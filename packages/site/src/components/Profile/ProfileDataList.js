@@ -49,7 +49,7 @@ function ProfileDataList({ tab, network, address }) {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [dispatch, tab, network, address, page]);
+  }, [dispatch, tab, network, address, page, apiUrl]);
 
   return isLoading ? (
     <ListLoader />
