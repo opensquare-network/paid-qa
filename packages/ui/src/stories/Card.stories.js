@@ -90,3 +90,24 @@ export const customizeHead = () => {
     </Card>
   );
 };
+export const prefixAndSuffix = () => {
+  const Box = styled.div`
+    width: 80px;
+    height: 80px;
+    border: 1px solid #f0f3f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+
+  return (
+    <Card
+      title="Card prefix and suffix"
+      size="small"
+      prefix={<Box>Prefix</Box>}
+      suffix={<Box>Suffix</Box>}
+    >
+      <p>Card content</p>
+    </Card>
+  );
+};
