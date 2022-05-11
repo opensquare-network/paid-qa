@@ -56,7 +56,7 @@ const InfoWrapper = styled(FlexBetween)`
     margin-top: 6px;
   }
 `;
-const ReplyContent = styled.div`
+const AnswerContent = styled.div`
   color: ${text_dark_minor};
 
   display: -webkit-box;
@@ -153,19 +153,38 @@ const UnreadDot = styled.div`
   background-color: ${primary_turquoise_500};
 `;
 
-const TypeMap = {
-  topicResolved: "resolved",
-  support: "promised",
-  fund: "funded",
-};
-
 const assertType = (t = [], expect) => t.includes(expect);
+const resolveItemState = (t = []) => {
+  const value = {
+    type: "",
+    shouldShowAmount: false,
+    shouldShowAnswer: false,
+  };
+
+  if (assertType(t, "topicResolved")) {
+    value.type = "resolved";
+  } else if (assertType(t, "support")) {
+    value.type = "promised";
+    value.shouldShowAmount = true;
+  } else if (assertType(t, "fund")) {
+    value.type = "funded";
+    value.shouldShowAmount = true;
+  } else if (assertType(t, "mention")) {
+    value.type = "mentioned";
+    value.shouldShowAnswer = true;
+  } else if (assertType(t, "reply")) {
+    value.type = "replied";
+    value.shouldShowAnswer = true;
+  }
+
+  return value;
+};
 
 function stripHtml(html = "") {
   return html.replace(/<\/?[^>]+(>|$)/gi, "");
 }
 
-function extractReplyContent(content) {
+function extractAnswerContent(content) {
   const html = micromark(content);
   const text = stripHtml(html);
 
@@ -174,16 +193,15 @@ function extractReplyContent(content) {
 
 export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
-    type,
+    type: origType,
     read: origRead,
     data: { topic, answer, support, fund },
   } = data;
 
   const [read, setRead] = useState(origRead);
 
-  const isReply = assertType(type, "reply");
-  const isSupport = assertType(type, "support");
-  const isFund = assertType(type, "fund");
+  const { type, shouldShowAmount, shouldShowAnswer } =
+    resolveItemState(origType);
 
   function handleMarkAsRead(data) {
     onMarkAsRead(data);
@@ -191,7 +209,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   }
 
   let titlePrefix;
-  if (isSupport || isFund) {
+  if (shouldShowAmount) {
     const { bounty } = { ...support, ...fund };
 
     titlePrefix = (
@@ -208,7 +226,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
         head={
           <Head>
             <TitleWrapper>
-              <Type>{TypeMap[type] || type}</Type>
+              <Type>{type}</Type>
               <Title>
                 {titlePrefix}
                 <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
@@ -239,8 +257,8 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
           </Head>
         }
       >
-        {isReply && (
-          <ReplyContent>{extractReplyContent(answer.content)}</ReplyContent>
+        {shouldShowAnswer && (
+          <AnswerContent>{extractAnswerContent(answer.content)}</AnswerContent>
         )}
       </Card>
     </NotificationItemWrapper>
