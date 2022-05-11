@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import {
+  Card,
+  NoData,
+  FlexBetween,
+  Flex,
+  Pagination,
+  ProgressBar,
+} from "@osn/common-ui";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
-import Pagination from "@osn/common-ui/lib/styled/Pagination";
 import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
 import { newErrorToast } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
-import Flex from "@osn/common-ui/lib/styled/Flex";
 import { Link } from "react-router-dom";
-import Card from "@osn/common-ui/lib/styled/Card";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import ProgressBar from "@osn/common-ui/lib/styled/ProgressBar";
 import Wrapper from "./styled/ListWrapper";
 import { MOBILE_SIZE } from "@osn/consts";
-import NoData from "@osn/common-ui/lib/NoData";
 import StatusTag from "components/StatusTag";
 
 const NoWrap = styled.span`
