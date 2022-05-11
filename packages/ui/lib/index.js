@@ -16,6 +16,7 @@ import List from "./List";
 import Time from "./Time";
 import Card from "./Card";
 import Tabs from "./Tabs";
+import MarkdownPreview from "./Preview";
 //styled
 import Button from "./styled/Button";
 import Container from "./styled/Container";
@@ -67,4 +68,5 @@ export {
   List,
   Time,
   Tabs,
+  MarkdownPreview,
 };

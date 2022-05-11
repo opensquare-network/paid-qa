@@ -1,6 +1,7 @@
 import React from "react";
 import MicromarkMd from "./MicromarkMd";
 import styled, { css } from "styled-components";
+import sanitizeHtml from "sanitize-html";
 
 const PreviewWrapper = styled.div`
   ${(p) =>
@@ -16,10 +17,15 @@ const PreviewWrapper = styled.div`
     `}
 `;
 
-function Preview({ content, bordered = true, minHeight }) {
+function Preview({
+  content,
+  bordered = true,
+  allowTags = sanitizeHtml.defaults.allowedTags.concat(["img", "iframe", "br"]),
+  minHeight,
+}) {
   return (
     <PreviewWrapper bordered={bordered} minHeight={minHeight}>
-      <MicromarkMd md={content} />
+      <MicromarkMd md={content} allowTags={allowTags} />
     </PreviewWrapper>
   );
 }
