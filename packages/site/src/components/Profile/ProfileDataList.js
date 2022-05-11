@@ -35,11 +35,15 @@ function ProfileDataList({ tab, network, address }) {
 
   useEffect(() => {
     setPage(1);
-    setData(EmptyList);
+    fetchData(1);
+  }, [tab, network, address]);
+
+  const fetchData = (page) => {
     setIsLoading(true);
+    setData(EmptyList);
 
     serverApi
-      .fetch(apiUrl, { page })
+      .fetch(apiUrl, { page, pageSize })
       .then(({ result, error }) => {
         setData(result ?? EmptyList);
         if (error) {
@@ -49,7 +53,7 @@ function ProfileDataList({ tab, network, address }) {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [dispatch, tab, network, address, page, apiUrl]);
+  };
 
   return isLoading ? (
     <ListLoader />
@@ -64,7 +68,11 @@ function ProfileDataList({ tab, network, address }) {
         )}
       />
 
-      <Pagination {...{ ...data, page, setPage, pageSize }} large />
+      <Pagination
+        {...{ ...data, page, setPage, pageSize }}
+        large
+        onChange={fetchData}
+      />
     </>
   );
 }
