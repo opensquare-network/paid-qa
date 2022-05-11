@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import Header from "components/Profile/Header";
 import Container from "@osn/common-ui/lib/styled/Container";
-import TopicsList from "components/Profile/TopicsList";
 import { useParams } from "react-router";
 import serverApi from "../services/serverApi";
 import { newErrorToast } from "../store/reducers/toastSlice";
@@ -53,9 +52,6 @@ export default function Profile() {
         <ContentWrapper>
           <ProfileDataList tab={tab} network={network} address={address} />
 
-          {tab === "topics" && (
-            <TopicsList network={network} address={address} />
-          )}
           {tab === "funds" && <FundsList network={network} address={address} />}
           {tab === "rewards" && (
             <RewardsList network={network} address={address} />
