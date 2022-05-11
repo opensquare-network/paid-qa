@@ -7,13 +7,14 @@ import { newErrorToast } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
 import { List, Pagination } from "@osn/common-ui";
 import PromiseItem from "./ProfilePromiseItem";
+import TopicItem from "./ProfileTopicItem";
 import AnswerItem from "./ProfileAnswerItem";
 
 const meta = {
   promises: { endpoint: "/promisedtopics", component: PromiseItem },
   funds: { endpoint: "/funds", component: null },
   rewards: { endpoint: "/rewards", component: null },
-  topics: { endpoint: "/topics", component: null },
+  topics: { endpoint: "/topics", component: TopicItem },
   replies: { endpoint: "/answers", component: AnswerItem },
 };
 
