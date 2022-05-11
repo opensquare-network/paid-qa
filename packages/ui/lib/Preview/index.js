@@ -16,10 +16,10 @@ const PreviewWrapper = styled.div`
     `}
 `;
 
-function Preview({ content, bordered = true, minHeight }) {
+function Preview({ content, bordered = true, allowTags, minHeight }) {
   return (
     <PreviewWrapper bordered={bordered} minHeight={minHeight}>
-      <MicromarkMd md={content} />
+      <MicromarkMd md={content} allowTags={allowTags} />
     </PreviewWrapper>
   );
 }
