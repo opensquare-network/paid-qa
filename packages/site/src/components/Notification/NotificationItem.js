@@ -5,16 +5,32 @@ import { Time, Card, Flex, FlexBetween } from "@osn/common-ui";
 import {
   text_dark_minor,
   primary_turquoise_500,
+  text_dark_accessory,
 } from "@osn/common-ui/lib/styles/colors";
-import { ReactComponent as ReadStatus } from "@osn/common-ui/lib/imgs/icons/check.svg";
+import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/consts";
 import { micromark } from "micromark";
+import { useState } from "react";
 
 const dot = css`
   &::after {
     content: "·";
     margin: 0 8px;
+  }
+`;
+
+const NotificationItemWrapper = styled.div`
+  &:hover {
+    .unread-dot {
+      display: none;
+    }
+    .check-icon {
+      display: block;
+      path {
+        fill: ${text_dark_accessory};
+      }
+    }
   }
 `;
 const Head = styled(Flex)`
@@ -96,12 +112,42 @@ const Title = styled.p`
 
 const StatusWrapper = styled(Flex)`
   width: 18px;
+  height: 18px;
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     display: none;
   }
 `;
-const UnreadStatus = styled.div`
+const MarkAsReadButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+
+  .check-icon {
+    display: none;
+  }
+
+  &:hover {
+    .unread-dot {
+      display: none;
+    }
+
+    .check-icon {
+      display: block;
+
+      path {
+        fill: ${text_dark_minor};
+      }
+    }
+  }
+`;
+const UnreadDot = styled.div`
   width: 8px;
   height: 8px;
   background-color: ${primary_turquoise_500};
@@ -109,10 +155,11 @@ const UnreadStatus = styled.div`
 
 const TypeMap = {
   topicResolved: "resolved",
-  support: "supported",
+  support: "promised",
+  fund: "funded",
 };
 
-const assertType = (t, expect) => t.includes(expect);
+const assertType = (t = [], expect) => t.includes(expect);
 
 function stripHtml(html = "") {
   return html.replace(/<\/?[^>]+(>|$)/gi, "");
@@ -125,60 +172,77 @@ function extractReplyContent(content) {
   return text;
 }
 
-export default function NotificationItem({ data }) {
+export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
     type,
-    read,
-    data: { topic, answer, support },
+    read: origRead,
+    data: { topic, answer, support, fund },
   } = data;
+
+  const [read, setRead] = useState(origRead);
 
   const isReply = assertType(type, "reply");
   const isSupport = assertType(type, "support");
+  const isFund = assertType(type, "fund");
+
+  function handleMarkAsRead(data) {
+    onMarkAsRead(data);
+    setRead(true);
+  }
 
   let titlePrefix;
-  if (isSupport) {
+  if (isSupport || isFund) {
+    const { bounty } = { ...support, ...fund };
+
     titlePrefix = (
       <Amount>
-        {support?.bounty?.value} {support?.bounty?.symbol}
+        {bounty?.value} {bounty?.symbol}
       </Amount>
     );
   }
 
   return (
-    <Card
-      size="small"
-      head={
-        <Head>
-          <TitleWrapper>
-            <Type>{TypeMap[type] || type}</Type>
-            <Title>
-              {titlePrefix}
-              <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
-            </Title>
-          </TitleWrapper>
+    <NotificationItemWrapper>
+      <Card
+        size="small"
+        head={
+          <Head>
+            <TitleWrapper>
+              <Type>{TypeMap[type] || type}</Type>
+              <Title>
+                {titlePrefix}
+                <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
+              </Title>
+            </TitleWrapper>
 
-          <InfoWrapper>
-            <NetworkUser
-              address={topic.signer}
-              network={topic.network}
-              iconSize={16}
-              tooltipPosition="down"
-            ></NetworkUser>
+            <InfoWrapper>
+              <NetworkUser
+                address={topic.signer}
+                network={topic.network}
+                iconSize={16}
+                tooltipPosition="down"
+              />
 
-            <Time time={topic.createdAt} />
+              <Time time={topic.createdAt} />
 
-            <StatusWrapper>
-              {isReply && (
-                <Flex>{read ? <ReadStatus /> : <UnreadStatus />}</Flex>
-              )}
-            </StatusWrapper>
-          </InfoWrapper>
-        </Head>
-      }
-    >
-      {isReply && (
-        <ReplyContent>{extractReplyContent(answer.content)}</ReplyContent>
-      )}
-    </Card>
+              <StatusWrapper>
+                {!read ? (
+                  <MarkAsReadButton onClick={() => handleMarkAsRead(data)}>
+                    <UnreadDot className="unread-dot" />
+                    <CheckIcon className="check-icon" />
+                  </MarkAsReadButton>
+                ) : (
+                  <div />
+                )}
+              </StatusWrapper>
+            </InfoWrapper>
+          </Head>
+        }
+      >
+        {isReply && (
+          <ReplyContent>{extractReplyContent(answer.content)}</ReplyContent>
+        )}
+      </Card>
+    </NotificationItemWrapper>
   );
 }

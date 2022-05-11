@@ -74,7 +74,8 @@ export function useNotifications(page, account, tab, setPage) {
         });
     }
   }, [account?.network, account?.address, page, tab, notifications.total]);
-  return [isLoading, notifications];
+
+  return [isLoading, notifications, setNotifications];
 }
 
 export const useBalance = (account, api) => {

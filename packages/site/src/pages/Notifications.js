@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { NoData, Pagination, Container, List, Flex } from "@osn/common-ui";
@@ -42,32 +42,28 @@ export default function Notifications() {
   const [page, setPage] = useState(1);
   const account = useSelector(accountSelector);
   const [tab, setTab] = useState("notifications");
-  const [isLoading, notifications] = useNotifications(
+  const [isLoading, notifications, setNotifications] = useNotifications(
     page,
     account,
     tab,
     setPage
   );
 
-  useEffect(() => {
-    if (account?.address && account?.network) {
-      dispatch(clearUnread(account.network, account.address));
-    }
-  }, [dispatch, account?.network, account?.address]);
-
   return (
     <Wrapper>
       <NotificationTabs
-        items={[
-          { value: "notifications", suffix: notifications?.items?.length },
-        ]}
+        items={[{ value: "notifications", suffix: notifications?.total }]}
         value={tab}
         setValue={setTab}
         extra={
           notifications?.items?.length > 0 && (
             <ReadAllButton
               role="button"
-              onClick={clearUnread(account.network, account.address)}
+              onClick={() => {
+                dispatch(clearUnread(account.network, account.address));
+                // do refresh
+                setNotifications({ total: null });
+              }}
             >
               <CheckUnderline style={{ marginRight: 11 }} />
               Mark all as read
@@ -85,7 +81,16 @@ export default function Notifications() {
             data={notifications?.items}
             itemRender={(item) => (
               <List.Item>
-                <NotificationItem data={item}></NotificationItem>
+                <NotificationItem
+                  data={item}
+                  onMarkAsRead={(data) =>
+                    dispatch(
+                      clearUnread(account.network, account.address, {
+                        items: [data._id],
+                      })
+                    )
+                  }
+                />
               </List.Item>
             )}
           />
