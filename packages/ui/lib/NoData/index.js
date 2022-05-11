@@ -6,12 +6,12 @@ import { text_dark_accessory } from "../styles/colors";
 
 const Message = styled(FlexCenter)`
   color: ${text_dark_accessory};
-  height: 100%;
+  height: 66px;
 `;
 
 export default function NoData({ message = "No current data" }) {
   return (
-    <Card style={{ height: 130 }}>
+    <Card>
       <Message>{message}</Message>
     </Card>
   );
