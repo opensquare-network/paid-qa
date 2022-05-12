@@ -49,6 +49,11 @@ export const TEST_ASSETS = [
     name: "Westend",
     symbol: "WND",
   },
+  {
+    id: "opensquare",
+    name: "OpenSquare",
+    symbol: "OSNT",
+  },
 ];
 
 export const DEFAULT_POLKADOT_NODES = [

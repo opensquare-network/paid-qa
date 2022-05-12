@@ -25,6 +25,7 @@ const IconsMap = {
   khala: "khala.svg",
   bifrost: "bifrost.svg",
   kintsugi: "kintsugi.svg",
+  opensquare: "osn.svg",
 };
 
 function getAssetIcon(assetKey) {
@@ -73,7 +74,9 @@ export default function AssetSelector({ asset, setAsset }) {
     return {
       key: i,
       value: i,
-      content: <AssetItem assetKey={item.id} assetName={item.name} />,
+      content: (
+        <AssetItem assetKey={item.id} assetName={item.symbol || item.name} />
+      ),
     };
   });
 

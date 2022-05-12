@@ -175,7 +175,7 @@ export default function NetworkAssetSelector({
     return {
       key: i,
       value: i,
-      content: <AssetItem assetKey={item.id} assetName={item.name} />,
+      content: <AssetItem assetKey={item.id} assetName={item.symbol} />,
     };
   });
 
