@@ -12,7 +12,18 @@ export const Chains = {
   westend: "westend",
   westmint: "westmint",
   statemint: "statemint",
+  interlay: "interlay",
 };
+
+export const identityChainMap = Object.freeze({
+  [Chains.kintsugi]: [Chains.kusama],
+  [Chains.statemine]: [Chains.kusama],
+  [Chains.karura]: [Chains.kusama],
+  [Chains.interlay]: [Chains.polkadot],
+  [Chains.acala]: [Chains.polkadot],
+  [Chains.crust]: [Chains.crust],
+  [Chains.westmint]: [Chains.westend],
+});
 
 export const ChainSS58Format = Object.freeze({
   [Chains.polkadot]: 0,

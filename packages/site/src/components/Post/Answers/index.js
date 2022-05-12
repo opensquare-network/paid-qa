@@ -35,6 +35,7 @@ import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
+import { identityChainMap } from "@osn/consts";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -150,7 +151,8 @@ export default function Answers({ topicCid }) {
           network: item.network,
         }))
         .map(async (item) => {
-          const identity = await fetchIdentity(item.network, item.address);
+          const identityChain = identityChainMap[item.network] || item.network;
+          const identity = await fetchIdentity(identityChain, item.address);
           return {
             ...item,
             identity,
@@ -175,7 +177,8 @@ export default function Answers({ topicCid }) {
   };
 
   const onReply = async (user) => {
-    const identity = fetchIdentity(user.network, user.address);
+    const identityChain = identityChainMap[user.network] || user.network;
+    const identity = fetchIdentity(identityChain, user.address);
     const mention = `[@${
       identity?.info?.display || addressEllipsis(user.address)
     }](/network/${user.network}/address/${user.address})`;
