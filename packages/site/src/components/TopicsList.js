@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
-import styled from "styled-components";
 import Topic from "components/Topic";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
-import Pagination from "@osn/common-ui/lib/styled/Pagination";
+import { List, Pagination } from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filterAssetSelector,
@@ -16,9 +15,6 @@ import serverApi from "../services/serverApi";
 import { newErrorToast } from "../store/reducers/toastSlice";
 import { EmptyList } from "../utils/constants";
 import { useSearchParams } from "react-router-dom";
-import NoData from "@osn/common-ui/lib/NoData";
-
-const Wrapper = styled.div``;
 
 export default function TopicsList() {
   const dispatch = useDispatch();
@@ -64,18 +60,22 @@ export default function TopicsList() {
     topics.total,
   ]);
 
-  return (
-    <Wrapper>
-      {isLoading ? (
-        <ListLoader />
-      ) : topics?.items?.length === 0 ? (
-        <NoData message={"No current topics"} />
-      ) : (
-        topics?.items?.map((topic, index) => (
-          <Topic key={index} topic={topic} />
-        ))
-      )}
-      <Pagination className="pagination" {...{ ...topics, setPage }} large />
-    </Wrapper>
+  return isLoading ? (
+    <ListLoader />
+  ) : (
+    <>
+      <List
+        gap={20}
+        data={topics?.items}
+        noDataMessage="No current topics"
+        itemRender={(item) => (
+          <List.Item>
+            <Topic topic={item} />
+          </List.Item>
+        )}
+      />
+
+      <Pagination {...{ ...topics, setPage }} large />
+    </>
   );
 }
