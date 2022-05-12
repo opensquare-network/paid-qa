@@ -32,7 +32,6 @@ const meta = {
 
 function ProfileDataList({ tab, network, address }) {
   const dispatch = useDispatch();
-  const pageSize = 10;
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +51,7 @@ function ProfileDataList({ tab, network, address }) {
       setData(EmptyList);
 
       serverApi
-        .fetch(apiUrl, { page, pageSize })
+        .fetch(apiUrl, { page })
         .then(({ result, error }) => {
           setData(result ?? EmptyList);
           if (error) {
@@ -86,11 +85,7 @@ function ProfileDataList({ tab, network, address }) {
         />
       </ListWrapper>
 
-      <Pagination
-        {...{ ...data, page, setPage, pageSize }}
-        large
-        onChange={fetchData}
-      />
+      <Pagination {...{ ...data, page, setPage }} large onChange={fetchData} />
     </>
   );
 }
