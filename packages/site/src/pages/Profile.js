@@ -8,7 +8,6 @@ import serverApi from "../services/serverApi";
 import { newErrorToast } from "../store/reducers/toastSlice";
 import { useDispatch } from "react-redux";
 import FundsList from "../components/Profile/FundsList";
-import RewardsList from "../components/Profile/RewardsList";
 import ProfileDataList from "../components/Profile/ProfileDataList";
 
 const ContentWrapper = styled.div`
@@ -53,9 +52,6 @@ export default function Profile() {
           <ProfileDataList tab={tab} network={network} address={address} />
 
           {tab === "funds" && <FundsList network={network} address={address} />}
-          {tab === "rewards" && (
-            <RewardsList network={network} address={address} />
-          )}
         </ContentWrapper>
       </Container>
     </div>
