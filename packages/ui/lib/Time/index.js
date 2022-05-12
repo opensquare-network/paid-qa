@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { timeDuration } from "@osn/common";
+import { timeDuration } from "./utils";
 
 const Wrapper = styled.div`
   font-size: 14px;
