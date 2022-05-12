@@ -7,6 +7,7 @@ import {
   addressEllipsis,
   encodeNetworkAddress,
 } from "@osn/common/src/utils/address";
+import { identityChainMap } from "@osn/consts";
 
 const IdentityWrapper = styled.a`
   display: flex;
@@ -52,8 +53,8 @@ export default function IdentityOrAddr({
     if (!address || !network) {
       return;
     }
-
-    fetchIdentity(network, address)
+    const identityChain = identityChainMap[network] || network;
+    fetchIdentity(identityChain, address)
       .then((identity) => {
         if (isMounted.current) {
           setIdentity(identity);

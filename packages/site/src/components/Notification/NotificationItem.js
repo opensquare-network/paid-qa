@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import NetworkUser from "../User/NetworkUser";
-import { Time, Card, Flex, FlexBetween } from "@osn/common-ui";
+import { Time, Card, Flex, FlexBetween, MarkdownPreview } from "@osn/common-ui";
 import {
   text_dark_minor,
   primary_turquoise_500,
@@ -10,7 +10,6 @@ import {
 import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/consts";
-import { micromark } from "micromark";
 import { useState } from "react";
 
 const dot = css`
@@ -30,6 +29,14 @@ const NotificationItemWrapper = styled.div`
       path {
         fill: ${text_dark_accessory};
       }
+    }
+  }
+
+  a {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 `;
@@ -56,20 +63,6 @@ const InfoWrapper = styled(FlexBetween)`
     margin-top: 6px;
   }
 `;
-const AnswerContent = styled.div`
-  color: ${text_dark_minor};
-
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-
-  @media screen and (max-width: ${MOBILE_SIZE}px) {
-    -webkit-line-clamp: 3;
-  }
-`;
 const Type = styled.div`
   text-transform: capitalize;
   color: ${text_dark_minor};
@@ -90,14 +83,6 @@ const Amount = styled.span`
 const Title = styled.p`
   ${p_14_medium};
   margin: 0;
-
-  a {
-    &:hover {
-      text-decoration: underline;
-    }
-
-    cursor: pointer;
-  }
 
   @media screen and (min-width: ${MOBILE_SIZE - 1}px) {
     text-overflow: ellipsis;
@@ -180,17 +165,6 @@ const resolveItemState = (t = []) => {
   return value;
 };
 
-function stripHtml(html = "") {
-  return html.replace(/<\/?[^>]+(>|$)/gi, "");
-}
-
-function extractAnswerContent(content) {
-  const html = micromark(content);
-  const text = stripHtml(html);
-
-  return text;
-}
-
 export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
     type: origType,
@@ -258,7 +232,11 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
         }
       >
         {shouldShowAnswer && (
-          <AnswerContent>{extractAnswerContent(answer.content)}</AnswerContent>
+          <MarkdownPreview
+            content={answer.content}
+            bordered={false}
+            allowTags={["a"]}
+          />
         )}
       </Card>
     </NotificationItemWrapper>

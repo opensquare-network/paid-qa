@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import DropdownSelector from "@osn/common-ui/lib/DropdownSelector";
 import Flex from "@osn/common-ui/lib/styled/Flex";
+import { ASSETS, TEST_ASSETS } from "../utils/constants";
 
 const Wrapper = styled.div`
   > div div {
@@ -55,33 +56,12 @@ const Assets = [
     id: "all",
     name: "All Assets",
   },
-  {
-    id: "polkadot",
-    name: "Polkadot",
-    symbol: "DOT",
-  },
-  {
-    id: "kusama",
-    name: "Kusama",
-    symbol: "KSM",
-  },
-  {
-    id: "rmrk",
-    name: "RMRK",
-    symbol: "RMRK",
-  },
-  {
-    id: "polarisdao",
-    name: "PolarisDAO",
-    symbol: "ARIS",
-  },
 ];
-if (process.env.REACT_APP_SHOW_WESTEND === "TRUE") {
-  Assets.push({
-    id: "westend",
-    name: "Westend",
-    symbol: "WND",
-  });
+if (process.env.REACT_APP_ENVIRONMENT === "production") {
+  Assets.push(...ASSETS);
+}
+if (process.env.REACT_APP_ENVIRONMENT === "development") {
+  Assets.push(...TEST_ASSETS);
 }
 
 export default function AssetSelector({ asset, setAsset }) {
