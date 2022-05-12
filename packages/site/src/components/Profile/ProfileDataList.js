@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
 import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
@@ -34,27 +33,30 @@ function ProfileDataList({ tab, network, address }) {
     };
   }, [tab, network, address]);
 
+  const fetchData = useCallback(
+    (page) => {
+      setIsLoading(true);
+      setData(EmptyList);
+
+      serverApi
+        .fetch(apiUrl, { page, pageSize })
+        .then(({ result, error }) => {
+          setData(result ?? EmptyList);
+          if (error) {
+            dispatch(newErrorToast(error?.message || `Failed to load ${tab}`));
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+    [dispatch, tab, apiUrl]
+  );
+
   useEffect(() => {
     setPage(1);
     fetchData(1);
-  }, [tab, network, address]);
-
-  const fetchData = (page) => {
-    setIsLoading(true);
-    setData(EmptyList);
-
-    serverApi
-      .fetch(apiUrl, { page, pageSize })
-      .then(({ result, error }) => {
-        setData(result ?? EmptyList);
-        if (error) {
-          dispatch(newErrorToast(error?.message || `Failed to load ${tab}`));
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  }, [tab, network, address, fetchData]);
 
   return isLoading ? (
     <ListLoader />
