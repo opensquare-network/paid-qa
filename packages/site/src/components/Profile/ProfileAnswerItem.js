@@ -24,14 +24,6 @@ const TitleLink = styled(Link)`
   }
 `;
 
-const MarkdownPreviewWrapper = styled.div`
-  a {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
 export default function AnswerItem({ data }) {
   return (
     <Card
@@ -47,13 +39,11 @@ export default function AnswerItem({ data }) {
         </StyledDividerWrapper>
       }
     >
-      <MarkdownPreviewWrapper>
-        <MarkdownPreview
-          content={data?.content}
-          bordered={false}
-          allowTags={["a"]}
-        />
-      </MarkdownPreviewWrapper>
+      <MarkdownPreview
+        content={data?.content}
+        bordered={false}
+        allowTags={["a"]}
+      />
     </Card>
   );
 }
