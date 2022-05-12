@@ -26,6 +26,7 @@ const IconsMap = {
   bifrost: "bifrost.svg",
   kintsugi: "kintsugi.svg",
   opensquare: "osn.svg",
+  westend: "westend.svg",
 };
 
 function getAssetIcon(assetKey) {
