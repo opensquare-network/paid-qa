@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import Address from "@osn/common-ui/lib/Account/Address";
 import { encodeAddress } from "@polkadot/util-crypto";
-import { ChainSS58Format } from "@osn/consts";
+import { ChainSS58Format, identityChainMap } from "@osn/consts";
 import { fetchIdentity } from "@osn/common/src/services/identity";
 import IdentityIcon from "@osn/common-ui/lib/Identity/IdentityIcon";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
@@ -73,7 +73,8 @@ const AccountItem = ({ header, accountName, accountAddress, chain }) => {
   }
   let displayAccountName = accountName;
   useEffect(() => {
-    fetchIdentity(chain, accountAddress).then((identity) => {
+    const identityChain = identityChainMap[chain] || chain;
+    fetchIdentity(identityChain, accountAddress).then((identity) => {
       setIdentity(identity);
     });
   }, [accountAddress, chain]);
