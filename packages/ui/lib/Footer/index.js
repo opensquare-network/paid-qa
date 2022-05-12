@@ -82,7 +82,7 @@ const Item = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: rgba(255, 255, 255, 0.65);
-  > img {
+  > svg {
     width: 24px;
     height: 24px;
     margin-right: 8px;
@@ -96,11 +96,7 @@ const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  > img {
-    width: 68px;
-    height: 48px;
-    margin-bottom: 120px;
-  }
+
   > div {
     text-align: right;
     font-size: 16px;
