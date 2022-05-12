@@ -4,6 +4,7 @@ import ListItem from "./ListItem";
 import NoData from "../NoData";
 
 const ListWrapper = styled.ul`
+  margin: 0;
   padding: 0;
 `;
 
