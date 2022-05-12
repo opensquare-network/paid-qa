@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cloneElement } from "react";
 import styled, { css } from "styled-components";
 import { p_14_medium, p_14_normal, p_16_semibold } from "../styles/textStyles";
 import { netural_grey_200 } from "../styles/colors";
@@ -33,26 +33,26 @@ const CardWrapper = styled(Flex)`
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     padding: 16px;
   }
-`;
 
-const CardPrefix = styled.div`
-  margin-right: 32px;
+  .osn-card-prefix {
+    margin-right: 32px;
 
-  ${(p) =>
-    p.size === "small" &&
-    css`
-      margin-right: 24px;
-    `}
-`;
+    ${(p) =>
+      p.size === "small" &&
+      css`
+        margin-right: 24px;
+      `}
 
-const CardSuffix = styled.div`
-  margin-left: 32px;
+    .osn-card-suffix {
+      margin-left: 32px;
 
-  ${(p) =>
-    p.size === "small" &&
-    css`
-      margin-left: 24px;
-    `}
+      ${(p) =>
+        p.size === "small" &&
+        css`
+          margin-left: 24px;
+        `}
+    }
+  }
 `;
 
 const CardBody = styled.div`
@@ -109,21 +109,19 @@ function Card(props) {
       bordered={bordered}
       className="osn-card"
     >
-      {prefix && (
-        <CardPrefix size={size} className="osn-card-prefix">
-          {prefix}
-        </CardPrefix>
-      )}
+      {prefix &&
+        cloneElement(prefix, {
+          className: "osn-card-prefix",
+        })}
       <CardBody className="osn-card-body">
         {head}
         {head && children && <Divider />}
         {children}
       </CardBody>
-      {suffix && (
-        <CardSuffix size={size} className="osn-card-suffix">
-          {suffix}
-        </CardSuffix>
-      )}
+      {suffix &&
+        cloneElement(suffix, {
+          className: "osn-card-suffix",
+        })}
     </CardWrapper>
   );
 }
