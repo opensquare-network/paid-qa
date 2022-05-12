@@ -20,6 +20,37 @@ if (process.env.REACT_APP_ENVIRONMENT === "development") {
   AVAILABLE_NETWORKS.push(...PRODUCTION_NETWORK);
 }
 
+export const ASSETS = [
+  {
+    id: "polkadot",
+    name: "Polkadot",
+    symbol: "DOT",
+  },
+  {
+    id: "kusama",
+    name: "Kusama",
+    symbol: "KSM",
+  },
+  {
+    id: "rmrk",
+    name: "RMRK",
+    symbol: "RMRK",
+  },
+  {
+    id: "polarisdao",
+    name: "PolarisDAO",
+    symbol: "ARIS",
+  },
+];
+
+export const TEST_ASSETS = [
+  {
+    id: "westend",
+    name: "Westend",
+    symbol: "WND",
+  },
+];
+
 export const DEFAULT_POLKADOT_NODES = [
   {
     name: "Parity",
