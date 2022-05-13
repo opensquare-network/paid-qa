@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 
 import Background from "components/Background";
@@ -26,16 +26,20 @@ export default function Topic() {
   const { cid } = useParams();
   const dispatch = useDispatch();
   const topic = useSelector(topicSelector);
+  const navigate = useNavigate();
+
   useEffect(() => {
     serverApi.fetch(`/topics/${cid}`).then(({ result }) => {
       if (result) {
         dispatch(setTopic(result));
+      } else {
+        navigate("/404");
       }
     });
     return () => {
       dispatch(setTopic(null));
     };
-  }, [dispatch, cid]);
+  }, [dispatch, cid, navigate]);
 
   return (
     <Wrapper>
