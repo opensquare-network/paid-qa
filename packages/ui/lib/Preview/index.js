@@ -21,7 +21,7 @@ function Preview({
   content,
   bordered = true,
   allowTags = sanitizeHtml.defaults.allowedTags.concat(["img", "iframe", "br"]),
-  minHeight,
+  minHeight = 19.25,
 }) {
   return (
     <PreviewWrapper bordered={bordered} minHeight={minHeight}>
