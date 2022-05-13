@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Preview from "../../lib/Preview";
+import MarkdownPreview from "../../lib/Preview";
 
 export default {
-  title: "Preview",
-  component: Preview,
+  title: "MarkdownPreview",
+  component: MarkdownPreview,
   parameters: {
     docs: {
       description: {
@@ -65,7 +65,7 @@ export const primary = () => {
         onChange={(event) => setContent(event.target.value)}
       ></Textarea>
 
-      <Preview content={content} />
+      <MarkdownPreview content={content} />
     </Wrapper>
   );
 };
@@ -81,7 +81,7 @@ export const toggleBorder = () => {
         {bordered ? "hide" : "show"} border
       </button>
 
-      <Preview content={markdown} bordered={bordered} />
+      <MarkdownPreview content={markdown} bordered={bordered} />
     </>
   );
 };
