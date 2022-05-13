@@ -18,6 +18,7 @@ import Acala from "../imgs/icons/chain/acala.png";
 import Westmint from "../imgs/icons/chain/wesmint.png";
 import Statemine from "../imgs/icons/chain/statemine.png";
 import Statemint from "../imgs/icons/chain/statemint.png";
+import Karura from "../imgs/icons/chain/karura.png";
 import styled from "styled-components";
 import Tooltip from "../Tooltip";
 
@@ -48,8 +49,9 @@ function ResolveChainIcon({ chainName, size = 24 }) {
       return <Khala viewBox="0 0 24 24" width={size} height={size} />;
     case "bifrost":
       return <img src={Bifrost} width={size} alt={chainName} />;
-    case "kintsugi":
     case "karura":
+      return <img src={Karura} width={size} alt={chainName} />;
+    case "kintsugi":
       return <img src={Kintsugi} width={size} alt={chainName} />;
     case "moonriver":
       return <Moonriver viewBox="0 0 24 24" width={size} height={size} />;
