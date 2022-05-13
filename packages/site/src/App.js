@@ -10,6 +10,7 @@ import Home from "pages/Home";
 import Topic from "pages/Topic";
 import Profile from "pages/Profile";
 import NewTopic from "pages/NewTopic";
+import FourOFour from "pages/404";
 import Notifications from "pages/Notifications";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -29,6 +30,7 @@ function App() {
               path="/network/:network/address/:address"
               element={<Profile />}
             />
+            <Route path="*" element={<FourOFour />} />
           </Routes>
         </Main>
         <Footer />
