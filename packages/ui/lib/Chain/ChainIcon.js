@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactComponent as Statemine } from "../imgs/icons/chain/statemine.svg";
 import { ReactComponent as Polkadot } from "../imgs/icons/chain/polkadot.svg";
 import { ReactComponent as Khala } from "../imgs/icons/chain/khala.svg";
 import { ReactComponent as Kusama } from "../imgs/icons/chain/kusama.svg";
@@ -9,10 +8,16 @@ import { ReactComponent as Interlay } from "../imgs/icons/chain/interlay.svg";
 import { ReactComponent as Polkadex } from "../imgs/icons/chain/polkadex.svg";
 import { ReactComponent as Crust } from "../imgs/icons/chain/crust.svg";
 import { ReactComponent as Ethereum } from "../imgs/icons/chain/ethereum.svg";
+import { ReactComponent as Moonbeam } from "../imgs/icons/chain/moonbeam.svg";
+import { ReactComponent as Centrifuge } from "../imgs/icons/chain/centrifuge.svg";
+import { ReactComponent as Chrwna } from "../imgs/icons/chain/chrwna.svg";
 import Westend from "../imgs/icons/chain/westend.png";
 import Bifrost from "../imgs/icons/chain/bifrost.png";
 import Kintsugi from "../imgs/icons/chain/kintsugi.png";
 import Acala from "../imgs/icons/chain/acala.png";
+import Westmint from "../imgs/icons/chain/wesmint.png";
+import Statemine from "../imgs/icons/chain/statemine.png";
+import Statemint from "../imgs/icons/chain/statemint.png";
 import styled from "styled-components";
 import Tooltip from "../Tooltip";
 
@@ -23,13 +28,22 @@ const Wrapper = styled.div`
 
 function ResolveChainIcon({ chainName, size = 24 }) {
   switch (chainName) {
+    case "chrwna":
+      return <Chrwna viewBox="0 0 24 24" width={size} height={size} />;
+    case "centrifuge":
+      return <Centrifuge viewBox="0 0 24 24" width={size} height={size} />;
+    case "moonbeam":
+      return <Moonbeam viewBox="0 0 24 24" width={size} height={size} />;
     case "polkadot":
       return <Polkadot viewBox="0 0 24 24" width={size} height={size} />;
     case "kusama":
       return <Kusama viewBox="0 0 24 24" width={size} height={size} />;
     case "statemine":
+      return <img src={Statemine} width={size} alt={chainName} />;
+    case "statemint":
+      return <img src={Statemint} width={size} alt={chainName} />;
     case "westmint":
-      return <Statemine viewBox="0 0 24 24" width={size} height={size} />;
+      return <img src={Westmint} width={size} alt={chainName} />;
     case "khala":
       return <Khala viewBox="0 0 24 24" width={size} height={size} />;
     case "bifrost":
