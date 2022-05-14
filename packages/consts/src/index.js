@@ -13,6 +13,7 @@ export const Chains = {
   westmint: "westmint",
   statemint: "statemint",
   interlay: "interlay",
+  crust: "crust",
 };
 
 export const identityChainMap = Object.freeze({
@@ -33,7 +34,8 @@ export const ChainSS58Format = Object.freeze({
   [Chains.khala]: 30,
   [Chains.bifrost]: 6,
   [Chains.kintsugi]: 2092,
-  [Chains.westend]: 2,
+  [Chains.westend]: 42,
+  [Chains.crust]: 66,
 });
 
 export const MOBILE_SIZE = 900;
