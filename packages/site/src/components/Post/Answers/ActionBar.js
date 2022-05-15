@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import More from "@osn/common-ui/lib/Icon/More";
 import ReportModal from "../../ReportModal";
 import { useOnClickOutside } from "@osn/common/src/utils/hooks";
 import { useIsOwner } from "../../../utils/hooks";
@@ -88,7 +87,7 @@ export default function ActionBar({
   const buttonRef = useRef(null);
   useOnClickOutside(buttonRef, () => setShowMoreActions(false));
 
-  const toggleShowMoreActions = () => setShowMoreActions(!showMoreActions);
+  // const toggleShowMoreActions = () => setShowMoreActions(!showMoreActions);
 
   const onReplyClick = useCallback(() => {
     const network = answerNetwork;
@@ -116,7 +115,7 @@ export default function ActionBar({
         </Flex>
         {account && (
           <div ref={buttonRef}>
-            <More className="more" onClick={toggleShowMoreActions} />
+            {/*<More className="more" onClick={toggleShowMoreActions} />*/}
             {showMoreActions && (
               <MoreActions>
                 <MoreActionItem
