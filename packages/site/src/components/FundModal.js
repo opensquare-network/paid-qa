@@ -215,7 +215,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
         <ItemTitle>
           <StyledText>Asset</StyledText>
-          {account?.network === "statemine" && (
+          {["statemine", "westmint"].includes(account?.network) && (
             <ManualSwitch>
               <span>Manual</span>
               <Toggle on={manualOn} setOn={setManualOn} />

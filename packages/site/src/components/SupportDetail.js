@@ -122,7 +122,7 @@ export default function SupportDetail({
 
       <ItemTitle>
         <StyledText>Asset</StyledText>
-        {account?.network === "statemine" && (
+        {["statemine", "westmint"].includes(account?.network) && (
           <ManualSwitch>
             <span>Manual</span>
             <Toggle on={manualOn} setOn={setManualOn} />
