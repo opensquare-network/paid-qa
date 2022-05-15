@@ -8,7 +8,6 @@ import { accountSelector } from "store/reducers/accountSlice";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { useOnClickOutside } from "@osn/common/src/utils/hooks";
 import ReportModal from "../../ReportModal";
-import More from "@osn/common-ui/lib/Icon/More";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { useIsOwner } from "../../../utils/hooks";
 
@@ -65,7 +64,7 @@ export default function ActionBar({
   const buttonRef = useRef(null);
   useOnClickOutside(buttonRef, () => setShowMoreActions(false));
 
-  const toggleShowMoreActions = () => setShowMoreActions(!showMoreActions);
+  // const toggleShowMoreActions = () => setShowMoreActions(!showMoreActions);
 
   return (
     <Wrapper>
@@ -82,7 +81,7 @@ export default function ActionBar({
         </Flex>
         {account && (
           <div ref={buttonRef}>
-            <More className="more" onClick={toggleShowMoreActions} />
+            {/*<More className="more" onClick={toggleShowMoreActions} />*/}
             {showMoreActions && (
               <MoreActions>
                 <MoreActionItem
