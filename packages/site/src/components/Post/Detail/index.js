@@ -10,7 +10,6 @@ import DetailLoader from "@osn/common-ui/lib/Skeleton/DetailLoader";
 import { useIsOwner } from "../../../utils/hooks";
 import { netural_grey_200 } from "@osn/common-ui/es/styles/colors";
 
-const Wrapper = styled(Card)``;
 const Divider = styled.div`
   height: 1px;
   background-color: ${netural_grey_200};
@@ -28,7 +27,7 @@ export default function Detail({ topic }) {
   }
 
   return (
-    <Wrapper>
+    <Card>
       <Title topic={topic} />
       <Divider />
       <Description topic={topic} />
@@ -43,6 +42,6 @@ export default function Detail({ topic }) {
       <Share />
       <Gap />
       <Resolve topic={topic} />
-    </Wrapper>
+    </Card>
   );
 }
