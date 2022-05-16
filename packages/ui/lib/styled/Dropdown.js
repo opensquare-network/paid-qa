@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { Dropdown } from "semantic-ui-react";
 import CaretDownIcon from "../imgs/icons/caret-down.svg";
-import { neutral_grey_500 } from "../styles/colors";
+import {
+  netural_grey_100,
+  netural_grey_200,
+  neutral_grey_500,
+} from "../styles/colors";
 
 const StyledDropdown = styled(Dropdown)`
   width: 100%;
@@ -20,8 +24,32 @@ const StyledDropdown = styled(Dropdown)`
   .ui.selection.dropdown {
     min-height: 48px !important;
   }
-  &.ui.dropdown .menu > .item {
-    // padding: 0 !important;
+  &.ui.dropdown .menu {
+    border-radius: 0 !important;
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      width: 10px;
+      padding: 0px;
+      background-color: ${neutral_grey_500};
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    > .item {
+      border-top: none !important;
+
+      &.selected,
+      &:hover {
+        background-color: ${netural_grey_200};
+      }
+    }
   }
   .icon {
     top: 50% !important;
@@ -40,28 +68,6 @@ const StyledDropdown = styled(Dropdown)`
   &.active {
     .icon {
       transform: translate(0, -50%) rotate(180deg) !important;
-    }
-  }
-  .menu {
-    border-radius: 0 !important;
-
-    .item {
-      border-top: none !important;
-    }
-
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-      background-color: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      width: 10px;
-      padding: 0px;
-      background-color: ${neutral_grey_500};
-      border: 2px solid transparent;
-      background-clip: padding-box;
     }
   }
 `;
