@@ -37,6 +37,11 @@ async function getTopics(symbol, status, title, page, pageSize) {
                   "bounty.value": { $toString: "$bounty.value" },
                 },
               },
+              {
+                $sort: {
+                  "indexer.blockTime": 1,
+                },
+              },
             ],
             as: "rewards",
           },
@@ -142,7 +147,10 @@ async function getTopics(symbol, status, title, page, pageSize) {
 
     await Promise.all([
       Topic.populate(topics, { path: "answersCount" }),
-      Topic.populate(topics, { path: "rewards" }),
+      Topic.populate(topics, {
+        path: "rewards",
+        options: { sort: { "indexer.blockTime": 1 } },
+      }),
     ]);
 
     return {
