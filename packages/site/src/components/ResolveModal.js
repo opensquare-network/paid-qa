@@ -42,7 +42,7 @@ const Info = styled.div`
 `;
 
 const ItemTitle = styled(FlexBetween)`
-  margin: 8px 0px;
+  margin-top: 20px;
 `;
 
 const StyledText = styled.p`
@@ -121,9 +121,7 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
       <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
         <StyledTitle>Resolve</StyledTitle>
 
-        {percentage !== 100 && (
-          <Info>If promise is not kept, credit score will be affected.</Info>
-        )}
+        <Info>Are you sure to resolve the topic?</Info>
 
         <ItemTitle>
           <StyledText>My promise</StyledText>
