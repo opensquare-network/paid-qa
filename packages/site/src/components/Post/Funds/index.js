@@ -32,12 +32,17 @@ const Item = styled(FlexBetween)`
   > :first-child {
     color: #a1a8b3;
   }
+  align-items: start;
 `;
 
 const GreyText = styled.p`
   color: #a1a8b3;
   text-align: center;
   ${p_14_normal};
+`;
+
+const TextRight = styled.div`
+  text-align: right;
 `;
 
 export default function Funds({ topicCid }) {
@@ -77,7 +82,11 @@ export default function Funds({ topicCid }) {
               <div>{key === "0" ? "Topic" : `#${key}`}</div>
               <div>
                 {Object.keys(item || {}).map((symbol, index) => {
-                  return <div key={index}>{`${item[symbol]} ${symbol}`}</div>;
+                  return (
+                    <TextRight
+                      key={index}
+                    >{`${item[symbol]} ${symbol}`}</TextRight>
+                  );
                 })}
               </div>
             </Item>
