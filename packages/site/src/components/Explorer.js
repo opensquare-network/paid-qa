@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 
-import Input from "@osn/common-ui/lib/styled/Input";
+import { Input, FlexBetween, MobileVisible } from "@osn/common-ui";
 import AssetSelector from "./AssetSelector";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,8 +15,6 @@ import {
   h3_36_bold,
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import MobileVisible from "@osn/common-ui/lib/styled/MobileVisible";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
