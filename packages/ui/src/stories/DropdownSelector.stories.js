@@ -13,23 +13,17 @@ export default {
   },
 };
 
-const options = [
-  {
-    id: 1,
-    content: "Option 1",
-    value: "option-1",
-  },
-  {
-    id: 2,
-    content: "Option 2",
-    value: "option-2",
-  },
-  {
-    id: 3,
-    content: "Option 3",
-    value: "option-3",
-  },
-];
+const options = Array.from({ length: 10 })
+  .fill(null)
+  .map((_, index) => {
+    const i = index + 1;
+
+    return {
+      id: i,
+      content: `Option ${i}`,
+      value: `option-${i}`,
+    };
+  });
 
 export const primary = () => {
   const [value, setValue] = useState("option-2");
