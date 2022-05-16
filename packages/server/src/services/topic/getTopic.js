@@ -2,8 +2,14 @@ const { Topic } = require("../../models");
 
 async function getTopic(cid) {
   const topic = await Topic.findOne({ cid })
-    .populate("rewards")
-    .populate("appendants")
+    .populate({
+      path: "rewards",
+      options: { sort: { "indexer.blockTime": 1 } },
+    })
+    .populate({
+      path: "appendants",
+      options: { sort: { "indexer.blockTime": 1 } },
+    })
     .populate("funds")
     .populate("resolves");
   return topic;
