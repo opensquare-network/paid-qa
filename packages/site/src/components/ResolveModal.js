@@ -56,7 +56,6 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
   const account = useSelector(accountSelector);
   const isMounted = useIsMounted();
   const api = useApi();
-  const percentage = useAverageFulfillment(rewards);
 
   const showErrorToast = (message) => {
     dispatch(newErrorToast(message));
