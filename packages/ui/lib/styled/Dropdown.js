@@ -2,11 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Dropdown } from "semantic-ui-react";
 import CaretDownIcon from "../imgs/icons/caret-down.svg";
-import {
-  netural_grey_100,
-  netural_grey_200,
-  neutral_grey_500,
-} from "../styles/colors";
+import { netural_grey_200, netural_grey_500 } from "../styles/colors";
 
 const StyledDropdown = styled(Dropdown)`
   width: 100%;
@@ -37,7 +33,7 @@ const StyledDropdown = styled(Dropdown)`
       border-radius: 10px;
       width: 10px;
       padding: 0px;
-      background-color: ${neutral_grey_500};
+      background-color: ${netural_grey_500};
       border: 2px solid transparent;
       background-clip: padding-box;
     }
