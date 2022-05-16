@@ -8,16 +8,16 @@ import Share from "./Share";
 import Resolve from "./Resolve";
 import DetailLoader from "@osn/common-ui/lib/Skeleton/DetailLoader";
 import { useIsOwner } from "../../../utils/hooks";
+import { netural_grey_200 } from "@osn/common-ui/es/styles/colors";
 
-const Wrapper = styled(Card)`
-  > :not(:first-child) {
-    padding-top: 20px;
-    border-top: solid 1px #f0f3f8;
-  }
-
-  > :not(:last-child) {
-    padding-bottom: 20px;
-  }
+const Wrapper = styled(Card)``;
+const Divider = styled.div`
+  height: 1px;
+  background-color: ${netural_grey_200};
+  margin: 20px 0;
+`;
+const Gap = styled.div`
+  margin: 20px 0;
 `;
 
 export default function Detail({ topic }) {
@@ -30,14 +30,18 @@ export default function Detail({ topic }) {
   return (
     <Wrapper>
       <Title topic={topic} />
+      <Divider />
       <Description topic={topic} />
+      <Divider />
       <Appendants
         topicCid={topic.cid}
         topicNetwork={topic.network}
         appendants={topic.appendants}
         editable={isOwner && topic.status !== "resolved"}
       />
+      <Divider />
       <Share />
+      <Gap />
       <Resolve topic={topic} />
     </Wrapper>
   );
