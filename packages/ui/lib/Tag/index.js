@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { p_12_medium } from "../styles/textStyles";
+import { primary_purple_500, primary_turquoise_500 } from "../styles/colors";
 
 const presetColors = {
-  purple: "#6848FF",
+  purple: primary_purple_500,
   gray: "#E2E8F0",
-  turquoise: "#04D2C5",
+  turquoise: primary_turquoise_500,
 };
 
 const Wrapper = styled.span`
@@ -14,7 +15,7 @@ const Wrapper = styled.span`
   line-height: 16px;
   font-size: 12px;
   ${p_12_medium}
-  background-color: ${(p) => presetColors[p.color] || p.color || "#000"};
+  background: ${(p) => presetColors[p.color] || p.color || "#000"};
 `;
 
 export default function Tag({ children, color = "", ...props }) {
