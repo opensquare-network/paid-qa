@@ -20,7 +20,7 @@ import {
   updatePendingToast,
 } from "store/reducers/toastSlice";
 import serverApi from "services/serverApi";
-import PromiseItem, { useAverageFulfillment } from "./Post/Promises/Item";
+import PromiseItem from "./Post/Promises/Item";
 import { fetchTopic } from "store/reducers/topicSlice";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
@@ -42,7 +42,7 @@ const Info = styled.div`
 `;
 
 const ItemTitle = styled(FlexBetween)`
-  margin: 8px 0px;
+  margin-top: 20px;
 `;
 
 const StyledText = styled.p`
@@ -56,7 +56,6 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
   const account = useSelector(accountSelector);
   const isMounted = useIsMounted();
   const api = useApi();
-  const percentage = useAverageFulfillment(rewards);
 
   const showErrorToast = (message) => {
     dispatch(newErrorToast(message));
@@ -121,9 +120,7 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
       <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
         <StyledTitle>Resolve</StyledTitle>
 
-        {percentage !== 100 && (
-          <Info>If promise is not kept, credit score will be affected.</Info>
-        )}
+        <Info>Are you sure to resolve the topic?</Info>
 
         <ItemTitle>
           <StyledText>My promise</StyledText>

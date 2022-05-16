@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import ProgressBar from "@osn/common-ui/lib/styled/ProgressBar";
-import NetworkUser from "../../User/NetworkUser";
 import { useSelector } from "react-redux";
 import { fundSummarySelector } from "store/reducers/topicSlice";
 import BigNumber from "bignumber.js";
-import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
@@ -39,24 +37,6 @@ const ResolvedTag = styled(FlexCenter)`
   color: #a1a8b3;
 `;
 
-export function useAverageFulfillment(rewards) {
-  const fundSummary = useSelector(fundSummarySelector);
-  if (!rewards.length > 0) {
-    return 0;
-  }
-  let fulfillment = 0;
-  rewards.forEach((reward) => {
-    const paidValue =
-      fundSummary?.statsBySponsors?.[reward.sponsor]?.[reward.symbol] || 0;
-    const percent = new BigNumber(paidValue)
-      .div(reward.value)
-      .times(100)
-      .integerValue();
-    fulfillment += Math.max(0, Math.min(percent, 100));
-  });
-  return fulfillment / rewards.length;
-}
-
 export function useFulfillment(reward) {
   const fundSummary = useSelector(fundSummarySelector);
   if (!reward) {
@@ -74,11 +54,9 @@ export function useFulfillment(reward) {
 
 export default function Item({ reward, resolve }) {
   const [paidValue, percent] = useFulfillment(reward);
-  const sponsorAddress = encodeNetworkAddress(reward.sponsor, reward.network);
   return (
     <Wrapper>
       <FlexBetween>
-        <NetworkUser address={sponsorAddress} network={reward.network} />
         {resolve && <ResolvedTag>Resolved</ResolvedTag>}
       </FlexBetween>
       {!resolve && (
