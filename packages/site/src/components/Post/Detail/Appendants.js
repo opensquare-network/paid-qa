@@ -1,13 +1,17 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as AddIcon } from "./icons/add-appendant.svg";
 
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import RichEdit from "@osn/common-ui/lib/RichEdit";
-import Time from "@osn/common-ui/lib/Time";
-import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import {
+  DividerWrapper,
+  RichEditor,
+  Time,
+  FlexBetween,
+  FlexCenter,
+  MarkdownPreview,
+  IpfsSquare,
+} from "@osn/common-ui";
 import { useApi } from "utils/hooks";
 import {
   newErrorToast,
@@ -28,8 +32,7 @@ import {
   p_14_normal,
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
-import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
+import { text_dark_accessory } from "@osn/common-ui/es/styles/colors";
 
 const { InteractionEncoder } = encoder;
 const { AppendInteraction } = interactions;
@@ -49,11 +52,6 @@ const ItemWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
   }
-  > :nth-child(2) {
-    margin-top: 4px;
-    ${p_14_normal};
-    color: #506176;
-  }
 `;
 
 const StyledDividerWrapper = styled(DividerWrapper)`
@@ -68,12 +66,26 @@ const StyledDividerWrapper = styled(DividerWrapper)`
 
 const AddButton = styled(FlexCenter)`
   cursor: pointer;
+
+  ${(p) =>
+    p.editing &&
+    css`
+      svg {
+        path {
+          fill: ${text_dark_accessory};
+        }
+      }
+    `}
 `;
 
 const EditorWrapper = styled.div``;
 
 const Count = styled.div`
   color: #a1a8b3;
+`;
+
+const MarkdownPreviewWrapper = styled.div`
+  margin-top: 4px;
 `;
 
 export default function Appendants({
@@ -176,7 +188,7 @@ export default function Appendants({
           <Count>{appendantsCount}</Count>
         </DividerWrapper>
         {editable && (
-          <AddButton onClick={() => setEditing(!editing)}>
+          <AddButton editing={editing} onClick={() => setEditing(!editing)}>
             <AddIcon />
           </AddButton>
         )}
@@ -194,12 +206,15 @@ export default function Appendants({
               }
             />
           </div>
-          <MicromarkMd md={item.content} />
+
+          <MarkdownPreviewWrapper>
+            <MarkdownPreview content={item.content} bordered={false} />
+          </MarkdownPreviewWrapper>
         </ItemWrapper>
       ))}
       {editing && (
         <EditorWrapper>
-          <RichEdit
+          <RichEditor
             content={content}
             setContent={setContent}
             onSubmit={onSubmit}
