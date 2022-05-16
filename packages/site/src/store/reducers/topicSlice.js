@@ -9,7 +9,6 @@ const topicSlice = createSlice({
     topic: null,
     fundSummary: null,
     filterAsset: "all",
-    filterStatus: "all",
     filterTitle: "",
   },
   reducers: {
@@ -25,9 +24,6 @@ const topicSlice = createSlice({
     setFilterAsset(state, { payload }) {
       state.filterAsset = payload;
     },
-    setFilterStatus(state, { payload }) {
-      state.filterStatus = payload;
-    },
     setFilterTitle(state, { payload }) {
       state.filterTitle = payload;
     },
@@ -39,7 +35,6 @@ export const {
   setTopic,
   setFundSummary,
   setFilterAsset,
-  setFilterStatus,
   setFilterTitle,
 } = topicSlice.actions;
 

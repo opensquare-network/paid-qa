@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   filterAssetSelector,
   setFilterAsset,
-  setFilterStatus,
   setFilterTitle,
 } from "store/reducers/topicSlice";
 import { MOBILE_SIZE } from "@osn/consts";
@@ -87,7 +86,6 @@ export default function Explorer() {
     return () => {
       //reset filter when leave home page
       dispatch(setFilterAsset("all"));
-      dispatch(setFilterStatus("all"));
       dispatch(setFilterTitle(""));
     };
   }, [dispatch]);
