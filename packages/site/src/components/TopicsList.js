@@ -6,7 +6,6 @@ import { List, Pagination } from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filterAssetSelector,
-  filterStatusSelector,
   filterTitleSelector,
   setTopics,
   topicsSelector,
@@ -26,18 +25,16 @@ export default function TopicsList() {
   const topics = useSelector(topicsSelector);
   const [isLoading, setIsLoading] = useState(true);
   const filterAsset = useSelector(filterAssetSelector);
-  const filterStatus = useSelector(filterStatusSelector);
   const filterTitle = useSelector(filterTitleSelector);
 
   useEffect(() => {
     setSearchParams();
-  }, [filterAsset, filterStatus, filterTitle, setSearchParams]);
+  }, [filterAsset, filterTitle, setSearchParams]);
 
   useEffect(() => {
     setIsLoading(true);
     serverApi
       .fetch("/topics", {
-        status: filterStatus,
         symbol: filterAsset?.symbol || "all",
         title: filterTitle,
         page,
@@ -51,14 +48,7 @@ export default function TopicsList() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [
-    dispatch,
-    filterAsset?.symbol,
-    filterStatus,
-    filterTitle,
-    page,
-    topics.total,
-  ]);
+  }, [dispatch, filterAsset?.symbol, filterTitle, page, topics.total]);
 
   return isLoading ? (
     <ListLoader />

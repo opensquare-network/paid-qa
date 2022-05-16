@@ -3,12 +3,10 @@ import { useEffect, useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 
 import Input from "@osn/common-ui/lib/styled/Input";
-import TopicStatusSelect from "./TopicStatusSelect";
 import AssetSelector from "./AssetSelector";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filterAssetSelector,
-  filterStatusSelector,
   setFilterAsset,
   setFilterStatus,
   setFilterTitle,
@@ -82,7 +80,6 @@ const ItemWrapper = styled.div`
 
 export default function Explorer() {
   const dispatch = useDispatch();
-  const filterStatus = useSelector(filterStatusSelector);
   const filterAsset = useSelector(filterAssetSelector);
   const [collapsed, setCollapsed] = useState(true);
 
@@ -97,9 +94,6 @@ export default function Explorer() {
 
   const setAsset = (asset) => {
     dispatch(setFilterAsset(asset));
-  };
-  const setStatus = (status) => {
-    dispatch(setFilterStatus(status));
   };
   const debouncedSetTitle = useMemo(
     () => debounce((text) => dispatch(setFilterTitle(text)), 500),
@@ -121,16 +115,6 @@ export default function Explorer() {
             placeholder="Search topic..."
             onChange={(e) => debouncedSetTitle(e.target.value)}
           />
-        </ItemWrapper>
-        <ItemWrapper
-          className={collapsed && "mobile-invisible"}
-          style={{ zIndex: 11 }}
-        >
-          <div>
-            <div>Status</div>
-            <img src="/imgs/icons/sort-by.svg" alt="" />
-          </div>
-          <TopicStatusSelect status={filterStatus} setStatus={setStatus} />
         </ItemWrapper>
         <ItemWrapper className={collapsed && "mobile-invisible"}>
           <div>

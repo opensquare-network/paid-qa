@@ -47,7 +47,6 @@ export const topicsSelector = (state) => state.topic.topics;
 export const topicSelector = (state) => state.topic.topic;
 export const fundSummarySelector = (state) => state.topic.fundSummary;
 export const filterAssetSelector = (state) => state.topic.filterAsset;
-export const filterStatusSelector = (state) => state.topic.filterStatus;
 export const filterTitleSelector = (state) => state.topic.filterTitle;
 
 export const fetchTopic = (topicCid) => async (dispatch) => {
