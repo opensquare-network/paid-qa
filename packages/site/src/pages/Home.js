@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
-import Container from "@osn/common-ui/lib/styled/Container";
+import { Container, FlexBetween } from "@osn/common-ui";
 import Explorer from "components/Explorer";
 import NewTopicAnchor from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
 import { MOBILE_SIZE } from "@osn/consts";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 
 const Wrapper = styled.div`
   position: relative;
