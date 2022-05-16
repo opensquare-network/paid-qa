@@ -24,7 +24,7 @@ export default function TagList({ topic }) {
     return null;
   }
   const tokenValues = calcRewards(topic.rewards);
-
+  const symbol = topic.rewards[0].bounty.symbol;
   return (
     <Wrapper>
       {
@@ -32,12 +32,10 @@ export default function TagList({ topic }) {
         topic.status === "resolved" ? (
           <StatusTag status={topic.status} />
         ) : (
-          Object.keys(tokenValues).map((symbol) => (
-            <Tag
-              key={symbol}
-              color={getSymbolColor(symbol)}
-            >{`${tokenValues[symbol]} ${symbol}`}</Tag>
-          ))
+          <Tag
+            key={symbol}
+            color={getSymbolColor(symbol)}
+          >{`${tokenValues[symbol]} ${symbol}`}</Tag>
         )
       }
     </Wrapper>
