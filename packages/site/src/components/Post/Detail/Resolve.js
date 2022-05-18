@@ -8,7 +8,7 @@ import { Button } from "@osn/common-ui";
 
 const Wrapper = styled.div``;
 
-export default function Resolve({ topic }) {
+export default function Resolve({ topic, ...restProps }) {
   const [open, setOpen] = useState();
   const account = useSelector(accountSelector);
   const sumUpRewards = calcSponserRewards(
@@ -29,7 +29,7 @@ export default function Resolve({ topic }) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper {...restProps}>
       <Button block onClick={() => setOpen(true)}>
         Resolve
       </Button>
