@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
 import getApi from "@osn/common/src/services/chain/api";
@@ -7,6 +7,7 @@ import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import serverApi from "../services/serverApi";
 import { EmptyList, PROJECT_NAME, tabRouterMap } from "./constants";
 import { encodeNetworkAddress } from "@osn/common/src";
+import { unreadSelector } from "store/reducers/notificationSlice";
 
 export function useApi() {
   const account = useSelector(accountSelector);
@@ -43,8 +44,36 @@ export function useApi() {
 
 export function useNotifications(page, account, tab, setPage) {
   const pageSize = 10;
-  const [notifications, setNotifications] = useState({ items: null, total: 0 });
+  const [notifications, setNotifications] = useState(EmptyList);
   const [isLoading, setIsLoading] = useState(true);
+  const unread = useSelector(unreadSelector);
+  const [prevUnread, setPrevUnread] = useState(unread);
+
+  const refresh = useCallback(() => {
+    if (account?.network && account?.address) {
+      serverApi
+        .fetch(
+          `/network/${account.network}/address/${
+            account.address
+          }/${tabRouterMap.get(tab)}`,
+          { page, pageSize }
+        )
+        .then(({ result }) => {
+          if (result) {
+            setNotifications(result);
+          }
+        });
+    }
+  }, [account?.network, account?.address, tab, page, pageSize]);
+
+  useEffect(() => {
+    // Got new notifications
+    if (unread > prevUnread) {
+      refresh();
+    }
+
+    setPrevUnread(unread);
+  }, [unread, prevUnread, refresh]);
 
   useEffect(() => {
     setNotifications(null);
@@ -54,7 +83,6 @@ export function useNotifications(page, account, tab, setPage) {
   useEffect(() => {
     if (account?.network && account?.address) {
       setIsLoading(true);
-      setNotifications({ items: null, total: notifications.total });
       serverApi
         .fetch(
           `/network/${account.network}/address/${
@@ -73,9 +101,9 @@ export function useNotifications(page, account, tab, setPage) {
           setIsLoading(false);
         });
     }
-  }, [account?.network, account?.address, page, tab, notifications.total]);
+  }, [account?.network, account?.address, page, tab]);
 
-  return [isLoading, notifications, setNotifications];
+  return [isLoading, notifications, refresh];
 }
 
 export const useBalance = (account, api) => {

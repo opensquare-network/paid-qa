@@ -8,7 +8,7 @@ import Share from "./Share";
 import Resolve from "./Resolve";
 import DetailLoader from "@osn/common-ui/lib/Skeleton/DetailLoader";
 import { useIsOwner } from "../../../utils/hooks";
-import { netural_grey_200 } from "@osn/common-ui/es/styles/colors";
+import { netural_grey_200 } from "@osn/common-ui/lib/styles/colors";
 
 const Divider = styled.div`
   height: 1px;

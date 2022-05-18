@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
+const EventEmitter = require("events");
 const { RequiredString } = require("./utils");
 const { NotificationType } = require("../utils/constants");
 
@@ -51,6 +52,12 @@ const NotificationSchema = new mongoose.Schema(
 
 NotificationSchema.index({ owner: 1, read: 1 });
 
+const eventEmitter = new EventEmitter();
+
+NotificationSchema.post("save", function () {
+  eventEmitter.emit("save", this);
+});
+
 const Notification = mongoose.model("Notification", NotificationSchema);
 
-module.exports = Notification;
+module.exports = { eventEmitter, Notification };
