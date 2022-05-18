@@ -24,8 +24,6 @@ export default function NotificationMonitor() {
       };
 
       const subscribe = () => {
-        console.log("subscribe", publicKey);
-
         socket.emit("subscribe", { event: "notification", publicKey });
         socket.on("notification", onNotification);
       };
@@ -37,7 +35,6 @@ export default function NotificationMonitor() {
       }
 
       return () => {
-        console.log("unsubscribe", publicKey);
         socket.emit("unsubscribe", { event: "notification", publicKey });
         socket.off("notification", onNotification);
       };
