@@ -13,11 +13,13 @@ import NewTopic from "pages/NewTopic";
 import FourOFour from "pages/404";
 import Notifications from "pages/Notifications";
 import ScrollToTop from "./components/ScrollToTop";
+import NotificationMonitor from "components/NotificationMonitor";
 
 function App() {
   return (
     <HashRouter>
       <Layout>
+        <NotificationMonitor />
         <Header />
         <ScrollToTop />
         <Main>

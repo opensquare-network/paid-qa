@@ -32,7 +32,7 @@ import {
   p_14_normal,
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import { text_dark_accessory } from "@osn/common-ui/es/styles/colors";
+import { text_dark_accessory } from "@osn/common-ui/lib/styles/colors";
 
 const { InteractionEncoder } = encoder;
 const { AppendInteraction } = interactions;

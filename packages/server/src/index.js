@@ -9,6 +9,7 @@ const logger = require("koa-logger");
 const helmet = require("koa-helmet");
 const cors = require("@koa/cors");
 const router = require("./routes");
+const socket = require("./socket");
 
 const app = new Koa();
 
@@ -38,3 +39,5 @@ const port = parseInt(process.env.PORT) || 5050;
 server.listen(port, () =>
   console.log(`✅  The server is running at http://localhost:${port}/`)
 );
+
+socket(server);

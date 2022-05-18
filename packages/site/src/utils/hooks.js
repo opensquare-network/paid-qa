@@ -7,6 +7,7 @@ import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import serverApi from "../services/serverApi";
 import { EmptyList, PROJECT_NAME, tabRouterMap } from "./constants";
 import { encodeNetworkAddress } from "@osn/common/src";
+import { unreadSelector } from "store/reducers/notificationSlice";
 
 export function useApi() {
   const account = useSelector(accountSelector);
@@ -45,6 +46,7 @@ export function useNotifications(page, account, tab, setPage) {
   const pageSize = 10;
   const [notifications, setNotifications] = useState({ items: null, total: 0 });
   const [isLoading, setIsLoading] = useState(true);
+  const unread = useSelector(unreadSelector);
 
   useEffect(() => {
     setNotifications(null);
@@ -73,7 +75,14 @@ export function useNotifications(page, account, tab, setPage) {
           setIsLoading(false);
         });
     }
-  }, [account?.network, account?.address, page, tab, notifications.total]);
+  }, [
+    account?.network,
+    account?.address,
+    page,
+    tab,
+    notifications.total,
+    unread,
+  ]);
 
   return [isLoading, notifications, setNotifications];
 }

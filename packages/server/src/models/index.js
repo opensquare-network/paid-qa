@@ -6,7 +6,7 @@ const Appendant = require("./appendant");
 const Answer = require("./answer");
 const Fund = require("./fund");
 const Resolve = require("./resolve");
-const Notification = require("./notification");
+const { Notification } = require("./notification");
 const Report = require("./report");
 
 mongoose.connect(MONGODB_URI);
