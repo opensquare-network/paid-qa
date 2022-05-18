@@ -65,6 +65,7 @@ const markdownStyle = css`
     p {
       max-width: 48.5em;
       word-break: break-word;
+      line-height: 24px !important;
     }
 
     ol,
