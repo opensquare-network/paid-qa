@@ -42,7 +42,7 @@ export default function Notifications() {
   const [page, setPage] = useState(1);
   const account = useSelector(accountSelector);
   const [tab, setTab] = useState("notifications");
-  const [isLoading, notifications, setNotifications] = useNotifications(
+  const [isLoading, notifications, refresh] = useNotifications(
     page,
     account,
     tab,
@@ -59,10 +59,10 @@ export default function Notifications() {
           notifications?.items?.length > 0 && (
             <ReadAllButton
               role="button"
-              onClick={() => {
-                dispatch(clearUnread(account.network, account.address));
+              onClick={async () => {
+                await dispatch(clearUnread(account.network, account.address));
                 // do refresh
-                setNotifications({ total: null });
+                refresh();
               }}
             >
               <CheckUnderline style={{ marginRight: 11 }} />
@@ -79,6 +79,7 @@ export default function Notifications() {
           <List
             gap={20}
             data={notifications?.items}
+            itemKey={(item) => `${item._id}_${item.read}`}
             itemRender={(item) => (
               <List.Item>
                 <NotificationItem

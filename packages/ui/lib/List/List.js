@@ -12,6 +12,7 @@ function List(props) {
   const {
     children,
     data = [],
+    itemKey,
     gap,
     itemRender,
     noDataMessage,
@@ -26,7 +27,10 @@ function List(props) {
     <ListWrapper {...restProps}>
       {data?.length ? (
         data?.map((item, index) =>
-          React.cloneElement(itemRender(item, index), { key: index, gap })
+          React.cloneElement(itemRender(item, index), {
+            key: itemKey ? itemKey(item) : index,
+            gap,
+          })
         )
       ) : (
         <NoData message={noDataMessage} />
