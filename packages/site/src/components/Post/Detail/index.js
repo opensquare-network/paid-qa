@@ -10,12 +10,17 @@ import DetailLoader from "@osn/common-ui/lib/Skeleton/DetailLoader";
 import { useIsOwner } from "../../../utils/hooks";
 
 const Wrapper = styled(Card)`
-  > :not(:first-child, :last-child) {
+  > :not(:first-child) {
     padding-top: 20px;
     border-top: solid 1px #f0f3f8;
   }
   > :not(:last-child) {
     padding-bottom: 20px;
+  }
+
+  .post-detail-resolve {
+    padding-top: 0;
+    border-top: none;
   }
 `;
 
@@ -37,7 +42,7 @@ export default function Detail({ topic }) {
         editable={isOwner && topic.status !== "resolved"}
       />
       <Share />
-      <Resolve topic={topic} />
+      <Resolve className="post-detail-resolve" topic={topic} />
     </Wrapper>
   );
 }
