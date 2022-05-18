@@ -10,11 +10,6 @@ function setup(server) {
   });
 
   io.on("connection", (socket) => {
-    console.log(socket.id, "connect");
-    socket.on("disconnect", () => {
-      console.log(socket.id, "disconnect");
-    });
-
     routes(io, socket);
   });
 }
