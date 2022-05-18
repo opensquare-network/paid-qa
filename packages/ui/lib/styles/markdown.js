@@ -4,7 +4,7 @@ const markdownStyle = css`
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 24px !important;
   color: #1e2134;
 
   &.markdown-content {
