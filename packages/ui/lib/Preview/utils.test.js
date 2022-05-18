@@ -1,12 +1,4 @@
-import { matchMdLink, replaceMentionLinks } from "./utils";
-
-test("matchMdLink", () => {
-  expect(
-    matchMdLink(`##HELLO, 
-  https://www.opensquare.io/ is a great website`)
-  ).toBe(`##HELLO, 
-  [https://www.opensquare.io/](https://www.opensquare.io/) is a great website`);
-});
+import { replaceMentionLinks } from "./utils";
 
 test("replaceMentionLinks", () => {
   expect(

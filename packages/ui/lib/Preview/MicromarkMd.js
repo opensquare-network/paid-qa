@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { micromark } from "micromark";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
-import { matchMdLink, replaceMentionLinks } from "./utils";
+import { replaceMentionLinks } from "./utils";
 import sanitizeHtml from "sanitize-html";
 import markdownStyle from "../styles/markdown";
 
@@ -12,8 +12,8 @@ const Wrapper = styled.div`
 `;
 
 export default function MicromarkMd({ md = "", allowTags }) {
-  const linkMd = matchMdLink(replaceMentionLinks(md));
-  const displayContent = linkMd.replace(/\n+/g, function (ns) {
+  const mentionedMd = replaceMentionLinks(md);
+  const displayContent = mentionedMd.replace(/\n+/g, function (ns) {
     if (ns.length === 1) return "  " + ns;
     return ns;
   });
