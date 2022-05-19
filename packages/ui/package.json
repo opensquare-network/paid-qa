@@ -13,10 +13,10 @@
   },
   "scripts": {
     "build": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel lib --out-dir es --copy-files",
-    "test": "craco test",
+    "test": "jest lib",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run test && npm run build"
   },
   "jest": {
     "transformIgnorePatterns": []
@@ -63,7 +63,10 @@
     "@storybook/react": "^6.4.22",
     "@storybook/testing-library": "^0.0.9",
     "@svgr/webpack": "^6.2.1",
+    "@types/jest": "^27.5.1",
+    "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.4",
+    "jest": "^28.1.0",
     "semantic-ui-css": "^2.4.1"
   }
 }
