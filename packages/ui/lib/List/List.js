@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ListItem from "./ListItem";
 import NoData from "../NoData";
+import ListLoader from "../Skeleton/ListLoader";
 
 const ListWrapper = styled.ul`
   margin: 0;
@@ -16,8 +17,13 @@ function List(props) {
     gap,
     itemRender,
     noDataMessage,
+    loading = false,
     ...restProps
   } = props;
+
+  if (loading) {
+    return <ListLoader />;
+  }
 
   if (typeof itemRender !== "function") {
     return null;
