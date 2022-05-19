@@ -25,21 +25,21 @@ function List(props) {
     return <ListLoader />;
   }
 
+  if (!data?.length) {
+    return <NoData message={noDataMessage} />;
+  }
+
   if (typeof itemRender !== "function") {
     return null;
   }
 
   return (
     <ListWrapper {...restProps}>
-      {data?.length ? (
-        data?.map((item, index) =>
-          React.cloneElement(itemRender(item, index), {
-            key: itemKey ? itemKey(item) : index,
-            gap,
-          })
-        )
-      ) : (
-        <NoData message={noDataMessage} />
+      {data?.map((item, index) =>
+        React.cloneElement(itemRender(item, index), {
+          key: itemKey ? itemKey(item) : index,
+          gap,
+        })
       )}
     </ListWrapper>
   );
