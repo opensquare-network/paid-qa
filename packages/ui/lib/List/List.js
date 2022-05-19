@@ -9,6 +9,9 @@ const ListWrapper = styled.ul`
   padding: 0;
 `;
 
+/**
+ * @param {import('./types').ListProps} props
+ */
 function List(props) {
   const {
     children,
