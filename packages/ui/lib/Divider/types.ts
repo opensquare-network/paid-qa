@@ -1,6 +1,8 @@
 export type DividerProps = {
   /**
-   * @default 20px
+   * @default 20
+   *
+   * unit: px
    */
   gap?: number;
 };
