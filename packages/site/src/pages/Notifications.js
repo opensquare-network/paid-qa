@@ -5,7 +5,6 @@ import { NoData, Pagination, Container, List, Flex } from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
-import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { useNotifications } from "../utils/hooks";
 import NotificationItem from "../components/Notification/NotificationItem";
 import NotificationTabs from "../components/Notification/NotificationTabs";
@@ -74,10 +73,9 @@ export default function Notifications() {
 
       <Container>
         <ContentWrapper>
-          {isLoading && <ListLoader />}
-
           <List
             gap={20}
+            loading={isLoading}
             data={notifications?.items}
             itemKey={(item) => `${item._id}_${item.read}`}
             itemRender={(item) => (
