@@ -17,6 +17,7 @@ import Time from "./Time";
 import Card from "./Card";
 import Tabs from "./Tabs";
 import MarkdownPreview from "./Preview";
+import Divider from "./Divider";
 //styled
 import Button from "./styled/Button";
 import Container from "./styled/Container";
@@ -69,4 +70,5 @@ export {
   Time,
   Tabs,
   MarkdownPreview,
+  Divider,
 };
