@@ -1,12 +1,23 @@
+// @ts-check
+
 import { createRef } from "react";
 import { render } from "react-dom";
 import ToastContainer from "./ToastContainer";
+
+/**
+ * @typedef {import('./types').ToastOptions} ToastOptions
+ * @typedef {import('./types').DestroyCallback} DestroyCallback
+ * @typedef {import('./types').ToastCreate} ToastCreate
+ */
 
 let seed = 1;
 
 const toastContainerRef = createRef();
 
 // TODO: refactor this
+/**
+ * @param {ToastOptions['appendTo']} appendTo
+ */
 const prepareToastContainer = (appendTo) => {
   const container = document.querySelector(".osn-toast-container");
   // FIXME: not expected behaviour
@@ -14,6 +25,7 @@ const prepareToastContainer = (appendTo) => {
     return { create };
   }
 
+  /** @type ToastCreate */
   function create(option) {
     return toastContainerRef.current?.create(option);
   }
@@ -27,14 +39,16 @@ const prepareToastContainer = (appendTo) => {
 };
 
 /**
- * @param {import('./types').ToastOptions} options
- * @returns {import('./types').DestroyCallback}
+ * @param {ToastOptions} options
+ * @returns {DestroyCallback}
  */
 export function createToast(options = {}) {
   seed += 1;
 
   const { title, message, type, appendTo = document.body } = options;
   const { create } = prepareToastContainer(appendTo);
+
+  /** @type DestroyCallback */
   const destroy = create({
     seed,
     title,
