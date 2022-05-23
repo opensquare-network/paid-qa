@@ -50,7 +50,7 @@ const ToastItemWrapper = styled.div`
     width: 100%;
   }
 `;
-const ToastTitleGroup = styled.div`
+const ToastHead = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 4px;
@@ -95,7 +95,7 @@ function ToastItem(props = {}) {
 
   return (
     <ToastItemWrapper type={type} slideIn={slideIn}>
-      <ToastTitleGroup>
+      <ToastHead>
         <ToastTitle>{title}</ToastTitle>
         {type === "pending" ? (
           <PendingIcon />
@@ -104,7 +104,7 @@ function ToastItem(props = {}) {
             <CloseIcon onClick={onClose} />
           </CloseIconWrapper>
         )}
-      </ToastTitleGroup>
+      </ToastHead>
 
       <ToastMessage>{message}</ToastMessage>
     </ToastItemWrapper>
