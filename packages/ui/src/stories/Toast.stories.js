@@ -31,7 +31,7 @@ export const primary = () => {
           createToast({
             title: "Success",
             message: "Message",
-            type: "success",
+            type: "Sit sed nulla rhoncus pellentesque.",
           });
         }}
       >
@@ -42,8 +42,8 @@ export const primary = () => {
         onClick={() => {
           createToast({
             title: "Pending",
-            message: "Message",
-            type: "pending",
+            message: "Waiting for signing and syncing data...",
+            type: "Sit sed nulla rhoncus pellentesque.",
           });
         }}
       >
@@ -55,7 +55,7 @@ export const primary = () => {
           createToast({
             title: "Error",
             message: "Message",
-            type: "error",
+            type: "Sit sed nulla rhoncus pellentesque.",
           });
         }}
       >
@@ -67,7 +67,7 @@ export const primary = () => {
           createToast({
             title: "Info",
             message: "Message",
-            type: "info",
+            type: "Sit sed nulla rhoncus pellentesque.",
           });
         }}
       >
