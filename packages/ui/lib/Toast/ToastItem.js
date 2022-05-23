@@ -21,7 +21,7 @@ const borderColors = {
 };
 
 const ToastItemWrapper = styled.div`
-  border-left: 4px solid #9da9bb;
+  border-left: 4px solid ${text_dark_accessory};
   padding: 16px;
   width: 296px;
   background-color: #ffffff;
@@ -66,7 +66,6 @@ const ToastMessage = styled.p`
   word-break: break-all;
 `;
 const CloseIconWrapper = styled.div`
-
   svg {
     cursor: pointer;
     fill: ${text_dark_accessory};
