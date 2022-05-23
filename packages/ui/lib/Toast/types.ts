@@ -6,14 +6,16 @@ export type ToastOptions = {
   type?: ToastType;
   /**
    * @default 5000
+   * unit ms
    */
   timeout?: false | number;
   appendTo?: HTMLElement;
 };
 
 export type ToastItemProps = Omit<ToastOptions, "appendTo"> & {
+  seed: number;
   sortedIndex: number;
-  onClose?(): void;
+  destroy?(seed?: number): void;
 };
 
 export type ToastCreateOption = ToastOptions & {
