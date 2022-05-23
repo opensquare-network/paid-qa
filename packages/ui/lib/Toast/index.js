@@ -58,6 +58,6 @@ export function createToast(options = {}) {
   return destroy;
 }
 
-export function destroyAllToast() {
+export function destroyAllToasts() {
   toastContainerRef.current?.destroyAll();
 }
