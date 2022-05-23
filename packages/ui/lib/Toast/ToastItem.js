@@ -107,13 +107,15 @@ function ToastItem(props = {}) {
     >
       <ToastHead>
         <ToastTitle>{title}</ToastTitle>
-        {type === "pending" ? (
-          <PendingIcon />
-        ) : (
-          <CloseIconWrapper>
-            <CloseIcon onClick={onClose} />
-          </CloseIconWrapper>
-        )}
+        <div>
+          {type === "pending" ? (
+            <PendingIcon />
+          ) : (
+            <CloseIconWrapper>
+              <CloseIcon onClick={onClose} />
+            </CloseIconWrapper>
+          )}
+        </div>
       </ToastHead>
 
       <ToastMessage>{message}</ToastMessage>
