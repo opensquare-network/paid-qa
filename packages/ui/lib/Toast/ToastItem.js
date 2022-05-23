@@ -95,7 +95,7 @@ function ToastItem(props = {}) {
   const { title, message, type, sortedIndex, onClose = () => {} } = props;
   const [slideIn, setSlideIn] = useState(false);
 
-  setTimeout(() => setSlideIn(true), 1);
+  setTimeout(() => setSlideIn(true));
 
   return (
     <ToastItemWrapper
