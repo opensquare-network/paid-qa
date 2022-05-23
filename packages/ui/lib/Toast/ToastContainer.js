@@ -4,11 +4,17 @@ import ToastItem from "./ToastItem";
 
 const ToastContainerWrapper = styled.div`
   position: fixed;
-  right: 0;
-  top: 0;
+  top: 60px;
+  right: 32px;
+  z-index: 999;
 
   display: flex;
   flex-direction: column-reverse;
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    right: 0;
+  }
 `;
 
 function ToastContainer(_, ref) {
