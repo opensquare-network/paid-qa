@@ -2,7 +2,7 @@ import React, { forwardRef, useImperativeHandle, useState } from "react";
 import styled from "styled-components";
 import ToastItem from "./ToastItem";
 
-const ToastContainerWrapper = styled.div`
+const ToastWrapper = styled.div`
   position: fixed;
   top: 90px;
   right: 80px;
@@ -37,7 +37,7 @@ function ToastContainer(_, ref) {
   }
 
   return (
-    <ToastContainerWrapper>
+    <ToastWrapper className="osn-toast">
       {toastItems.map((item, index) => (
         <ToastItem
           key={index}
@@ -48,7 +48,7 @@ function ToastContainer(_, ref) {
           onClose={() => handleClose(item.seed)}
         />
       ))}
-    </ToastContainerWrapper>
+    </ToastWrapper>
   );
 }
 
