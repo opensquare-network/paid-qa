@@ -8,9 +8,6 @@ const ToastContainerWrapper = styled.div`
   right: 80px;
   z-index: 999;
 
-  display: flex;
-  flex-direction: column-reverse;
-
   @media screen and (max-width: 500px) {
     width: 100%;
     top: 40px;
@@ -44,6 +41,7 @@ function ToastContainer(_, ref) {
       {toastItems.map((item, index) => (
         <ToastItem
           key={index}
+          sortedIndex={toastItems.length - index - 1}
           title={item.title}
           message={item.message}
           type={item.type}

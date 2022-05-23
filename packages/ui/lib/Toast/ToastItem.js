@@ -27,18 +27,23 @@ const ToastItemWrapper = styled.div`
   background-color: #ffffff;
   box-shadow: ${shadow_200};
 
-  transform: translateX(100%);
+  transform: translateX(200%);
   transition: transform 0.25s ease-out;
+
+  position: absolute;
+  top: 0;
+  right: 0;
 
   ${(p) =>
     p.slideIn &&
     css`
-      transform: translateX(0);
+      transform: translateX(0)
+        ${p.sortedIndex
+          ? `translateY(calc(${p.sortedIndex * 100}% + ${
+              p.sortedIndex * 20
+            }px))`
+          : ""};
     `}
-  /* reversed */
-  :not(:last-child) {
-    margin-top: 20px;
-  }
 
   ${(p) =>
     p.type &&
@@ -87,13 +92,18 @@ const CloseIconWrapper = styled.div`
  * @param {import('./types').ToastItemProps} props
  */
 function ToastItem(props = {}) {
-  const { title, message, type, onClose = () => {} } = props;
+  const { title, message, type, sortedIndex, onClose = () => {} } = props;
   const [slideIn, setSlideIn] = useState(false);
 
   setTimeout(() => setSlideIn(true), 1);
 
   return (
-    <ToastItemWrapper className="osn-toast-item" type={type} slideIn={slideIn}>
+    <ToastItemWrapper
+      className="osn-toast-item"
+      type={type}
+      sortedIndex={sortedIndex}
+      slideIn={slideIn}
+    >
       <ToastHead>
         <ToastTitle>{title}</ToastTitle>
         {type === "pending" ? (

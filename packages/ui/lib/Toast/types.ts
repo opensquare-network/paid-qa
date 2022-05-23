@@ -8,6 +8,7 @@ export type ToastOptions = {
 };
 
 export type ToastItemProps = Omit<ToastOptions, "appendTo"> & {
+  sortedIndex: number;
   onClose?(): void;
 };
 
