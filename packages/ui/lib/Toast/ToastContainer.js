@@ -40,7 +40,7 @@ function ToastContainer(_, ref) {
     <ToastWrapper className="osn-toast">
       {toastItems.map((item, index) => (
         <ToastItem
-          key={index}
+          key={item.seed}
           sortedIndex={toastItems.length - index - 1}
           title={item.title}
           message={item.message}
