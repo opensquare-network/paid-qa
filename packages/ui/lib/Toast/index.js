@@ -40,7 +40,6 @@ const prepareToastContainer = (appendTo) => {
 
 /**
  * @param {ToastOptions} options
- * @returns {DestroyCallback}
  */
 export function createToast(options = {}) {
   seed += 1;
@@ -48,7 +47,6 @@ export function createToast(options = {}) {
   const { title, message, type, appendTo = document.body } = options;
   const { create } = prepareToastContainer(appendTo);
 
-  /** @type DestroyCallback */
   const destroy = create({
     seed,
     title,
