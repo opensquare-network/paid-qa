@@ -4,6 +4,10 @@ export type ToastOptions = {
   title?: string;
   message?: string;
   type?: ToastType;
+  /**
+   * @default 5000
+   */
+  timeout?: false | number;
   appendTo?: HTMLElement;
 };
 

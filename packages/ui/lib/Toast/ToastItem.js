@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import {
   primary_purple_500,
@@ -92,10 +92,39 @@ const CloseIconWrapper = styled.div`
  * @param {import('./types').ToastItemProps} props
  */
 function ToastItem(props = {}) {
-  const { title, message, type, sortedIndex, onClose = () => {} } = props;
+  const {
+    title,
+    message,
+    type,
+    seed,
+    timeout = 5000,
+    sortedIndex,
+    destroy = () => {},
+    ...restProps
+  } = props;
   const [slideIn, setSlideIn] = useState(false);
+  const [timer, setTimer] = useState(null);
 
   setTimeout(() => setSlideIn(true));
+
+  function startTimer() {
+    if (timeout === false || timer) return;
+    setTimer(
+      setTimeout(() => {
+        destroy(seed);
+      }, timeout)
+    );
+  }
+
+  function clearTimer() {
+    if (!timer) return;
+    setTimer(clearTimeout(timer));
+  }
+
+  useEffect(() => {
+    startTimer();
+    return () => clearTimer();
+  }, []);
 
   return (
     <ToastItemWrapper
@@ -103,6 +132,9 @@ function ToastItem(props = {}) {
       type={type}
       sortedIndex={sortedIndex}
       slideIn={slideIn}
+      onMouseEnter={clearTimer}
+      onMouseLeave={startTimer}
+      {...restProps}
     >
       <ToastHead>
         <ToastTitle>{title}</ToastTitle>
@@ -111,7 +143,7 @@ function ToastItem(props = {}) {
             <PendingIcon />
           ) : (
             <CloseIconWrapper>
-              <CloseIcon onClick={onClose} />
+              <CloseIcon onClick={() => destroy(seed)} />
             </CloseIconWrapper>
           )}
         </div>

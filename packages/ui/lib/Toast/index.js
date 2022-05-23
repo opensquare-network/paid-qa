@@ -44,7 +44,7 @@ const prepareToastContainer = (appendTo) => {
 export function createToast(options = {}) {
   seed += 1;
 
-  const { title, message, type, appendTo = document.body } = options;
+  const { title, message, type, timeout, appendTo = document.body } = options;
   const { create } = prepareToastContainer(appendTo);
 
   const destroy = create({
@@ -52,6 +52,7 @@ export function createToast(options = {}) {
     title,
     message,
     type,
+    timeout,
   });
 
   return destroy;

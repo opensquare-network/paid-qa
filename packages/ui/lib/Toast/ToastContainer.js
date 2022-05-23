@@ -21,19 +21,20 @@ function ToastContainer(_, ref) {
 
   useImperativeHandle(ref, () => ({
     create(option) {
-      setToastItems([...toastItems, option]);
-      return () => handleClose(option.seed);
+      setToastItems((items) => [...items, option]);
+      return () => destroy(option.seed);
     },
     destroyAll() {
       setToastItems([]);
     },
   }));
 
-  function handleClose(seed) {
+  function destroy(seed) {
     if (!seed) return;
 
-    const clone = toastItems.filter((item) => item.seed !== seed);
-    setToastItems(clone);
+    setToastItems((items) => {
+      return items.filter((item) => item.seed !== seed);
+    });
   }
 
   return (
@@ -41,11 +42,13 @@ function ToastContainer(_, ref) {
       {toastItems.map((item, index) => (
         <ToastItem
           key={item.seed}
+          seed={item.seed}
           sortedIndex={toastItems.length - index - 1}
           title={item.title}
           message={item.message}
           type={item.type}
-          onClose={() => handleClose(item.seed)}
+          timeout={item.timeout}
+          destroy={destroy}
         />
       ))}
     </ToastWrapper>
