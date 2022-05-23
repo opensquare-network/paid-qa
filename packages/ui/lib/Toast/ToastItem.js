@@ -37,6 +37,7 @@ const ToastItemWrapper = styled.div`
   ${(p) =>
     p.slideIn &&
     css`
+      /* FIXME: not the expected animation */
       transform: translateX(0)
         ${p.sortedIndex
           ? `translateY(calc(${p.sortedIndex * 100}% + ${
