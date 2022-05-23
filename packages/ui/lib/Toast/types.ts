@@ -25,3 +25,6 @@ export type ToastCreateOption = ToastOptions & {
 export type ToastCreate = (options: ToastCreateOption) => DestroyCallback;
 
 export type DestroyCallback = () => void;
+
+export declare function createToast(options: ToastOptions): DestroyCallback;
+export declare function destroyAllToasts(): void;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "../../lib/styled/Button";
-import { createToast, destroyAllToast } from "../../lib/Toast";
+import { createToast, destroyAllToasts } from "../../lib/Toast";
 
 export default {
   title: "Toast",
@@ -74,7 +74,7 @@ export const primary = () => {
         Info
       </Button>
       <br />
-      <Button primary onClick={destroyAllToast}>
+      <Button primary onClick={destroyAllToasts}>
         Destroy All
       </Button>
     </DemoWrapper>
