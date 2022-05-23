@@ -93,7 +93,7 @@ function ToastItem(props = {}) {
   setTimeout(() => setSlideIn(true), 1);
 
   return (
-    <ToastItemWrapper type={type} slideIn={slideIn}>
+    <ToastItemWrapper className="osn-toast-item" type={type} slideIn={slideIn}>
       <ToastHead>
         <ToastTitle>{title}</ToastTitle>
         {type === "pending" ? (
