@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import {
   primary_purple_500,
+  secondary_green_500,
   secondary_red_500,
+  text_dark_major,
   text_dark_minor,
 } from "../styles/colors";
 import { p_16_semibold, p_14_normal } from "../styles/textStyles";
@@ -10,7 +12,7 @@ import { ReactComponent as PendingIcon } from "../imgs/icons/pending.svg";
 import { ReactComponent as CloseIcon } from "../imgs/icons/close.svg";
 
 const borderColors = {
-  success: "#4CAF50",
+  success: secondary_green_500,
   info: primary_purple_500,
   pending: primary_purple_500,
   error: secondary_red_500,
@@ -23,8 +25,6 @@ const ToastItemWrapper = styled.div`
   background-color: #ffffff;
   filter: drop-shadow(0px 4px 31px rgba(26, 33, 44, 0.06))
     drop-shadow(0px 0.751293px 8px rgba(26, 33, 44, 0.04));
-  /* TODO: use color from colors.js */
-  color: rgba(17, 17, 17, 0.65);
   display: flex;
 
   transform: translateX(100%);
@@ -45,12 +45,17 @@ const ToastItemWrapper = styled.div`
     css`
       border-left-color: ${borderColors[p.type]};
     `}
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
 `;
 const ToastItemContent = styled.div`
   flex: 1;
 `;
 const ToastTitle = styled.div`
   ${p_16_semibold};
+  color: ${text_dark_major};
   margin-bottom: 4px;
 `;
 const ToastMessage = styled.p`
