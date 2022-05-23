@@ -19,7 +19,7 @@ export const primary = () => {
         onClick={() => {
           createToast({
             title: "Default",
-            message: "Message",
+            message: "Sit sed nulla rhoncus pellentesque.",
           });
         }}
       >
@@ -30,8 +30,8 @@ export const primary = () => {
         onClick={() => {
           createToast({
             title: "Success",
-            message: "Message",
-            type: "Sit sed nulla rhoncus pellentesque.",
+            message: "Sit sed nulla rhoncus pellentesque.",
+            type: "success",
           });
         }}
       >
@@ -43,7 +43,7 @@ export const primary = () => {
           createToast({
             title: "Pending",
             message: "Waiting for signing and syncing data...",
-            type: "Sit sed nulla rhoncus pellentesque.",
+            type: "pending",
           });
         }}
       >
@@ -54,8 +54,8 @@ export const primary = () => {
         onClick={() => {
           createToast({
             title: "Error",
-            message: "Message",
-            type: "Sit sed nulla rhoncus pellentesque.",
+            message: "Sit sed nulla rhoncus pellentesque.",
+            type: "error",
           });
         }}
       >
@@ -66,8 +66,8 @@ export const primary = () => {
         onClick={() => {
           createToast({
             title: "Info",
-            message: "Message",
-            type: "Sit sed nulla rhoncus pellentesque.",
+            message: "Sit sed nulla rhoncus pellentesque.",
+            type: "info",
           });
         }}
       >
