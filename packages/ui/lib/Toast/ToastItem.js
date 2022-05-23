@@ -7,6 +7,7 @@ import {
   text_dark_major,
   text_dark_minor,
 } from "../styles/colors";
+import { shadow_200 } from "../styles/effects";
 import { p_16_semibold, p_14_normal } from "../styles/textStyles";
 import { ReactComponent as PendingIcon } from "../imgs/icons/pending.svg";
 import { ReactComponent as CloseIcon } from "../imgs/icons/close.svg";
@@ -23,9 +24,8 @@ const ToastItemWrapper = styled.div`
   padding: 20px;
   width: 400px;
   background-color: #ffffff;
-  filter: drop-shadow(0px 4px 31px rgba(26, 33, 44, 0.06))
-    drop-shadow(0px 0.751293px 8px rgba(26, 33, 44, 0.04));
   display: flex;
+  box-shadow: ${shadow_200};
 
   transform: translateX(100%);
   transition: transform 0.25s ease-out;
