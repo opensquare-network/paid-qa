@@ -4,8 +4,8 @@ import ToastItem from "./ToastItem";
 
 const ToastContainerWrapper = styled.div`
   position: fixed;
-  top: 60px;
-  right: 32px;
+  top: 90px;
+  right: 80px;
   z-index: 999;
 
   display: flex;
@@ -13,7 +13,9 @@ const ToastContainerWrapper = styled.div`
 
   @media screen and (max-width: 500px) {
     width: 100%;
+    top: 40px;
     right: 0;
+    padding: 0 20px;
   }
 `;
 
