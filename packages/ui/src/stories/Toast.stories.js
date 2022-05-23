@@ -53,6 +53,18 @@ export const primary = () => {
       <Button
         onClick={() => {
           createToast({
+            title: "Error",
+            message: "Message",
+            type: "error",
+          });
+        }}
+      >
+        Error
+      </Button>
+      <br />
+      <Button
+        onClick={() => {
+          createToast({
             title: "Info",
             message: "Message",
             type: "info",
