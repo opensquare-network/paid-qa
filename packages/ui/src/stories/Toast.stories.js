@@ -80,3 +80,34 @@ export const primary = () => {
     </DemoWrapper>
   );
 };
+export const destroyTimeout = () => {
+  return (
+    <DemoWrapper>
+      <Button
+        onClick={() => {
+          createToast({
+            title: "Notice",
+            message: "never auto destroy",
+            timeout: false,
+            type: "error",
+          });
+        }}
+      >
+        Never auto destroy
+      </Button>
+      <br />
+      <Button
+        onClick={() => {
+          createToast({
+            title: "Notice",
+            message: "Destroy after 2 seconds",
+            timeout: 2000,
+            type: "error",
+          });
+        }}
+      >
+        Destroy after 2 seconds
+      </Button>
+    </DemoWrapper>
+  );
+};
