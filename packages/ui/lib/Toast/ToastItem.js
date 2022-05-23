@@ -4,6 +4,7 @@ import {
   primary_purple_500,
   secondary_green_500,
   secondary_red_500,
+  text_dark_accessory,
   text_dark_major,
   text_dark_minor,
 } from "../styles/colors";
@@ -69,14 +70,17 @@ const CloseIconWrapper = styled.div`
 
   svg {
     cursor: pointer;
+    fill: ${text_dark_accessory};
+
     path {
-      fill: #9da9bb;
+      fill: ${text_dark_accessory};
     }
-    fill: #9da9bb;
+
     :hover {
-      fill: #2e343d;
+      fill: ${text_dark_minor};
+
       path {
-        fill: #2e343d;
+        fill: ${text_dark_minor};
       }
     }
     `;
