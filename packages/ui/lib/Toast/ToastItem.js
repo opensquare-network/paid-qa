@@ -22,10 +22,9 @@ const borderColors = {
 
 const ToastItemWrapper = styled.div`
   border-left: 4px solid #9da9bb;
-  padding: 20px;
-  width: 400px;
+  padding: 16px;
+  width: 296px;
   background-color: #ffffff;
-  display: flex;
   box-shadow: ${shadow_200};
 
   transform: translateX(100%);
@@ -51,13 +50,14 @@ const ToastItemWrapper = styled.div`
     width: 100%;
   }
 `;
-const ToastItemContent = styled.div`
-  flex: 1;
+const ToastTitleGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
 `;
 const ToastTitle = styled.div`
   ${p_16_semibold};
   color: ${text_dark_major};
-  margin-bottom: 4px;
 `;
 const ToastMessage = styled.p`
   ${p_14_normal};
@@ -65,7 +65,6 @@ const ToastMessage = styled.p`
   word-wrap: break-word;
   word-break: break-all;
 `;
-const ToastItemExtra = styled.div``;
 const CloseIconWrapper = styled.div`
 
   svg {
@@ -96,12 +95,8 @@ function ToastItem(props = {}) {
 
   return (
     <ToastItemWrapper type={type} slideIn={slideIn}>
-      <ToastItemContent>
+      <ToastTitleGroup>
         <ToastTitle>{title}</ToastTitle>
-        <ToastMessage>{message}</ToastMessage>
-      </ToastItemContent>
-
-      <ToastItemExtra>
         {type === "pending" ? (
           <PendingIcon />
         ) : (
@@ -109,7 +104,9 @@ function ToastItem(props = {}) {
             <CloseIcon onClick={onClose} />
           </CloseIconWrapper>
         )}
-      </ToastItemExtra>
+      </ToastTitleGroup>
+
+      <ToastMessage>{message}</ToastMessage>
     </ToastItemWrapper>
   );
 }
