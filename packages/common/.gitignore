@@ -1,3 +1,4 @@
-dist
+cjs
+es
 bundle.js
 *.js.map

@@ -1,0 +1,17 @@
+{
+  "env": {
+    "cjs": {
+      "presets": ["@babel/env"]
+    },
+    "es": {
+      "presets": [
+        [
+          "@babel/env",
+          {
+            "modules": false
+          }
+        ]
+      ]
+    }
+  }
+}

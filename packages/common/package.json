@@ -1,7 +1,8 @@
 {
   "name": "@osn/common",
   "version": "0.0.8",
-  "main": "bundle.js",
+  "main": "cjs/index.js",
+  "module": "es/index.js",
   "scripts": {
     "build": "npm run build:es && npm run build:cjs",
     "build:es": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel src --out-dir es --copy-files",
@@ -11,6 +12,23 @@
   "jest": {
     "transformIgnorePatterns": []
   },
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./cjs/index.js"
+    },
+    "./extension": {
+      "import": "./es/extension.js",
+      "require": "./cjs/extension.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "es",
+    "cjs",
+    "*.js",
+    "!test"
+  ],
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
@@ -20,12 +38,6 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
   ],
-  "babel": {
-    "presets": [
-      "@babel/react",
-      "@babel/env"
-    ]
-  },
   "dependencies": {
     "@osn/provider-options": "^1.0.2",
     "@polkadot/api": "^7.9.1",
