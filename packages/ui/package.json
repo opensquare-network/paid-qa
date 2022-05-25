@@ -1,6 +1,6 @@
 {
   "name": "@osn/common-ui",
-  "version": "0.0.63",
+  "version": "0.0.64",
   "main": "es/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
