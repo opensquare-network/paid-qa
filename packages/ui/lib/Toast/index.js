@@ -1,6 +1,6 @@
 // @ts-check
 
-import { createRef } from "react";
+import React, { createRef } from "react";
 import { render } from "react-dom";
 import ToastContainer from "./ToastContainer";
 
