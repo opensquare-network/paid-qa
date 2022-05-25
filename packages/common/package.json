@@ -1,13 +1,34 @@
 {
   "name": "@osn/common",
-  "version": "0.0.8",
-  "main": "bundle.js",
+  "version": "0.0.9",
+  "main": "cjs/index.js",
+  "module": "es/index.js",
   "scripts": {
-    "build": "rollup -c"
+    "build": "npm run build:es && npm run build:cjs",
+    "build:es": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel src --out-dir es --copy-files",
+    "build:cjs": "rm -rf cjs && NODE_ENV=production BABEL_ENV=cjs babel src --out-dir cjs --copy-files",
+    "prepublishOnly": "npm run build"
   },
   "jest": {
     "transformIgnorePatterns": []
   },
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./cjs/index.js"
+    },
+    "./extension": {
+      "import": "./es/extension.js",
+      "require": "./cjs/extension.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "es",
+    "cjs",
+    "*.js",
+    "!test"
+  ],
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
@@ -17,27 +38,18 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
   ],
-  "babel": {
-    "presets": [
-      "@babel/react",
-      "@babel/env"
-    ]
-  },
   "dependencies": {
-    "@osn/provider-options": "^1.0.2",
-    "@polkadot/api": "^7.9.1",
-    "@osn/consts": "^0.0.2"
+    "@osn/consts": "^0.0.2",
+    "@osn/provider-options": "^1.0.2"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "@polkadot/api": "^7.9.1"
+    "@polkadot/api": "^7.9.1",
+    "@polkadot/extension-dapp": "^0.43.1",
+    "react": "^17.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.3",
     "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.7.0",
-    "babel-loader": "^8.2.4",
-    "rollup": "^2.70.2"
+    "@babel/preset-env": "^7.16.11"
   }
 }

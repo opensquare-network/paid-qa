@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@craco/craco": "^6.4.3",
-    "@osn/common": "^0.0.8",
+    "@osn/common": "^0.0.9",
     "@osn/consts": "^0.0.2",
     "dayjs": "^1.10.8",
     "micromark": "^3.0.10",
