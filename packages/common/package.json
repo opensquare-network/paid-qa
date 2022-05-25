@@ -42,7 +42,6 @@
   ],
   "dependencies": {
     "@osn/provider-options": "^1.0.2",
-    "@polkadot/api": "^7.9.1",
     "@osn/consts": "^0.0.2"
   },
   "peerDependencies": {
