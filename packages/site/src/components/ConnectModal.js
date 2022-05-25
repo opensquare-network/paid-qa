@@ -13,7 +13,7 @@ import {
   p_16_semibold,
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import { polkadotWeb3Accounts } from "@osn/common/src/utils/extension";
+import { polkadotWeb3Accounts } from "@osn/common/src/extension";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { AVAILABLE_NETWORKS, PROJECT_NAME } from "utils/constants";
 
