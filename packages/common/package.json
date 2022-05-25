@@ -20,7 +20,8 @@
     "./extension": {
       "import": "./es/extension.js",
       "require": "./cjs/extension.js"
-    }
+    },
+    "./*": "./*"
   },
   "sideEffects": false,
   "files": [
