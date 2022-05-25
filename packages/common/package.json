@@ -28,7 +28,8 @@
     "es",
     "cjs",
     "*.js",
-    "!test"
+    "!src",
+    "!**/*.test.js"
   ],
   "keywords": [],
   "author": "",
