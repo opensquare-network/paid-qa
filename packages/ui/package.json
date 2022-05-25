@@ -67,6 +67,7 @@
     "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.4",
     "jest": "^28.1.0",
+    "react-content-loader": "^6.2.0",
     "semantic-ui-css": "^2.4.1"
   }
 }
