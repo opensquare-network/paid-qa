@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { NoData, Pagination, Container, List, Flex } from "@osn/common-ui";
+import { Pagination, Container, List, Flex } from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUnread } from "store/reducers/notificationSlice";
 import { accountSelector } from "store/reducers/accountSlice";
@@ -77,6 +77,7 @@ export default function Notifications() {
             gap={20}
             loading={isLoading}
             data={notifications?.items}
+            noDataMessage="No notifications"
             itemKey={(item) => `${item._id}_${item.read}`}
             itemRender={(item) => (
               <List.Item>
@@ -93,10 +94,6 @@ export default function Notifications() {
               </List.Item>
             )}
           />
-
-          {notifications?.items?.length === 0 && (
-            <NoData message={"No notifications"} />
-          )}
         </ContentWrapper>
 
         <Pagination
