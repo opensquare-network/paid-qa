@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Topic, Reward } = require("../../models");
-const { PostStatus } = require("../../utils/constants");
+const { OnChainStatus } = require("../../utils/constants");
 const {
   getApi,
   getRemark,
@@ -79,12 +79,18 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
         },
         title,
         content,
+        bounty: {
+          value: tokenAmount,
+          tokenIdentifier,
+          symbol,
+          decimals,
+        },
         data,
         pinned: false,
         network,
         signer,
         signerPublicKey,
-        status: PostStatus.Published,
+        status: OnChainStatus.Published,
       },
       { upsert: true, session }
     );
@@ -105,9 +111,10 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
           symbol,
           decimals,
         },
+        type: "topic",
         sponsor: signer,
         sponsorPublicKey: signerPublicKey,
-        status: PostStatus.Published,
+        status: OnChainStatus.Published,
       },
       { upsert: true, session }
     );
@@ -164,7 +171,7 @@ async function saveUnverifiedTopic(
         network,
         signer,
         signerPublicKey,
-        status: PostStatus.Reserved,
+        status: OnChainStatus.Reserved,
       },
       { upsert: true, session }
     );
@@ -182,7 +189,7 @@ async function saveUnverifiedTopic(
         bounty,
         sponsor: signer,
         sponsorPublicKey: signerPublicKey,
-        status: PostStatus.Reserved,
+        status: OnChainStatus.Reserved,
       },
       { upsert: true, session }
     );

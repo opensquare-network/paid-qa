@@ -77,6 +77,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
         symbol,
         decimals,
       },
+      type: "support",
     },
     { upsert: true, new: true }
   );

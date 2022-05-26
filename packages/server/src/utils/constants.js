@@ -1,8 +1,6 @@
-const PostStatus = Object.freeze({
+const OnChainStatus = Object.freeze({
   Reserved: "reserved",
   Published: "published",
-  Active: "active",
-  Resolved: "resolved",
 });
 
 const NotificationType = Object.freeze({
@@ -14,6 +12,6 @@ const NotificationType = Object.freeze({
 });
 
 module.exports = {
-  PostStatus,
+  OnChainStatus,
   NotificationType,
 };

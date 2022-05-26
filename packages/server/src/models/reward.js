@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const {
-  RequiredPostStatus,
+  RequireOnChainStatus,
   RequiredDecimal128,
   RequiredString,
   RequiredNumber,
@@ -24,7 +24,12 @@ const RewardSchema = new mongoose.Schema(
       decimals: RequiredNumber,
       value: RequiredDecimal128,
     },
-    status: RequiredPostStatus,
+    type: {
+      type: String,
+      enum: ["topic", "support"],
+      required: true,
+    },
+    status: RequireOnChainStatus,
   },
   {
     timestamps: true,

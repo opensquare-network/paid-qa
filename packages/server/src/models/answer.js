@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { RequiredPostStatus, RequiredString } = require("./utils");
+const { RequireOnChainStatus, RequiredString } = require("./utils");
 
 const AnswerSchema = new mongoose.Schema(
   {
@@ -24,7 +24,7 @@ const AnswerSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    status: RequiredPostStatus,
+    status: RequireOnChainStatus,
   },
   {
     timestamps: true,
