@@ -1,6 +1,6 @@
 {
   "name": "@osn/common",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "cjs/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -45,8 +45,8 @@
     "@osn/provider-options": "^1.0.2"
   },
   "peerDependencies": {
-    "@polkadot/api": "^7.9.1",
-    "@polkadot/extension-dapp": "^0.43.1",
+    "@polkadot/api": "^8.5.1",
+    "@polkadot/extension-dapp": "^0.43.2",
     "react": "^17.0.2"
   },
   "devDependencies": {
