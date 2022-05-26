@@ -24,7 +24,7 @@ export default function TagList({ topic }) {
     return null;
   }
   const tokenValues = calcRewards(topic.rewards);
-  const symbol = topic.rewards[0]?.bounty.symbol;
+  const symbol = topic.rewards?.[0]?.bounty.symbol;
   return (
     <Wrapper>
       {
