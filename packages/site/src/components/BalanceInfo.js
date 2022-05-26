@@ -57,6 +57,8 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
   const fetchAssetBalance = useMemo(() => {
     return debounce(async (assetId) => {
       if (!api || assetId === "" || !account?.address) {
+        setBalance("0");
+        setLoadingBalance(false);
         return;
       }
 
