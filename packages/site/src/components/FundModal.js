@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
@@ -38,6 +38,8 @@ import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import BalanceInfo from "./BalanceInfo";
+import debounce from "lodash.debounce";
+import { hexToString } from "@polkadot/util";
 
 const { InteractionEncoder } = encoder;
 const { FundInteraction } = interactions;
@@ -102,6 +104,23 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
   const api = useApi();
 
+  const fetchAssetSymbol = useMemo(() => {
+    return debounce(async (assetId) => {
+      if (!api || assetId === "N" || assetId === "") {
+        setSymbol("");
+        setLoadingSymbol(false);
+        return;
+      }
+      const metadata = await api.query.assets.metadata(assetId);
+      const { symbol: hexSymbol } = metadata.toJSON();
+      const symbol = hexToString(hexSymbol);
+      if (isMounted.current) {
+        setSymbol(symbol);
+        setLoadingSymbol(false);
+      }
+    }, 300);
+  }, [api, isMounted]);
+
   useEffect(() => {
     if (manualOn) {
       if (tokenIdentifier === "N") {
@@ -109,8 +128,9 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         return;
       }
       setLoadingSymbol(true);
+      fetchAssetSymbol(tokenIdentifier);
     }
-  }, [manualOn, tokenIdentifier]);
+  }, [fetchAssetSymbol, manualOn, tokenIdentifier]);
 
   useEffect(() => {
     if (!manualOn && selectedAsset) {
