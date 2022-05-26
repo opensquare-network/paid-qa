@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const {
-  RequiredPostStatus,
+  RequireOnChainStatus,
   RequiredString,
   RequiredNumber,
+  RequiredDecimal128,
 } = require("./utils");
 
 const TopicSchema = new mongoose.Schema(
@@ -17,6 +18,12 @@ const TopicSchema = new mongoose.Schema(
     network: RequiredString,
     title: RequiredString,
     content: RequiredString,
+    bounty: {
+      tokenIdentifier: RequiredString,
+      symbol: RequiredString,
+      decimals: RequiredNumber,
+      value: RequiredDecimal128,
+    },
     data: {
       type: Object,
       required: true,
@@ -25,7 +32,8 @@ const TopicSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    status: RequiredPostStatus,
+    resolved: Boolean,
+    status: RequireOnChainStatus,
     signer: RequiredString,
     signerPublicKey: RequiredString,
   },

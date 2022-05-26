@@ -6,7 +6,7 @@ const {
   interactions: { AnswerInteraction },
 } = require("@paid-qa/spec");
 const { Answer } = require("../models");
-const { PostStatus } = require("../utils/constants");
+const { OnChainStatus } = require("../utils/constants");
 const { getApi, submitRemarks } = require("../services/node.service");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -34,7 +34,7 @@ async function flushBatch(batch) {
           $in: batch.data.map((i) => i.answerCid),
         },
       },
-      { status: PostStatus.Published }
+      { status: OnChainStatus.Published }
     );
   }
 }
@@ -67,7 +67,10 @@ async function startSubmitAnswers(network) {
   }
   const batch = batches[network];
 
-  const answers = await Answer.find({ status: PostStatus.Reserved, network });
+  const answers = await Answer.find({
+    status: OnChainStatus.Reserved,
+    network,
+  });
   for (const answer of answers) {
     try {
       await submitAnswer(batch, answer);
@@ -82,7 +85,9 @@ async function startSubmitAnswers(network) {
 }
 
 async function main() {
-  const networks = await Answer.find({ status: PostStatus.Reserved }).distinct("network");
+  const networks = await Answer.find({
+    status: OnChainStatus.Reserved,
+  }).distinct("network");
 
   while (true) {
     try {

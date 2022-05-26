@@ -39,7 +39,7 @@ export default function Detail({ topic }) {
         topicCid={topic.cid}
         topicNetwork={topic.network}
         appendants={topic.appendants}
-        editable={isOwner && topic.status !== "resolved"}
+        editable={isOwner && !topic.resolved}
       />
       <Share />
       <Resolve className="post-detail-resolve" topic={topic} />

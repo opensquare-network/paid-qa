@@ -1,6 +1,5 @@
 const { Topic, Resolve, Reward, Notification } = require("../../models");
 const { isSamePublicKey } = require("../../utils/address");
-const { PostStatus } = require("../../utils/constants");
 const uniq = require("lodash.uniq");
 
 async function updateTopicResolve(topicCid) {
@@ -14,10 +13,7 @@ async function updateTopicResolve(topicCid) {
       )
   );
 
-  await Topic.updateOne(
-    { cid: topicCid },
-    { status: allResolved ? PostStatus.Resolved : PostStatus.Active }
-  );
+  await Topic.updateOne({ cid: topicCid }, { resolved: allResolved });
 
   if (allResolved) {
     const topic = await Topic.findOne({ cid: topicCid })

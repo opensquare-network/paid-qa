@@ -1,9 +1,9 @@
 const { Schema } = require("mongoose");
-const { PostStatus } = require("../utils/constants");
+const { OnChainStatus } = require("../utils/constants");
 
-const RequiredPostStatus = {
+const RequireOnChainStatus = {
   type: String,
-  enum: [PostStatus.Reserved, PostStatus.Published, PostStatus.Active, PostStatus.Resolved],
+  enum: [OnChainStatus.Reserved, OnChainStatus.Published],
   required: true,
 };
 
@@ -27,10 +27,10 @@ const RequiredRefCidType = {
   type: String,
   enum: ["topic", "answer"],
   required: true,
-}
+};
 
 module.exports = {
-  RequiredPostStatus,
+  RequireOnChainStatus,
   RequiredString,
   RequiredNumber,
   RequiredDecimal128,

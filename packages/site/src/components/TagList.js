@@ -24,13 +24,13 @@ export default function TagList({ topic }) {
     return null;
   }
   const tokenValues = calcRewards(topic.rewards);
-  const symbol = topic.rewards[0].bounty.symbol;
+  const symbol = topic.rewards[0]?.bounty.symbol;
   return (
     <Wrapper>
       {
         // Show resolved tag only when the topic is resolved
-        topic.status === "resolved" ? (
-          <StatusTag status={topic.status} />
+        topic.resolved ? (
+          <StatusTag status={"resolved"} />
         ) : (
           <Tag
             key={symbol}

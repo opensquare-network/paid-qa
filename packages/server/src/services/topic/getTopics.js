@@ -1,5 +1,5 @@
 const { Topic } = require("../../models");
-const { PostStatus } = require("../../utils/constants");
+const { OnChainStatus } = require("../../utils/constants");
 const { escapeRegex } = require("../../utils/regex");
 
 async function getTopics(symbol, status, title, page, pageSize) {
@@ -8,7 +8,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
     q.status = status;
   } else {
     q.status = {
-      $in: [PostStatus.Published, PostStatus.Active, PostStatus.Resolved],
+      $in: [OnChainStatus.Published],
     };
   }
 

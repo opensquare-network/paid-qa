@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const {
-  RequiredPostStatus,
+  RequireOnChainStatus,
   RequiredString,
   RequiredNumber,
 } = require("./utils");
@@ -25,7 +25,7 @@ const AppendantSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    status: RequiredPostStatus,
+    status: RequireOnChainStatus,
     signer: RequiredString,
   },
   {

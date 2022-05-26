@@ -1,5 +1,5 @@
 const { Topic, Appendant } = require("../../models");
-const { PostStatus } = require("../../utils/constants");
+const { OnChainStatus } = require("../../utils/constants");
 const { getApi, getRemark } = require("../node.service");
 const {
   parser: { InteractionParser },
@@ -82,7 +82,7 @@ async function createVerifiedAppendant(
       pinned: false,
       network,
       signer,
-      status: PostStatus.Published,
+      status: OnChainStatus.Published,
     },
     { upsert: true }
   );
@@ -133,7 +133,7 @@ async function saveUnverifiedAppendant(
       pinned: false,
       network,
       signer,
-      status: PostStatus.Reserved,
+      status: OnChainStatus.Reserved,
     },
     { upsert: true }
   );
