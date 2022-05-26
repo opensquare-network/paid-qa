@@ -27,52 +27,51 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-function ResolveChainIcon({ chainName, size = 24 }) {
-  switch (chainName) {
-    case "chrwna":
-      return <Chrwna viewBox="0 0 24 24" width={size} height={size} />;
-    case "centrifuge":
-      return <Centrifuge viewBox="0 0 24 24" width={size} height={size} />;
-    case "moonbeam":
-      return <Moonbeam viewBox="0 0 24 24" width={size} height={size} />;
-    case "polkadot":
-      return <Polkadot viewBox="0 0 24 24" width={size} height={size} />;
-    case "kusama":
-      return <Kusama viewBox="0 0 24 24" width={size} height={size} />;
-    case "statemine":
-      return <img src={Statemine} width={size} alt={chainName} />;
-    case "statemint":
-      return <img src={Statemint} width={size} alt={chainName} />;
-    case "westmint":
-      return <img src={Westmint} width={size} alt={chainName} />;
-    case "khala":
-      return <Khala viewBox="0 0 24 24" width={size} height={size} />;
-    case "bifrost":
-      return <img src={Bifrost} width={size} alt={chainName} />;
-    case "karura":
-      return <img src={Karura} width={size} alt={chainName} />;
-    case "kintsugi":
-      return <img src={Kintsugi} width={size} alt={chainName} />;
-    case "moonriver":
-      return <Moonriver viewBox="0 0 24 24" width={size} height={size} />;
-    case "westend":
-      return <img src={Westend} width={size} alt={chainName} />;
-    case "interlay":
-      return <Interlay viewBox="0 0 24 24" width={size} height={size} />;
-    case "acala":
-      return <img src={Acala} width={size} alt={chainName} />;
-    case "polkadex":
-      return <Polkadex viewBox="0 0 24 24" width={size} height={size} />;
-    case "crust":
-      return <Crust viewBox="0 0 24 24" width={size} height={size} />;
-    case "ethereum":
-      return <Ethereum viewBox="0 0 24 24" width={size} height={size} />;
-    default:
-      return <Default viewBox="0 0 24 24" width={size} height={size} />;
-  }
-}
+const svgs = {
+  Polkadot,
+  Khala,
+  Kusama,
+  Moonriver,
+  Interlay,
+  Polkadex,
+  Crust,
+  Ethereum,
+  Moonbeam,
+  Centrifuge,
+  Chrwna,
+};
+const pngs = {
+  Westend,
+  Bifrost,
+  Kintsugi,
+  Acala,
+  Westmint,
+  Statemine,
+  Statemint,
+  Karura,
+};
+
+// since nextjs v11, import image assets will return an object { src, ... }
+const resolvePngs = (png) => png.src ?? png;
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+function ResolveChainIcon({ chainName = "", size = 24 }) {
+  chainName = capitalize(chainName);
+
+  let Icon = <Default viewBox="0 0 24 24" width={size} height={size} />;
+
+  if (svgs[chainName]) {
+    const SvgIcon = svgs[chainName];
+    Icon = <SvgIcon viewBox="0 0 24 24" width={size} height={size} />;
+  } else if (pngs[chainName]) {
+    Icon = (
+      <img src={resolvePngs(pngs[chainName])} width={size} alt={chainName} />
+    );
+  }
+
+  return Icon;
+}
 
 function ChainIcon({
   chainName,
