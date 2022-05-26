@@ -1,6 +1,6 @@
 {
   "name": "@osn/common",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "cjs/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -20,14 +20,16 @@
     "./extension": {
       "import": "./es/extension.js",
       "require": "./cjs/extension.js"
-    }
+    },
+    "./*": "./*"
   },
   "sideEffects": false,
   "files": [
     "es",
     "cjs",
     "*.js",
-    "!test"
+    "!src",
+    "!**/*.test.js"
   ],
   "keywords": [],
   "author": "",
