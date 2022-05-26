@@ -63,7 +63,7 @@ function ResolveChainIcon({ chainName = "", size = 24 }) {
 
   if (svgs[chainName]) {
     const SvgIcon = svgs[chainName];
-    Iocn = <SvgIcon viewBox="0 0 24 24" width={size} height={size} />;
+    Icon = <SvgIcon viewBox="0 0 24 24" width={size} height={size} />;
   } else if (pngs[chainName]) {
     Icon = (
       <img src={resolvePngs(pngs[chainName])} width={size} alt={chainName} />
