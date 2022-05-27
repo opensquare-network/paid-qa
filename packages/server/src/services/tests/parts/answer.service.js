@@ -1,4 +1,4 @@
-const { postAnswer, getAnswers } = require("../../answer.service");
+const { postAnswer, getAnswers } = require("../../answer");
 
 jest.mock("../../node.service");
 jest.mock("../../ipfs.service");

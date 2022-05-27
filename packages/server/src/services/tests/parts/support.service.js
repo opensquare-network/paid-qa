@@ -1,5 +1,5 @@
-const { addSupport } = require("../../support.service");
-const { getTopic } = require("../../topic.service");
+const { addSupport } = require("../../support");
+const { getTopic } = require("../../topic");
 
 jest.mock("../../node.service");
 jest.mock("../../ipfs.service");
@@ -28,7 +28,8 @@ module.exports = () => {
       rewards: [
         {
           indexer: {
-            blockHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
+            blockHash:
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
             blockHeight: 0,
             extrinsicIndex: 1,
             blockTime: 1648444080001,
@@ -48,7 +49,8 @@ module.exports = () => {
         },
         {
           indexer: {
-            blockHash: "0x0000000000000000000000000000000000000000000000000000000000000002",
+            blockHash:
+              "0x0000000000000000000000000000000000000000000000000000000000000002",
             blockHeight: 2,
             extrinsicIndex: 1,
             blockTime: 1648444080001,

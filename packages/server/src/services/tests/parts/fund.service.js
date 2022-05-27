@@ -1,5 +1,5 @@
-const { getAnswers } = require("../../answer.service");
-const { addFund } = require("../../fund.service");
+const { getAnswers } = require("../../answer");
+const { addFund } = require("../../fund");
 
 jest.mock("../../node.service");
 jest.mock("../../ipfs.service");
@@ -31,7 +31,8 @@ module.exports = () => {
           funds: [
             {
               indexer: {
-                blockHash: "0x0000000000000000000000000000000000000000000000000000000000000003",
+                blockHash:
+                  "0x0000000000000000000000000000000000000000000000000000000000000003",
                 blockHeight: 3,
                 extrinsicIndex: 1,
                 blockTime: 1648444080001,

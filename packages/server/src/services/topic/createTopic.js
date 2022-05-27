@@ -41,6 +41,7 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
 
   // Verify if ipfs cid is the same as the one in the system remark
   if (interaction.topicIpfsCid !== cid) {
+    console.log(cid);
     throw new HttpError(
       500,
       "System remark topic cid does not match the ipfs content"
