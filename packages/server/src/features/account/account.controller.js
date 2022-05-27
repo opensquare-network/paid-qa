@@ -278,15 +278,17 @@ async function getAccountAnswers(ctx) {
 async function getAccountOverview(ctx) {
   const { address } = ctx.params;
   const signerPublicKey = toPublicKey(address);
-  const q = { sponsorPublicKey: signerPublicKey };
+
   const promisesCountQuery = Reward.aggregate([
-    { $match: q },
+    { $match: { sponsorPublicKey: signerPublicKey } },
     { $group: { _id: "$topicCid" } },
     { $count: "total" },
   ]);
 
   const notFulfilledPromiseCountQuery = Reward.aggregate([
-    { $match: q },
+    // Find out all topics that have promised by signer,
+    // and calculate the promised amount for each topic
+    { $match: { sponsorPublicKey: signerPublicKey } },
     {
       $group: {
         _id: {
@@ -296,6 +298,7 @@ async function getAccountOverview(ctx) {
         promiseAmount: { $sum: "$bounty.value" },
       },
     },
+    // Find out related answers for all topics
     {
       $lookup: {
         from: "answers",
@@ -304,6 +307,8 @@ async function getAccountOverview(ctx) {
         as: "answers",
       },
     },
+    // Find out all funds that hsd made by thesigner, for each promised topics.
+    // Including funds to the topic creator and all answerers
     {
       $lookup: {
         from: "funds",
@@ -313,6 +318,8 @@ async function getAccountOverview(ctx) {
           symbol: "$_id.symbol",
         },
         pipeline: [
+          // Filter out funds that are not related to this topic and answers
+          // made by the signer and with the same symbol
           {
             $match: {
               $expr: {
@@ -329,6 +336,7 @@ async function getAccountOverview(ctx) {
               },
             },
           },
+          // Sum up all funds
           {
             $group: {
               _id: null,
@@ -344,6 +352,7 @@ async function getAccountOverview(ctx) {
         fundAmount: { $first: "$fundAmount.value" },
       },
     },
+    // Find the numbers of topics that are not fulfilled, (those fundAmount < promiseAmount)
     {
       $match: {
         $expr: {
