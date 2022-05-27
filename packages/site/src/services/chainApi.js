@@ -68,7 +68,19 @@ export async function submitFund(api, remark, transfer, account, callback) {
           transfer.value
         );
   const txBatch = api.tx.utility.batch([txRemark, txTransfer]);
-  return await signAndSendTx(txBatch, account, callback);
+  try {
+    return await signAndSendTx(txBatch, account, callback);
+  } catch (e) {
+    if (e.message === "BatchInterrupted") {
+      console.log(e.data);
+      const [index, { token } = {}] = e.data || [];
+      if (index === 1) {
+        throw new Error(`Transfer failed` + (token ? `, ${token}` : ``));
+      }
+    }
+
+    throw e;
+  }
 }
 
 function signAndSendTx(tx, account, callback = () => {}) {
@@ -81,14 +93,16 @@ function signAndSendTx(tx, account, callback = () => {}) {
             unsub();
 
             for (const {
-              event: { method, section },
+              event: { method, section, data },
             } of events) {
               if (section === "system" && method === "ExtrinsicFailed") {
                 return reject(new Error("Extrinsic failed"));
               }
 
               if (section === "utility" && method === "BatchInterrupted") {
-                return reject(new Error("Batch extrinsic failed"));
+                const err = new Error("BatchInterrupted");
+                err.data = data.toJSON();
+                return reject(err);
               }
             }
 
