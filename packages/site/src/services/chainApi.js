@@ -72,7 +72,6 @@ export async function submitFund(api, remark, transfer, account, callback) {
     return await signAndSendTx(txBatch, account, callback);
   } catch (e) {
     if (e.message === "BatchInterrupted") {
-      console.log(e.data);
       const [index, { token } = {}] = e.data || [];
       if (index === 1) {
         throw new Error(`Transfer failed` + (token ? `, ${token}` : ``));
