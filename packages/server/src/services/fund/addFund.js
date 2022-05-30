@@ -12,6 +12,7 @@ const {
 } = require("../node.service");
 const BigNumber = require("bignumber.js");
 const { toPublicKey } = require("../../utils/address");
+const { updatePromiseFulfillment } = require("../fulfill");
 
 async function addFund(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -64,11 +65,14 @@ async function addFund(network, blockHash, extrinsicIndex) {
   let topic = await Topic.findOne({ cid: interaction.ipfsCid });
   let answer = await Answer.findOne({ cid: interaction.ipfsCid });
 
+  let topicCid;
   let refCidType;
   if (topic) {
     refCidType = "topic";
+    topicCid = topic.cid;
   } else if (answer) {
     refCidType = "answer";
+    topicCid = answer.topicCid;
   } else {
     throw new HttpError(500, "Invalid ipfsCid");
   }
@@ -97,6 +101,8 @@ async function addFund(network, blockHash, extrinsicIndex) {
     },
     { upsert: true, new: true }
   );
+
+  await updatePromiseFulfillment(topicCid, sponsorPublicKey);
 
   const fundTo = answer?.signer || topic?.signer;
   if (answer) {

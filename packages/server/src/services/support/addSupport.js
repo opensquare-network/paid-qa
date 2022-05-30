@@ -13,6 +13,7 @@ const {
 const { validateTokenAmount } = require("../common");
 const { updateTopicResolve } = require("../resolve");
 const { toPublicKey } = require("../../utils/address");
+const { updatePromiseFulfillment } = require("../fulfill");
 
 async function addSupport(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -83,6 +84,8 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   );
 
   await updateTopicResolve(topicCid);
+
+  await updatePromiseFulfillment(topicCid, sponsorPublicKey);
 
   const owner = toPublicKey(topic.signer);
   await Notification.create({
