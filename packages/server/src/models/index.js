@@ -8,6 +8,7 @@ const Fund = require("./fund");
 const Resolve = require("./resolve");
 const { Notification } = require("./notification");
 const Report = require("./report");
+const Fulfill = require("./fulfill");
 
 mongoose.connect(MONGODB_URI);
 mongoose.connection.on("error", () => {
@@ -24,4 +25,5 @@ module.exports = {
   Resolve,
   Notification,
   Report,
+  Fulfill,
 };

@@ -15,6 +15,7 @@ const { HttpError } = require("../../utils/exc");
 const { ipfsAdd, cidOf } = require("../ipfs.service");
 const { validateTokenAmount } = require("../common");
 const { toPublicKey } = require("../../utils/address");
+const { updatePromiseFulfillment } = require("../fulfill");
 
 async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content } = data;
@@ -121,6 +122,8 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
     );
   });
 
+  await updatePromiseFulfillment(cid, signerPublicKey);
+
   // Upload topic content to IPFS
   try {
     const added = await ipfsAdd(data);
@@ -195,6 +198,8 @@ async function saveUnverifiedTopic(
       { upsert: true, session }
     );
   });
+
+  await updatePromiseFulfillment(cid, signerPublicKey);
 
   return {
     cid,
