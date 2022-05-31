@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
-const { RequiredRefCidType, RequiredDecimal128, RequiredString, RequiredNumber } = require("./utils");
+const {
+  RequiredRefCidType,
+  RequiredDecimal128,
+  RequiredString,
+  RequiredNumber,
+} = require("./utils");
 
 const FundSchema = new mongoose.Schema(
   {
@@ -48,7 +53,10 @@ FundSchema.virtual("answer", {
 FundSchema.index({ refCid: 1 });
 FundSchema.index({ sponsorPublicKey: 1 });
 FundSchema.index({ beneficiaryPublicKey: 1 });
-FundSchema.index({ "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 }, { unique: true });
+FundSchema.index(
+  { "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 },
+  { unique: true }
+);
 
 const Fund = mongoose.model("Fund", FundSchema);
 
