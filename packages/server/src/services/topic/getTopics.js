@@ -1,5 +1,7 @@
-const { Topic } = require("../../models");
-const { OnChainStatus } = require("../../utils/constants");
+const { Topic } = require("@paid-qa/backend-common/src/models");
+const {
+  OnChainStatus,
+} = require("@paid-qa/backend-common/src/utils/constants");
 const { escapeRegex } = require("../../utils/regex");
 
 async function getTopics(symbol, status, title, page, pageSize) {

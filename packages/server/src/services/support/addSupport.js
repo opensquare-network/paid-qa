@@ -3,7 +3,11 @@ const {
   interactions: { SupportInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../../utils/exc");
-const { Topic, Reward, Notification } = require("../../models");
+const {
+  Topic,
+  Reward,
+  Notification,
+} = require("@paid-qa/backend-common/src/models");
 const {
   getApi,
   getRemark,
@@ -12,8 +16,10 @@ const {
 } = require("../node.service");
 const { validateTokenAmount } = require("../common");
 const { updateTopicResolve } = require("../resolve");
-const { toPublicKey } = require("../../utils/address");
-const { updatePromiseFulfillment } = require("../fulfill");
+const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const {
+  updatePromiseFulfillment,
+} = require("@paid-qa/backend-common/src/services/fulfill");
 
 async function addSupport(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
