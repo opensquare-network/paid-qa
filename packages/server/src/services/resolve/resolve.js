@@ -5,7 +5,7 @@ const {
 const { HttpError } = require("../../utils/exc");
 const { Topic, Resolve } = require("@paid-qa/backend-common/src/models");
 const { getApi, getRemark } = require("../node.service");
-const updateTopicResolve = require("./updateTopicResolve");
+const updateTopicResolve = require("@paid-qa/backend-common/src/services/resolve/updateTopicResolve");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 
 async function resolve(network, blockHash, extrinsicIndex) {

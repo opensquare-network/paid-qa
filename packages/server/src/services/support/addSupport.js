@@ -15,7 +15,7 @@ const {
   getNativeTokenInfo,
 } = require("../node.service");
 const { validateTokenAmount } = require("../common");
-const { updateTopicResolve } = require("../resolve");
+const updateTopicResolve = require("@paid-qa/backend-common/src/services/resolve/updateTopicResolve");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const {
   updatePromiseFulfillment,

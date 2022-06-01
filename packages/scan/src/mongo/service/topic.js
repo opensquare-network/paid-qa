@@ -3,8 +3,8 @@ const { Topic } = require("@paid-qa/backend-common/src/models");
 
 async function insertTopic(topic) {
   const { cid } = topic;
-  const maybeInTopicDb = await Topic.findOne({ cid });
-  if (maybeInTopicDb) {
+  const maybeInDb = await Topic.findOne({ cid });
+  if (maybeInDb) {
     busLogger.info(
       `Same topic ${cid} has existed in DB, #${topic.indexer.blockHeight}`
     );
