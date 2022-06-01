@@ -66,6 +66,14 @@ module.exports = {
         name: "@osn/common-ui$",
       },
     },
+    // https://reactjs.org/warnings/invalid-hook-call-warning.html#duplicate-react
+    {
+      plugin: enableImportOutsideSrcDir,
+      options: {
+        path: "../../node_modules/react",
+        name: "react",
+      },
+    },
   ],
   webpack: {
     configure: {
