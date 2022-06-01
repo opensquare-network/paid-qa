@@ -14,19 +14,14 @@ const AppendantSchema = new mongoose.Schema(
       blockTime: RequiredNumber,
     },
     network: RequiredString,
-    content: RequiredString,
-    data: {
-      type: Object,
-      required: true,
-    },
+    content: String,
     topicCid: RequiredString,
     cid: RequiredString,
-    pinned: {
-      type: Boolean,
-      default: false,
-    },
     status: RequireOnChainStatus,
     signer: RequiredString,
+    data: Object,
+    pinned: Boolean,
+    parsed: Boolean,
   },
   {
     timestamps: true,
