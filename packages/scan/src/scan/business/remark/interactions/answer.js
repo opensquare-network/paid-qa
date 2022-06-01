@@ -10,7 +10,6 @@ const { currentChain } = require("../../../../common/env");
 const { insertAnswer } = require("../../../../mongo/service/answer");
 const { hexToString } = require("@polkadot/util");
 const { remarkLogger } = require("../../../../common/logger");
-const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 
 async function handleAnswer(interaction, caller, indexer) {
   // todo: 1. get the content of answer entity from ipfs
@@ -24,8 +23,6 @@ async function handleAnswer(interaction, caller, indexer) {
     indexer: indexer.toJSON(),
     network,
     cid: interaction.answerIpfsCid,
-    // signer: caller,
-    // signerPublicKey: toPublicKey(caller),
     pinned: true,
     status: OnChainStatus.Published,
   };
@@ -35,12 +32,9 @@ async function handleAnswer(interaction, caller, indexer) {
 
 async function handleBatchAnswerExtrinsic(extrinsic, caller, indexer) {
   const { section, method } = extrinsic;
-  console.log({ section, method });
   if (SECTIONS.UTILITY !== section || METHODS.BATCH !== method) {
     return;
   }
-
-  console.log("try batch answer");
 
   const {
     args: [txs],
@@ -48,12 +42,9 @@ async function handleBatchAnswerExtrinsic(extrinsic, caller, indexer) {
 
   for (const tx of txs) {
     const { section, method } = tx;
-    console.log({ section, method });
     if (SECTIONS.SYSTEM !== section && METHODS.REMARK !== method) {
       continue;
     }
-
-    console.log("handle batch remark");
 
     const {
       args: [remarkBytes],
@@ -69,7 +60,6 @@ async function handleBatchAnswerExtrinsic(extrinsic, caller, indexer) {
     const interaction = parser.getInteraction();
 
     if (interaction instanceof AnswerInteraction) {
-      console.log("handle batch answer");
       await handleAnswer(interaction, caller, indexer);
     }
   }
