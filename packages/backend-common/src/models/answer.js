@@ -19,6 +19,7 @@ const AnswerSchema = new mongoose.Schema(
     cid: RequiredString,
     pinned: Boolean,
     status: RequireOnChainStatus,
+    parsed: Boolean,
   },
   {
     timestamps: true,
