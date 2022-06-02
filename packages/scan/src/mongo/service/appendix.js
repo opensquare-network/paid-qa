@@ -1,23 +1,22 @@
 const { busLogger } = require("../../common/logger");
-const { Appendant } = require("@paid-qa/backend-common/src/models");
+const {
+  getAppendixCollection,
+} = require("../index");
 
 async function insertAppendix(appendix) {
-  const { topicCid: topicIpfsCid, cid: messageIpfsCid } = appendix;
-
-  const maybeInDb = await Appendant.findOne({
-    topicCid: topicIpfsCid,
-    cid: messageIpfsCid,
-  });
-  if (maybeInDb) {
+  const { topicIpfsCid, messageIpfsCid } = appendix;
+  const col = await getAppendixCollection();
+  const maybeInTopicDb = await col.findOne({ topicIpfsCid, messageIpfsCid });
+  if (maybeInTopicDb) {
     busLogger.info(
-      `Same appendix ${topicIpfsCid} append ${messageIpfsCid} has existed in DB, #${appendix.indexer.blockHeight}`
-    );
+      `Same topic ${ topicIpfsCid } append ${ messageIpfsCid } has existed in DB, #${ appendix.indexer.blockHeight }`
+    )
     return;
   }
 
-  await Appendant.create(appendix);
+  await col.insertOne(appendix);
 }
 
 module.exports = {
   insertAppendix,
-};
+}

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const { Notification } = require("@paid-qa/backend-common/src/models");
-const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const { Notification } = require("../../models");
+const { toPublicKey } = require("../../utils/address");
 
 async function clearUnreadNotifications(network, address, items) {
   const publicKey = toPublicKey(address);

@@ -13,22 +13,15 @@ class ExtrinsicIndexer extends BlockIndexer {
       blockIndexer.blockHeight,
       blockIndexer.blockHash,
       blockIndexer.blockTime,
-      extrinsicIndex
-    );
+      extrinsicIndex,
+    )
   }
 
   get extrinsicIndex() {
     return this.#extrinsicIndex;
   }
-
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      extrinsicIndex: this.#extrinsicIndex,
-    };
-  }
 }
 
 module.exports = {
   ExtrinsicIndexer,
-};
+}

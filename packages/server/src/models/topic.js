@@ -16,21 +16,26 @@ const TopicSchema = new mongoose.Schema(
     },
     cid: RequiredString,
     network: RequiredString,
-    title: String,
-    content: String,
+    title: RequiredString,
+    content: RequiredString,
     bounty: {
       tokenIdentifier: RequiredString,
       symbol: RequiredString,
       decimals: RequiredNumber,
       value: RequiredDecimal128,
     },
+    data: {
+      type: Object,
+      required: true,
+    },
+    pinned: {
+      type: Boolean,
+      default: false,
+    },
     resolved: Boolean,
     status: RequireOnChainStatus,
     signer: RequiredString,
     signerPublicKey: RequiredString,
-    data: Object, // raw data submitted by the user, should be pinned to IPFS
-    pinned: Boolean, // indicates if the topic content is pinned to ipfs
-    parsed: Boolean, // indicates whether the ipfs content has been parsed by scan-worker
   },
   {
     timestamps: true,

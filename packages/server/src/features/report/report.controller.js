@@ -1,7 +1,7 @@
 const { HttpError } = require("../../utils/exc");
 const { isValidSignature } = require("../../utils/signature");
-const { Report, Topic, Answer } = require("@paid-qa/backend-common/src/models");
-const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const { Report, Topic, Answer } = require("../../models");
+const { toPublicKey } = require("../../utils/address");
 
 async function report(ctx) {
   const { data, address, network, signature } = ctx.request.body;

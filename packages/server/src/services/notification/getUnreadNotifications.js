@@ -1,5 +1,5 @@
-const { Notification } = require("@paid-qa/backend-common/src/models");
-const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const { Notification } = require("../../models");
+const { toPublicKey } = require("../../utils/address");
 
 async function getUnreadNotifications(network, address) {
   const publicKey = toPublicKey(address);

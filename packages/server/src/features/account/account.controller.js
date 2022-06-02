@@ -1,13 +1,7 @@
 const flatten = require("lodash.flatten");
 const BigNumber = require("bignumber.js");
-const {
-  Topic,
-  Reward,
-  Fund,
-  Answer,
-  Fulfill,
-} = require("@paid-qa/backend-common/src/models");
-const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const { Topic, Reward, Fund, Answer, Fulfill } = require("../../models");
+const { toPublicKey } = require("../../utils/address");
 const { extractPage } = require("../../utils/pagination");
 
 async function getAccountTopics(ctx) {

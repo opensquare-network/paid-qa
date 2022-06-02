@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
-const { Topic, Reward } = require("@paid-qa/backend-common/src/models");
-const {
-  OnChainStatus,
-} = require("@paid-qa/backend-common/src/utils/constants");
+const { Topic, Reward } = require("../../models");
+const { OnChainStatus } = require("../../utils/constants");
 const {
   getApi,
   getRemark,
@@ -16,10 +14,8 @@ const {
 const { HttpError } = require("../../utils/exc");
 const { ipfsAdd, cidOf } = require("../ipfs.service");
 const { validateTokenAmount } = require("../common");
-const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
-const {
-  updatePromiseFulfillment,
-} = require("@paid-qa/backend-common/src/services/fulfill");
+const { toPublicKey } = require("../../utils/address");
+const { updatePromiseFulfillment } = require("../fulfill");
 
 async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content } = data;
