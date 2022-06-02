@@ -10,20 +10,14 @@ const AnswerSchema = new mongoose.Schema(
       blockTime: Number,
     },
     network: RequiredString,
-    topicCid: RequiredString,
-    content: RequiredString,
-    signer: RequiredString,
-    signerPublicKey: RequiredString,
-    signature: RequiredString,
-    data: {
-      type: Object,
-      required: true,
-    },
+    topicCid: String,
+    content: String,
+    signer: String,
+    signerPublicKey: String,
+    signature: String,
+    data: Object,
     cid: RequiredString,
-    pinned: {
-      type: Boolean,
-      default: false,
-    },
+    pinned: Boolean,
     status: RequireOnChainStatus,
   },
   {
@@ -46,10 +40,6 @@ AnswerSchema.virtual("topic", {
 });
 
 AnswerSchema.index({ cid: 1 }, { unique: true });
-AnswerSchema.index(
-  { "indexer.blockHash": 1, "indexer.extrinsicIndex": 1 },
-  { unique: true, sparse: true }
-);
 AnswerSchema.index({ topicCid: 1 });
 
 const Answer = mongoose.model("Answer", AnswerSchema);

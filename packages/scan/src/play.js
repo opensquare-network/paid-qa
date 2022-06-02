@@ -11,7 +11,7 @@ const { disconnect } = require("./chain/api");
 async function play() {
   await initDb();
 
-  const heights = [2247795];
+  const heights = [2261918];
   const blocks = await fetchBlocks(heights);
   for (const { block, events } of blocks) {
     const blockIndexer = await scanBlock(block, events);

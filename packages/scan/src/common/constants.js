@@ -6,6 +6,8 @@ const CHAINS = {
   WESTMINT: "westmint",
 };
 
+const ASSET_PARA_CHAIN = [CHAINS.STATEMINE, CHAINS.WESTMINT];
+
 const SECTIONS = {
   SYSTEM: "system",
   UTILITY: "utility",
@@ -18,6 +20,7 @@ const METHODS = {
 
 module.exports = {
   CHAINS,
+  ASSET_PARA_CHAIN,
   SECTIONS,
   METHODS,
 };
