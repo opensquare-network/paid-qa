@@ -156,7 +156,6 @@ function getKeyringPair() {
 
   const keyring = new Keyring({ type: "sr25519" });
   const pair = keyring.addFromUri(phrase);
-  console.log(pair.address);
   return pair;
 }
 

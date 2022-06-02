@@ -1,4 +1,4 @@
-const { Answer } = require("@paid-qa/backend-common/src/models");
+const { Answer } = require("../../models");
 
 async function getAnswers(topicCid, page, pageSize) {
   const q = { topicCid };

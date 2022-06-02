@@ -1,19 +1,10 @@
-const {
-  Topic,
-  Answer,
-  Notification,
-} = require("@paid-qa/backend-common/src/models");
+const { Topic, Answer, Notification } = require("../../models");
 const { HttpError } = require("../../utils/exc");
 const { isValidSignature } = require("../../utils/signature");
-const {
-  OnChainStatus,
-} = require("@paid-qa/backend-common/src/utils/constants");
+const { OnChainStatus } = require("../../utils/constants");
 const { cidOf } = require("../ipfs.service");
 const { extractMentions } = require("../../utils/mention");
-const {
-  toPublicKey,
-  isSamePublicKey,
-} = require("@paid-qa/backend-common/src/utils/address");
+const { toPublicKey, isSamePublicKey } = require("../../utils/address");
 
 async function postAnswer(data) {
   const { answer, address: signer, network, signature } = data;

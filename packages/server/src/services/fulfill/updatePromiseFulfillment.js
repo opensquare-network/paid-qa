@@ -1,4 +1,5 @@
-const { Reward, Answer, Fund, Fulfill } = require("../../models");
+const { Reward, Answer, Fund } = require("../../models");
+const Fulfill = require("../../models/fulfill");
 
 async function updatePromiseFulfillment(topicCid, sponsorPublicKey) {
   const topicPromise = await Reward.aggregate([

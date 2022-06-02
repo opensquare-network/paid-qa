@@ -1,6 +1,4 @@
-const {
-  eventEmitter,
-} = require("@paid-qa/backend-common/src/models/notification");
+const { eventEmitter } = require("../models/notification");
 
 let globalIO;
 

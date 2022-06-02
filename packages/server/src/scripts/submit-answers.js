@@ -5,10 +5,8 @@ const {
   encoder: { InteractionEncoder },
   interactions: { AnswerInteraction },
 } = require("@paid-qa/spec");
-const { Answer } = require("@paid-qa/backend-common/src/models");
-const {
-  OnChainStatus,
-} = require("@paid-qa/backend-common/src/utils/constants");
+const { Answer } = require("../models");
+const { OnChainStatus } = require("../utils/constants");
 const { getApi, submitRemarks } = require("../services/node.service");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

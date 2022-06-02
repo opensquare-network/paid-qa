@@ -1,7 +1,5 @@
-const { Topic, Appendant } = require("@paid-qa/backend-common/src/models");
-const {
-  OnChainStatus,
-} = require("@paid-qa/backend-common/src/utils/constants");
+const { Topic, Appendant } = require("../../models");
+const { OnChainStatus } = require("../../utils/constants");
 const { getApi, getRemark } = require("../node.service");
 const {
   parser: { InteractionParser },

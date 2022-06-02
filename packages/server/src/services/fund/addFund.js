@@ -3,12 +3,7 @@ const {
   interactions: { FundInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../../utils/exc");
-const {
-  Topic,
-  Fund,
-  Notification,
-  Answer,
-} = require("@paid-qa/backend-common/src/models");
+const { Topic, Fund, Notification, Answer } = require("../../models");
 const {
   getApi,
   getRemark,
@@ -16,10 +11,8 @@ const {
   getNativeTokenInfo,
 } = require("../node.service");
 const BigNumber = require("bignumber.js");
-const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
-const {
-  updatePromiseFulfillment,
-} = require("@paid-qa/backend-common/src/services/fulfill");
+const { toPublicKey } = require("../../utils/address");
+const { updatePromiseFulfillment } = require("../fulfill");
 
 async function addFund(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex

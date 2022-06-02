@@ -1,18 +1,15 @@
-const { busLogger } = require("../../common/logger");
-const { Answer } = require("@paid-qa/backend-common/src/models");
+const { getAnswerCollection } = require("../index");
 
 async function insertAnswer(answer) {
-  const maybeInDb = await Answer.findOne({ cid: answer.cid });
+  const col = await getAnswerCollection()
+  const maybeInDb = await col.findOne({ answerIpfsCid: answer.answerIpfsCid });
   if (maybeInDb) {
-    busLogger.info(
-      `Same answer ${answer.cid} has existed in DB, #${answer.indexer.blockHeight}`
-    );
-    return;
+    return
   }
 
-  await Answer.create(answer);
+  await col.insertOne(answer);
 }
 
 module.exports = {
   insertAnswer,
-};
+}

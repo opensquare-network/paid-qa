@@ -5,17 +5,17 @@
 require("dotenv").config();
 const { scanBlock } = require("./scan/block");
 const { fetchBlocks } = require("./scan/fetch");
-const { initDb, closeDb } = require("./mongo");
-const { disconnect } = require("./chain/api");
+const { initDb, closeDb, } = require("./mongo");
+const { disconnect } = require("./chain/api")
 
 async function play() {
   await initDb();
 
-  const heights = [2261918];
+  const heights = [9688365, 9755646, 9756325];
   const blocks = await fetchBlocks(heights);
   for (const { block, events } of blocks) {
     const blockIndexer = await scanBlock(block, events);
-    console.log(`${blockIndexer.blockHeight} done`);
+    console.log(`${ blockIndexer.blockHeight } done`)
   }
 }
 
