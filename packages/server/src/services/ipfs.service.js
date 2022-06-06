@@ -1,6 +1,6 @@
 const Hash = require("ipfs-only-hash");
 const { CID } = require("multiformats/cid");
-const { getClients, ClientOptions, ClientMode } = require("@paid-qa/ipfs");
+const { getClients, ClientOptions, ClientMode } = require("@osn/ipfs");
 const {
   INFURA_PROJECT_ID,
   INFURA_PROJECT_SECRET,
