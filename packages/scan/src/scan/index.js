@@ -1,7 +1,7 @@
 const { updateScanHeight } = require("../mongo/scanHeight");
 const { scanBlock } = require("./block");
 const { fetchBlocks } = require("./fetch");
-const { getTargetHeight, getHeights, } = require("./utils");
+const { getTargetHeight, getHeights } = require("./utils");
 const { sleep } = require("../common/utils/sleep");
 const { getFinalizedHeight } = require("../chain/finalized");
 const { deleteFromHeight } = require("./delete");
@@ -29,12 +29,12 @@ async function oneStepScan(startHeight) {
   const heights = getHeights(startHeight, targetHeight);
   const blocks = await fetchBlocks(heights);
 
-  for (const { block, events } of blocks) {
+  for (const { block, events, height } of blocks) {
     try {
       const blockIndexer = await scanBlock(block, events);
       await updateScanHeight(blockIndexer.blockHeight);
     } catch (e) {
-      logger.error(`Error with block scan ${item.height}`, e);
+      logger.error(`Error with block scan ${height}`, e);
     }
   }
 
