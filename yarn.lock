@@ -2152,6 +2152,15 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@osn/ipfs@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@osn/ipfs/-/ipfs-0.0.3.tgz#35a1ed3fd6eb7d4a5ed7485cf93963f7b4ae903b"
+  integrity sha512-TwCcoBzx+YFa9o2LFOWxfrU/D8TzzZFiUzLqNTPvfPdmYEdh7UYdCKI/v4gnvJCkumvnbuoqrqoAXWECRsZXKg==
+  dependencies:
+    dotenv "^16.0.0"
+    ipfs-http-client "^56.0.1"
+    it-all "^1.0.6"
+
 "@osn/polkadot-react-identicon@^1.0.7":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@osn/polkadot-react-identicon/-/polkadot-react-identicon-1.0.8.tgz#c4da14f5122057ff72cba1724467cb1455e4377c"
