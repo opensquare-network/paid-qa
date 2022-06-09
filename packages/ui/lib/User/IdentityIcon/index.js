@@ -10,7 +10,7 @@ import { ReactComponent as SubRedIcon } from "./icons/sub-red.svg";
 import Tooltip from "../../Tooltip";
 
 const Wrapper = styled.span`
-  position: relative;
+  position: ${(p) => (p.showTooltip ? "relative" : "inherit")};
   display: flex;
   align-items: center;
 `;
@@ -41,7 +41,7 @@ export default function IdentityIcon({
   const statusDesc = statusIconMap.get(status)?.desc ?? "Erroneous identity";
 
   return (
-    <Wrapper>
+    <Wrapper showTooltip={showTooltip}>
       <StatusIcon width={size} height={size} />
       {showTooltip && (
         <Tooltip
