@@ -5,10 +5,11 @@ const {
   INFURA_PROJECT_ID,
   INFURA_PROJECT_SECRET,
   LOCAL_IPFS_NODE_URL,
+  USE_LOCAL_IFPS_NODE,
 } = require("../env");
 
 const [ipfsClient] = getClients(
-  ClientMode.Infura,
+  USE_LOCAL_IFPS_NODE ? ClientMode.Local : ClientMode.Infura,
   new ClientOptions(
     INFURA_PROJECT_ID,
     INFURA_PROJECT_SECRET,
