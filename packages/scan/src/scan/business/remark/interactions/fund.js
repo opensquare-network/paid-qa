@@ -16,7 +16,7 @@ const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const {
   updatePromiseFulfillment,
 } = require("@paid-qa/backend-common/src/services/fulfill");
-const { Answer } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 const { hexToString } = require("@polkadot/util");
 
 function parseRemarkCall(txRemark) {

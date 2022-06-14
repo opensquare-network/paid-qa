@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const {
-  RequireOnChainStatus,
   RequiredString,
   RequiredNumber,
   RequiredDecimal128,
@@ -25,11 +24,9 @@ const TopicSchema = new mongoose.Schema(
       value: RequiredDecimal128,
     },
     resolved: Boolean,
-    status: RequireOnChainStatus,
     signer: RequiredString,
     signerPublicKey: RequiredString,
     data: Object, // raw data submitted by the user, should be pinned to IPFS
-    pinned: Boolean, // indicates if the topic content is pinned to ipfs
     parsed: Boolean, // indicates whether the ipfs content has been parsed by scan-worker
     synced: Boolean,
   },

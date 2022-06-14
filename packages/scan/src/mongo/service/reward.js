@@ -1,5 +1,5 @@
 const { busLogger } = require("../../common/logger");
-const { Reward } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Reward } = require("@paid-qa/backend-common/src/models/scan");
 
 async function insertReward(reward) {
   const maybeInDb = await Reward.findOne({

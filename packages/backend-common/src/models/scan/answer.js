@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
-const { RequireOnChainStatus, RequiredString } = require("../utils");
+const { RequiredString, RequiredNumber } = require("../utils");
 
 const AnswerSchema = new mongoose.Schema(
   {
     indexer: {
-      blockHash: String,
-      blockHeight: Number,
-      extrinsicIndex: Number,
-      blockTime: Number,
+      blockHash: RequiredString,
+      blockHeight: RequiredNumber,
+      extrinsicIndex: RequiredNumber,
+      blockTime: RequiredNumber,
     },
-    network: RequiredString,
+    network: String,
     topicCid: String,
     content: String,
     signer: String,
@@ -17,8 +17,6 @@ const AnswerSchema = new mongoose.Schema(
     signature: String,
     data: Object,
     cid: RequiredString,
-    pinned: Boolean,
-    status: RequireOnChainStatus,
     parsed: Boolean,
     synced: Boolean,
   },

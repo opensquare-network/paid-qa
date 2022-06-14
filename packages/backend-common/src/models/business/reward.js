@@ -30,7 +30,6 @@ const RewardSchema = new mongoose.Schema(
       required: true,
     },
     status: RequireOnChainStatus,
-    synced: Boolean,
   },
   {
     timestamps: true,

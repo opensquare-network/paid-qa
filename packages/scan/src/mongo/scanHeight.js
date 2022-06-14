@@ -1,4 +1,4 @@
-const { Status } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Status } = require("@paid-qa/backend-common/src/models/scan");
 const isNil = require("lodash.isnil");
 const { currentChain } = require("../common/env");
 const { CHAINS } = require("../common/constants");

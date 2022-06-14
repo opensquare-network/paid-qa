@@ -1,5 +1,5 @@
 const { busLogger } = require("../../common/logger");
-const { Answer } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 
 async function insertAnswer(answer) {
   const maybeInDb = await Answer.findOne({ cid: answer.cid });

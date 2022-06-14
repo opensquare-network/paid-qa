@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const { SCAN_MONGODB_URI } = require("../../env");
-const { TopicSchema } = require("../schemas/topic");
-const { RewardSchema } = require("../schemas/reward");
-const { AppendantSchema } = require("../schemas/appendant");
-const { AnswerSchema } = require("../schemas/answer");
-const { FundSchema } = require("../schemas/fund");
-const { ResolveSchema } = require("../schemas/resolve");
-const { StatusSchema } = require("../schemas/status");
+const { TopicSchema } = require("./topic");
+const { RewardSchema } = require("./reward");
+const { AppendantSchema } = require("./appendant");
+const { AnswerSchema } = require("./answer");
+const { FundSchema } = require("./fund");
+const { ResolveSchema } = require("./resolve");
+const { StatusSchema } = require("./status");
 
 const scanDb = mongoose.createConnection(SCAN_MONGODB_URI);
 scanDb.on("error", () => {

@@ -2,7 +2,7 @@ const omit = require("lodash.omit");
 const {
   Answer: BusinessAnswer,
 } = require("@paid-qa/backend-common/src/models");
-const { Answer } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 
 async function syncAnswer(answer) {
   await BusinessAnswer.updateOne(

@@ -1,5 +1,5 @@
 const { busLogger } = require("../../common/logger");
-const { Appendant } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Appendant } = require("@paid-qa/backend-common/src/models/scan");
 
 async function insertAppendix(appendix) {
   const { topicCid: topicIpfsCid, cid: messageIpfsCid } = appendix;

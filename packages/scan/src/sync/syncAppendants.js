@@ -2,7 +2,7 @@ const omit = require("lodash.omit");
 const {
   Appendant: BusinessAppendant,
 } = require("@paid-qa/backend-common/src/models");
-const { Appendant } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Appendant } = require("@paid-qa/backend-common/src/models/scan");
 
 async function syncAppendant(appendant) {
   await BusinessAppendant.updateOne(

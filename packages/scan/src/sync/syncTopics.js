@@ -1,6 +1,6 @@
 const omit = require("lodash.omit");
 const { Topic: BusinessTopic } = require("@paid-qa/backend-common/src/models");
-const { Topic } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Topic } = require("@paid-qa/backend-common/src/models/scan");
 
 async function syncTopic(topic) {
   await BusinessTopic.updateOne(

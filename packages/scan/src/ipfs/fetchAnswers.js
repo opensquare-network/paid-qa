@@ -1,4 +1,4 @@
-const { Answer } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { fetchIpfsJson } = require("./utils");
 

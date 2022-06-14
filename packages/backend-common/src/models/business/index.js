@@ -1,17 +1,14 @@
 const mongoose = require("mongoose");
 const { MONGODB_URI } = require("../../env");
-const { TopicSchema } = require("../schemas/topic");
-const { RewardSchema } = require("../schemas/reward");
-const { AppendantSchema } = require("../schemas/appendant");
-const { AnswerSchema } = require("../schemas/answer");
-const { FundSchema } = require("../schemas/fund");
-const { ResolveSchema } = require("../schemas/resolve");
-const {
-  NotificationEvent,
-  NotificationSchema,
-} = require("../schemas/notification");
-const { ReportSchema } = require("../schemas/report");
-const { FulfillSchema } = require("../schemas/fulfill");
+const { TopicSchema } = require("./topic");
+const { RewardSchema } = require("./reward");
+const { AppendantSchema } = require("./appendant");
+const { AnswerSchema } = require("./answer");
+const { FundSchema } = require("./fund");
+const { ResolveSchema } = require("./resolve");
+const { NotificationEvent, NotificationSchema } = require("./notification");
+const { ReportSchema } = require("./report");
+const { FulfillSchema } = require("./fulfill");
 
 const businessDb = mongoose.createConnection(MONGODB_URI);
 businessDb.on("error", () => {

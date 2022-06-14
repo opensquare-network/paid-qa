@@ -1,4 +1,4 @@
-const { Appendant } = require("@paid-qa/backend-common/src/models/dbs/scan");
+const { Appendant } = require("@paid-qa/backend-common/src/models/scan");
 const { fetchIpfsJson } = require("./utils");
 
 async function fetchAppendant(appendant) {

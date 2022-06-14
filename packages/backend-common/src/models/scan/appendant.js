@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
-const {
-  RequireOnChainStatus,
-  RequiredString,
-  RequiredNumber,
-} = require("../utils");
+const { RequiredString, RequiredNumber } = require("../utils");
 
 const AppendantSchema = new mongoose.Schema(
   {
@@ -17,10 +13,8 @@ const AppendantSchema = new mongoose.Schema(
     content: String,
     topicCid: RequiredString,
     cid: RequiredString,
-    status: RequireOnChainStatus,
     signer: RequiredString,
     data: Object,
-    pinned: Boolean,
     parsed: Boolean,
     synced: Boolean,
   },
