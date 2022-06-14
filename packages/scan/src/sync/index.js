@@ -5,6 +5,8 @@ const syncTopics = require("./syncTopics");
 const syncAppendants = require("./syncAppendants");
 const syncAnswers = require("./syncAnswers");
 const syncResolves = require("./syncResolves");
+const syncRewards = require("./syncRewards");
+const syncFunds = require("./syncFunds");
 
 async function main() {
   console.log("Sync scan db to business", new Date());
