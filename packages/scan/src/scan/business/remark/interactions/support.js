@@ -68,7 +68,7 @@ async function handleSupport(interaction, caller, indexer) {
 
   await updateTopicResolve(interaction.topicIpfsCid);
 
-  await updatePromiseFulfillment(reward.topicCid, reward.sponsorPublicKey);
+  // await updatePromiseFulfillment(reward.topicCid, reward.sponsorPublicKey);
 }
 
 module.exports = {

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { RequireOnChainStatus, RequiredString } = require("./utils");
+const { RequireOnChainStatus, RequiredString } = require("../utils");
 
 const AnswerSchema = new mongoose.Schema(
   {
@@ -20,6 +20,7 @@ const AnswerSchema = new mongoose.Schema(
     pinned: Boolean,
     status: RequireOnChainStatus,
     parsed: Boolean,
+    synced: Boolean,
   },
   {
     timestamps: true,
@@ -43,6 +44,4 @@ AnswerSchema.virtual("topic", {
 AnswerSchema.index({ cid: 1 }, { unique: true });
 AnswerSchema.index({ topicCid: 1 });
 
-const Answer = mongoose.model("Answer", AnswerSchema);
-
-module.exports = Answer;
+module.exports = { AnswerSchema };

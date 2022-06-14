@@ -4,7 +4,7 @@ const {
   RequiredDecimal128,
   RequiredString,
   RequiredNumber,
-} = require("./utils");
+} = require("../utils");
 
 const RewardSchema = new mongoose.Schema(
   {
@@ -30,6 +30,7 @@ const RewardSchema = new mongoose.Schema(
       required: true,
     },
     status: RequireOnChainStatus,
+    synced: Boolean,
   },
   {
     timestamps: true,
@@ -44,6 +45,4 @@ RewardSchema.index(
   { unique: true }
 );
 
-const Reward = mongoose.model("Reward", RewardSchema);
-
-module.exports = Reward;
+module.exports = { RewardSchema };

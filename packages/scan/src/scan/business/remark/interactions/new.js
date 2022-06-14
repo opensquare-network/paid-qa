@@ -83,7 +83,7 @@ async function handleNew(interaction, caller, indexer) {
 
   await insertReward(reward);
 
-  await updatePromiseFulfillment(topic.cid, topic.signerPublicKey);
+  // await updatePromiseFulfillment(topic.cid, topic.signerPublicKey);
 }
 
 module.exports = {

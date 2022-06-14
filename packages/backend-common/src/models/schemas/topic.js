@@ -4,7 +4,7 @@ const {
   RequiredString,
   RequiredNumber,
   RequiredDecimal128,
-} = require("./utils");
+} = require("../utils");
 
 const TopicSchema = new mongoose.Schema(
   {
@@ -31,6 +31,7 @@ const TopicSchema = new mongoose.Schema(
     data: Object, // raw data submitted by the user, should be pinned to IPFS
     pinned: Boolean, // indicates if the topic content is pinned to ipfs
     parsed: Boolean, // indicates whether the ipfs content has been parsed by scan-worker
+    synced: Boolean,
   },
   {
     timestamps: true,
@@ -83,6 +84,4 @@ TopicSchema.index(
 );
 TopicSchema.index({ signerPublicKey: 1 });
 
-const Topic = mongoose.model("Topic", TopicSchema);
-
-module.exports = Topic;
+module.exports = { TopicSchema };

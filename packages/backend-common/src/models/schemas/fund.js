@@ -4,7 +4,7 @@ const {
   RequiredDecimal128,
   RequiredString,
   RequiredNumber,
-} = require("./utils");
+} = require("../utils");
 
 const FundSchema = new mongoose.Schema(
   {
@@ -27,6 +27,7 @@ const FundSchema = new mongoose.Schema(
       decimals: RequiredNumber,
       value: RequiredDecimal128,
     },
+    synced: Boolean,
   },
   {
     timestamps: true,
@@ -58,6 +59,4 @@ FundSchema.index(
   { unique: true }
 );
 
-const Fund = mongoose.model("Fund", FundSchema);
-
-module.exports = Fund;
+module.exports = { FundSchema };

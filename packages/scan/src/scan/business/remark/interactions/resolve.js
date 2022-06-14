@@ -16,7 +16,7 @@ async function handleResolve(interaction, caller, indexer) {
 
   await insertResolve(resolve);
 
-  await updateTopicResolve(interaction.topicIpfsCid);
+  // await updateTopicResolve(interaction.topicIpfsCid);
 }
 
 module.exports = {
