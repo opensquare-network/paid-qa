@@ -7,7 +7,6 @@ const { Appendant } = require("@paid-qa/backend-common/src/models/scan");
 async function syncAppendant(appendant) {
   await BusinessAppendant.updateOne(
     {
-      indexer: appendant.indexer,
       cid: appendant.cid,
     },
     {
@@ -23,10 +22,15 @@ async function syncAppendant(appendant) {
     },
     { upsert: true }
   );
+
+  await Appendant.updateOne({ _id: appendant._id }, { synced: true });
 }
 
 async function syncAppendants() {
-  const appendants = await Appendant.find({ parsed: true, synced: false });
+  const appendants = await Appendant.find({
+    parsed: true,
+    synced: { $ne: true },
+  });
   console.log(`Syncing ${appendants.length} appendants`);
   for (const appendant of appendants) {
     console.log(`Syncing appendant ${appendant.cid}`);

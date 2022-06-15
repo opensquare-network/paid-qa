@@ -11,6 +11,7 @@ const scanStartHeight = {
   [CHAINS.POLKADOT]: 9139074,
   [CHAINS.STATEMINE]: 9139074,
   [CHAINS.WESTEND]: 9688127,
+  [CHAINS.WESTMINT]: 2009349,
 };
 
 async function getNextScanHeight() {

@@ -7,7 +7,6 @@ const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 async function syncAnswer(answer) {
   await BusinessAnswer.updateOne(
     {
-      indexer: answer.indexer,
       cid: answer.cid,
     },
     {
@@ -23,10 +22,12 @@ async function syncAnswer(answer) {
     },
     { upsert: true }
   );
+
+  await Answer.updateOne({ _id: answer._id }, { synced: true });
 }
 
 async function syncAnswers() {
-  const answers = await Answer.find({ parsed: true, synced: false });
+  const answers = await Answer.find({ parsed: true, synced: { $ne: true } });
   console.log(`Syncing ${answers.length} answers`);
   for (const answer of answers) {
     console.log(`Syncing answer ${answer.cid}`);
