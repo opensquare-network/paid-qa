@@ -3,9 +3,12 @@ const {
   Reward: BusinessReward,
 } = require("@paid-qa/backend-common/src/models");
 const { Reward } = require("@paid-qa/backend-common/src/models/scan");
+const {
+  createSupportNotification,
+} = require("@paid-qa/backend-common/src/services/notification/createSupportNotification");
 
 async function syncReward(reward) {
-  await BusinessReward.updateOne(
+  const result = await BusinessReward.updateOne(
     {
       "indexer.blockHash": reward.indexer.blockHash,
       "indexer.extrinsicIndex": reward.indexer.extrinsicIndex,
@@ -24,6 +27,19 @@ async function syncReward(reward) {
   );
 
   await Reward.updateOne({ _id: reward._id }, { synced: true });
+
+  // Create notification
+  if (result.upsertedCount === 0 || reward.type !== "support") {
+    return;
+  }
+
+  const support = await BusinessReward.findOne({
+    "indexer.blockHash": reward.indexer.blockHash,
+    "indexer.extrinsicIndex": reward.indexer.extrinsicIndex,
+    topicCid: reward.topicCid,
+  });
+
+  await createSupportNotification(support);
 }
 
 async function syncRewards() {

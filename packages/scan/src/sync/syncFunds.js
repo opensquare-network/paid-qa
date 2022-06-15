@@ -1,9 +1,12 @@
 const omit = require("lodash.omit");
 const { Fund: BusinessFund } = require("@paid-qa/backend-common/src/models");
 const { Fund, Answer } = require("@paid-qa/backend-common/src/models/scan");
+const {
+  createFundNotification,
+} = require("@paid-qa/backend-common/src/services/notification/createFundNotification");
 
 async function syncFund(fund) {
-  await BusinessFund.updateOne(
+  const result = await BusinessFund.updateOne(
     {
       "indexer.blockHash": fund.indexer.blockHash,
       "indexer.extrinsicIndex": fund.indexer.extrinsicIndex,
@@ -22,6 +25,19 @@ async function syncFund(fund) {
   );
 
   await Fund.updateOne({ _id: fund._id }, { synced: true });
+
+  // Create notification
+  if (result.upsertedCount === 0) {
+    return;
+  }
+
+  const businessFund = await BusinessFund.findOne({
+    "indexer.blockHash": fund.indexer.blockHash,
+    "indexer.extrinsicIndex": fund.indexer.extrinsicIndex,
+    refCid: fund.refCid,
+  });
+
+  await createFundNotification(businessFund);
 }
 
 async function syncFunds() {
