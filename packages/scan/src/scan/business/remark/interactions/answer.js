@@ -18,7 +18,7 @@ async function handleAnswer(interaction, caller, indexer) {
     indexer: indexer.toJSON(),
     network,
     cid: interaction.answerIpfsCid,
-    pinned: true,
+    parsed: true,
     status: OnChainStatus.Published,
   };
 
