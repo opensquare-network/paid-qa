@@ -14,6 +14,9 @@ const {
   toPublicKey,
   isSamePublicKey,
 } = require("@paid-qa/backend-common/src/utils/address");
+const {
+  createAnswerNotification,
+} = require("@paid-qa/backend-common/src/services/notification/createAnswerNotification");
 
 async function postAnswer(data) {
   const { answer, address: signer, network, signature } = data;
@@ -48,45 +51,7 @@ async function postAnswer(data) {
     status: OnChainStatus.Reserved,
   });
 
-  if (!isSamePublicKey(topic.signer, signer)) {
-    const owner = toPublicKey(topic.signer);
-    await Notification.create({
-      owner,
-      type: ["reply"],
-      data: {
-        topic: topic._id,
-        answer: answerObj._id,
-        byWho: {
-          address: signer,
-          network,
-        },
-      },
-    });
-  }
-
-  const mentions = extractMentions(content);
-  for (const mention of mentions) {
-    const owner = toPublicKey(mention.address);
-    await Notification.updateOne(
-      {
-        owner,
-        "data.topic": topic._id,
-        "data.answer": answerObj._id,
-      },
-      {
-        $addToSet: {
-          type: "mention",
-        },
-        $set: {
-          "data.byWho": {
-            address: signer,
-            network,
-          },
-        },
-      },
-      { upsert: true }
-    );
-  }
+  await createAnswerNotification(answerObj);
 
   return {
     cid,

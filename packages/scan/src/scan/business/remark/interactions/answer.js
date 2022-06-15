@@ -12,18 +12,13 @@ const { hexToString } = require("@polkadot/util");
 const { remarkLogger } = require("../../../../common/logger");
 
 async function handleAnswer(interaction, caller, indexer) {
-  // todo: 1. get the content of answer entity from ipfs
-  // todo: 2. valid the signature
-  // todo: 3. save the topicIpfsCid and answer related object and content to DB
-  // todo: we do the upper tasks in a background worker
-
   const network = currentChain();
 
   const answer = {
     indexer: indexer.toJSON(),
     network,
     cid: interaction.answerIpfsCid,
-    pinned: true,
+    parsed: true,
     status: OnChainStatus.Published,
   };
 

@@ -11,14 +11,11 @@ const { parseFundCall } = require("./remark/interactions/fund");
 async function handleExtrinsic(extrinsic, indexer) {
   const { section, method } = extrinsic.method;
 
-  console.log("EEE");
-
   if (SECTIONS.SYSTEM === section && METHODS.REMARK === method) {
     await handleRemarkExtrinisc(extrinsic, indexer);
   } else if (SECTIONS.UTILITY === section && METHODS.BATCH === method) {
     const caller = extrinsic.signer.toString();
 
-    console.log("BBB");
     await handleBatchAnswerExtrinsic(extrinsic.method, caller, indexer);
 
     const fund = parseFundCall(extrinsic.method);

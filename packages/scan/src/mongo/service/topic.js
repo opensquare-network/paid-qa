@@ -1,5 +1,5 @@
 const { busLogger } = require("../../common/logger");
-const { Topic } = require("@paid-qa/backend-common/src/models");
+const { Topic } = require("@paid-qa/backend-common/src/models/scan");
 
 async function insertTopic(topic) {
   const { cid } = topic;

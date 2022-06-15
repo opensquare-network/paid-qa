@@ -14,9 +14,6 @@ const {
   OnChainStatus,
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
-const {
-  updatePromiseFulfillment,
-} = require("@paid-qa/backend-common/src/services/fulfill");
 
 async function handleNew(interaction, caller, indexer) {
   const isNativeToken = NATIVE_TOKEN_IDENTIFIER === interaction.tokenIdentifier;
@@ -82,8 +79,6 @@ async function handleNew(interaction, caller, indexer) {
   };
 
   await insertReward(reward);
-
-  await updatePromiseFulfillment(topic.cid, topic.signerPublicKey);
 }
 
 module.exports = {

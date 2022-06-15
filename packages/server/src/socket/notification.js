@@ -1,10 +1,8 @@
-const {
-  eventEmitter,
-} = require("@paid-qa/backend-common/src/models/notification");
+const { NotificationEvent } = require("@paid-qa/backend-common/src/models");
 
 let globalIO;
 
-eventEmitter.on("save", (data) => {
+NotificationEvent.on("save", (data) => {
   if (globalIO) {
     const room = `notification-${data.owner}`;
     globalIO.to(room).emit("notification", data);

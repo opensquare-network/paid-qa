@@ -1,5 +1,5 @@
 const { busLogger } = require("../../common/logger");
-const { Fund } = require("@paid-qa/backend-common/src/models");
+const { Fund } = require("@paid-qa/backend-common/src/models/scan");
 
 async function insertFund(fund) {
   const maybeInDb = await Fund.findOne({

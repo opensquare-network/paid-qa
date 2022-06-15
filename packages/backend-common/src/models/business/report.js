@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { RequiredRefCidType, RequiredString } = require("./utils");
+const { RequiredRefCidType, RequiredString } = require("../utils");
 
 const ReportSchema = new mongoose.Schema(
   {
@@ -26,6 +26,4 @@ const ReportSchema = new mongoose.Schema(
 
 ReportSchema.index({ refCid: 1, signerPublicKey: 1 }, { unique: true });
 
-const Report = mongoose.model("Report", ReportSchema);
-
-module.exports = Report;
+module.exports = { ReportSchema };

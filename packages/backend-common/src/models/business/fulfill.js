@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { RequiredDecimal128, RequiredString } = require("./utils");
+const { RequiredDecimal128, RequiredString } = require("../utils");
 
 const FulfillSchema = new mongoose.Schema(
   {
@@ -19,6 +19,4 @@ const FulfillSchema = new mongoose.Schema(
 FulfillSchema.index({ topicCid: 1 });
 FulfillSchema.index({ sponsorPublicKey: 1 });
 
-const Fulfill = mongoose.model("Fulfill", FulfillSchema);
-
-module.exports = Fulfill;
+module.exports = { FulfillSchema };

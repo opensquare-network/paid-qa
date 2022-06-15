@@ -20,6 +20,9 @@ const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const {
   updatePromiseFulfillment,
 } = require("@paid-qa/backend-common/src/services/fulfill");
+const {
+  createSupportNotification,
+} = require("@paid-qa/backend-common/src/services/notification/createSupportNotification");
 
 async function addSupport(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -66,7 +69,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   validateTokenAmount(tokenAmount, decimals);
 
   const sponsorPublicKey = toPublicKey(signer);
-  const support = await Reward.findOneAndUpdate(
+  const supportObj = await Reward.findOneAndUpdate(
     {
       "indexer.blockHash": blockHash,
       "indexer.extrinsicIndex": extrinsicIndex,
@@ -93,19 +96,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
 
   await updatePromiseFulfillment(topicCid, sponsorPublicKey);
 
-  const owner = toPublicKey(topic.signer);
-  await Notification.create({
-    owner,
-    type: ["support"],
-    data: {
-      topic: topic._id,
-      support: support._id,
-      byWho: {
-        address: signer,
-        network,
-      },
-    },
-  });
+  await createSupportNotification(supportObj);
 
   return {
     topicCid,

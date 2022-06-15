@@ -1,4 +1,4 @@
-const { Topic } = require("@paid-qa/backend-common/src/models");
+const { Topic } = require("@paid-qa/backend-common/src/models/scan");
 const { fetchIpfsJson } = require("./utils");
 
 async function fetchTopic(topic) {

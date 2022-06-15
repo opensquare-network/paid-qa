@@ -1,5 +1,5 @@
 const { busLogger } = require("../../common/logger");
-const { Resolve } = require("@paid-qa/backend-common/src/models");
+const { Resolve } = require("@paid-qa/backend-common/src/models/scan");
 
 async function insertResolve(resolve) {
   const maybeInDb = await Resolve.findOne({

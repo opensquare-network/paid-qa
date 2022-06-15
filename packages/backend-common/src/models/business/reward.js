@@ -4,7 +4,7 @@ const {
   RequiredDecimal128,
   RequiredString,
   RequiredNumber,
-} = require("./utils");
+} = require("../utils");
 
 const RewardSchema = new mongoose.Schema(
   {
@@ -44,6 +44,4 @@ RewardSchema.index(
   { unique: true }
 );
 
-const Reward = mongoose.model("Reward", RewardSchema);
-
-module.exports = Reward;
+module.exports = { RewardSchema };

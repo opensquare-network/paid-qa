@@ -13,10 +13,7 @@ const {
   OnChainStatus,
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
-const {
-  updatePromiseFulfillment,
-} = require("@paid-qa/backend-common/src/services/fulfill");
-const { Answer } = require("@paid-qa/backend-common/src/models");
+const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 const { hexToString } = require("@polkadot/util");
 
 function parseRemarkCall(txRemark) {
@@ -150,8 +147,6 @@ async function handleFund(interaction, caller, indexer, transfer) {
   };
 
   await insertFund(fund);
-
-  await updatePromiseFulfillment(fund.refCid, fund.sponsorPublicKey);
 }
 
 module.exports = {
