@@ -6,10 +6,22 @@ async function createFundNotification(fund) {
 
   if (fund.refCidType === "topic") {
     topic = await Topic.findOne({ cid: fund.refCid });
+    if (!topic) {
+      return;
+    }
+
     fundTo = topic?.signer;
   } else if (fund.refCidType === "answer") {
     answer = await Answer.findOne({ cid: fund.refCid });
+    if (!answer) {
+      return;
+    }
+
     topic = await Topic.findOne({ cid: answer.topicCid });
+    if (!topic) {
+      return;
+    }
+
     fundTo = answer?.signer;
   } else {
     return;
