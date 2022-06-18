@@ -14,78 +14,8 @@ const {
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { Answer } = require("@paid-qa/backend-common/src/models/scan");
-const { hexToString } = require("@polkadot/util");
 
-function parseRemarkCall(txRemark) {
-  const { section, method } = txRemark;
-  if (section !== "system" || method !== "remark") {
-    throw new Error("Not a remark");
-  }
-
-  const {
-    args: [remarkBytes],
-  } = txRemark;
-  const remark = hexToString(remarkBytes.toHex());
-  return {
-    remark,
-  };
-}
-
-function parseTransferCall(txTransfer) {
-  let tokenIdentifier, to, value;
-  const { section, method } = txTransfer;
-
-  if (
-    section === "balances" &&
-    (method === "transfer" || method === "transferKeepAlive")
-  ) {
-    tokenIdentifier = "N";
-    [to, value] = txTransfer.args;
-  } else if (section === "assets" && method === "transfer") {
-    [tokenIdentifier, to, value] = txTransfer.args;
-  } else {
-    throw new Error("Not a transfer");
-  }
-
-  return {
-    transfer: {
-      tokenIdentifier,
-      to,
-      value,
-    },
-  };
-}
-
-function parseFundCall(txFund) {
-  const { section, method } = txFund;
-  if (section !== "utility" || method !== "batch") {
-    return;
-  }
-
-  const {
-    args: [txs],
-  } = txFund;
-
-  if (txs.length !== 2) {
-    return;
-  }
-
-  const [txRemark, txTransfer] = txs;
-
-  try {
-    const { remark } = parseRemarkCall(txRemark);
-    const { transfer } = parseTransferCall(txTransfer);
-
-    return {
-      remark,
-      transfer,
-    };
-  } catch (e) {
-    return;
-  }
-}
-
-async function handleFund(interaction, caller, indexer, transfer) {
+async function handleFundInteraction(interaction, caller, indexer, transfer) {
   const isNativeToken = NATIVE_TOKEN_IDENTIFIER === transfer.tokenIdentifier;
   const isAssetParaChain = ASSET_PARA_CHAIN.includes(currentChain());
   const chain = currentChain();
@@ -150,6 +80,5 @@ async function handleFund(interaction, caller, indexer, transfer) {
 }
 
 module.exports = {
-  handleFund,
-  parseFundCall,
+  handleFundInteraction,
 };
