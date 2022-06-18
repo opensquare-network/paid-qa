@@ -16,6 +16,7 @@ const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 
 async function handleFundInteraction(interaction, caller, indexer, transfer) {
+  // fixme: shall we extract the logic to get token info? There are duplicated code logic to do this.
   const isNativeToken = NATIVE_TOKEN_IDENTIFIER === transfer.tokenIdentifier;
   const isAssetParaChain = ASSET_PARA_CHAIN.includes(currentChain());
   const chain = currentChain();
