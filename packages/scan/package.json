@@ -22,7 +22,7 @@
     "lodash.uniqby": "^4.7.0",
     "log4js": "^6.4.1",
     "mongodb": "^4.4.0",
-    "node-fetch": "^3.2.5"
+    "node-fetch": "2"
   },
   "devDependencies": {
     "jest": "^27.5.1"
