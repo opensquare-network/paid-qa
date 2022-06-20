@@ -219,12 +219,14 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
 
             <InfoWrapper>
               <NetworkUserWrapper>
-                <NetworkUser
-                  address={byWho.address}
-                  network={byWho.network}
-                  iconSize={16}
-                  tooltipPosition="down"
-                />
+                {byWho && (
+                  <NetworkUser
+                    address={byWho.address}
+                    network={byWho.network}
+                    iconSize={16}
+                    tooltipPosition="down"
+                  />
+                )}
               </NetworkUserWrapper>
 
               <TimeWrapper>
