@@ -7,7 +7,6 @@ const {
     AppendInteraction,
     SupportInteraction,
     AnswerInteraction,
-    FundInteraction,
     ResolveInteraction,
   },
 } = require("@paid-qa/spec");
@@ -15,16 +14,16 @@ const { handleNew } = require("./interactions/new");
 const { handleAppend } = require("./interactions/append");
 const { handleSupport } = require("./interactions/support");
 const { handleAnswer } = require("./interactions/answer");
-const { handleFund } = require("./interactions/fund");
 const { handleResolve } = require("./interactions/resolve");
 
 /**
  *
- * @param extrinsic https://wiki.polkadot.network/docs/glossary#extrinsic
+ * @param remark the remark string
+ * @param caller the remark caller
  * @param indexer ExtrinsicIndexer
  * @returns {Promise<void>}
  */
-async function handleRemark(remark, caller, indexer, ...otherArgs) {
+async function handleRemark(remark, caller, indexer) {
   const parser = new InteractionParser(remark);
   if (!parser.isValid) {
     return;
@@ -39,8 +38,6 @@ async function handleRemark(remark, caller, indexer, ...otherArgs) {
     await handleSupport(interaction, caller, indexer);
   } else if (interaction instanceof AnswerInteraction) {
     await handleAnswer(interaction, caller, indexer);
-  } else if (interaction instanceof FundInteraction) {
-    await handleFund(interaction, caller, indexer, ...otherArgs);
   } else if (interaction instanceof ResolveInteraction) {
     await handleResolve(interaction, caller, indexer);
   }

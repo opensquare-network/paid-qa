@@ -1,7 +1,7 @@
+const { handleFundInBatch } = require("./batch/fund");
+const { handleBatchAnswer } = require("./batch/answer");
 const { SECTIONS, METHODS } = require("../../common/constants");
-const { handleRemark, handleRemarkExtrinisc } = require("./remark");
-const { handleBatchAnswerExtrinsic } = require("./remark/interactions/answer");
-const { parseFundCall } = require("./remark/interactions/fund");
+const { handleRemarkExtrinisc } = require("./remark");
 
 /**
  * @param extrinsic https://wiki.polkadot.network/docs/glossary#extrinsic
@@ -16,13 +16,8 @@ async function handleExtrinsic(extrinsic, indexer) {
   } else if (SECTIONS.UTILITY === section && METHODS.BATCH === method) {
     const caller = extrinsic.signer.toString();
 
-    await handleBatchAnswerExtrinsic(extrinsic.method, caller, indexer);
-
-    const fund = parseFundCall(extrinsic.method);
-    if (fund) {
-      const { remark, transfer } = fund;
-      await handleRemark(remark, caller, indexer, transfer);
-    }
+    await handleBatchAnswer(extrinsic.method, caller, indexer);
+    await handleFundInBatch(extrinsic.method, caller, indexer);
   }
 }
 

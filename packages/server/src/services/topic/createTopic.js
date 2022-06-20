@@ -223,6 +223,7 @@ async function createTopic(
   try {
     return await createVerifiedTopic(data, network, blockHash, extrinsicIndex);
   } catch (e) {
+    // fixme: save this error in log, not just to console
     console.error(e);
     return await saveUnverifiedTopic(
       data,
