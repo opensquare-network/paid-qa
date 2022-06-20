@@ -172,7 +172,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
     type: origType,
     read: origRead,
-    data: { topic, answer, support, fund },
+    data: { byWho, topic, answer, support, fund },
   } = data;
 
   const [read, setRead] = useState(origRead);
@@ -212,8 +212,8 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
 
             <InfoWrapper>
               <NetworkUser
-                address={topic.signer}
-                network={topic.network}
+                address={byWho.address}
+                network={byWho.network}
                 iconSize={16}
                 tooltipPosition="down"
               />
