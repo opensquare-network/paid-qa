@@ -141,6 +141,9 @@ const UnreadDot = styled.div`
 const assertType = (t = [], expect) => t.includes(expect);
 const resolveItemState = (t = []) => {
   const value = {
+    /**
+     * @type {'resolved' | 'promised' | 'funded' | 'mentioned' | 'replied'}
+     */
     type: "",
     shouldShowAmount: false,
     shouldShowAnswer: false,
