@@ -12,13 +12,23 @@ import { isSamePublicKey } from "@osn/common/src/utils/address";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 import { Button } from "@osn/common-ui";
-import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import {
+  p_14_normal,
+  p_16_semibold,
+} from "@osn/common-ui/lib/styles/textStyles";
 import ConnectWallet from "components/ConnectWallet";
+import Tooltip from "@osn/common-ui/lib/Tooltip";
 
 const Title = styled.div`
   padding-bottom: 16px;
   border-bottom: solid 1px #f0f3f8;
   ${p_16_semibold};
+`;
+
+const Left = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 const ContentWrapper = styled.div`
@@ -30,6 +40,12 @@ const ContentWrapper = styled.div`
 
 const ButtonContainer = styled.div`
   padding-top: 20px;
+`;
+
+const GreyText = styled.p`
+  color: #a1a8b3;
+  text-align: center;
+  ${p_14_normal};
 `;
 
 export default function Promises({ topicCid, rewards, resolves }) {
@@ -49,14 +65,30 @@ export default function Promises({ topicCid, rewards, resolves }) {
   return (
     <Card>
       <Title className="flex items-center justify-between">
-        <div>Supports</div>
+        <Left>
+          <span>Supports</span>
+          <Tooltip
+            content={`Additional fund promises besides the original promise from OP`}
+            size="fit"
+          >
+            <div>
+              <FlexCenter>
+                <img src="/imgs/icons/info.svg" alt="" />
+              </FlexCenter>
+            </div>
+          </Tooltip>
+        </Left>
         <img src="/imgs/icons/promise.svg" alt="" />
       </Title>
       <ContentWrapper>
-        {isLoading && (
+        {isLoading ? (
           <FlexCenter style={{ marginTop: 0 }}>
             <Loading />
           </FlexCenter>
+        ) : (
+          sumUpRewards?.length === 0 && (
+            <GreyText>No current supporters</GreyText>
+          )
         )}
         {sumUpRewards.map((reward, index) => {
           const resolve = resolves?.find((resolve) =>
