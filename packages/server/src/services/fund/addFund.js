@@ -3,12 +3,7 @@ const {
   interactions: { FundInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../../utils/exc");
-const {
-  Topic,
-  Fund,
-  Notification,
-  Answer,
-} = require("@paid-qa/backend-common/src/models");
+const { Topic, Fund, Answer } = require("@paid-qa/backend-common/src/models");
 const {
   getApi,
   getRemark,
