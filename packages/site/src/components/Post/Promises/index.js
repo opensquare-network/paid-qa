@@ -45,11 +45,14 @@ export default function Promises({ topicCid, rewards, resolves }) {
   );
 
   const sumUpRewards = calcSponserRewards(rewards);
+  if (sumUpRewards?.length === 0) {
+    return null;
+  }
 
   return (
     <Card>
       <Title className="flex items-center justify-between">
-        <div>Promises</div>
+        <div>Supports</div>
         <img src="/imgs/icons/promise.svg" alt="" />
       </Title>
       <ContentWrapper>

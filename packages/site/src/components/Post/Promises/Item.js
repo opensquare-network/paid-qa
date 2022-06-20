@@ -6,6 +6,7 @@ import BigNumber from "bignumber.js";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import NetworkUser from "../../User/NetworkUser";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -61,6 +62,7 @@ export default function Item({ reward, resolve }) {
       </FlexBetween>
       {!resolve && (
         <>
+          <NetworkUser network={reward.network} address={reward.sponsor} />
           <ProgressBar percent={percent} />
           <FlexBetween>
             <Label>Fund</Label>
