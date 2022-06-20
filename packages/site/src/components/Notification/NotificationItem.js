@@ -57,6 +57,7 @@ const TitleWrapper = styled(Flex)`
 const InfoWrapper = styled(FlexBetween)`
   flex: 1;
   max-width: 50%;
+  display: flex;
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     max-width: 100%;
@@ -95,9 +96,18 @@ const Title = styled.p`
   }
 `;
 
+const NetworkUserWrapper = styled(Flex)`
+  flex: 1;
+`;
+const TimeWrapper = styled(Flex)`
+  flex: 1;
+  justify-content: flex-end;
+`;
 const StatusWrapper = styled(Flex)`
+  flex: 1;
   width: 18px;
   height: 18px;
+  justify-content: flex-end;
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     display: none;
@@ -108,8 +118,8 @@ const MarkAsReadButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  width: 100%;
-  height: 100%;
+  width: 18px;
+  height: 18px;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -169,7 +179,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
     type: origType,
     read: origRead,
-    data: { topic, answer, support, fund },
+    data: { byWho, topic, answer, support, fund },
   } = data;
 
   const [read, setRead] = useState(origRead);
@@ -208,14 +218,18 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
             </TitleWrapper>
 
             <InfoWrapper>
-              <NetworkUser
-                address={topic.signer}
-                network={topic.network}
-                iconSize={16}
-                tooltipPosition="down"
-              />
+              <NetworkUserWrapper>
+                <NetworkUser
+                  address={byWho.address}
+                  network={byWho.network}
+                  iconSize={16}
+                  tooltipPosition="down"
+                />
+              </NetworkUserWrapper>
 
-              <Time time={topic.createdAt} />
+              <TimeWrapper>
+                <Time time={topic.createdAt} />
+              </TimeWrapper>
 
               <StatusWrapper>
                 {!read ? (
