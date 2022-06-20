@@ -44,10 +44,7 @@ export default function Promises({ topicCid, rewards, resolves }) {
       account?.address && isSamePublicKey(resolve.sponsor, account.address)
   );
 
-  const sumUpRewards = calcSponserRewards(rewards);
-  if (sumUpRewards?.length === 0) {
-    return null;
-  }
+  const sumUpRewards = calcSponserRewards(rewards, true);
 
   return (
     <Card>
