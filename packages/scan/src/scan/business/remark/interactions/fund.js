@@ -54,14 +54,12 @@ async function handleFundInteraction(interaction, caller, indexer, transfer) {
   const beneficiary = transfer.to.toJSON()?.id;
   const beneficiaryPublicKey = toPublicKey(beneficiary);
 
-  let topicCid, refCidType; // fixme: shall we remove the topicCid? Since it's not used bellow.
+  let refCidType;
   const answer = await Answer.findOne({ cid: interaction.ipfsCid });
   if (answer) {
-    topicCid = answer.topicCid;
-    refCidType = "topic"; // fixme: should it be `answer`?
-  } else {
-    topicCid = interaction.ipfsCid;
     refCidType = "answer";
+  } else {
+    refCidType = "topic";
   }
 
   const fund = {
