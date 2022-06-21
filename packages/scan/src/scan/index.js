@@ -33,6 +33,10 @@ async function oneStepScan(startHeight) {
     try {
       const blockIndexer = await scanBlock(block, events);
       await updateScanHeight(blockIndexer.blockHeight);
+
+      if (height % 10000 === 0) {
+        process.exit(0); // in case of memory leak
+      }
     } catch (e) {
       logger.error(`Error with block scan ${height}`, e);
     }
