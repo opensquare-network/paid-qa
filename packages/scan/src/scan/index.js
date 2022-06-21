@@ -29,7 +29,12 @@ async function oneStepScan(startHeight) {
   const heights = getHeights(startHeight, targetHeight);
   const blocks = await fetchBlocks(heights);
 
-  for (const { block, events, height } of blocks) {
+  for (const wrappedBlock of blocks) {
+    if (!wrappedBlock) {
+      process.exit(0);
+    }
+
+    const { block, events, height } = wrappedBlock;
     try {
       const blockIndexer = await scanBlock(block, events);
       await updateScanHeight(blockIndexer.blockHeight);
