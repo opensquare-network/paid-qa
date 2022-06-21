@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { RequiredString, RequiredNumber } = require("./utils");
+const { RequiredString, RequiredNumber } = require("../utils");
 
 const ResolveSchema = new mongoose.Schema(
   {
@@ -13,6 +13,7 @@ const ResolveSchema = new mongoose.Schema(
     network: RequiredString,
     sponsor: RequiredString,
     sponsorPublicKey: RequiredString,
+    synced: Boolean,
   },
   {
     timestamps: true,
@@ -25,6 +26,4 @@ ResolveSchema.index(
   { unique: true }
 );
 
-const Resolve = mongoose.model("Resolve", ResolveSchema);
-
-module.exports = Resolve;
+module.exports = { ResolveSchema };

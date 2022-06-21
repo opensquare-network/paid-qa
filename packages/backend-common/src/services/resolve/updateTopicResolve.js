@@ -1,5 +1,12 @@
-const { Topic, Resolve, Reward, Notification } = require("../../models");
-const { isSamePublicKey } = require("../../utils/address");
+const {
+  Topic,
+  Resolve,
+  Reward,
+  Notification,
+} = require("@paid-qa/backend-common/src/models");
+const {
+  isSamePublicKey,
+} = require("@paid-qa/backend-common/src/utils/address");
 const uniq = require("lodash.uniq");
 
 async function updateTopicResolve(topicCid) {

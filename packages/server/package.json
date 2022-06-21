@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "@paid-qa/server",
   "version": "0.1.0",
   "private": true,
   "license": "Apache-2.0",
@@ -29,8 +29,9 @@
     "lodash.flatten": "^4.4.0",
     "lodash.uniq": "^4.5.0",
     "lodash.uniqwith": "^4.5.0",
+    "log4js": "^6.5.2",
     "mongoose": "^6.3.1",
-    "node-fetch": "^3.2.3",
+    "node-fetch": "2",
     "socket.io": "^4.5.0"
   },
   "devDependencies": {

@@ -3,7 +3,11 @@ const {
   interactions: { SupportInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../../utils/exc");
-const { Topic, Reward, Notification } = require("../../models");
+const {
+  Topic,
+  Reward,
+  Notification,
+} = require("@paid-qa/backend-common/src/models");
 const {
   getApi,
   getRemark,
@@ -11,9 +15,14 @@ const {
   getNativeTokenInfo,
 } = require("../node.service");
 const { validateTokenAmount } = require("../common");
-const { updateTopicResolve } = require("../resolve");
-const { toPublicKey } = require("../../utils/address");
-const { updatePromiseFulfillment } = require("../fulfill");
+const updateTopicResolve = require("@paid-qa/backend-common/src/services/resolve/updateTopicResolve");
+const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const {
+  updatePromiseFulfillment,
+} = require("@paid-qa/backend-common/src/services/fulfill");
+const {
+  createSupportNotification,
+} = require("@paid-qa/backend-common/src/services/notification/createSupportNotification");
 
 async function addSupport(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -60,7 +69,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
   validateTokenAmount(tokenAmount, decimals);
 
   const sponsorPublicKey = toPublicKey(signer);
-  const support = await Reward.findOneAndUpdate(
+  const supportObj = await Reward.findOneAndUpdate(
     {
       "indexer.blockHash": blockHash,
       "indexer.extrinsicIndex": extrinsicIndex,
@@ -87,19 +96,7 @@ async function addSupport(network, blockHash, extrinsicIndex) {
 
   await updatePromiseFulfillment(topicCid, sponsorPublicKey);
 
-  const owner = toPublicKey(topic.signer);
-  await Notification.create({
-    owner,
-    type: ["support"],
-    data: {
-      topic: topic._id,
-      support: support._id,
-      byWho: {
-        address: signer,
-        network,
-      },
-    },
-  });
+  await createSupportNotification(supportObj);
 
   return {
     topicCid,

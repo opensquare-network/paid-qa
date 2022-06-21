@@ -1,4 +1,4 @@
-const { Topic } = require("../../models");
+const { Topic } = require("@paid-qa/backend-common/src/models");
 
 async function getTopic(cid) {
   const topic = await Topic.findOne({ cid })

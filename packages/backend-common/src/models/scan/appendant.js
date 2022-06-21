@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
-const {
-  RequireOnChainStatus,
-  RequiredString,
-  RequiredNumber,
-} = require("./utils");
+const { RequiredString, RequiredNumber } = require("../utils");
 
 const AppendantSchema = new mongoose.Schema(
   {
@@ -14,19 +10,13 @@ const AppendantSchema = new mongoose.Schema(
       blockTime: RequiredNumber,
     },
     network: RequiredString,
-    content: RequiredString,
-    data: {
-      type: Object,
-      required: true,
-    },
+    content: String,
     topicCid: RequiredString,
     cid: RequiredString,
-    pinned: {
-      type: Boolean,
-      default: false,
-    },
-    status: RequireOnChainStatus,
     signer: RequiredString,
+    data: Object,
+    parsed: Boolean,
+    synced: Boolean,
   },
   {
     timestamps: true,
@@ -40,6 +30,4 @@ AppendantSchema.index(
 );
 AppendantSchema.index({ topicCid: 1 });
 
-const Appendant = mongoose.model("Appendant", AppendantSchema);
-
-module.exports = Appendant;
+module.exports = { AppendantSchema };

@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const {
-  RequireOnChainStatus,
   RequiredString,
   RequiredNumber,
   RequiredDecimal128,
-} = require("./utils");
+} = require("../utils");
 
 const TopicSchema = new mongoose.Schema(
   {
@@ -16,26 +15,20 @@ const TopicSchema = new mongoose.Schema(
     },
     cid: RequiredString,
     network: RequiredString,
-    title: RequiredString,
-    content: RequiredString,
+    title: String,
+    content: String,
     bounty: {
       tokenIdentifier: RequiredString,
       symbol: RequiredString,
       decimals: RequiredNumber,
       value: RequiredDecimal128,
     },
-    data: {
-      type: Object,
-      required: true,
-    },
-    pinned: {
-      type: Boolean,
-      default: false,
-    },
     resolved: Boolean,
-    status: RequireOnChainStatus,
     signer: RequiredString,
     signerPublicKey: RequiredString,
+    data: Object, // raw data submitted by the user, should be pinned to IPFS
+    parsed: Boolean, // indicates whether the ipfs content has been parsed by scan-worker
+    synced: Boolean,
   },
   {
     timestamps: true,
@@ -88,6 +81,4 @@ TopicSchema.index(
 );
 TopicSchema.index({ signerPublicKey: 1 });
 
-const Topic = mongoose.model("Topic", TopicSchema);
-
-module.exports = Topic;
+module.exports = { TopicSchema };
