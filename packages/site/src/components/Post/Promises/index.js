@@ -55,11 +55,6 @@ export default function Promises({ topicCid, rewards, resolves }) {
   // At least one promise exists which is support by topic creator
   const isLoading = !(rewards?.length > 0);
 
-  const myResolve = resolves?.find(
-    (resolve) =>
-      account?.address && isSamePublicKey(resolve.sponsor, account.address)
-  );
-
   const sumUpRewards = calcSponserRewards(rewards, true);
 
   return (
@@ -97,7 +92,7 @@ export default function Promises({ topicCid, rewards, resolves }) {
           return <Item key={index} reward={reward} resolve={resolve} />;
         })}
       </ContentWrapper>
-      {!myResolve && !isLoading && (
+      {!isLoading && (
         <ButtonContainer>
           {account ? (
             <Button block large onClick={() => setOpenSupportModel(true)}>
