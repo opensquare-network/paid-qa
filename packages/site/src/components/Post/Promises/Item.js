@@ -6,6 +6,8 @@ import BigNumber from "bignumber.js";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import NetworkUser from "../../User/NetworkUser";
+import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 
 const Wrapper = styled.div`
   > :not(:first-child) {
@@ -54,9 +56,11 @@ export function useFulfillment(reward) {
 
 export default function Item({ reward, resolve }) {
   const [paidValue, percent] = useFulfillment(reward);
+  const sponsorAddress = encodeNetworkAddress(reward.sponsor, reward.network);
   return (
     <Wrapper>
       <FlexBetween>
+        <NetworkUser network={reward.network} address={sponsorAddress} />
         {resolve && <ResolvedTag>Resolved</ResolvedTag>}
       </FlexBetween>
       {!resolve && (

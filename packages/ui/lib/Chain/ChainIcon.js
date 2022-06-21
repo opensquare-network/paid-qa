@@ -15,6 +15,9 @@ import Westend from "../imgs/icons/chain/westend.png";
 import Bifrost from "../imgs/icons/chain/bifrost.png";
 import Kintsugi from "../imgs/icons/chain/kintsugi.png";
 import Acala from "../imgs/icons/chain/acala.png";
+import Turing from "../imgs/icons/chain/turing.png";
+import Crab from "../imgs/icons/chain/crab.png";
+import Darwinia from "../imgs/icons/chain/darwinia.png";
 import Westmint from "../imgs/icons/chain/wesmint.png";
 import Statemine from "../imgs/icons/chain/statemine.png";
 import Statemint from "../imgs/icons/chain/statemint.png";
@@ -49,6 +52,9 @@ const pngs = {
   Statemine,
   Statemint,
   Karura,
+  Turing,
+  Crab,
+  Darwinia,
 };
 
 // since nextjs v11, import image assets will return an object { src, ... }

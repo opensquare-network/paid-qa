@@ -1,14 +1,15 @@
 const Hash = require("ipfs-only-hash");
 const { CID } = require("multiformats/cid");
-const { getClients, ClientOptions, ClientMode } = require("@paid-qa/ipfs");
+const { getClients, ClientOptions, ClientMode } = require("@osn/ipfs");
 const {
   INFURA_PROJECT_ID,
   INFURA_PROJECT_SECRET,
   LOCAL_IPFS_NODE_URL,
+  USE_LOCAL_IFPS_NODE,
 } = require("../env");
 
 const [ipfsClient] = getClients(
-  ClientMode.Infura,
+  USE_LOCAL_IFPS_NODE ? ClientMode.Local : ClientMode.Infura,
   new ClientOptions(
     INFURA_PROJECT_ID,
     INFURA_PROJECT_SECRET,
