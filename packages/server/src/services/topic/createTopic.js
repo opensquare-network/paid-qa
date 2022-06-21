@@ -20,6 +20,7 @@ const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const {
   updatePromiseFulfillment,
 } = require("@paid-qa/backend-common/src/services/fulfill");
+const { logger } = require("../logger");
 
 async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content } = data;
@@ -223,8 +224,7 @@ async function createTopic(
   try {
     return await createVerifiedTopic(data, network, blockHash, extrinsicIndex);
   } catch (e) {
-    // fixme: save this error in log, not just to console
-    console.error(e);
+    logger.error(`Cannot verify topic: ${e.message}`);
     return await saveUnverifiedTopic(
       data,
       network,

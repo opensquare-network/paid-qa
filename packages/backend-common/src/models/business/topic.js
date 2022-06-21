@@ -6,7 +6,6 @@ const {
   RequiredDecimal128,
 } = require("../utils");
 
-// fixme: we should extract common fields with the scan/topic model
 const TopicSchema = new mongoose.Schema(
   {
     indexer: {

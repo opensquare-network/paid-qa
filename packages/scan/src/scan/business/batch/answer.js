@@ -1,6 +1,6 @@
 const { handleAnswer } = require("../remark/interactions/answer");
 const { remarkLogger } = require("../../../common/logger");
-const { SECTIONS, METHODS } = require("../../common/constants");
+const { SECTIONS, METHODS } = require("../../../common/constants");
 const { hexToString } = require("@polkadot/util");
 const {
   parser: { InteractionParser },
