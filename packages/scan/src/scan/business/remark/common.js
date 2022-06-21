@@ -1,10 +1,7 @@
-const {
-  queryNativeTokenInfo,
-  queryAssetInfo,
-} = require("../../common/tokenInfo");
-const { remarkLogger } = require("../../../../common/logger");
-const { currentChain } = require("../../../../common/env");
-const { ASSET_PARA_CHAIN } = require("../../../../common/constants");
+const { queryNativeTokenInfo, queryAssetInfo } = require("../common/tokenInfo");
+const { remarkLogger } = require("../../../common/logger");
+const { currentChain } = require("../../../common/env");
+const { ASSET_PARA_CHAIN } = require("../../../common/constants");
 const {
   constants: { NATIVE_TOKEN_IDENTIFIER },
 } = require("@paid-qa/spec");

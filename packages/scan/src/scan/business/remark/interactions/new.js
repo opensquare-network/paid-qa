@@ -5,6 +5,7 @@ const {
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { getTokenInfo } = require("../common");
+const { currentChain } = require("../../../../common/env");
 
 async function handleNew(interaction, caller, indexer) {
   const tokenInfo = await getTokenInfo(interaction.tokenIdentifier, indexer);
