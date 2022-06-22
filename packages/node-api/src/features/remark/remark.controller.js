@@ -1,6 +1,6 @@
 const { Keyring } = require("@polkadot/api");
 const { hexToString } = require("@polkadot/util");
-const { getApis } = require("../../apis");
+const { getApis } = require("@osn/polkadot-api-container");
 const {
   isExtrinsicSuccess,
   extractBlockTime,
