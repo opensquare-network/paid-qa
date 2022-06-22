@@ -1,4 +1,4 @@
-const { Keyring } = require("@polkadot/api");
+const { Keyring } = require("@polkadot/keyring");
 const { hexToString } = require("@polkadot/util");
 const { getApis } = require("@osn/polkadot-api-container");
 const {
