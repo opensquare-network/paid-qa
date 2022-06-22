@@ -10,6 +10,7 @@ function getTargetHeight(startHeight) {
     targetHeight = startHeight + step;
   }
 
+  console.log({ startHeight, chainHeight, step, targetHeight });
   return targetHeight;
 }
 
@@ -25,4 +26,4 @@ function getHeights(start, end) {
 module.exports = {
   getTargetHeight,
   getHeights,
-}
+};

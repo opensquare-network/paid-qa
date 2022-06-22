@@ -28,6 +28,12 @@ async function oneStepScan(startHeight) {
   const targetHeight = getTargetHeight(startHeight);
   const heights = getHeights(startHeight, targetHeight);
   const blocks = await fetchBlocks(heights);
+  if ((blocks || []).length <= 0) {
+    await sleep(1000);
+    return startHeight;
+  }
+
+  let restart = false;
 
   for (const { block, events, height } of blocks) {
     try {
@@ -36,6 +42,14 @@ async function oneStepScan(startHeight) {
     } catch (e) {
       logger.error(`Error with block scan ${height}`, e);
     }
+
+    if (block.height % 100000 === 0) {
+      restart = true;
+    }
+  }
+
+  if (restart) {
+    process.exit();
   }
 
   const lastHeight = last(blocks || []).height;

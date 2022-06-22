@@ -4,7 +4,7 @@ const { getApi } = require("../chain/api");
 
 async function fetchBlocks(heights = []) {
   if (heights.length <= 0) {
-    throw new Error('Fetch blocks with 0 heights');
+    throw new Error("Fetch blocks with 0 heights");
   }
 
   const allPromises = [];
@@ -12,14 +12,16 @@ async function fetchBlocks(heights = []) {
     allPromises.push(makeSureFetch(height));
   }
 
-  return await Promise.all(allPromises);
+  const blocks = await Promise.all(allPromises);
+
+  return blocks.filter((b) => b !== null);
 }
 
 async function makeSureFetch(height, doFetchAuthor = false) {
   try {
     return await fetchOneBlock(height, doFetchAuthor);
   } catch (e) {
-    blockLogger.error(`error fetch block ${ height }`, e);
+    blockLogger.error(`error fetch block ${height}`, e);
     return null;
   }
 }
@@ -46,4 +48,4 @@ async function fetchOneBlock(height) {
 module.exports = {
   fetchOneBlock,
   fetchBlocks,
-}
+};
