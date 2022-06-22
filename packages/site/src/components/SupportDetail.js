@@ -67,11 +67,12 @@ export default function SupportDetail({
   setTokenIdentifier,
   inputAmount,
   setInputAmount,
+  symbol,
+  setSymbol,
 }) {
   const account = useSelector(accountSelector);
   const [manualOn, setManualOn] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
-  const [symbol, setSymbol] = useState("");
   const [loadingSymbol, setLoadingSymbol] = useState(false);
   const api = useApi();
   const isMounted = useIsMounted();
@@ -83,15 +84,21 @@ export default function SupportDetail({
         setLoadingSymbol(false);
         return;
       }
-      const metadata = await api.query.assets.metadata(assetId);
-      const { symbol: hexSymbol } = metadata.toJSON();
-      const symbol = hexToString(hexSymbol);
-      if (isMounted.current) {
-        setSymbol(symbol);
+
+      try {
+        const metadata = await api.query.assets.metadata(assetId);
+        const { symbol: hexSymbol } = metadata.toJSON();
+        const symbol = hexToString(hexSymbol);
+        if (isMounted.current) {
+          setSymbol(symbol);
+          setLoadingSymbol(false);
+        }
+      } catch (e) {
+        setSymbol("");
         setLoadingSymbol(false);
       }
     }, 300);
-  }, [api, isMounted]);
+  }, [api, isMounted, setSymbol]);
 
   useEffect(() => {
     if (manualOn) {
@@ -110,7 +117,7 @@ export default function SupportDetail({
       setTokenIdentifier(selectedAsset.tokenIdentifier);
       setSymbol(selectedAsset.symbol);
     }
-  }, [selectedAsset, manualOn, setTokenIdentifier]);
+  }, [selectedAsset, manualOn, setTokenIdentifier, setSymbol]);
 
   return (
     <>

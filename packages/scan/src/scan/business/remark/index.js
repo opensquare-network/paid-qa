@@ -1,5 +1,5 @@
 const { remarkLogger } = require("../../../common/logger");
-const { hexToString } = require("@polkadot/util")
+const { hexToString } = require("@polkadot/util");
 const {
   parser: { InteractionParser },
   interactions: {
@@ -7,34 +7,28 @@ const {
     AppendInteraction,
     SupportInteraction,
     AnswerInteraction,
-    FundInteraction,
     ResolveInteraction,
-  }
-} = require("@paid-qa/spec")
-const { handleNew } = require("./interactions/new")
-const { handleAppend } = require("./interactions/append")
-const { handleSupport } = require("./interactions/support")
-const { handleAnswer } = require("./interactions/answer")
-const { handleFund } = require("./interactions/fund")
-const { handleResolve } = require("./interactions/resolve")
+  },
+} = require("@paid-qa/spec");
+const { handleNew } = require("./interactions/new");
+const { handleAppend } = require("./interactions/append");
+const { handleSupport } = require("./interactions/support");
+const { handleAnswer } = require("./interactions/answer");
+const { handleResolve } = require("./interactions/resolve");
 
 /**
  *
- * @param extrinsic https://wiki.polkadot.network/docs/glossary#extrinsic
+ * @param remark the remark string
+ * @param caller the remark caller
  * @param indexer ExtrinsicIndexer
  * @returns {Promise<void>}
  */
-async function handleRemark(extrinsic, indexer) {
-  const { args: [remarkBytes] } = extrinsic.method;
-  const remark = hexToString(remarkBytes.toHex());
-  remarkLogger.info(`${ remark } at ${ indexer.blockHeight }`)
-
+async function handleRemark(remark, caller, indexer) {
   const parser = new InteractionParser(remark);
   if (!parser.isValid) {
-    return
+    return;
   }
 
-  let caller = extrinsic.signer.toString();
   const interaction = parser.getInteraction();
   if (interaction instanceof NewInteraction) {
     await handleNew(interaction, caller, indexer);
@@ -44,8 +38,6 @@ async function handleRemark(extrinsic, indexer) {
     await handleSupport(interaction, caller, indexer);
   } else if (interaction instanceof AnswerInteraction) {
     await handleAnswer(interaction, caller, indexer);
-  } else if (interaction instanceof FundInteraction) {
-    await handleFund(interaction, caller, indexer);
   } else if (interaction instanceof ResolveInteraction) {
     await handleResolve(interaction, caller, indexer);
   }
@@ -53,6 +45,18 @@ async function handleRemark(extrinsic, indexer) {
   // TODO: 2. handle the business with different interactions
 }
 
+async function handleRemarkExtrinisc(extrinsic, indexer) {
+  const {
+    args: [remarkBytes],
+  } = extrinsic.method;
+  const remark = hexToString(remarkBytes.toHex());
+  remarkLogger.info(`${remark} at ${indexer.blockHeight}`);
+  let caller = extrinsic.signer.toString();
+
+  return await handleRemark(remark, caller, indexer);
+}
+
 module.exports = {
   handleRemark,
-}
+  handleRemarkExtrinisc,
+};

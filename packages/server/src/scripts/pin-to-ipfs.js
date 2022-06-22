@@ -1,13 +1,17 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-const { Topic, Appendant, Answer } = require("../models");
+const {
+  Topic,
+  Appendant,
+  Answer,
+} = require("@paid-qa/backend-common/src/models");
 const { ipfsAdd } = require("../services/ipfs.service");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function startPinTopics() {
-  const topics = await Topic.find({ pinned: false });
+  const topics = await Topic.find({ pinned: { $ne: true } });
   for (const topic of topics) {
     try {
       const added = await ipfsAdd(topic.data);

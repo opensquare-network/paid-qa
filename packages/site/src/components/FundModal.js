@@ -111,11 +111,17 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         setLoadingSymbol(false);
         return;
       }
-      const metadata = await api.query.assets.metadata(assetId);
-      const { symbol: hexSymbol } = metadata.toJSON();
-      const symbol = hexToString(hexSymbol);
-      if (isMounted.current) {
-        setSymbol(symbol);
+
+      try {
+        const metadata = await api.query.assets.metadata(assetId);
+        const { symbol: hexSymbol } = metadata.toJSON();
+        const symbol = hexToString(hexSymbol);
+        if (isMounted.current) {
+          setSymbol(symbol);
+          setLoadingSymbol(false);
+        }
+      } catch (e) {
+        setSymbol("");
         setLoadingSymbol(false);
       }
     }, 300);
@@ -225,7 +231,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
   return (
     <Wrapper>
-      <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
+      <Modal
+        open={open}
+        setOpen={setOpen}
+        okText="Confirm"
+        disableButton={!symbol || !inputAmount}
+        onOk={doConfirm}
+      >
         <StyledTitle>Fund</StyledTitle>
         <StyledText>Network</StyledText>
         <ChainWrapper>

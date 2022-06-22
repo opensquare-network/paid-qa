@@ -1,4 +1,5 @@
 const Router = require("koa-router");
+const { Chains } = require("./constants");
 
 const router = new Router();
 
@@ -16,7 +17,7 @@ module.exports = (app) => {
 
   for (const r of chainFeatureRouters) {
     router.use(
-      "/:chain(kusama|polkadot|karura|khala|statemine|bifrost|kintsugi|westend|westmint)",
+      `/:chain(${Object.keys(Chains).join("|")})`,
       r.routes(),
       r.allowedMethods({ throw: true })
     );

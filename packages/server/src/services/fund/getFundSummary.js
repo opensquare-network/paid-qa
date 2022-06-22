@@ -1,8 +1,10 @@
-const { Topic } = require("../../models");
+const { Topic } = require("@paid-qa/backend-common/src/models");
 const { bnAdd } = require("../../utils/bn");
 
 function accumulateSymbolFunds(stats, fund) {
-  const { bounty: { symbol, value } } = fund;
+  const {
+    bounty: { symbol, value },
+  } = fund;
   stats[symbol] = bnAdd(stats[symbol] || 0, value);
 }
 
