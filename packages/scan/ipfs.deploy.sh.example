@@ -1,0 +1,1 @@
+NODE_ENV=production pm2 start src/ipfs/index.js --name polkadot-paid-qa-fetch-ipfs-prod --log-date-format 'YYYY-MM-DD HH:mm Z' --env production --cron-restart='*/5 * * * *' --no-autorestart
