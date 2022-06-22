@@ -1,19 +1,11 @@
-const {
-  Topic,
-  Answer,
-  Notification,
-} = require("@paid-qa/backend-common/src/models");
+const { Topic, Answer } = require("@paid-qa/backend-common/src/models");
 const { HttpError } = require("../../utils/exc");
 const { isValidSignature } = require("../../utils/signature");
 const {
   OnChainStatus,
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { cidOf } = require("../ipfs.service");
-const { extractMentions } = require("../../utils/mention");
-const {
-  toPublicKey,
-  isSamePublicKey,
-} = require("@paid-qa/backend-common/src/utils/address");
+const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const {
   createAnswerNotification,
 } = require("@paid-qa/backend-common/src/services/notification/createAnswerNotification");
