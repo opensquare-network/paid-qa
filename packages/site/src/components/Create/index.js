@@ -24,7 +24,7 @@ import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import RewardDetail from "./RewardDetail";
-import RichTextEditor from "@osn/rich-text-editor";
+import { RichEditor } from "@osn/common-ui";
 
 const { InteractionEncoder } = encoder;
 const { NewInteraction } = interactions;
@@ -196,8 +196,12 @@ export default function Create() {
           disabled={loading}
         />
         <Title>Topic</Title>
-
-        <RichTextEditor value={content} onChange={setContent} />
+        <RichEditor
+          content={content}
+          setContent={setContent}
+          disabled={loading}
+          showSubmitButton={false}
+        />
       </Main>
       <Side>
         {account ? (
