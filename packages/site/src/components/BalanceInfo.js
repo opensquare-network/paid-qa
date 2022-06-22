@@ -35,24 +35,47 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
   const isMounted = useIsMounted();
   const api = useApi();
 
+  const setUnknownSymbol = () => {
+    setSymbol(null);
+    setDecimals(0);
+    setLoadingSymbol(false);
+  };
+
   const fetchAssetSymbol = useMemo(() => {
     return debounce(async (assetId) => {
-      if (!api || assetId === "N" || assetId === "") {
-        setSymbol("");
-        setDecimals(0);
+      if (!api || assetId === "") {
+        setUnknownSymbol();
+        return;
+      }
+
+      if (assetId === "N") {
+        const meta = getSymbolMetaByChain(account?.network);
+        setSymbol(meta?.symbol);
+        setDecimals(meta?.decimals);
         setLoadingSymbol(false);
         return;
       }
-      const metadata = await api.query.assets.metadata(assetId);
-      const { symbol: hexSymbol, decimals } = metadata.toJSON();
-      const symbol = hexToString(hexSymbol);
-      if (isMounted.current) {
-        setSymbol(symbol);
-        setDecimals(decimals);
-        setLoadingSymbol(false);
+
+      try {
+        const metadata = await api.query.assets.metadata(assetId);
+        const { symbol: hexSymbol, decimals } = metadata.toJSON();
+
+        if (hexSymbol === "0x") {
+          setUnknownSymbol();
+          return;
+        }
+
+        const symbol = hexToString(hexSymbol);
+        if (isMounted.current) {
+          setSymbol(symbol);
+          setDecimals(decimals);
+          setLoadingSymbol(false);
+        }
+      } catch (e) {
+        setUnknownSymbol();
       }
     }, 300);
-  }, [api, isMounted]);
+  }, [api, isMounted, account?.network]);
 
   const fetchAssetBalance = useMemo(() => {
     return debounce(async (assetId) => {
@@ -62,23 +85,30 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
         return;
       }
 
-      let balance;
-      if (assetId === "N") {
-        const systemBalance = await api.query.system.account(account.address);
-        const {
-          data: { free },
-        } = systemBalance.toJSON();
-        balance = free;
-      } else {
-        const assetAccount = await api.query.assets.account(
-          assetId,
-          account?.address
-        );
-        const { balance: hexBalance = 0 } = assetAccount.toJSON() || {};
-        balance = hexBalance;
-      }
-      if (isMounted.current) {
-        setBalance(balance);
+      try {
+        let balance;
+
+        if (assetId === "N") {
+          const systemBalance = await api.query.system.account(account.address);
+          const {
+            data: { free },
+          } = systemBalance.toJSON();
+          balance = free;
+        } else {
+          const assetAccount = await api.query.assets.account(
+            assetId,
+            account?.address
+          );
+          const { balance: hexBalance = 0 } = assetAccount.toJSON() || {};
+          balance = hexBalance;
+        }
+
+        if (isMounted.current) {
+          setBalance(balance);
+          setLoadingBalance(false);
+        }
+      } catch (e) {
+        setBalance("0");
         setLoadingBalance(false);
       }
     }, 300);
@@ -97,11 +127,13 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
       <div>
         {loadingBalance || loadingSymbol ? (
           <Loading />
+        ) : symbol === null ? (
+          <div>Asset doesn't exist</div>
         ) : (
           <ValueDisplay
             value={balance}
             decimals={decimals}
-            symbol={symbol || getSymbolMetaByChain(account?.network)?.symbol}
+            symbol={symbol}
             showAEM
           />
         )}

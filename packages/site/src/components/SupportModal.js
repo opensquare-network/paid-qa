@@ -48,6 +48,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
   const account = useSelector(accountSelector);
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
+  const [symbol, setSymbol] = useState("");
   const api = useApi();
   const isMounted = useIsMounted();
 
@@ -129,7 +130,13 @@ export default function SupportModal({ open, setOpen, topicCid }) {
 
   return (
     <Wrapper>
-      <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
+      <Modal
+        open={open}
+        setOpen={setOpen}
+        okText="Confirm"
+        disableButton={!symbol || !inputAmount}
+        onOk={doConfirm}
+      >
         <StyledTitle>Promise</StyledTitle>
         <StyledDescription>
           Support the topic and promise rewards for answers. No need to deduct
@@ -141,6 +148,8 @@ export default function SupportModal({ open, setOpen, topicCid }) {
           setTokenIdentifier={setTokenIdentifier}
           inputAmount={inputAmount}
           setInputAmount={setInputAmount}
+          symbol={symbol}
+          setSymbol={setSymbol}
         />
 
         <StyledDescription>

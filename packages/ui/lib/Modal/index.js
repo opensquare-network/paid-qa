@@ -46,6 +46,7 @@ export default function Modal({
   onOk = () => {},
   onClose = () => {},
   okText = "OK",
+  disableButton = false,
   okButtonProps = {},
   closeBar = true,
   closeOnClickOutside = true,
@@ -60,7 +61,7 @@ export default function Modal({
   );
 
   footer = footer ?? (
-    <Button primary onClick={onOk} {...okButtonProps}>
+    <Button primary disabled={disableButton} onClick={onOk} {...okButtonProps}>
       {okText}
     </Button>
   );
