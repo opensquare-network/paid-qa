@@ -165,34 +165,39 @@ async function batchSendRemarks(ctx) {
   const { remarks } = ctx.request.body;
 
   const apis = getApis(chain);
-  for (const api of apis) {
-    try {
-      const keyringPair = getKeyringPair();
-      const tx = api.tx.utility.batch(
-        remarks.map((remark) => api.tx.system.remark(remark))
-      );
-      const result = await tx.signAndSend(keyringPair);
-      console.log(
-        "BatchSendRemarks to",
-        chain,
-        ":",
-        remarks,
-        "\nExtrinsic:",
-        result.toJSON()
-      );
-      ctx.body = {
-        status: "success",
-        result: result.toJSON(),
-      };
-      return;
-    } catch (e) {
-      console.log("BatchSendRemarks:", e);
-    }
+  const api = apis.find((api) => api.isConnected);
+
+  if (!api) {
+    ctx.throw(500, "No apis connected");
+    return;
   }
 
-  ctx.body = {
-    status: "failed",
-  };
+  try {
+    const keyringPair = getKeyringPair();
+    const tx = api.tx.utility.batch(
+      remarks.map((remark) => api.tx.system.remark(remark))
+    );
+    const result = await tx.signAndSend(keyringPair);
+    console.log(
+      "BatchSendRemarks to",
+      chain,
+      ":",
+      remarks,
+      "\nExtrinsic:",
+      result.toJSON()
+    );
+
+    ctx.body = {
+      status: "success",
+      result: result.toJSON(),
+    };
+  } catch (e) {
+    console.log("BatchSendRemarks:", e);
+
+    ctx.body = {
+      status: "failed",
+    };
+  }
 }
 
 module.exports = {
