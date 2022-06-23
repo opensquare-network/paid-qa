@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import RichTextEditor from "@osn/rich-text-editor";
 
 import Button from "../styled/Button";
 
