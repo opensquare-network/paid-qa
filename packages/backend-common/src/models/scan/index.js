@@ -23,6 +23,7 @@ const Resolve = scanDb.model("Resolve", ResolveSchema);
 const Status = scanDb.model("Status", StatusSchema);
 
 module.exports = {
+  connection: scanDb,
   Topic,
   Reward,
   Appendant,

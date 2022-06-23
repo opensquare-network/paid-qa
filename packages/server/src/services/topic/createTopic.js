@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const { Topic, Reward } = require("@paid-qa/backend-common/src/models");
+const {
+  connection,
+  Topic,
+  Reward,
+} = require("@paid-qa/backend-common/src/models");
 const {
   OnChainStatus,
 } = require("@paid-qa/backend-common/src/utils/constants");
@@ -73,56 +77,59 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
 
   const signerPublicKey = toPublicKey(signer);
 
-  await Topic.updateOne(
-    { cid },
-    {
-      indexer: {
-        blockHash,
-        blockHeight,
-        extrinsicIndex,
-        blockTime,
+  const session = await connection.startSession();
+  await session.withTransaction(async () => {
+    await Topic.updateOne(
+      { cid },
+      {
+        indexer: {
+          blockHash,
+          blockHeight,
+          extrinsicIndex,
+          blockTime,
+        },
+        title,
+        content,
+        bounty: {
+          value: tokenAmount,
+          tokenIdentifier,
+          symbol,
+          decimals,
+        },
+        data,
+        pinned: false,
+        network,
+        signer,
+        signerPublicKey,
+        status: OnChainStatus.Published,
       },
-      title,
-      content,
-      bounty: {
-        value: tokenAmount,
-        tokenIdentifier,
-        symbol,
-        decimals,
-      },
-      data,
-      pinned: false,
-      network,
-      signer,
-      signerPublicKey,
-      status: OnChainStatus.Published,
-    },
-    { upsert: true }
-  );
+      { upsert: true, session }
+    );
 
-  await Reward.updateOne(
-    {
-      "indexer.blockHash": blockHash,
-      "indexer.extrinsicIndex": extrinsicIndex,
-    },
-    {
-      "indexer.blockHeight": blockHeight,
-      "indexer.blockTime": blockTime,
-      topicCid: cid,
-      network,
-      bounty: {
-        value: tokenAmount,
-        tokenIdentifier,
-        symbol,
-        decimals,
+    await Reward.updateOne(
+      {
+        "indexer.blockHash": blockHash,
+        "indexer.extrinsicIndex": extrinsicIndex,
       },
-      type: "topic",
-      sponsor: signer,
-      sponsorPublicKey: signerPublicKey,
-      status: OnChainStatus.Published,
-    },
-    { upsert: true }
-  );
+      {
+        "indexer.blockHeight": blockHeight,
+        "indexer.blockTime": blockTime,
+        topicCid: cid,
+        network,
+        bounty: {
+          value: tokenAmount,
+          tokenIdentifier,
+          symbol,
+          decimals,
+        },
+        type: "topic",
+        sponsor: signer,
+        sponsorPublicKey: signerPublicKey,
+        status: OnChainStatus.Published,
+      },
+      { upsert: true, session }
+    );
+  });
 
   await updatePromiseFulfillment(cid, signerPublicKey);
 
@@ -159,7 +166,7 @@ async function saveUnverifiedTopic(
   const signerPublicKey = toPublicKey(signer);
   const cid = await cidOf(data);
 
-  const session = await mongoose.startSession();
+  const session = await connection.startSession();
   await session.withTransaction(async () => {
     await Topic.updateOne(
       { cid },

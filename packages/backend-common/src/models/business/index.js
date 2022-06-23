@@ -29,6 +29,7 @@ const Report = businessDb.model("Report", ReportSchema);
 const Fulfill = businessDb.model("Fulfill", FulfillSchema);
 
 module.exports = {
+  connection: businessDb,
   Topic,
   Reward,
   Appendant,
