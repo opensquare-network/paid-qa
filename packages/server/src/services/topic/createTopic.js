@@ -73,59 +73,56 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
 
   const signerPublicKey = toPublicKey(signer);
 
-  const session = await mongoose.startSession();
-  await session.withTransaction(async () => {
-    await Topic.updateOne(
-      { cid },
-      {
-        indexer: {
-          blockHash,
-          blockHeight,
-          extrinsicIndex,
-          blockTime,
-        },
-        title,
-        content,
-        bounty: {
-          value: tokenAmount,
-          tokenIdentifier,
-          symbol,
-          decimals,
-        },
-        data,
-        pinned: false,
-        network,
-        signer,
-        signerPublicKey,
-        status: OnChainStatus.Published,
+  await Topic.updateOne(
+    { cid },
+    {
+      indexer: {
+        blockHash,
+        blockHeight,
+        extrinsicIndex,
+        blockTime,
       },
-      { upsert: true, session }
-    );
+      title,
+      content,
+      bounty: {
+        value: tokenAmount,
+        tokenIdentifier,
+        symbol,
+        decimals,
+      },
+      data,
+      pinned: false,
+      network,
+      signer,
+      signerPublicKey,
+      status: OnChainStatus.Published,
+    },
+    { upsert: true }
+  );
 
-    await Reward.updateOne(
-      {
-        "indexer.blockHash": blockHash,
-        "indexer.extrinsicIndex": extrinsicIndex,
+  await Reward.updateOne(
+    {
+      "indexer.blockHash": blockHash,
+      "indexer.extrinsicIndex": extrinsicIndex,
+    },
+    {
+      "indexer.blockHeight": blockHeight,
+      "indexer.blockTime": blockTime,
+      topicCid: cid,
+      network,
+      bounty: {
+        value: tokenAmount,
+        tokenIdentifier,
+        symbol,
+        decimals,
       },
-      {
-        "indexer.blockHeight": blockHeight,
-        "indexer.blockTime": blockTime,
-        topicCid: cid,
-        network,
-        bounty: {
-          value: tokenAmount,
-          tokenIdentifier,
-          symbol,
-          decimals,
-        },
-        type: "topic",
-        sponsor: signer,
-        sponsorPublicKey: signerPublicKey,
-        status: OnChainStatus.Published,
-      },
-      { upsert: true, session }
-    );
-  });
+      type: "topic",
+      sponsor: signer,
+      sponsorPublicKey: signerPublicKey,
+      status: OnChainStatus.Published,
+    },
+    { upsert: true }
+  );
 
   await updatePromiseFulfillment(cid, signerPublicKey);
 
