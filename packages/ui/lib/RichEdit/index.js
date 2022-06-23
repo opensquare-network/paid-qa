@@ -1,12 +1,8 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import { useState } from "react";
+import styled from "styled-components";
+import RichTextEditor from "@osn/rich-text-editor";
 
-import MarkdownEditor from "../Editor/MarkdownEditor";
 import Button from "../styled/Button";
-import Preview from "../Preview";
-
-const MarkdownWrapper = styled.div``;
 
 const ButtonsWrapper = styled.div`
   margin-top: 20px;
@@ -15,16 +11,6 @@ const ButtonsWrapper = styled.div`
   > :not(:first-child) {
     margin-left: 16px;
   }
-`;
-
-const MarkdownEditorWrapper = styled.div`
-  ${(p) =>
-    p.preview &&
-    css`
-      height: 0;
-      opacity: 0;
-      pointer-events: none;
-    `}
 `;
 
 const ErrorMsg = styled.div`
@@ -42,46 +28,30 @@ function RichEdit(
     onSubmit = () => {},
     showButtons = true,
     showSubmitButton = true,
-    showPreviewButton = true,
     submitButtonProps = {},
-    previewButtonProps = {},
     // @deprecated use `submitButtonText` instead
     submitButtonName = "Post",
     submitButtonText = submitButtonName,
     submitting = false,
     disabled = false,
     errorMsg = "",
-    loadSuggestions,
+    loadSuggestions = () => [],
   },
   ref
 ) {
-  const [preview, setPreview] = useState(false);
-
   return (
-    <div className="rich-editor">
-      <MarkdownWrapper>
-        <MarkdownEditorWrapper preview={preview} ref={ref}>
-          <MarkdownEditor
-            content={content}
-            setContent={setContent}
-            disabled={submitting}
-            loadSuggestions={loadSuggestions}
-          />
-        </MarkdownEditorWrapper>
-        {preview && <Preview minHeight={159} content={content} />}
-      </MarkdownWrapper>
+    <div className="rich-editor" ref={ref}>
+      <RichTextEditor
+        disabled={disabled}
+        value={content}
+        onChange={setContent}
+        loadSuggestions={loadSuggestions}
+      />
+
       {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
+
       {showButtons && (
         <ButtonsWrapper>
-          {showPreviewButton && (
-            <Button
-              {...previewButtonProps}
-              className="button-preview"
-              onClick={() => setPreview(!preview)}
-            >
-              {preview ? "Edit" : "Preview"}
-            </Button>
-          )}
           {showSubmitButton && (
             <Button
               className="button-submit"
@@ -90,7 +60,6 @@ function RichEdit(
               isLoading={submitting}
               disabled={disabled}
               onClick={() => {
-                setPreview(false);
                 onSubmit();
               }}
             >

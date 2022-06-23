@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -75,6 +75,7 @@ export default function Answers({ topicCid }) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();
+  const [suggestions, setSuggestions] = useState([]);
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
@@ -140,7 +141,7 @@ export default function Answers({ topicCid }) {
     }
   };
 
-  const loadSuggestions = async (text) => {
+  const fetchIdentitySuggestions = useCallback(async () => {
     const userIdentities = await Promise.all(
       uniqWith(
         answers?.items || [],
@@ -159,16 +160,28 @@ export default function Answers({ topicCid }) {
           };
         })
     );
-    return userIdentities
-      .map((user) => {
-        const display =
-          user.identity?.info?.display || addressEllipsis(user.address);
-        return {
-          preview: display,
-          value: `[@${display}](/network/${user.network}/address/${user.address})`,
-        };
-      })
-      .filter((i) => i.preview.toLowerCase().includes(text.toLowerCase()));
+
+    return userIdentities.map((user) => {
+      const display =
+        user.identity?.info?.display || addressEllipsis(user.address);
+      return {
+        address: user.address,
+        value: `[@${display}](/network/${user.network}/address/${user.address}) `,
+        preview: <span>{display}</span>,
+      };
+    });
+  }, [answers]);
+
+  useEffect(() => {
+    fetchIdentitySuggestions().then((v) => {
+      setSuggestions(v);
+    });
+  }, [answers, fetchIdentitySuggestions]);
+
+  const loadSuggestions = (text) => {
+    return suggestions.filter((i) =>
+      i.address.toLowerCase().includes(text.toLowerCase())
+    );
   };
 
   const forceEditor = () => {
