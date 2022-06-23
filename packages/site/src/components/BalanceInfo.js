@@ -128,7 +128,7 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
         {loadingBalance || loadingSymbol ? (
           <Loading />
         ) : symbol === null ? (
-          <div>Asset doesn't exist</div>
+          <div>0</div>
         ) : (
           <ValueDisplay
             value={balance}

@@ -40,6 +40,7 @@ import Flex from "@osn/common-ui/lib/styled/Flex";
 import BalanceInfo from "./BalanceInfo";
 import debounce from "lodash.debounce";
 import { hexToString } from "@polkadot/util";
+import { ASSET_CHAINS } from "utils/constants";
 
 const { InteractionEncoder } = encoder;
 const { FundInteraction } = interactions;
@@ -86,6 +87,15 @@ const StyledTitle = styled.header`
   ${p_20_semibold};
   color: #1e2134;
   margin-bottom: 8px;
+`;
+
+const ErrorMessage = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #ee4444;
+  margin: 8px 0;
 `;
 
 export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
@@ -247,7 +257,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
         <ItemTitle>
           <StyledText>Asset</StyledText>
-          {["statemine", "westmint"].includes(account?.network) && (
+          {ASSET_CHAINS.includes(account?.network) && (
             <ManualSwitch>
               <span>Manual</span>
               <Toggle on={manualOn} setOn={setManualOn} />
@@ -255,10 +265,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
           )}
         </ItemTitle>
         {manualOn ? (
-          <AssetInput
-            value={tokenIdentifier}
-            onChange={(e) => setTokenIdentifier(e.target.value)}
-          />
+          <>
+            <AssetInput
+              value={tokenIdentifier}
+              onChange={(e) => setTokenIdentifier(e.target.value)}
+            />
+            {!symbol && <ErrorMessage>Asset doesn't exist.</ErrorMessage>}
+          </>
         ) : (
           <AssetSelector
             network={account?.network}

@@ -263,3 +263,5 @@ export const tabRouterMap = new Map([
 ]);
 
 export const PROJECT_NAME = "OpenSquare-Paid-QA";
+
+export const ASSET_CHAINS = ["statemine", "westmint"];

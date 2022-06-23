@@ -18,6 +18,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import BalanceInfo from "./BalanceInfo";
+import { ASSET_CHAINS } from "utils/constants";
 
 const StyledText = styled.p`
   ${p_16_semibold};
@@ -60,6 +61,15 @@ const ItemTitle = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 8px;
+`;
+
+const ErrorMessage = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #ee4444;
+  margin: 8px 0;
 `;
 
 export default function SupportDetail({
@@ -129,7 +139,7 @@ export default function SupportDetail({
 
       <ItemTitle>
         <StyledText>Asset</StyledText>
-        {["statemine", "westmint"].includes(account?.network) && (
+        {ASSET_CHAINS.includes(account?.network) && (
           <ManualSwitch>
             <span>Manual</span>
             <Toggle on={manualOn} setOn={setManualOn} />
@@ -137,10 +147,13 @@ export default function SupportDetail({
         )}
       </ItemTitle>
       {manualOn ? (
-        <AssetInput
-          value={tokenIdentifier}
-          onChange={(e) => setTokenIdentifier(e.target.value)}
-        />
+        <>
+          <AssetInput
+            value={tokenIdentifier}
+            onChange={(e) => setTokenIdentifier(e.target.value)}
+          />
+          {!symbol && <ErrorMessage>Asset doesn't exist.</ErrorMessage>}
+        </>
       ) : (
         <AssetSelector network={account?.network} setAsset={setSelectedAsset} />
       )}
