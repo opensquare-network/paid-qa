@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const { HttpError } = require("../utils/exc");
 
 class NodeApi {

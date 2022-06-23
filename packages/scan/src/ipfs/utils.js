@@ -1,5 +1,3 @@
-const fetch = require("node-fetch");
-
 const ipfsGatewayUrl = process.env.IPFS_GATEWAY_URL || "https://ipfs.io/ipfs/";
 
 async function fetchIpfsJson(cid) {
