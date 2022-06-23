@@ -34,7 +34,7 @@ function RichEdit(
     submitting = false,
     disabled = false,
     errorMsg = "",
-    loadSuggestions = () => {},
+    loadSuggestions = () => [],
   },
   ref
 ) {
