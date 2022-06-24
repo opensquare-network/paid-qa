@@ -40,7 +40,11 @@ import Flex from "@osn/common-ui/lib/styled/Flex";
 import BalanceInfo from "./BalanceInfo";
 import debounce from "lodash.debounce";
 import { hexToString } from "@polkadot/util";
-import { ASSET_CHAINS } from "utils/constants";
+import {
+  ASSET_CHAINS,
+  DEFAULT_MINIMUM_FUND_AMOUNT,
+  MINIMUM_FUND_AMOUNTS,
+} from "utils/constants";
 
 const { InteractionEncoder } = encoder;
 const { FundInteraction } = interactions;
@@ -184,6 +188,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
     if (new BigNumber(inputAmount).isNaN()) {
       return showErrorToast("Amount is invalid");
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (new BigNumber(inputAmount).lt(minimum)) {
+      return showErrorToast(
+        `Fund amount cannot be less than minimum: ${minimum}`
+      );
     }
 
     const interaction = new FundInteraction(ipfsCid);
