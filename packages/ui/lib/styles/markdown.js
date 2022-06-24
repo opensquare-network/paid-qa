@@ -122,7 +122,7 @@ const markdownStyle = css`
       white-space: nowrap !important;
       word-break: keep-all;
       overflow-x: scroll;
-      display: block;
+      display: inline-flex;
     }
 
     a {
