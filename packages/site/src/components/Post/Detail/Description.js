@@ -17,7 +17,6 @@ const Wrapper = styled.div`
   > :nth-child(2) {
     margin-top: 16px;
     ${p_14_normal};
-    color: #506176;
   }
   > :nth-child(3) {
     margin-top: 15px;
