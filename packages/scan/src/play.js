@@ -3,9 +3,10 @@
 // westend 9756325-2: osn:q:1:AS:bafybeibknoqig3k472ke56llloupmlf7g6u6xwxntje4pm2a37npb343n4
 
 require("dotenv").config();
+const {
+  chain: { fetchBlocks, disconnect },
+} = require("@osn/scan-common");
 const { scanBlock } = require("./scan/block");
-const { fetchBlocks } = require("./scan/fetch");
-const { disconnect } = require("./chain/api");
 
 async function play() {
   const heights = [

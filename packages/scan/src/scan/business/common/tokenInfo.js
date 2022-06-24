@@ -1,7 +1,9 @@
-const { findBlockApi } = require("../../../chain/blockApi");
+const {
+  chain: { getApi, findBlockApi },
+} = require("@osn/scan-common");
+
 const { TokenInfo } = require("../../../common/types/TokenInfo");
-const { getApi } = require("../../../chain/api");
-const { hexToString } = require("@polkadot/util")
+const { hexToString } = require("@polkadot/util");
 
 /**
  * Query and return the current chain native token info.
@@ -12,10 +14,13 @@ async function queryNativeTokenInfo() {
   const properties = await api.rpc.system.properties();
   const { tokenSymbol, tokenDecimals } = properties;
   if (tokenSymbol.isNil || tokenDecimals.isNil) {
-    throw new Error("Unexpected token info")
+    throw new Error("Unexpected token info");
   }
 
-  return new TokenInfo(tokenSymbol.value[0].toString(), tokenDecimals.value[0].toNumber());
+  return new TokenInfo(
+    tokenSymbol.value[0].toString(),
+    tokenDecimals.value[0].toNumber()
+  );
 }
 
 /**
@@ -28,7 +33,7 @@ async function queryAssetInfo(assetId, blockHash) {
   const blockApi = await findBlockApi(blockHash);
   const asset = await blockApi.query.assets.asset(assetId);
   if (asset.isNone) {
-    return null
+    return null;
   }
 
   const metadata = await blockApi.query.assets.metadata(assetId);
@@ -41,4 +46,4 @@ async function queryAssetInfo(assetId, blockHash) {
 module.exports = {
   queryNativeTokenInfo,
   queryAssetInfo,
-}
+};
