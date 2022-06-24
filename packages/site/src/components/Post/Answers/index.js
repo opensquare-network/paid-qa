@@ -36,6 +36,7 @@ import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
 import { identityChainMap } from "@osn/consts";
+import NetworkUser from "components/User/NetworkUser";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -167,7 +168,9 @@ export default function Answers({ topicCid }) {
       return {
         address: user.address,
         value: `[@${display}](/network/${user.network}/address/${user.address}) `,
-        preview: <span>{display}</span>,
+        preview: (
+          <NetworkUser noLink address={user.address} network={user.network} />
+        ),
       };
     });
   }, [answers]);
