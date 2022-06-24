@@ -1,5 +1,8 @@
-const { extractExtrinsicEvents, isExtrinsicSuccess, extrinsicSuccess, } = require("../extrinsics");
-const { setupPolkadotApi, disconnect, } = require("../../../common/test/utils");
+const {
+  utils: { extractExtrinsicEvents, isExtrinsicSuccess },
+} = require("@osn/scan-common");
+const { extrinsicSuccess } = require("../extrinsics");
+const { setupPolkadotApi, disconnect } = require("../../../common/test/utils");
 const { fetchOneBlock } = require("../../fetch");
 jest.setTimeout(30000);
 
@@ -20,8 +23,8 @@ describe("Extrinsic", () => {
 
     const extrinsicEvents = extractExtrinsicEvents(events, extrinsicIndex);
     expect(extrinsicEvents.length).toEqual(8);
-    expect(isExtrinsicSuccess(extrinsicEvents)).toBeTruthy()
+    expect(isExtrinsicSuccess(extrinsicEvents)).toBeTruthy();
 
     expect(extrinsicSuccess(events, extrinsicIndex)).toBeTruthy();
-  })
-})
+  });
+});

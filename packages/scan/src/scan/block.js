@@ -1,11 +1,13 @@
+const {
+  chain: { getBlockIndexer },
+} = require("@osn/scan-common");
 const { handleExtrinsic } = require("./business");
 const { extrinsicSuccess } = require("./utils/extrinsics");
-const { getBlockIndexer } = require("./utils/indexer");
 const { ExtrinsicIndexer } = require("../common/types/ExtrinsicIndexer");
 
 async function scanBlock(block, events = []) {
   const blockIndexer = getBlockIndexer(block);
-  await handleExtrinsics(block.extrinsics, events, blockIndexer)
+  await handleExtrinsics(block.extrinsics, events, blockIndexer);
 
   return blockIndexer;
 }
@@ -24,4 +26,4 @@ async function handleExtrinsics(extrinsics, allEvents, blockIndexer) {
 
 module.exports = {
   scanBlock,
-}
+};

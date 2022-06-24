@@ -1,8 +1,10 @@
-const { getScanStep } = require("../../common/env");
-const { getFinalizedHeight } = require("../../chain/finalized");
+const {
+  chain: { getLatestHeight },
+  env: { getScanStep },
+} = require("@osn/scan-common");
 
 function getTargetHeight(startHeight) {
-  const chainHeight = getFinalizedHeight();
+  const chainHeight = getLatestHeight();
 
   let targetHeight = chainHeight;
   const step = getScanStep();
@@ -25,4 +27,4 @@ function getHeights(start, end) {
 module.exports = {
   getTargetHeight,
   getHeights,
-}
+};
