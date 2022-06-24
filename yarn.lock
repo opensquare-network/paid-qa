@@ -2183,14 +2183,14 @@
     ipfs-http-client "^56.0.1"
     it-all "^1.0.6"
 
-"@osn/polkadot-api-container@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@osn/polkadot-api-container/-/polkadot-api-container-1.0.2.tgz#b05bb4b46d3561c98f23d68440d715cd7d631101"
-  integrity sha512-9uSYuE48f9ZmxK2Ifjakfq8GojjcAvFmSLtdwH44WPg6ohlVOGMb1cKQYren2dn9oVr3Vj3wNYW0ATus8Oyduw==
+"@osn/polkadot-api-container@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@osn/polkadot-api-container/-/polkadot-api-container-1.0.3.tgz#f8d9400f3835266e0da7e5285222ab094a567a67"
+  integrity sha512-5vGYYdMWRYn8cW7R1oVPYYMtCizMkjw9igH2eH0AgEIhYRaSO/J40AqvGb8ks0yVKTwuVzCxkcEUkqqElFthNQ==
   dependencies:
     "@osn/provider-options" "^1.0.7"
-    "@polkadot/api" "8.9.1"
-    "@polkadot/util" "9.5.1"
+    "@polkadot/api" "^8.9.1"
+    "@polkadot/util" "^9.6.1"
     lodash.isnil "^4.0.0"
 
 "@osn/polkadot-react-identicon@^1.0.7":
@@ -2230,15 +2230,15 @@
     prismjs "^1.28.0"
     sanitize-html "^2.7.0"
 
-"@osn/scan-common@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@osn/scan-common/-/scan-common-0.0.10.tgz#604b14eeea978920e2adebe31bd484116b2c0d3a"
-  integrity sha512-au+URa65leapbzN/natf//RbzEk2ItLhelgtPppWzeuX7M9I+1awrpH+3n92Qw6OxVmtV6sCEoCuv7IUy1Ua0w==
+"@osn/scan-common@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@osn/scan-common/-/scan-common-0.0.11.tgz#316906e8ad8d800f7ec3478ac9406ab7862eb68b"
+  integrity sha512-q3NRgJKVQaUwlVY7kM0TFHcTE/8DzLIct2n+M2AeFVKCQeNuvYCteJuOERkCjz6ejl2hWBK5GY8vrkCUnJWkeA==
   dependencies:
-    "@polkadot/api" "^8.5.1"
-    "@polkadot/types" "^8.5.1"
-    "@polkadot/util" "^9.2.1"
-    "@polkadot/util-crypto" "^9.2.1"
+    "@polkadot/api" "^8.9.1"
+    "@polkadot/types" "^8.9.1"
+    "@polkadot/util" "^9.6.1"
+    "@polkadot/util-crypto" "^9.6.1"
     bignumber.js "^9.0.2"
     lodash.findlast "^4.6.0"
     lodash.last "^3.0.0"
@@ -2301,7 +2301,7 @@
     "@polkadot/util-crypto" "^9.5.1"
     rxjs "^7.5.5"
 
-"@polkadot/api@8.9.1", "@polkadot/api@^8.5.1":
+"@polkadot/api@8.9.1", "@polkadot/api@^8.9.1":
   version "8.9.1"
   resolved "https://registry.yarnpkg.com/@polkadot/api/-/api-8.9.1.tgz#c35c5d583845a5d67edfa8c3579bad143f65bcd6"
   integrity sha512-UwQ5hWPHruqnBO2hriaPhGaOwaWZx9MVECWFJzVs0ZuhKDge9jyBp+JXud/Ly/+8VbeokYUB0DSZG/gTAO5+vg==
@@ -2346,15 +2346,6 @@
     "@polkadot/util-crypto" "^8.7.1"
     "@polkadot/x-global" "^8.7.1"
 
-"@polkadot/keyring@9.5.1", "@polkadot/keyring@^9.5.1":
-  version "9.5.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-9.5.1.tgz#3b0851f8fffe489f1b6020e69dc9a3a8e5696172"
-  integrity sha512-ixv2lq1zNzYa+GqZQTzcraNw5ZrTTK+2/sqfeMOIr7gBGk0UCALuK0NCvTRAUtQK1RT2psBkkm2lr/rrNCeK+A==
-  dependencies:
-    "@babel/runtime" "^7.18.3"
-    "@polkadot/util" "9.5.1"
-    "@polkadot/util-crypto" "9.5.1"
-
 "@polkadot/keyring@^8.7.1":
   version "8.7.1"
   resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-8.7.1.tgz#07cf6d6ee351dcf70fbf965b1d6d96c5025ae1b8"
@@ -2363,6 +2354,24 @@
     "@babel/runtime" "^7.17.8"
     "@polkadot/util" "8.7.1"
     "@polkadot/util-crypto" "8.7.1"
+
+"@polkadot/keyring@^9.5.1":
+  version "9.5.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-9.5.1.tgz#3b0851f8fffe489f1b6020e69dc9a3a8e5696172"
+  integrity sha512-ixv2lq1zNzYa+GqZQTzcraNw5ZrTTK+2/sqfeMOIr7gBGk0UCALuK0NCvTRAUtQK1RT2psBkkm2lr/rrNCeK+A==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    "@polkadot/util" "9.5.1"
+    "@polkadot/util-crypto" "9.5.1"
+
+"@polkadot/keyring@^9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-9.6.1.tgz#ec24f1dd41c4feee641152f220588a4d7136cc9a"
+  integrity sha512-BKItB142itho5Hxa8uE9e2AIkb2SJpOfsyu0usf/whby9i8IH5nRRYbNvWf/yl0aEJk7Ld1Vx8K4rjiTpHjZZg==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    "@polkadot/util" "9.6.1"
+    "@polkadot/util-crypto" "9.6.1"
 
 "@polkadot/networks@8.7.1", "@polkadot/networks@^8.7.1":
   version "8.7.1"
@@ -2565,7 +2574,7 @@
     "@polkadot/util-crypto" "^8.7.1"
     rxjs "^7.5.5"
 
-"@polkadot/types@8.9.1", "@polkadot/types@^8.5.1":
+"@polkadot/types@8.9.1", "@polkadot/types@^8.9.1":
   version "8.9.1"
   resolved "https://registry.yarnpkg.com/@polkadot/types/-/types-8.9.1.tgz#e5bf1cef79d8c305faa8691c62dd3d4be9baed53"
   integrity sha512-h43/aPzk+ta0MzzGQz3DiGtearttHxZr08xOdtU5GctI6u9MXm0n0w74clciLpIGu5CI+QxYN3oQ8/5WXTukMw==
@@ -2632,7 +2641,7 @@
     ed2curve "^0.3.0"
     tweetnacl "^1.0.3"
 
-"@polkadot/util-crypto@^9.2.1":
+"@polkadot/util-crypto@9.6.1", "@polkadot/util-crypto@^9.6.1":
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/@polkadot/util-crypto/-/util-crypto-9.6.1.tgz#0c2a8f88a5b995937f01ebbeb7bb9dd4f54c263d"
   integrity sha512-j9iCSPSuli520x/8F92uytc8rx3xH3deI6j8sQuvXZwla4mQQd6c0IkHccUgm+lPhASbXpQBLoZubEc2lPIOAA==
@@ -2677,7 +2686,7 @@
     bn.js "^5.2.1"
     ip-regex "^4.3.0"
 
-"@polkadot/util@9.6.1", "@polkadot/util@^9.2.1":
+"@polkadot/util@9.6.1", "@polkadot/util@^9.6.1":
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/@polkadot/util/-/util-9.6.1.tgz#ddf79746eb8df3b56eb2d1921b2fb1451d9fcef0"
   integrity sha512-2lapwzBg+kzTMzETnat7wxWrNmJstui1C81EvDVhecDXLeB3TITrHJs9u/RKiCigQGNHTP3riBOPIeSx9Gqv0A==
