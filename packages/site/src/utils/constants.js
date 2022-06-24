@@ -273,4 +273,5 @@ export const MINIMUM_FUND_AMOUNTS = {
   KSM: 0.01,
   RMRK: 0.1,
   OSNT: 0.1,
+  WND: 0.1,
 };
