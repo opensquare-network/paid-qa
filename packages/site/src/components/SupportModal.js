@@ -24,6 +24,10 @@ import {
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import SupportDetail from "./SupportDetail";
+import {
+  DEFAULT_MINIMUM_FUND_AMOUNT,
+  MINIMUM_FUND_AMOUNTS,
+} from "utils/constants";
 
 const { InteractionEncoder } = encoder;
 const { SupportInteraction } = interactions;
@@ -80,6 +84,13 @@ export default function SupportModal({ open, setOpen, topicCid }) {
 
     if (new BigNumber(inputAmount).isNaN()) {
       return showErrorToast("Amount is invalid");
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (new BigNumber(inputAmount).lt(minimum)) {
+      return showErrorToast(
+        `Support amount cannot be less than minimum: ${minimum}`
+      );
     }
 
     const interaction = new SupportInteraction(

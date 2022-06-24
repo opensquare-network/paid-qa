@@ -265,3 +265,13 @@ export const tabRouterMap = new Map([
 export const PROJECT_NAME = "OpenSquare-Paid-QA";
 
 export const ASSET_CHAINS = ["statemine", "westmint"];
+
+export const DEFAULT_MINIMUM_FUND_AMOUNT = 0.01;
+
+export const MINIMUM_FUND_AMOUNTS = {
+  DOT: 0.1,
+  KSM: 0.01,
+  RMRK: 0.1,
+  OSNT: 0.1,
+  WND: 0.1,
+};
