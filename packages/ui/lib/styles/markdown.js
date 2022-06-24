@@ -1,11 +1,12 @@
 import { css } from "styled-components";
 import { no_scroll_bar } from "./componentCss";
+import { text_dark_major } from "./colors";
 const markdownStyle = css`
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  color: #1e2134;
+  color: ${text_dark_major};
 
   &.markdown-content {
     max-width: 48.5em;
