@@ -1,11 +1,12 @@
 const { queryAssetInfo } = require("../tokenInfo");
-const { getApi } = require("../../../../chain/api");
+const {
+  chain: { getApi },
+} = require("@osn/scan-common");
 const { queryNativeTokenInfo } = require("../tokenInfo");
 const {
   setupPolkadotApi,
   setupKusamaApi,
   setupStatemineApi,
-  disconnect,
 } = require("../../../../common/test/utils");
 jest.setTimeout(3000000);
 
@@ -15,7 +16,6 @@ describe("Query token info", () => {
     const token = await queryNativeTokenInfo();
     expect(token.symbol).toBe("DOT");
     expect(token.decimals).toEqual(10);
-    await disconnect();
   });
 
   test(".kusama native works", async () => {
@@ -23,7 +23,6 @@ describe("Query token info", () => {
     const token = await queryNativeTokenInfo();
     expect(token.symbol).toBe("KSM");
     expect(token.decimals).toEqual(12);
-    await disconnect();
   });
 
   test(".statemine native works", async () => {
@@ -31,7 +30,6 @@ describe("Query token info", () => {
     const token = await queryNativeTokenInfo();
     expect(token.symbol).toBe("KSM");
     expect(token.decimals).toEqual(12);
-    await disconnect();
   });
 
   test(".statemine asset#8 works", async () => {
@@ -43,10 +41,8 @@ describe("Query token info", () => {
     const token = await queryAssetInfo(8, blockHash);
     expect(token.symbol).toBe("RMRK");
     expect(token.decimals).toEqual(10);
-    await disconnect();
-  })
-
-})
+  });
+});
 
 describe("Query token info", () => {
   test("statemine invalid asset works", async () => {
@@ -56,7 +52,6 @@ describe("Query token info", () => {
     const api = await getApi();
     const blockHash = await api.rpc.chain.getBlockHash(height);
     const token = await queryAssetInfo(8000000, blockHash);
-    expect(token).toBeNull()
-    await disconnect();
-  })
-})
+    expect(token).toBeNull();
+  });
+});

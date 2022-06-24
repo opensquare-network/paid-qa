@@ -1,4 +1,7 @@
-const { setApi, setProvider, getProvider } = require("../../chain/api");
+const {
+  chain: { setApi, setProvider, getProvider },
+} = require("@osn/scan-common");
+
 const { ApiPromise, WsProvider } = require("@polkadot/api");
 
 const polkadotEndpoint = "wss://polkadot.api.onfinality.io/public-ws";
