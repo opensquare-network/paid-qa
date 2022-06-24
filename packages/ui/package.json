@@ -46,6 +46,7 @@
     "styled-components": "^5.3.1"
   },
   "peerDependencies": {
+    "@osn/rich-text-editor": "^0.1.16",
     "react": "^17.0.2",
     "styled-components": "^5.3.1"
   },
