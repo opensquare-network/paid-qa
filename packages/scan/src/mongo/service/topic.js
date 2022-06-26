@@ -1,4 +1,4 @@
-const { busLogger } = require("../../common/logger");
+const { busLogger } = require("@osn/scan-common");
 const { Topic } = require("@paid-qa/backend-common/src/models/scan");
 
 async function insertTopic(topic) {

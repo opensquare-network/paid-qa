@@ -1,4 +1,3 @@
-const { remarkLogger } = require("../../../common/logger");
 const { hexToString } = require("@polkadot/util");
 const {
   parser: { InteractionParser },
@@ -15,6 +14,7 @@ const { handleAppend } = require("./interactions/append");
 const { handleSupport } = require("./interactions/support");
 const { handleAnswer } = require("./interactions/answer");
 const { handleResolve } = require("./interactions/resolve");
+const { busLogger } = require("@osn/scan-common");
 
 /**
  *
@@ -50,7 +50,7 @@ async function handleRemarkExtrinisc(extrinsic, indexer) {
     args: [remarkBytes],
   } = extrinsic.method;
   const remark = hexToString(remarkBytes.toHex());
-  remarkLogger.info(`${remark} at ${indexer.blockHeight}`);
+  busLogger.info(`${remark} at ${indexer.blockHeight}`);
   let caller = extrinsic.signer.toString();
 
   return await handleRemark(remark, caller, indexer);

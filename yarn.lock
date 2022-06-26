@@ -12510,7 +12510,7 @@ log-update@^4.0.0:
     slice-ansi "^4.0.0"
     wrap-ansi "^6.2.0"
 
-log4js@^6.4.0, log4js@^6.4.1:
+log4js@^6.4.0:
   version "6.4.5"
   resolved "https://registry.yarnpkg.com/log4js/-/log4js-6.4.5.tgz#5cca31b29ece65a625efbc3df6fcbd9cecb9ee7b"
   integrity sha512-43RJcYZ7nfUxpPO2woTl8CJ0t5+gucLJZ43mtp2PlInT+LygCp/bl6hNJtKulCJ+++fQsjIv4EO3Mp611PfeLQ==
