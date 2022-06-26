@@ -4,12 +4,13 @@ const {
 const { handleExtrinsic } = require("./business");
 const { extrinsicSuccess } = require("./utils/extrinsics");
 const { ExtrinsicIndexer } = require("../common/types/ExtrinsicIndexer");
+const { updateScanHeight } = require("../mongo/scanHeight");
 
-async function scanBlock(block, events = []) {
+async function scanBlock({ height, block, events }) {
   const blockIndexer = getBlockIndexer(block);
   await handleExtrinsics(block.extrinsics, events, blockIndexer);
 
-  return blockIndexer;
+  await updateScanHeight(height);
 }
 
 async function handleExtrinsics(extrinsics, allEvents, blockIndexer) {
