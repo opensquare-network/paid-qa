@@ -13,7 +13,7 @@
     "test": "jest src"
   },
   "dependencies": {
-    "@osn/scan-common": "^0.0.11",
+    "@osn/scan-common": "0.0.12",
     "@paid-qa/spec": "1.0.0",
     "dotenv": "^16.0.0",
     "lodash.isnil": "^4.0.0",
