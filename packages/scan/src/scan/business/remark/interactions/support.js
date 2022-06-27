@@ -4,9 +4,16 @@ const {
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { getTokenInfo } = require("../common");
+const { busLogger } = require("@osn/scan-common");
 
 async function handleSupport(interaction, caller, indexer) {
   const tokenInfo = await getTokenInfo(interaction.tokenIdentifier, indexer);
+  if (!tokenInfo) {
+    busLogger.error(
+      `Invalid support interaction with invalid token id at ${indexer.blockHeight}`
+    );
+    return;
+  }
 
   const bounty = {
     value: interaction.tokenAmount,
