@@ -24,7 +24,7 @@ async function syncTopic(topic) {
 
 async function syncTopics() {
   const topics = await Topic.find({ parsed: true, synced: { $ne: true } });
-  console.log(`Syncing ${topics.length} topics`);
+  console.log(`Syncing ${(topics || []).length} topics`);
   for (const topic of topics) {
     console.log(`Syncing topic ${topic.cid}`);
     await syncTopic(topic);
