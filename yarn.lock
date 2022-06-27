@@ -2224,10 +2224,10 @@
     prismjs "^1.28.0"
     sanitize-html "^2.7.0"
 
-"@osn/scan-common@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@osn/scan-common/-/scan-common-0.0.11.tgz#316906e8ad8d800f7ec3478ac9406ab7862eb68b"
-  integrity sha512-q3NRgJKVQaUwlVY7kM0TFHcTE/8DzLIct2n+M2AeFVKCQeNuvYCteJuOERkCjz6ejl2hWBK5GY8vrkCUnJWkeA==
+"@osn/scan-common@0.0.12":
+  version "0.0.12"
+  resolved "https://registry.npmjs.org/@osn/scan-common/-/scan-common-0.0.12.tgz#5b99dcd650bbf41d18b9552de32c7f75e86860bf"
+  integrity sha512-z5M5V9yK2B09YVWa3cOmVA+ErGkXobcJIRfrzhLlCRKMjeFohXh306SG7H6ER42kWPzqH+PoJnzXcQZ0xJDXwg==
   dependencies:
     "@polkadot/api" "^8.9.1"
     "@polkadot/types" "^8.9.1"
@@ -12510,7 +12510,7 @@ log-update@^4.0.0:
     slice-ansi "^4.0.0"
     wrap-ansi "^6.2.0"
 
-log4js@^6.4.0, log4js@^6.4.1:
+log4js@^6.4.0:
   version "6.4.5"
   resolved "https://registry.yarnpkg.com/log4js/-/log4js-6.4.5.tgz#5cca31b29ece65a625efbc3df6fcbd9cecb9ee7b"
   integrity sha512-43RJcYZ7nfUxpPO2woTl8CJ0t5+gucLJZ43mtp2PlInT+LygCp/bl6hNJtKulCJ+++fQsjIv4EO3Mp611PfeLQ==

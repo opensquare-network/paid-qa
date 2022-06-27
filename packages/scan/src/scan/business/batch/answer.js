@@ -1,11 +1,11 @@
 const { handleAnswer } = require("../remark/interactions/answer");
-const { remarkLogger } = require("../../../common/logger");
 const { SECTIONS, METHODS } = require("../../../common/constants");
 const { hexToString } = require("@polkadot/util");
 const {
   parser: { InteractionParser },
   interactions: { AnswerInteraction },
 } = require("@paid-qa/spec");
+const { busLogger } = require("@osn/scan-common");
 
 async function handleBatchAnswer(extrinsic, caller, indexer) {
   const {
@@ -22,7 +22,7 @@ async function handleBatchAnswer(extrinsic, caller, indexer) {
       args: [remarkBytes],
     } = tx;
     const remark = hexToString(remarkBytes.toHex());
-    remarkLogger.info(`${remark} at ${indexer.blockHeight}`);
+    busLogger.info(`${remark} at ${indexer.blockHeight}`);
 
     const parser = new InteractionParser(remark);
     if (!parser.isValid) {

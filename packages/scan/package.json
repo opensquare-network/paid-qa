@@ -13,14 +13,12 @@
     "test": "jest src"
   },
   "dependencies": {
-    "@osn/scan-common": "^0.0.11",
+    "@osn/scan-common": "0.0.12",
     "@paid-qa/spec": "1.0.0",
     "dotenv": "^16.0.0",
     "lodash.isnil": "^4.0.0",
-    "lodash.last": "^3.0.0",
     "lodash.omit": "^4.5.0",
-    "lodash.uniqby": "^4.7.0",
-    "log4js": "^6.4.1"
+    "lodash.uniqby": "^4.7.0"
   },
   "devDependencies": {
     "jest": "^27.5.1"

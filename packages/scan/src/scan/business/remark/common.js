@@ -1,10 +1,10 @@
 const { queryNativeTokenInfo, queryAssetInfo } = require("../common/tokenInfo");
-const { remarkLogger } = require("../../../common/logger");
 const { currentChain } = require("../../../common/env");
 const { ASSET_PARA_CHAIN } = require("../../../common/constants");
 const {
   constants: { NATIVE_TOKEN_IDENTIFIER },
 } = require("@paid-qa/spec");
+const { busLogger } = require("@osn/scan-common");
 
 async function getTokenInfo(tokenIdentifier, indexer) {
   const isNativeToken = NATIVE_TOKEN_IDENTIFIER === tokenIdentifier;
@@ -12,7 +12,7 @@ async function getTokenInfo(tokenIdentifier, indexer) {
   const chain = currentChain();
 
   if (!isAssetParaChain && !isNativeToken) {
-    remarkLogger.info(
+    busLogger.info(
       `Unsupported token identifier at ${chain} #${indexer.blockHeight}`
     );
     return;
@@ -26,7 +26,7 @@ async function getTokenInfo(tokenIdentifier, indexer) {
   }
 
   if (!tokenInfo) {
-    remarkLogger.info(
+    busLogger.info(
       `Can not find asset with token identifier ${tokenIdentifier} at ${chain} #${indexer.blockHeight}`
     );
     return;
