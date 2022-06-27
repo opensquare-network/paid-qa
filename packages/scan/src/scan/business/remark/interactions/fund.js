@@ -5,9 +5,16 @@ const {
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 const { getTokenInfo } = require("../common");
+const { busLogger } = require("@osn/scan-common");
 
 async function handleFundInteraction(interaction, caller, indexer, transfer) {
   const tokenInfo = await getTokenInfo(transfer.tokenIdentifier, indexer);
+  if (!tokenInfo) {
+    busLogger.error(
+      `Invalid fund interaction with invalid token id at ${indexer.blockHeight}`
+    );
+    return;
+  }
 
   const bounty = {
     value: transfer.value.toJSON(),

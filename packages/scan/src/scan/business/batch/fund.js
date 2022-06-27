@@ -12,7 +12,7 @@ function parseTransferCall(txTransfer) {
 
   if (
     section === "balances" &&
-    (method === "transfer" || method === "transferKeepAlive")
+    ["transfer", "transferKeepAlive"].includes(method)
   ) {
     tokenIdentifier = "N";
     [to, value] = txTransfer.args;
