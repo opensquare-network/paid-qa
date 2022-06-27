@@ -41,8 +41,6 @@ async function handleRemark(remark, caller, indexer) {
   } else if (interaction instanceof ResolveInteraction) {
     await handleResolve(interaction, caller, indexer);
   }
-  // TODO: 1. check the validity in each interaction handling method
-  // TODO: 2. handle the business with different interactions
 }
 
 async function handleRemarkExtrinisc(extrinsic, indexer) {

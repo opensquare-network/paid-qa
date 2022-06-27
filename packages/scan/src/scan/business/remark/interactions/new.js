@@ -6,9 +6,16 @@ const {
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { getTokenInfo } = require("../common");
 const { currentChain } = require("../../../../common/env");
+const { busLogger } = require("@osn/scan-common");
 
 async function handleNew(interaction, caller, indexer) {
   const tokenInfo = await getTokenInfo(interaction.tokenIdentifier, indexer);
+  if (!tokenInfo) {
+    busLogger.error(
+      `Invalid new interaction with invalid token id at ${indexer.blockHeight}`
+    );
+    return;
+  }
 
   const bounty = {
     value: interaction.tokenAmount,
@@ -31,7 +38,6 @@ async function handleNew(interaction, caller, indexer) {
   };
 
   await insertTopic(topic);
-  // todo: we just save the unparsed data first. The IPFS data cat and parsing work will be done at a dedicated worker.
 
   const reward = {
     indexer: indexer.toJSON(),
