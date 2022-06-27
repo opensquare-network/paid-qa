@@ -30,7 +30,7 @@ The common OpenSquare styled UI components. Used by `site` package.
 
 ## scan
 
-It implements a Paid-QA remarks scanner that used to parse and store from blockchain,
+It implements a Paid-QA remarks scanner that used to parse and store data from blockchain,
 and also to fetch and save related IPFS content to database.
 
 - Provide a scanner to scan remarks from main and relay chains.
