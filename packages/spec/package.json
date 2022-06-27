@@ -10,11 +10,19 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
   ],
+  "scripts": {
+    "test": "jest src"
+  },
   "dependencies": {
     "bignumber.js": "^9.0.2",
     "multiformats": "^9.6.4"
   },
   "devDependencies": {
     "jest": "^27.5.1"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@polkadot|@babel)/)"
+    ]
   }
 }
