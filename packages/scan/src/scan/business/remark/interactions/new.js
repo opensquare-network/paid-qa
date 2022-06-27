@@ -31,7 +31,6 @@ async function handleNew(interaction, caller, indexer) {
   };
 
   await insertTopic(topic);
-  // todo: we just save the unparsed data first. The IPFS data cat and parsing work will be done at a dedicated worker.
 
   const reward = {
     indexer: indexer.toJSON(),
