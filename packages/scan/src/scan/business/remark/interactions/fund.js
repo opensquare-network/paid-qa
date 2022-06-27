@@ -17,12 +17,12 @@ async function handleFundInteraction(interaction, caller, indexer, transfer) {
   }
 
   const bounty = {
-    value: transfer.value.toJSON(),
+    value: transfer.value,
     tokenIdentifier: transfer.tokenIdentifier,
     ...tokenInfo.toJSON(),
   };
 
-  const beneficiary = transfer.to.toJSON()?.id;
+  const beneficiary = transfer.to;
   const beneficiaryPublicKey = toPublicKey(beneficiary);
 
   let refCidType;

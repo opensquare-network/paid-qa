@@ -15,9 +15,12 @@ function parseTransferCall(txTransfer) {
     ["transfer", "transferKeepAlive"].includes(method)
   ) {
     tokenIdentifier = "N";
-    [to, value] = txTransfer.args;
+    to = txTransfer.args[0].toString();
+    value = txTransfer.args[1].toJSON();
   } else if (section === "assets" && method === "transfer") {
-    [tokenIdentifier, to, value] = txTransfer.args;
+    tokenIdentifier = txTransfer.args[0].toString();
+    to = txTransfer.args[1].toString();
+    value = txTransfer.args[2].toJSON();
   } else {
     throw new Error("Not a transfer");
   }
