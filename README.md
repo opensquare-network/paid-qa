@@ -1,7 +1,7 @@
 # Paid QA
 
 OpenSquare Paid-QA is an on-chain Paid Q&A platform that allow user to create topics and fund the valuable answers.
-This repository is the javascript implementation of the [OpenSquare QA Specification](https://github.com/opensquare-network/qa-spec).
+This repository is the nodejs implementation of the [OpenSquare QA Specification](https://github.com/opensquare-network/qa-spec).
 
 # Code structure
 
