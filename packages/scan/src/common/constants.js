@@ -4,9 +4,10 @@ const CHAINS = {
   STATEMINE: "statemine",
   WESTEND: "westend",
   WESTMINT: "westmint",
+  STATEMINT: "statemint",
 };
 
-const ASSET_PARA_CHAIN = [CHAINS.STATEMINE, CHAINS.WESTMINT];
+const ASSET_PARA_CHAIN = [CHAINS.STATEMINT, CHAINS.STATEMINE, CHAINS.WESTMINT];
 
 const SECTIONS = {
   SYSTEM: "system",
