@@ -1,4 +1,5 @@
-const ipfsGatewayUrl = process.env.IPFS_GATEWAY_URL || "https://ipfs.io/ipfs/";
+const ipfsGatewayUrl =
+  process.env.IPFS_GATEWAY_URL || "https://ipfs.infura.io/ipfs/";
 
 async function fetchIpfsJson(cid) {
   try {
