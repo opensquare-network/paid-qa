@@ -2224,10 +2224,10 @@
     prismjs "^1.28.0"
     sanitize-html "^2.7.0"
 
-"@osn/scan-common@0.0.12":
-  version "0.0.12"
-  resolved "https://registry.npmjs.org/@osn/scan-common/-/scan-common-0.0.12.tgz#5b99dcd650bbf41d18b9552de32c7f75e86860bf"
-  integrity sha512-z5M5V9yK2B09YVWa3cOmVA+ErGkXobcJIRfrzhLlCRKMjeFohXh306SG7H6ER42kWPzqH+PoJnzXcQZ0xJDXwg==
+"@osn/scan-common@0.0.13":
+  version "0.0.13"
+  resolved "https://registry.npmjs.org/@osn/scan-common/-/scan-common-0.0.13.tgz#2f389c131b3f9fcdebb6e725a51aeb20b0ba8348"
+  integrity sha512-LvE8wivUglDsGy2EYisgZBv10S+1JdwWrAIzj3MkGfiBlsgDzJu3eq6Wn/ik+toTVliGUG0eked/HgdSNqLbNQ==
   dependencies:
     "@polkadot/api" "^8.9.1"
     "@polkadot/types" "^8.9.1"
