@@ -6,6 +6,9 @@ const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 const {
   createAnswerNotification,
 } = require("@paid-qa/backend-common/src/services/notification/createAnswerNotification");
+const {
+  OnChainStatus,
+} = require("@paid-qa/backend-common/src/utils/constants");
 
 async function syncAnswer(answer) {
   const result = await BusinessAnswer.updateOne(
@@ -22,6 +25,7 @@ async function syncAnswer(answer) {
         "synced",
       ]),
       pinned: true,
+      status: OnChainStatus.Published,
     },
     { upsert: true }
   );

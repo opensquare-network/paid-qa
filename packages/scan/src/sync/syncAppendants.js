@@ -3,6 +3,9 @@ const {
   Appendant: BusinessAppendant,
 } = require("@paid-qa/backend-common/src/models");
 const { Appendant } = require("@paid-qa/backend-common/src/models/scan");
+const {
+  OnChainStatus,
+} = require("@paid-qa/backend-common/src/utils/constants");
 
 async function syncAppendant(appendant) {
   await BusinessAppendant.updateOne(
@@ -19,6 +22,7 @@ async function syncAppendant(appendant) {
         "synced",
       ]),
       pinned: true,
+      status: OnChainStatus.Published,
     },
     { upsert: true }
   );

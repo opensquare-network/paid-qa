@@ -1,6 +1,9 @@
 const omit = require("lodash.omit");
 const { Topic: BusinessTopic } = require("@paid-qa/backend-common/src/models");
 const { Topic } = require("@paid-qa/backend-common/src/models/scan");
+const {
+  OnChainStatus,
+} = require("@paid-qa/backend-common/src/utils/constants");
 
 async function syncTopic(topic) {
   await BusinessTopic.updateOne(
@@ -15,6 +18,7 @@ async function syncTopic(topic) {
         "synced",
       ]),
       pinned: true,
+      status: OnChainStatus.Published,
     },
     { upsert: true }
   );
