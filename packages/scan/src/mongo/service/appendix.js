@@ -5,7 +5,6 @@ async function insertAppendix(appendix) {
   const { topicCid: topicIpfsCid, cid: messageIpfsCid } = appendix;
 
   const maybeInDb = await Appendant.findOne({
-    topicCid: topicIpfsCid,
     cid: messageIpfsCid,
   });
   if (maybeInDb) {
