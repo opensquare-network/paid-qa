@@ -7,9 +7,8 @@ const { Resolve } = require("@paid-qa/backend-common/src/models/scan");
 async function syncResolve(resolve) {
   await BusinessResolve.updateOne(
     {
-      "indexer.blockHash": resolve.indexer.blockHash,
-      "indexer.extrinsicIndex": resolve.indexer.extrinsicIndex,
       topicCid: resolve.topicCid,
+      sponsorPublicKey: resolve.sponsorPublicKey,
     },
     {
       ...omit(resolve.toJSON(), [

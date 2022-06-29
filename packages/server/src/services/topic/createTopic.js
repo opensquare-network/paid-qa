@@ -125,7 +125,6 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
         type: "topic",
         sponsor: signer,
         sponsorPublicKey: signerPublicKey,
-        status: OnChainStatus.Published,
       },
       { upsert: true, session }
     );
