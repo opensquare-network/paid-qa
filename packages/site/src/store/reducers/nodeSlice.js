@@ -7,16 +7,6 @@ import {
   DEFAULT_KUSAMA_NODES,
   DEFAULT_STATEMINE_NODE_URL,
   DEFAULT_STATEMINE_NODES,
-  DEFAULT_KARURA_NODE_URL,
-  DEFAULT_ACALA_NODES,
-  DEFAULT_ACALA_NODE_URL,
-  DEFAULT_KARURA_NODES,
-  DEFAULT_KHALA_NODE_URL,
-  DEFAULT_KHALA_NODES,
-  DEFAULT_BASILISK_NODE_URL,
-  DEFAULT_BASILISK_NODES,
-  DEFAULT_BIFROST_NODES,
-  DEFAULT_BIFROST_NODE_URL,
   DEFAULT_WESTEND_NODES,
   DEFAULT_WESTEND_NODE_URL,
   DEFAULT_WESTMINT_NODES,
@@ -42,21 +32,6 @@ let nodeUrl = (() => {
       DEFAULT_STATEMINE_NODES.find(
         (item) => item.url === localNodeUrl?.statemine
       )?.url || DEFAULT_STATEMINE_NODE_URL,
-    karura:
-      DEFAULT_KARURA_NODES.find((item) => item.url === localNodeUrl?.karura)
-        ?.url || DEFAULT_KARURA_NODE_URL,
-    acala:
-      DEFAULT_ACALA_NODES.find((item) => item.url === localNodeUrl?.acala)
-        ?.url || DEFAULT_ACALA_NODE_URL,
-    khala:
-      DEFAULT_KHALA_NODES.find((item) => item.url === localNodeUrl?.khala)
-        ?.url || DEFAULT_KHALA_NODE_URL,
-    basilisk:
-      DEFAULT_BASILISK_NODES.find((item) => item.url === localNodeUrl?.basilisk)
-        ?.url || DEFAULT_BASILISK_NODE_URL,
-    bifrost:
-      DEFAULT_BIFROST_NODES.find((item) => item.url === localNodeUrl?.bifrost)
-        ?.url || DEFAULT_BIFROST_NODE_URL,
     westend:
       DEFAULT_WESTEND_NODES.find((item) => item.url === localNodeUrl?.bifrost)
         ?.url || DEFAULT_WESTEND_NODE_URL,
@@ -70,11 +45,6 @@ export const defaultNodes = {
   polkadot: DEFAULT_POLKADOT_NODES,
   kusama: DEFAULT_KUSAMA_NODES,
   statemine: DEFAULT_STATEMINE_NODES,
-  karura: DEFAULT_KARURA_NODES,
-  acala: DEFAULT_ACALA_NODES,
-  khala: DEFAULT_KHALA_NODES,
-  basilisk: DEFAULT_BASILISK_NODES,
-  bifrost: DEFAULT_BIFROST_NODES,
   westend: DEFAULT_WESTEND_NODES,
   westmint: DEFAULT_WESTMINT_NODES,
 };
