@@ -20,13 +20,6 @@ const Wrapper = styled.div`
 const ContentWrapper = styled.div`
   position: relative;
   margin: 20px 0;
-  .markdown-content {
-    max-width: initial;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
 `;
 
 const ReadAllButton = styled(Flex)`
