@@ -12,6 +12,7 @@ import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/consts";
 import { useState } from "react";
+import { maxLinePlugin } from "utils/markdownPreviewerPlugins";
 
 const dot = css`
   &::after {
@@ -249,7 +250,11 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
         }
       >
         {shouldShowAnswer && (
-          <MarkdownPreviewer content={answer.content} allowedTags={["a"]} />
+          <MarkdownPreviewer
+            content={answer.content}
+            allowedTags={["a"]}
+            plugins={[maxLinePlugin(3)]}
+          />
         )}
       </Card>
     </NotificationItemWrapper>
