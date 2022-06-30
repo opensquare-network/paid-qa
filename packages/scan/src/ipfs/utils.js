@@ -3,7 +3,10 @@ const ipfsGatewayUrl =
 
 async function fetchIpfsJson(cid) {
   try {
-    const res = await fetch(`${ipfsGatewayUrl}${cid}`);
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    setTimeout(() => abortController.abort(), 5000);
+    const res = await fetch(`${ipfsGatewayUrl}${cid}`, { signal });
     if (!res.ok) {
       return null;
     }
