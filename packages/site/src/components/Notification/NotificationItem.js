@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import NetworkUser from "../User/NetworkUser";
-import { Time, Card, Flex, FlexBetween, MarkdownPreview } from "@osn/common-ui";
+import { Time, Card, Flex, FlexBetween } from "@osn/common-ui";
+import { MarkdownPreviewer } from "@osn/previewer";
 import {
   text_dark_minor,
   primary_turquoise_500,
@@ -248,11 +249,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
         }
       >
         {shouldShowAnswer && (
-          <MarkdownPreview
-            content={answer.content}
-            bordered={false}
-            allowTags={["a"]}
-          />
+          <MarkdownPreviewer content={answer.content} allowedTags={["a"]} />
         )}
       </Card>
     </NotificationItemWrapper>

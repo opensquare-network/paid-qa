@@ -6,9 +6,13 @@ import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
 import NetworkUser from "../../User/NetworkUser";
 import ActionBar from "./ActionBar";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
-import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import {
+  MarkdownPreviewer,
+  renderIdentityOrAddressPlugin,
+} from "@osn/previewer";
+import IdentityOrAddr from "components/User/IdentityOrAddr";
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -54,7 +58,10 @@ export default function Item({ answer, height, onReply }) {
         </DividerWrapper>
       </FlexBetween>
       <ContentWrapper>
-        <MicromarkMd md={answer.content} />
+        <MarkdownPreviewer
+          content={answer.content}
+          plugins={[renderIdentityOrAddressPlugin(<IdentityOrAddr />)]}
+        />
         <ActionBar
           answerCid={answer.cid}
           answerOwner={answer.signer}

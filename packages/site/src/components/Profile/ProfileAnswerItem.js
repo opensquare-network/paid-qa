@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { Time, MarkdownPreview, Flex, Card } from "@osn/common-ui";
+import { Time, Flex, Card } from "@osn/common-ui";
 import { Link } from "react-router-dom";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import { MarkdownPreviewer } from "@osn/previewer";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -39,11 +40,7 @@ export default function AnswerItem({ data }) {
         </StyledDividerWrapper>
       }
     >
-      <MarkdownPreview
-        content={data?.content}
-        bordered={false}
-        allowTags={["a"]}
-      />
+      <MarkdownPreviewer content={data?.content} allowedTags={["a"]} />
     </Card>
   );
 }

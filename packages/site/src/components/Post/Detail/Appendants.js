@@ -9,7 +9,6 @@ import {
   Time,
   FlexBetween,
   FlexCenter,
-  MarkdownPreview,
   IpfsSquare,
 } from "@osn/common-ui";
 import { useApi } from "utils/hooks";
@@ -33,6 +32,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import { text_dark_accessory } from "@osn/common-ui/lib/styles/colors";
+import { MarkdownPreviewer } from "@osn/previewer";
 
 const { InteractionEncoder } = encoder;
 const { AppendInteraction } = interactions;
@@ -208,7 +208,7 @@ export default function Appendants({
           </div>
 
           <MarkdownPreviewWrapper>
-            <MarkdownPreview content={item.content} bordered={false} />
+            <MarkdownPreviewer content={item.content} />
           </MarkdownPreviewWrapper>
         </ItemWrapper>
       ))}
