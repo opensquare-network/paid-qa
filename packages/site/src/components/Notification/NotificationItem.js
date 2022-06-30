@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import NetworkUser from "../User/NetworkUser";
-import { Time, Card, Flex, FlexBetween, MarkdownPreview } from "@osn/common-ui";
+import { Time, Card, Flex, FlexBetween } from "@osn/common-ui";
+import { MarkdownPreviewer } from "@osn/previewer";
 import {
   text_dark_minor,
   primary_turquoise_500,
@@ -11,6 +12,7 @@ import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/consts";
 import { useState } from "react";
+import { maxLinePlugin } from "utils/markdownPreviewerPlugins";
 
 const dot = css`
   &::after {
@@ -248,10 +250,10 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
         }
       >
         {shouldShowAnswer && (
-          <MarkdownPreview
+          <MarkdownPreviewer
             content={answer.content}
-            bordered={false}
-            allowTags={["a"]}
+            allowedTags={["a"]}
+            plugins={[maxLinePlugin(3)]}
           />
         )}
       </Card>

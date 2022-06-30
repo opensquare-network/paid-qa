@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { Time, MarkdownPreview, Flex, Card } from "@osn/common-ui";
+import { Time, Flex, Card } from "@osn/common-ui";
 import { Link } from "react-router-dom";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import { MarkdownPreviewer } from "@osn/previewer";
+import { maxLinePlugin } from "utils/markdownPreviewerPlugins";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -39,10 +41,10 @@ export default function AnswerItem({ data }) {
         </StyledDividerWrapper>
       }
     >
-      <MarkdownPreview
+      <MarkdownPreviewer
         content={data?.content}
-        bordered={false}
-        allowTags={["a"]}
+        allowedTags={["a"]}
+        plugins={[maxLinePlugin(3)]}
       />
     </Card>
   );
