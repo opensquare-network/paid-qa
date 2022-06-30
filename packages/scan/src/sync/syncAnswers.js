@@ -23,6 +23,8 @@ async function syncAnswer(answer) {
         "updatedAt",
         "parsed",
         "synced",
+        "retries",
+        "lastRetryTime",
       ]),
       pinned: true,
       status: OnChainStatus.Published,

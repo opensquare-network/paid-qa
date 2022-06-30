@@ -16,6 +16,8 @@ async function syncTopic(topic) {
         "updatedAt",
         "parsed",
         "synced",
+        "retries",
+        "lastRetryTime",
       ]),
       pinned: true,
       status: OnChainStatus.Published,
