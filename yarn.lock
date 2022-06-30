@@ -2169,6 +2169,11 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@osn/consts@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@osn/consts/-/consts-0.0.2.tgz#e10bc23506dc9dd52e3b79eefd2b7f64cf96e0dc"
+  integrity sha512-wo83kImKM5Vz/hpfSjnnTGxB+xu+ueIIIdWcHA+NCdK9liAmkuUfgLW/+ZMaWWKP2h3SgMOGiypvnJF4+1i8qQ==
+
 "@osn/ipfs@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@osn/ipfs/-/ipfs-0.0.3.tgz#35a1ed3fd6eb7d4a5ed7485cf93963f7b4ae903b"
@@ -5698,6 +5703,11 @@ async@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/async/-/async-3.2.3.tgz#ac53dafd3f4720ee9e8a160628f18ea91df196c9"
   integrity sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==
+
+async@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.4.tgz#2d22e00f8cddeb5fde5dd33522b56d1cf569a81c"
+  integrity sha512-iAB+JbDEGXhyIUavoDl9WP/Jj106Kz9DEn1DPgYw5ruDn0e3Wgi3sKFm55sASdGBNOQB8F59d9qQ7deqrHA8wQ==
 
 asynckit@^0.4.0:
   version "0.4.0"

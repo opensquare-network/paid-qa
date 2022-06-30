@@ -1,11 +1,11 @@
 const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
-const { fetchIpfsJson } = require("./utils");
+const { fetchIpfsJsonInQueue } = require("./utils");
 
 async function fetchAnswer(answer) {
   const answerIpfsCid = answer.cid;
 
-  const answerData = await fetchIpfsJson(answerIpfsCid);
+  const answerData = await fetchIpfsJsonInQueue(answerIpfsCid);
   if (!answerData) {
     return;
   }
@@ -34,10 +34,13 @@ async function fetchAnswer(answer) {
 async function fetchAnswers() {
   const answers = await Answer.find({ parsed: false });
   console.log(`Fetching ${answers.length} answers`);
+
+  const promises = [];
   for (const answer of answers) {
-    console.log(`Fetching answer ${answer.cid}`);
-    await fetchAnswer(answer);
+    promises.push(fetchAnswer(answer));
   }
+
+  return promises;
 }
 
 module.exports = fetchAnswers;

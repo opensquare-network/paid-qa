@@ -1,10 +1,10 @@
 const { Appendant } = require("@paid-qa/backend-common/src/models/scan");
-const { fetchIpfsJson } = require("./utils");
+const { fetchIpfsJsonInQueue } = require("./utils");
 
 async function fetchAppendant(appendant) {
   const appendantIpfsCid = appendant.cid;
 
-  const appendantData = await fetchIpfsJson(appendantIpfsCid);
+  const appendantData = await fetchIpfsJsonInQueue(appendantIpfsCid);
   if (!appendantData) {
     return;
   }
@@ -24,10 +24,13 @@ async function fetchAppendant(appendant) {
 async function fetchAppendants() {
   const appendants = await Appendant.find({ parsed: false });
   console.log(`Fetching ${appendants.length} appendants`);
+
+  const promises = [];
   for (const appendant of appendants) {
-    console.log(`Fetching appendant ${appendant.cid}`);
-    await fetchAppendant(appendant);
+    promises.push(fetchAppendant(appendant));
   }
+
+  return promises;
 }
 
 module.exports = fetchAppendants;

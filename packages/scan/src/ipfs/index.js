@@ -7,9 +7,12 @@ const fetchAnswers = require("./fetchAnswers");
 
 async function main() {
   console.log("Fetch ipfs content at", new Date());
-  await fetchTopics();
-  await fetchAppendants();
-  await fetchAnswers();
+
+  await Promise.all([
+    ...(await fetchTopics()),
+    ...(await fetchAppendants()),
+    ...(await fetchAnswers()),
+  ]);
 }
 
 main()
