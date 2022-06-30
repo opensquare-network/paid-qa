@@ -1,11 +1,18 @@
 const { Topic } = require("@paid-qa/backend-common/src/models/scan");
-const { fetchIpfsJson } = require("./utils");
+const { fetchIpfsJsonInQueue } = require("./utils");
 
 async function fetchTopic(topic) {
   const topicIpfsCid = topic.cid;
 
-  const topicData = await fetchIpfsJson(topicIpfsCid);
+  const topicData = await fetchIpfsJsonInQueue(topicIpfsCid);
   if (!topicData) {
+    await Topic.updateOne(
+      { _id: topic._id },
+      {
+        $inc: { retries: 1 },
+        $set: { lastRetryTime: new Date() },
+      }
+    );
     return;
   }
 
@@ -15,12 +22,18 @@ async function fetchTopic(topic) {
 }
 
 async function fetchTopics() {
-  const topics = await Topic.find({ parsed: false });
+  const topics = await Topic.find({
+    parsed: false,
+    $or: [{ retries: null }, { retries: { $ne: null, $lt: 20 } }],
+  });
   console.log(`Fetching ${topics.length} topics`);
+
+  const promises = [];
   for (const topic of topics) {
-    console.log(`Fetching topic ${topic.cid}`);
-    await fetchTopic(topic);
+    promises.push(fetchTopic(topic));
   }
+
+  return promises;
 }
 
 module.exports = fetchTopics;
