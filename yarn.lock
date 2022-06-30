@@ -2205,6 +2205,14 @@
     util "npm:util"
     web-vitals "^2.1.4"
 
+"@osn/previewer@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@osn/previewer/-/previewer-0.4.1.tgz#ee1d5e98830bd94773b8a3970d40c468d02d775f"
+  integrity sha512-CfOd0HYNzPw+VdQGOjZy642PaIy7nUZK9bJTvMY4NILnI7xivJQSIBzz5jWBdxTo25IqGS/a9brZUf99HMRe2A==
+  dependencies:
+    marked "^4.0.17"
+    sanitize-html "^2.7.0"
+
 "@osn/provider-options@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@osn/provider-options/-/provider-options-1.0.2.tgz#0577c26ebcc41ac773b9718d47f9637bbb4cd952"
@@ -12477,7 +12485,7 @@ markdown-to-jsx@^7.1.3:
   resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.1.7.tgz#a5f22102fb12241c8cea1ca6a4050bb76b23a25d"
   integrity sha512-VI3TyyHlGkO8uFle0IOibzpO1c1iJDcXcS/zBrQrXQQvJ2tpdwVzVZ7XdKsyRz1NdRmre4dqQkMZzUHaKIG/1w==
 
-marked@^4.0.15:
+marked@^4.0.15, marked@^4.0.17:
   version "4.0.17"
   resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.17.tgz#1186193d85bb7882159cdcfc57d1dfccaffb3fe9"
   integrity sha512-Wfk0ATOK5iPxM4ptrORkFemqroz0ZDxp5MWfYA7H/F+wO17NRWV5Ypxi6p3g2Xmw2bKeiYOl6oVnLHKxBA0VhA==
