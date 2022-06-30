@@ -7,6 +7,13 @@ async function fetchAnswer(answer) {
 
   const answerData = await fetchIpfsJsonInQueue(answerIpfsCid);
   if (!answerData) {
+    await Answer.updateOne(
+      { _id: answer._id },
+      {
+        $inc: { retries: 1 },
+        $set: { lastRetryTime: new Date() },
+      }
+    );
     return;
   }
 
@@ -32,7 +39,10 @@ async function fetchAnswer(answer) {
 }
 
 async function fetchAnswers() {
-  const answers = await Answer.find({ parsed: false });
+  const answers = await Answer.find({
+    parsed: false,
+    $or: [{ retries: null }, { retries: { $ne: null, $lt: 20 } }],
+  });
   console.log(`Fetching ${answers.length} answers`);
 
   const promises = [];

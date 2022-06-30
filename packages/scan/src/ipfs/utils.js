@@ -1,22 +1,30 @@
 const queue = require("async/queue");
-const ipfsGatewayUrl =
-  process.env.IPFS_GATEWAY_URL || "https://ipfs.infura.io/ipfs/";
+const ipfsGatewayUrls = (
+  process.env.IPFS_GATEWAY_URLS || "https://ipfs.infura.io/ipfs/"
+).split(";");
+
+async function fetchWithTimeout(url) {
+  const abortController = new AbortController();
+  const signal = abortController.signal;
+  setTimeout(() => abortController.abort(), 5000);
+  const res = await fetch(url, { signal });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch, status ${res.status}, ${res.statusText}`);
+  }
+
+  const json = await res.json();
+  return json;
+}
 
 async function fetchIpfsJson(cid) {
   try {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-    setTimeout(() => abortController.abort(), 5000);
-    const res = await fetch(`${ipfsGatewayUrl}${cid}`, { signal });
-    if (!res.ok) {
-      return null;
-    }
-
-    const json = await res.json();
-
-    return json;
+    return await Promise.any(
+      ipfsGatewayUrls.map((ipfsGatewayUrl) =>
+        fetchWithTimeout(`${ipfsGatewayUrl}${cid}`)
+      )
+    );
   } catch (e) {
-    console.error(e.message);
+    console.error(`fetchIpfsJson: ${e.message}, ${cid}`);
     return null;
   }
 }
