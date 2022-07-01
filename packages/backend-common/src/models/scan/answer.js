@@ -19,6 +19,8 @@ const AnswerSchema = new mongoose.Schema(
     cid: RequiredString,
     parsed: Boolean,
     synced: Boolean,
+    retries: Number,
+    lastRetryTime: Date,
   },
   {
     timestamps: true,

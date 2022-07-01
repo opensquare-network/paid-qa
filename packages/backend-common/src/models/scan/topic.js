@@ -29,6 +29,8 @@ const TopicSchema = new mongoose.Schema(
     data: Object, // raw data submitted by the user, should be pinned to IPFS
     parsed: Boolean, // indicates whether the ipfs content has been parsed by scan-worker
     synced: Boolean,
+    retries: Number,
+    lastRetryTime: Date,
   },
   {
     timestamps: true,

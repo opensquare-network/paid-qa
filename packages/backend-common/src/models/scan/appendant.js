@@ -17,6 +17,8 @@ const AppendantSchema = new mongoose.Schema(
     data: Object,
     parsed: Boolean,
     synced: Boolean,
+    retries: Number,
+    lastRetryTime: Date,
   },
   {
     timestamps: true,
