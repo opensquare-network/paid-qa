@@ -80,6 +80,11 @@ export default function Answers({ topicCid }) {
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
+  const resolveMention = (identity, user) =>
+    `[@${identity?.info?.display || addressEllipsis(user.address)}](${
+      user.address
+    }-${user.network}) `;
+
   useEffect(() => {
     if (topicCid) {
       dispatch(fetchAnswers(topicCid, page));
@@ -163,11 +168,9 @@ export default function Answers({ topicCid }) {
     );
 
     return userIdentities.map((user) => {
-      const display =
-        user.identity?.info?.display || addressEllipsis(user.address);
       return {
         address: user.address,
-        value: `[@${display}](/network/${user.network}/address/${user.address}) `,
+        value: resolveMention(user.identity, user),
         preview: (
           <NetworkUser noLink address={user.address} network={user.network} />
         ),
@@ -195,9 +198,7 @@ export default function Answers({ topicCid }) {
   const onReply = async (user) => {
     const identityChain = identityChainMap[user.network] || user.network;
     const identity = fetchIdentity(identityChain, user.address);
-    const mention = `[@${
-      identity?.info?.display || addressEllipsis(user.address)
-    }](/network/${user.network}/address/${user.address})`;
+    const mention = resolveMention(identity, user);
 
     setContent(content + mention + " ");
 
