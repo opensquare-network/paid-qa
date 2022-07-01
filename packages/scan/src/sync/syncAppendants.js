@@ -20,6 +20,8 @@ async function syncAppendant(appendant) {
         "updatedAt",
         "parsed",
         "synced",
+        "retries",
+        "lastRetryTime",
       ]),
       pinned: true,
       status: OnChainStatus.Published,
