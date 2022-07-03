@@ -2169,10 +2169,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@osn/consts@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@osn/consts/-/consts-0.0.2.tgz#e10bc23506dc9dd52e3b79eefd2b7f64cf96e0dc"
-  integrity sha512-wo83kImKM5Vz/hpfSjnnTGxB+xu+ueIIIdWcHA+NCdK9liAmkuUfgLW/+ZMaWWKP2h3SgMOGiypvnJF4+1i8qQ==
+"@osn/constants@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@osn/constants/-/constants-1.0.0.tgz#87dd25f7a75ef163887ba0f8912fa02f217a4044"
+  integrity sha512-KdMYFiZD+11dgiYicE/A5l173ZeXnDcJkH83PmJUL+TDwDjswN3P/aF7XOOIbU3Wlmh5y6iW/KyZFYETka3XEw==
 
 "@osn/ipfs@^0.0.3":
   version "0.0.3"
@@ -15845,7 +15845,7 @@ rollup-plugin-terser@^7.0.0:
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
 
-rollup@^2.43.1, rollup@^2.70.2:
+rollup@^2.43.1:
   version "2.70.2"
   resolved "https://registry.npmjs.org/rollup/-/rollup-2.70.2.tgz#808d206a8851628a065097b7ba2053bd83ba0c0d"
   integrity sha512-EitogNZnfku65I1DD5Mxe8JYRUCy0hkK5X84IlDtUs+O6JRMpRciXTzyCUuX11b5L5pvjH+OmFXiQ3XjabcXgg==
