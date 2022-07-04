@@ -70,22 +70,16 @@ Site package depends on [React](https://reactjs.org/) and renders the fronted pa
 
 # How to run it
 
-## Prerequisite
+## Prerequisites
 
 ### MongoDB
 
 Make sure mongodb is installed, while corresponding url is required to config in the server package.
-Check [here](https://docs.mongodb.com/manual/installation/) to find a way to install it natively, or run it with docker:
-
-```bash
-docker run -d --name mongo -p 27017:27017 mongo:4.4.2
-```
-
-You may need more configuration for production environment.
+Check [here](https://www.mongodb.com/docs/manual/administration/install-community/) to find a way to install it natively.
 
 ### Infura api key and secret
 
-Register an [infura](https://infura.io/) account and get the project ID and secret.
+Register an [infura](https://infura.io/) account, crate and IPFS project and get the project ID and secret.
 
 ## Run
 
