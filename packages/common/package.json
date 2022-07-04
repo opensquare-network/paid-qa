@@ -41,7 +41,7 @@
     }
   ],
   "dependencies": {
-    "@osn/consts": "^0.0.2",
+    "@osn/constants": "1.0.0",
     "@osn/provider-options": "^1.0.2"
   },
   "peerDependencies": {

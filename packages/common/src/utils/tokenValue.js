@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { ChainSymbols } from "@osn/consts";
+import { ChainSymbols } from "@osn/constants";
 
 export function bnAdd(a, b) {
   return new BigNumber(a).plus(b).toString();
