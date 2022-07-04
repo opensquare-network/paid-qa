@@ -80,7 +80,7 @@ export default function Answers({ topicCid }) {
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
-  const resolveMention = (identity, user) =>
+  const resolveMentionFormat = (identity, user) =>
     `[@${identity?.info?.display || addressEllipsis(user.address)}](${
       user.address
     }-${user.network}) `;
@@ -170,7 +170,7 @@ export default function Answers({ topicCid }) {
     return userIdentities.map((user) => {
       return {
         address: user.address,
-        value: resolveMention(user.identity, user),
+        value: resolveMentionFormat(user.identity, user),
         preview: (
           <NetworkUser noLink address={user.address} network={user.network} />
         ),
@@ -198,7 +198,7 @@ export default function Answers({ topicCid }) {
   const onReply = async (user) => {
     const identityChain = identityChainMap[user.network] || user.network;
     const identity = fetchIdentity(identityChain, user.address);
-    const mention = resolveMention(identity, user);
+    const mention = resolveMentionFormat(identity, user);
 
     setContent(content + mention + " ");
 
