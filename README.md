@@ -35,13 +35,13 @@ and also to fetch and save related IPFS content to database.
 
 ## node-api
 
-This package maintains multiple [@polkadot/api](https://github.com/polkadot-js/api) instances or ethers [JsonRpcProvider](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/)s
-for target chains in case of a single endpoint failure. It is in charge of interaction with chain nodes and provides restful apis for caller to fetch on-chain data. The apis include:
+This package maintains multiple [@polkadot/api](https://github.com/polkadot-js/api) instances
+for different chains in case of a single endpoint failure. It is in charge of interaction with chain nodes and provides restful apis for caller to fetch on-chain data. The apis include:
 
 - [chain]/remark/block/[blockHash]/extrinsic/[extrinsicIndex]: get the remark at a block extrinsic(by block hash and extrinsic index).
 - [chain]/remark/batchsend: submit answers by batch transactions to the chain.
 - [chain]/token/native/info: get native token metadata of the chain.
-- [chain]/token/[assetId]/info: get asset token metadata.
+- [chain]/token/[assetId]/info: get asset token metadata defined in Statemine/Statemint/Westmint assets pallet.
 - [chain]/token/[assetId]/[blockHash]/info: get asset token metadata at a block.
 
 ## server
