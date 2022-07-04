@@ -10,11 +10,11 @@ sure yarn is installed before running it. There are 9 packages `backend-common`,
 
 ## backend-common
 
-This package maintains the common DB model and business logic shared by `server` and `scan` pakcage.
+This package maintains the common database models and business logics shared by `server` and `scan` packages.
 
 ## common
 
-This package maintains the common UI utilities. Used by `site` package.
+This package maintains the common UI utilities, used by `site` package.
 
 ## spec
 
@@ -22,7 +22,7 @@ It implements several utility functions and classes to help decode/encode [qa-sp
 
 ## ui
 
-The common OpenSquare styled UI components. Used by `site` package.
+It contains common OpenSquare styled UI components, used by `site` package and other collaboration products like [off-chain voting](https://github.com/opensquare-network/collaboration).
 
 ## scan
 
