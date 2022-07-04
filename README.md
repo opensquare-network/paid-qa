@@ -26,12 +26,12 @@ The common OpenSquare styled UI components. Used by `site` package.
 
 ## scan
 
-It implements a Paid-QA remarks scanner that used to parse and store data from blockchain,
-and also to fetch and save related IPFS content to database.
+It implements a scanner which is used to scan the history [qa-spec](https://github.com/opensquare-network/qa-spec) related extrinsics on different substrate chains.
+It also provides scripts to fetch qa collaboration data from IPFS and sync it to business database. So the key components includes:
 
-- Provide a scanner to scan remarks from main and relay chains.
-- The IPFS data fetcher.
-- A business data syncer.
+- A scanner to scan remark/batch extrinsics from supported chains.
+- Scripts to fetch topic/answer content from IPFS and store to scan database.
+- Scripts to sync topic related data from scan database to business database.
 
 ## node-api
 
