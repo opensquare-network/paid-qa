@@ -1,11 +1,15 @@
 const uniqWith = require("lodash.uniqwith");
+const { isAddress } = require("@polkadot/util-crypto");
 
 function extractMentions(content) {
   const mentions = [];
-  const reMention = /\[@[^\]]+\]\(\/network\/(\w+)\/address\/(\w+)\)/g;
+  const reMention = /\[@[^\]]+\]\((\w+)-(\w+)\)/g;
   let match;
   while ((match = reMention.exec(content)) !== null) {
-    const [, network, address] = match;
+    const [, address, network] = match;
+    if (!isAddress(address)) {
+      continue;
+    }
     mentions.push({
       network,
       address,
