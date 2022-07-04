@@ -29,7 +29,7 @@
   },
   "scripts": {
     "prepare": "husky install && husky set .husky/pre-commit \"npx lint-staged\"",
-    "build": "yarn workspace @osn/common build && yarn workspace @osn/consts build && yarn workspace @osn/common-ui build",
+    "build": "yarn workspace @osn/common build && yarn workspace @osn/common-ui build",
     "build-storybook": "yarn build && yarn workspace @osn/common-ui build-storybook",
     "build-site": "yarn build && yarn workspace @paid-qa/site build",
     "start": "yarn build && yarn workspace @paid-qa/site start",
