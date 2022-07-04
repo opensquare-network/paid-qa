@@ -4,7 +4,7 @@ import Detail from "./Detail";
 import Answers from "./Answers";
 import Promises from "./Promises";
 import Funds from "./Funds";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 
 const Wrapper = styled.div`
   display: flex;

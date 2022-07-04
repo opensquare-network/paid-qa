@@ -2169,7 +2169,7 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@osn/constants@1.0.0":
+"@osn/constants@1.0.0", "@osn/constants@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@osn/constants/-/constants-1.0.0.tgz#87dd25f7a75ef163887ba0f8912fa02f217a4044"
   integrity sha512-KdMYFiZD+11dgiYicE/A5l173ZeXnDcJkH83PmJUL+TDwDjswN3P/aF7XOOIbU3Wlmh5y6iW/KyZFYETka3XEw==

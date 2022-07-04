@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Container from "@osn/common-ui/lib/styled/Container";
 import User from "components/Profile/User";
 import Tabs from "./Tabs";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 import {
   p_14_normal,
   p_16_semibold,

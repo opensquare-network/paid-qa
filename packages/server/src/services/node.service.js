@@ -47,7 +47,7 @@ async function getAssetTokenInfo(api, assetId, blockHash) {
 
 async function submitRemarks(api, remarks) {
   try {
-    const result = await api.post("remark/batchsend", { remarks });
+    const result = await api.post("remark/batch_send", { remarks });
     return result;
   } catch (err) {
     throw new HttpError(500, "Failed to submit remarks");
