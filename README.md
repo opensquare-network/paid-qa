@@ -18,7 +18,7 @@ This package maintains the common UI utilities. Used by `site` package.
 
 ## spec
 
-It implements the OpenSquare QA specification parser. Used by `server` and `site` packages.
+It implements several utility functions and classes to help decode/encode [qa-spec](https://github.com/opensquare-network/qa-spec) specification, used by `server` and `site` packages.
 
 ## ui
 
