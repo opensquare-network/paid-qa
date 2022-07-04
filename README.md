@@ -177,10 +177,13 @@ REACT_APP_ENVIRONMENT=development
 Then run
 
 ```bash
+cd ../.. # go back to the root directory
 yarn start
 ```
 
-### 5. Run [scan](./packages/scan) package
+### 5. Run [scan](./packages/scan) package(optional)
+
+> Note: you don't have to run this package unless you want to sync the history topic collaboration data which maybe uploaded by other deployments.
 
 Come back to the project root dir and run
 
@@ -202,27 +205,30 @@ CHAIN=westmint
 
 SCAN_STEP=20
 
+# Turn on it when we scan the block meta data first
+USE_META=false
+MONGO_META_URL=mongodb://127.0.0.1:27017
+MONGO_DB_META_NAME=meta-westmint
+
 LOG_LEVEL=info
 NODE_ENV=production
-
-MONGO_DB_META_NAME=wastmint-meta
 
 IPFS_GATEWAY_URL=https://ipfs.infura.io/ipfs/
 ```
 
-Then start on-chain scanner
+Then start on-chain scanner;
 
 ```bash
 node src/index.js
 ```
 
-Run IPFS fetcher in a cron job
+Run the content IPFS sync script. You may also run it with pm2 with a `--cron-restart` setting, check [here](./packages/scan/ipfs.deploy.sh.example) for an example.
 
 ```bash
 node src/ipfs/index.js
 ```
 
-Run business DB syncer in a cron job
+Run the scan database to business database sync script. You may also run it with pm2 with a `--cron-restart` setting, check [here](./packages/scan/sync.deploy.sh.example) for an example.
 
 ```bash
 node src/sync/index.js
