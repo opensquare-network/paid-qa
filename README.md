@@ -1,51 +1,47 @@
 # Paid QA
 
-OpenSquare Paid-QA is an on-chain Paid Q&A platform that allow user to create topics and fund the valuable answers.
-This repository is the nodejs implementation of the [OpenSquare QA Specification](https://github.com/opensquare-network/qa-spec).
+OpenSquare Paid-QA is a paid Q&A platform that allow user to create topics and fund the valuable answers. It saves users' collaboration interactions to blockchain and stores collaboration content to IPFS.
+This repository is the Node.js implementation of the [OpenSquare QA Specification](https://github.com/opensquare-network/qa-spec) standard 1.0.
 
 # Code structure
 
 The code is organized with [yarn workspaces](https://classic.yarnpkg.com/lang/en/docs/workspaces/) and make
-sure yarn is installed before running it. There are 9 packages `backend-common`, `common`, `consts`, `node-api`, `scan`, `server`, `site`, `spec` and `ui` under the `packages` folder.
+sure yarn is installed before running it. There are 9 packages `backend-common`, `common`, `node-api`, `scan`, `server`, `site`, `spec` and `ui` under the `packages` folder.
 
 ## backend-common
 
-This package maintains the common DB model and business logic shared by `server` and `scan` pakcage.
+This package maintains the common database models and business logics shared by `server` and `scan` packages.
 
 ## common
 
-This package maintains the common UI utilities. Used by `site` package.
-
-## consts
-
-This package maintains the common constants. Used by `site` package.
+This package maintains the common UI utilities, used by `site` package.
 
 ## spec
 
-It implements the OpenSquare QA specification parser. Used by `server` and `site` packages.
+It implements several utility functions and classes to help decode/encode [qa-spec](https://github.com/opensquare-network/qa-spec) specification, used by `server` and `site` packages.
 
 ## ui
 
-The common OpenSquare styled UI components. Used by `site` package.
+It contains common OpenSquare styled UI components, used by `site` package and other collaboration products like [off-chain voting](https://github.com/opensquare-network/collaboration).
 
 ## scan
 
-It implements a Paid-QA remarks scanner that used to parse and store data from blockchain,
-and also to fetch and save related IPFS content to database.
+It implements a scanner which is used to scan the history [qa-spec](https://github.com/opensquare-network/qa-spec) related extrinsics on different substrate chains.
+It also provides scripts to fetch qa collaboration data from IPFS and sync it to business database. So the key components includes:
 
-- Provide a scanner to scan remarks from main and relay chains.
-- The IPFS data fetcher.
-- A business data syncer.
+- A scanner to scan remark/batch extrinsics from supported chains.
+- Scripts to fetch topic/answer content from IPFS and store to scan database.
+- Scripts to sync topic related data from scan database to business database.
 
 ## node-api
 
-This package maintains multiple [@polkadot/api](https://github.com/polkadot-js/api) instances or ethers [JsonRpcProvider](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/)s
-for target chains in case of a single endpoint failure. It is in charge of interaction with chain nodes and provides restful apis for caller to fetch on-chain data. The apis include:
+This package maintains multiple [@polkadot/api](https://github.com/polkadot-js/api) instances
+for different chains in case of a single endpoint failure. It is in charge of interaction with chain nodes and provides restful apis for caller to fetch on-chain data. The apis include:
 
 - [chain]/remark/block/[blockHash]/extrinsic/[extrinsicIndex]: get the remark at a block extrinsic(by block hash and extrinsic index).
 - [chain]/remark/batchsend: submit answers by batch transactions to the chain.
 - [chain]/token/native/info: get native token metadata of the chain.
-- [chain]/token/[assetId]/info: get asset token metadata.
+- [chain]/token/[assetId]/info: get asset token metadata defined in Statemine/Statemint/Westmint assets pallet.
 - [chain]/token/[assetId]/[blockHash]/info: get asset token metadata at a block.
 
 ## server
@@ -54,8 +50,10 @@ It integrates [koa.js](https://koajs.com/) as the server, and you can find the c
 The server provides apis for topics, supports, funds and resolves, check them
 under `packages/server/features` folder.
 
-It depends on [MongoDB](https://www.mongodb.com/) and related topics and instructions data are stored.
-All instructions data are signed with polkadot keys and submitted to blockchain, where topic contents are uploaded to IPFS too. We use [infura](https://infura.io/) as the IPFS service provider, so make sure to register an account and get the corresponding infura api token and secret key.
+It depends on [MongoDB](https://www.mongodb.com/) and related topics and interaction data are stored.
+All interaction data are signed with polkadot keys and submitted to blockchain, where topic contents are uploaded to IPFS too.
+We use [infura](https://infura.io/) as the IPFS service provider, so make sure to register an account, create an IPFS project and
+get the corresponding infura project id and secret.
 
 This package also depends on the `node-api` package to fetch on-chain info.
 So don't forget to config the required `NODE_API_ENDPOINT` environment variable.
@@ -72,22 +70,16 @@ Site package depends on [React](https://reactjs.org/) and renders the fronted pa
 
 # How to run it
 
-## Prerequisite
+## Prerequisites
 
 ### MongoDB
 
 Make sure mongodb is installed, while corresponding url is required to config in the server package.
-Check [here](https://docs.mongodb.com/manual/installation/) to find a way to install it natively, or run it with docker:
-
-```bash
-docker run -d --name mongo -p 27017:27017 mongo:4.4.2
-```
-
-You may need more configuration for production environment.
+Check [here](https://www.mongodb.com/docs/manual/administration/install-community/) to find a way to install it natively.
 
 ### Infura api key and secret
 
-Register an [infura](https://infura.io/) account and get the project ID and secret.
+Register an [infura](https://infura.io/) account, crate and IPFS project and get the project ID and secret.
 
 ## Run
 
@@ -110,7 +102,7 @@ The default environment variables will work, but if you want to change some, jus
 # You can change the chain endpoints, separated by ';'.
 DOT_ENDPOINTS=wss://rpc.polkadot.io;wss://polkadot.api.onfinality.io/public-ws;wss://polkadot-rpc.dwellir.com
 KSM_ENDPOINTS=wss://kusama-rpc.polkadot.io;wss://kusama.api.onfinality.io/public-ws;wss://kusama-rpc.dwellir.com
-WND_ENDPOINTS=wss://westend-rpc.polkadot.io;wss://westend.api.onfinality.io/public-ws;wss://rpc.pinknode.io/westend/explorer
+WND_ENDPOINTS=wss://westend-rpc.polkadot.io;wss://westend.api.onfinality.io/public-ws
 STATEMINE_ENDPOINTS=wss://statemine.api.onfinality.io/public-ws;wss://statemine-rpc.polkadot.io
 STATEMINT_ENDPOINTS=wss://statemint-rpc.polkadot.io;wss://statemint.api.onfinality.io/public-ws;wss://statemint-rpc.dwellir.com
 WESTMINT_ENDPOINTS=wss://westmint-rpc.polkadot.io;wss://westmint-rpc.dwellir.com
@@ -185,10 +177,13 @@ REACT_APP_ENVIRONMENT=development
 Then run
 
 ```bash
+cd ../.. # go back to the root directory
 yarn start
 ```
 
-### 5. Run [scan](./packages/scan) package
+### 5. Run [scan](./packages/scan) package(optional)
+
+> Note: you don't have to run this package unless you want to sync the history topic collaboration data which maybe uploaded by other deployments.
 
 Come back to the project root dir and run
 
@@ -210,27 +205,30 @@ CHAIN=westmint
 
 SCAN_STEP=20
 
+# Turn on it when we scan the block meta data first
+USE_META=false
+MONGO_META_URL=mongodb://127.0.0.1:27017
+MONGO_DB_META_NAME=meta-westmint
+
 LOG_LEVEL=info
 NODE_ENV=production
-
-MONGO_DB_META_NAME=wastmint-meta
 
 IPFS_GATEWAY_URL=https://ipfs.infura.io/ipfs/
 ```
 
-Then start on-chain scanner
+Then start on-chain scanner;
 
 ```bash
 node src/index.js
 ```
 
-Run IPFS fetcher in a cron job
+Run the content IPFS sync script. You may also run it with pm2 with a `--cron-restart` setting, check [here](./packages/scan/ipfs.deploy.sh.example) for an example.
 
 ```bash
 node src/ipfs/index.js
 ```
 
-Run business DB syncer in a cron job
+Run the scan database to business database sync script. You may also run it with pm2 with a `--cron-restart` setting, check [here](./packages/scan/sync.deploy.sh.example) for an example.
 
 ```bash
 node src/sync/index.js
