@@ -32,9 +32,6 @@ const Wrapper = styled(Flex)`
   object > div {
     justify-content: center;
   }
-  a {
-    display: block;
-  }
 `;
 
 const AddressWrapper = styled(FlexCenter)`
