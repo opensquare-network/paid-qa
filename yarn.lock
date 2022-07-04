@@ -2174,6 +2174,11 @@
   resolved "https://registry.npmjs.org/@osn/constants/-/constants-1.0.0.tgz#87dd25f7a75ef163887ba0f8912fa02f217a4044"
   integrity sha512-KdMYFiZD+11dgiYicE/A5l173ZeXnDcJkH83PmJUL+TDwDjswN3P/aF7XOOIbU3Wlmh5y6iW/KyZFYETka3XEw==
 
+"@osn/constants@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@osn/constants/-/constants-1.0.0.tgz#87dd25f7a75ef163887ba0f8912fa02f217a4044"
+  integrity sha512-KdMYFiZD+11dgiYicE/A5l173ZeXnDcJkH83PmJUL+TDwDjswN3P/aF7XOOIbU3Wlmh5y6iW/KyZFYETka3XEw==
+
 "@osn/ipfs@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@osn/ipfs/-/ipfs-0.0.3.tgz#35a1ed3fd6eb7d4a5ed7485cf93963f7b4ae903b"
