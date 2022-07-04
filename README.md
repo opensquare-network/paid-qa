@@ -50,8 +50,10 @@ It integrates [koa.js](https://koajs.com/) as the server, and you can find the c
 The server provides apis for topics, supports, funds and resolves, check them
 under `packages/server/features` folder.
 
-It depends on [MongoDB](https://www.mongodb.com/) and related topics and instructions data are stored.
-All instructions data are signed with polkadot keys and submitted to blockchain, where topic contents are uploaded to IPFS too. We use [infura](https://infura.io/) as the IPFS service provider, so make sure to register an account and get the corresponding infura api token and secret key.
+It depends on [MongoDB](https://www.mongodb.com/) and related topics and interaction data are stored.
+All interaction data are signed with polkadot keys and submitted to blockchain, where topic contents are uploaded to IPFS too.
+We use [infura](https://infura.io/) as the IPFS service provider, so make sure to register an account, create an IPFS project and
+get the corresponding infura project id and secret.
 
 This package also depends on the `node-api` package to fetch on-chain info.
 So don't forget to config the required `NODE_API_ENDPOINT` environment variable.
