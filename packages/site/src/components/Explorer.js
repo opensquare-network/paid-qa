@@ -10,7 +10,7 @@ import {
   setFilterAsset,
   setFilterTitle,
 } from "store/reducers/topicSlice";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 import {
   h3_36_bold,
   p_16_semibold,

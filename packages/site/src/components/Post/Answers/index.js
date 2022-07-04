@@ -35,7 +35,7 @@ import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
-import { identityChainMap } from "@osn/consts";
+import { identityChainMap } from "@osn/constants";
 import NetworkUser from "components/User/NetworkUser";
 
 const Title = styled.div`

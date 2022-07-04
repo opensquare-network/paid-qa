@@ -5,7 +5,7 @@ import Explorer from "components/Explorer";
 import NewTopicAnchor from "components/NewTopicButton";
 import TopicsList from "components/TopicsList";
 import Background from "components/Background";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 
 const Wrapper = styled.div`
   position: relative;
