@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Card, FlexBetween, Flex, ProgressBar } from "@osn/common-ui";
 import { Link } from "react-router-dom";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 import StatusTag from "components/StatusTag";
 
 const NoWrap = styled.span`

@@ -10,7 +10,7 @@ import {
 } from "@osn/common-ui/lib/styles/colors";
 import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 import { useState } from "react";
 
 const dot = css`
