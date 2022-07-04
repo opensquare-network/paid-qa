@@ -1,12 +1,12 @@
 # Paid QA
 
-OpenSquare Paid-QA is an on-chain Paid Q&A platform that allow user to create topics and fund the valuable answers.
-This repository is the nodejs implementation of the [OpenSquare QA Specification](https://github.com/opensquare-network/qa-spec).
+OpenSquare Paid-QA is a paid Q&A platform that allow user to create topics and fund the valuable answers. It saves users' collaboration interactions to blockchain and stores collaboration content to IPFS.
+This repository is the Node.js implementation of the [OpenSquare QA Specification](https://github.com/opensquare-network/qa-spec) standard 1.0.
 
 # Code structure
 
 The code is organized with [yarn workspaces](https://classic.yarnpkg.com/lang/en/docs/workspaces/) and make
-sure yarn is installed before running it. There are 9 packages `backend-common`, `common`, `consts`, `node-api`, `scan`, `server`, `site`, `spec` and `ui` under the `packages` folder.
+sure yarn is installed before running it. There are 9 packages `backend-common`, `common`, `node-api`, `scan`, `server`, `site`, `spec` and `ui` under the `packages` folder.
 
 ## backend-common
 
@@ -15,10 +15,6 @@ This package maintains the common DB model and business logic shared by `server`
 ## common
 
 This package maintains the common UI utilities. Used by `site` package.
-
-## consts
-
-This package maintains the common constants. Used by `site` package.
 
 ## spec
 
