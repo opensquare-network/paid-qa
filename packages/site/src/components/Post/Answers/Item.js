@@ -10,7 +10,7 @@ import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import {
   MarkdownPreviewer,
-  renderIdentityOrAddressPlugin,
+  renderMentionIdentityUserPlugin,
 } from "@osn/previewer";
 import IdentityOrAddr from "components/User/IdentityOrAddr";
 
@@ -60,7 +60,7 @@ export default function Item({ answer, height, onReply }) {
       <ContentWrapper>
         <MarkdownPreviewer
           content={answer.content}
-          plugins={[renderIdentityOrAddressPlugin(<IdentityOrAddr />)]}
+          plugins={[renderMentionIdentityUserPlugin(<MentionIdentityUser />)]}
         />
         <ActionBar
           answerCid={answer.cid}
