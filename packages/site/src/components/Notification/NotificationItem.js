@@ -41,14 +41,6 @@ const NotificationItemWrapper = styled.div`
       }
     }
   }
-
-  a {
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
 const Head = styled(Flex)`
   @media screen and (max-width: ${MOBILE_SIZE}px) {
