@@ -13,14 +13,6 @@ import AnswerItem from "./ProfileAnswerItem";
 
 const ListWrapper = styled.div`
   margin: 20px 0;
-
-  a {
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
 
 const meta = {

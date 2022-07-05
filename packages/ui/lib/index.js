@@ -16,6 +16,8 @@ import List from "./List";
 import Time from "./Time";
 import Card from "./Card";
 import Tabs from "./Tabs";
+import IdentityUser from "./Identity/IdentityUser";
+import MentionIdentityUser from "./Identity/MentionIdentityUser";
 //styled
 import Button from "./styled/Button";
 import Container from "./styled/Container";
@@ -67,5 +69,7 @@ export {
   List,
   Time,
   Tabs,
+  IdentityUser,
+  MentionIdentityUser,
 };
 export * from "./Toast";
