@@ -45,8 +45,8 @@
     "@osn/provider-options": "^1.0.2"
   },
   "peerDependencies": {
-    "@polkadot/api": "^8.9.1",
-    "@polkadot/extension-dapp": "^0.44.1",
+    "@polkadot/api": "8.11.3",
+    "@polkadot/extension-dapp": "^0.44.2-3",
     "react": "^17.0.2"
   },
   "devDependencies": {
