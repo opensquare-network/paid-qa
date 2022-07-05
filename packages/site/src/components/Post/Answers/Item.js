@@ -12,7 +12,7 @@ import {
   MarkdownPreviewer,
   renderMentionIdentityUserPlugin,
 } from "@osn/previewer";
-import IdentityOrAddr from "components/User/IdentityOrAddr";
+import { MentionIdentityUser } from "@osn/common-ui";
 
 const Wrapper = styled.div`
   padding-top: 20px;
