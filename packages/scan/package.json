@@ -13,7 +13,7 @@
     "test": "jest src"
   },
   "dependencies": {
-    "@osn/scan-common": "0.0.13",
+    "@osn/scan-common": "0.0.19",
     "@paid-qa/spec": "1.0.0",
     "async": "^3.2.4",
     "dotenv": "^16.0.0",
