@@ -6,6 +6,7 @@ const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { Answer } = require("@paid-qa/backend-common/src/models/scan");
 const { getTokenInfo } = require("../common");
 const { busLogger } = require("@osn/scan-common");
+const BigNumber = require("bignumber.js");
 
 async function handleFundInteraction(interaction, caller, indexer, transfer) {
   const tokenInfo = await getTokenInfo(transfer.tokenIdentifier, indexer);
@@ -16,8 +17,12 @@ async function handleFundInteraction(interaction, caller, indexer, transfer) {
     return;
   }
 
+  const tokenAmount = new BigNumber(transfer.value)
+    .div(Math.pow(10, tokenInfo.decimals))
+    .toFixed();
+
   const bounty = {
-    value: transfer.value,
+    value: tokenAmount,
     tokenIdentifier: transfer.tokenIdentifier,
     ...tokenInfo.toJSON(),
   };
