@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import IdentityUser from "./IdentityUser";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
-import {
-  secondary_blue_100,
-  secondary_blue_500,
-} from "@osn/common-ui/lib/styles/colors";
+import { secondary_blue_100, secondary_blue_500 } from "../styles/colors";
 
 const Link = styled.a`
   font-weight: 500;
