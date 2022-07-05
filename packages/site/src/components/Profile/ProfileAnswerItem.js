@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { Time, Flex, Card } from "@osn/common-ui";
+import { Time, Flex, Card, MentionIdentityUser } from "@osn/common-ui";
 import { Link } from "react-router-dom";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import {
   MarkdownPreviewer,
-  renderIdentityOrAddressPlugin,
+  renderMentionIdentityUserPlugin,
 } from "@osn/previewer";
-import IdentityOrAddr from "components/User/IdentityOrAddr";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -48,7 +47,7 @@ export default function AnswerItem({ data }) {
         content={data?.content}
         allowedTags={["a"]}
         maxLines={3}
-        plugins={[renderIdentityOrAddressPlugin(<IdentityOrAddr />)]}
+        plugins={[renderMentionIdentityUserPlugin(<MentionIdentityUser />)]}
       />
     </Card>
   );
