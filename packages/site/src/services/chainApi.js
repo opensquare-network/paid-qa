@@ -15,11 +15,10 @@ export const signMessage = async (text, address) => {
     throw new Error("Sign addres is missing");
   }
 
-  await web3Enable(PROJECT_NAME);
-  const injector = await web3FromAddress(address);
+  const signer = await getSigner(address);
 
   const data = stringToHex(text);
-  const result = await injector.signer.signRaw({
+  const result = await signer.signRaw({
     type: "bytes",
     data,
     address,
@@ -28,10 +27,10 @@ export const signMessage = async (text, address) => {
   return result.signature;
 };
 
-export const setSigner = async (api, signerAddress) => {
+export const getSigner = async (signerAddress) => {
   await web3Enable(PROJECT_NAME);
   const injector = await web3FromAddress(signerAddress);
-  api.setSigner(injector.signer);
+  return injector.signer;
 };
 
 function extractBlockTime(extrinsics) {
@@ -45,7 +44,6 @@ function extractBlockTime(extrinsics) {
 }
 
 export async function submitRemark(api, remark, account, callback) {
-  await setSigner(api, account.address);
   const tx = api.tx.system.remark(remark);
   const { blockHash, extrinsicIndex } = await signAndSendTx(
     tx,
@@ -65,7 +63,6 @@ export async function submitRemark(api, remark, account, callback) {
 }
 
 export async function submitFund(api, remark, transfer, account, callback) {
-  await setSigner(api, account.address);
   const txRemark = api.tx.system.remark(remark);
   const txTransfer =
     transfer.tokenIdentifier === "N"
@@ -93,8 +90,10 @@ export async function submitFund(api, remark, transfer, account, callback) {
 function signAndSendTx(tx, account, callback = () => {}) {
   return new Promise(async (resolve, reject) => {
     try {
+      const signer = await getSigner(account.address);
       const unsub = await tx.signAndSend(
         account.address,
+        { signer },
         ({ events = [], status }) => {
           if (status.isInBlock) {
             unsub();
