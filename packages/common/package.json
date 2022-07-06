@@ -28,7 +28,6 @@
     "es",
     "cjs",
     "*.js",
-    "!src",
     "!**/*.test.js"
   ],
   "keywords": [],
