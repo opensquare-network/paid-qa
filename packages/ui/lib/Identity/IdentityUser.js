@@ -1,3 +1,5 @@
+// low-level component
+
 import styled from "styled-components";
 import IdentityIcon from "./IdentityIcon";
 import ChainIcon from "../Chain/ChainIcon";
