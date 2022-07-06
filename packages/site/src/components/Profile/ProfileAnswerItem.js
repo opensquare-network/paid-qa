@@ -47,7 +47,9 @@ export default function AnswerItem({ data }) {
         content={data?.content}
         allowedTags={["a"]}
         maxLines={3}
-        plugins={[renderMentionIdentityUserPlugin(<MentionIdentityUser />)]}
+        plugins={[
+          renderMentionIdentityUserPlugin(<MentionIdentityUser hashRoute />),
+        ]}
       />
     </Card>
   );

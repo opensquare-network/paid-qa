@@ -254,7 +254,11 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
             content={answer.content}
             allowedTags={["a"]}
             maxLines={3}
-            plugins={[renderMentionIdentityUserPlugin(<MentionIdentityUser />)]}
+            plugins={[
+              renderMentionIdentityUserPlugin(
+                <MentionIdentityUser hashRoute />
+              ),
+            ]}
           />
         )}
       </Card>

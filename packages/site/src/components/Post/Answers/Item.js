@@ -60,7 +60,9 @@ export default function Item({ answer, height, onReply }) {
       <ContentWrapper>
         <MarkdownPreviewer
           content={answer.content}
-          plugins={[renderMentionIdentityUserPlugin(<MentionIdentityUser />)]}
+          plugins={[
+            renderMentionIdentityUserPlugin(<MentionIdentityUser hashRoute />),
+          ]}
         />
         <ActionBar
           answerCid={answer.cid}
