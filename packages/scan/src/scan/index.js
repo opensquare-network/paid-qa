@@ -2,11 +2,16 @@ const {
   chain: { getApi },
   utils: { sleep, getHeadUsedInGB },
   scan: { oneStepScan },
+  env: { firstScanKnowHeights },
 } = require("@osn/scan-common");
 const { scanBlock } = require("./block");
 const { getNextScanHeight } = require("../mongo/scanHeight");
 
 async function scan() {
+  if (firstScanKnowHeights()) {
+    // todo: scan known heights
+  }
+
   let toScanHeight = await getNextScanHeight();
 
   while (true) {
