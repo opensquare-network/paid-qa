@@ -35,14 +35,14 @@
   ],
   "dependencies": {
     "@craco/craco": "^6.4.3",
+    "@osn/common": "^0.0.12",
+    "@osn/constants": "1.0.0",
     "dayjs": "^1.10.8",
     "react-mde": "^11.5.0",
     "react-router-dom": "^6.3.0",
     "styled-components": "^5.3.1"
   },
   "peerDependencies": {
-    "@osn/common": "^0.0.13",
-    "@osn/constants": "1.1.0",
     "@osn/rich-text-editor": "^0.1.16",
     "react": "^17.0.2",
     "styled-components": "^5.3.1"
