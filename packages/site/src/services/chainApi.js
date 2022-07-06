@@ -15,17 +15,22 @@ export const signMessage = async (text, address) => {
     throw new Error("Sign addres is missing");
   }
 
-  await web3Enable(PROJECT_NAME);
-  const injector = await web3FromAddress(address);
+  const signer = await getSigner(address);
 
   const data = stringToHex(text);
-  const result = await injector.signer.signRaw({
+  const result = await signer.signRaw({
     type: "bytes",
     data,
     address,
   });
 
   return result.signature;
+};
+
+export const getSigner = async (signerAddress) => {
+  await web3Enable(PROJECT_NAME);
+  const injector = await web3FromAddress(signerAddress);
+  return injector.signer;
 };
 
 function extractBlockTime(extrinsics) {
@@ -85,8 +90,10 @@ export async function submitFund(api, remark, transfer, account, callback) {
 function signAndSendTx(tx, account, callback = () => {}) {
   return new Promise(async (resolve, reject) => {
     try {
+      const signer = await getSigner(account.address);
       const unsub = await tx.signAndSend(
         account.address,
+        { signer },
         ({ events = [], status }) => {
           if (status.isInBlock) {
             unsub();
