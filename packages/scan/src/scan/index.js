@@ -1,3 +1,4 @@
+const { scanKnownHeights } = require("./known");
 const {
   chain: { getApi },
   utils: { sleep, getHeadUsedInGB },
@@ -9,7 +10,7 @@ const { getNextScanHeight } = require("../mongo/scanHeight");
 
 async function scan() {
   if (firstScanKnowHeights()) {
-    // todo: scan known heights
+    await scanKnownHeights();
   }
 
   let toScanHeight = await getNextScanHeight();
