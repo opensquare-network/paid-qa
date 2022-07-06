@@ -28,6 +28,12 @@ export const signMessage = async (text, address) => {
   return result.signature;
 };
 
+export const setSigner = async (api, signerAddress) => {
+  await web3Enable(PROJECT_NAME);
+  const injector = await web3FromAddress(signerAddress);
+  api.setSigner(injector.signer);
+};
+
 function extractBlockTime(extrinsics) {
   const setTimeExtrinsic = extrinsics.find(
     (ex) => ex.method.section === "timestamp" && ex.method.method === "set"
@@ -39,6 +45,7 @@ function extractBlockTime(extrinsics) {
 }
 
 export async function submitRemark(api, remark, account, callback) {
+  await setSigner(api, account.address);
   const tx = api.tx.system.remark(remark);
   const { blockHash, extrinsicIndex } = await signAndSendTx(
     tx,
@@ -58,6 +65,7 @@ export async function submitRemark(api, remark, account, callback) {
 }
 
 export async function submitFund(api, remark, transfer, account, callback) {
+  await setSigner(api, account.address);
   const txRemark = api.tx.system.remark(remark);
   const txTransfer =
     transfer.tokenIdentifier === "N"

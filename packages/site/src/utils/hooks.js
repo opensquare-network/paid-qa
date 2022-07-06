@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
 import getApi from "@osn/common/src/services/chain/api";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import serverApi from "../services/serverApi";
-import { EmptyList, PROJECT_NAME, tabRouterMap } from "./constants";
+import { EmptyList, tabRouterMap } from "./constants";
 import { encodeNetworkAddress } from "@osn/common/src";
 import { unreadSelector } from "store/reducers/notificationSlice";
 
@@ -15,7 +14,7 @@ export function useApi() {
   const [api, setApi] = useState(null);
 
   useEffect(() => {
-    if (!account?.address || !account?.network || !nodeUrl) {
+    if (!account?.network || !nodeUrl) {
       setApi(null);
       return;
     }
@@ -24,20 +23,18 @@ export function useApi() {
     const signal = abortController.signal;
 
     (async (signal) => {
-      await web3Enable(PROJECT_NAME);
-      const injector = await web3FromAddress(account.address);
       const api = await getApi(account.network, nodeUrl);
-      api.setSigner(injector.signer);
       if (signal.aborted) {
         return;
       }
       setApi(api);
     })(signal);
+
     return () => {
       abortController.abort();
       setApi(null);
     }; //clean up
-  }, [account?.address, account?.network, nodeUrl]);
+  }, [account?.network, nodeUrl]);
 
   return api;
 }
