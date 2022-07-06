@@ -2176,10 +2176,15 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@osn/constants@1.0.0", "@osn/constants@^1.0.0":
+"@osn/constants@1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@osn/constants/-/constants-1.0.0.tgz#87dd25f7a75ef163887ba0f8912fa02f217a4044"
   integrity sha512-KdMYFiZD+11dgiYicE/A5l173ZeXnDcJkH83PmJUL+TDwDjswN3P/aF7XOOIbU3Wlmh5y6iW/KyZFYETka3XEw==
+
+"@osn/constants@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@osn/constants/-/constants-1.1.0.tgz#e098c43b7d34b5f4ae9c63772521457d4d480c95"
+  integrity sha512-Rc1LxlVvZ4OrHn+zfXe3KbZpoCJrLloxvLlHzN6nWcsw4SDOBNDguYfZPoKgR24rH8BQebgEDqu+8w0GaFAKgg==
 
 "@osn/ipfs@^0.0.3":
   version "0.0.3"
