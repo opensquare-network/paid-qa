@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import IdentityUser from "./IdentityUser";
-import { encodeNetworkAddress } from "@osn/common/src/utils/address";
+import React from "react";
+import { css } from "styled-components";
 import { secondary_blue_100, secondary_blue_500 } from "../styles/colors";
+import LinkIdentityUser from "./LinkIdentityUser";
 
-const Link = styled.a`
+const styles = css`
   font-weight: 500;
   display: inline-flex;
   padding: 0 8px;
@@ -16,20 +16,26 @@ const Link = styled.a`
   }
 `;
 
-export default function MentionIdentityUser({ network, address }) {
-  let ss58Address = address;
-  if (address && network) {
-    ss58Address = encodeNetworkAddress(address, network);
-  }
-
+export default function MentionIdentityUser({
+  network,
+  address,
+  items = ["networkIcon", "identityIcon", "text"],
+  explore,
+  hashRoute,
+  href,
+  ...restProps
+}) {
   return (
-    <Link href={`/#/network/${network}/address/${ss58Address}`}>
-      <span className="mention">@</span>
-      <IdentityUser
-        items={["networkIcon", "identityIcon", "text"]}
-        network={network}
-        address={ss58Address}
-      />
-    </Link>
+    <LinkIdentityUser
+      prefix={<span className="mention">@</span>}
+      items={items}
+      network={network}
+      address={address}
+      extraCss={styles}
+      explore={explore}
+      hashRoute={hashRoute}
+      href={href}
+      {...restProps}
+    />
   );
 }
