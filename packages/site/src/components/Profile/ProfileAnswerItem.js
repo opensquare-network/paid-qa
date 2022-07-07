@@ -6,6 +6,7 @@ import {
   renderMentionIdentityUserPlugin,
 } from "@osn/previewer";
 import TitleLink from "./styled/TitleLink";
+import Dash from "../Dash";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -13,11 +14,6 @@ const StyledDividerWrapper = styled(Flex)`
   > :nth-child(2) {
     font-weight: 500;
     color: #1e2134;
-  }
-  > :nth-child(2)::after {
-    content: "·";
-    margin: 0 8px;
-    color: #a1a8b3;
   }
 `;
 
@@ -31,7 +27,7 @@ export default function AnswerItem({ data }) {
           <TitleLink to={`/topic/${data?.topic?.cid}`}>
             {data?.topic?.title}
           </TitleLink>
-          &nbsp;
+          <Dash />
           <Time time={data?.createdAt} />
         </StyledDividerWrapper>
       }

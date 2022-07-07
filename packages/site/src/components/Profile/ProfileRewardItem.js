@@ -8,6 +8,7 @@ import {
   text_dark_minor,
 } from "@osn/common-ui/lib/styles/colors";
 import TitleLink from "./styled/TitleLink";
+import Dash from "../Dash";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -16,12 +17,6 @@ const StyledDividerWrapper = styled(Flex)`
   > :nth-child(2) {
     font-weight: 500;
     color: ${text_dark_major};
-  }
-
-  > :nth-child(5)::after {
-    content: "·";
-    margin: 0 8px;
-    color: ${text_dark_accessory};
   }
 `;
 
@@ -60,6 +55,7 @@ export default function RewardItem({ data }) {
         <TitleLink to={`/topic/${topic?.cid}`}>
           <TextMajor>{topic?.title}</TextMajor>
         </TitleLink>
+        <Dash />
         <TextAccessory>
           <Time time={data?.indexer?.blockTime} />
         </TextAccessory>

@@ -21,13 +21,7 @@ import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/constants";
 import { useState } from "react";
-
-const dot = css`
-  &::after {
-    content: "·";
-    margin: 0 8px;
-  }
-`;
+import Dash from "../Dash";
 
 const NotificationItemWrapper = styled.div`
   &:hover {
@@ -69,7 +63,6 @@ const InfoWrapper = styled(FlexBetween)`
 const Type = styled.div`
   text-transform: capitalize;
   color: ${text_dark_minor};
-  ${dot}
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     &::after {
@@ -81,7 +74,6 @@ const Amount = styled.span`
   ${p_14_medium};
   white-space: nowrap;
   margin: 0;
-  ${dot}
 `;
 const Title = styled.p`
   ${p_14_medium};
@@ -200,9 +192,12 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
     const { bounty } = { ...support, ...fund };
 
     titlePrefix = (
-      <Amount>
-        {bounty?.value} {bounty?.symbol}
-      </Amount>
+      <>
+        <Amount>
+          {bounty?.value} {bounty?.symbol}
+        </Amount>
+        <Dash />
+      </>
     );
   }
 
@@ -214,6 +209,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
           <Head>
             <TitleWrapper>
               <Type>{type}</Type>
+              <Dash />
               <Title>
                 {titlePrefix}
                 <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
