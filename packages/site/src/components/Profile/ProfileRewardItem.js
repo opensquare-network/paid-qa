@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Flex, Card, Time, ChainIcon, Avatar } from "@osn/common-ui";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
-import { Link } from "react-router-dom";
 import IdentityOrAddr from "../User/IdentityOrAddr";
 import {
   text_dark_accessory,
   text_dark_major,
   text_dark_minor,
 } from "@osn/common-ui/lib/styles/colors";
+import TitleLink from "./styled/TitleLink";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -57,9 +57,9 @@ export default function RewardItem({ data }) {
           {data?.bounty?.value} {data?.bounty?.symbol}
         </TextMajor>
         &nbsp;in&nbsp;
-        <Link to={`/topic/${topic?.cid}`}>
+        <TitleLink to={`/topic/${topic?.cid}`}>
           <TextMajor>{topic?.title}</TextMajor>
-        </Link>
+        </TitleLink>
         <TextAccessory>
           <Time time={data?.indexer?.blockTime} />
         </TextAccessory>

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Card, FlexBetween, Flex, ProgressBar } from "@osn/common-ui";
-import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/constants";
 import StatusTag from "components/StatusTag";
+import TitleLink from "./styled/TitleLink";
 
 const NoWrap = styled.span`
   white-space: nowrap;
@@ -68,11 +68,11 @@ export default function PromiseItem({ data }) {
               {data?.promises?.map((p) => `${p.value} ${p.symbol}`).join(", ")}
             </TextMajor>
             <NoWrap>&nbsp;in&nbsp;</NoWrap>
-            <Link to={`/topic/${data?.topic?.cid}`}>
+            <TitleLink to={`/topic/${data?.topic?.cid}`}>
               <TextMajor style={{ whiteSpace: "pre-wrap" }}>
                 {data?.topic?.title}
               </TextMajor>
-            </Link>
+            </TitleLink>
           </TextWrap>
 
           <StatusTag status={resolved ? "resolved" : "active"} />
