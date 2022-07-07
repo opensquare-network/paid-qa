@@ -11,14 +11,10 @@ const {
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { getApi, submitRemarks } = require("../services/node.service");
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const BATCH_SIZE = 100;
-const FLUSH_INTERVAL = 3600 * 1000;
+const BATCH_SIZE = 1000;
 const batches = {};
 
 async function flushBatch(batch) {
-  batch.lastFlushTime = Date.now();
   if (batch.data.length === 0) {
     return;
   }
@@ -63,7 +59,6 @@ async function startSubmitAnswers(network) {
     // Initialize batch data
     batches[network] = {
       network,
-      lastFlushTime: 0,
       data: [],
     };
   }
@@ -72,7 +67,8 @@ async function startSubmitAnswers(network) {
   const answers = await Answer.find({
     status: OnChainStatus.Reserved,
     network,
-  });
+  }).limit(1000);
+
   for (const answer of answers) {
     try {
       await submitAnswer(batch, answer);
@@ -80,10 +76,9 @@ async function startSubmitAnswers(network) {
       console.error(e);
     }
   }
-  // Force to do batch submit in intervals
-  if (Date.now() - batch.lastFlushTime > FLUSH_INTERVAL) {
-    await flushBatch(batch);
-  }
+
+  // Force to do batch submit for the rest
+  await flushBatch(batch);
 }
 
 async function main() {
@@ -91,18 +86,14 @@ async function main() {
     status: OnChainStatus.Reserved,
   }).distinct("network");
 
-  while (true) {
-    try {
-      for (const network of networks) {
-        await startSubmitAnswers(network);
-      }
-      console.log(`Last submit at:`, new Date());
-    } catch (e) {
-      console.error(e);
+  try {
+    for (const network of networks) {
+      await startSubmitAnswers(network);
     }
-
-    await sleep(30 * 1000);
+    console.log(`Last submit at:`, new Date());
+  } catch (e) {
+    console.error(e);
   }
 }
 
-main();
+main().finally(() => process.exit());
