@@ -11,29 +11,26 @@ const {
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { getApi, submitRemarks } = require("../services/node.service");
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const BATCH_SIZE = 100;
-const FLUSH_INTERVAL = 3600 * 1000;
+const BATCH_SIZE = 1000;
 const batches = {};
 
-async function flushBatch(batch) {
-  batch.lastFlushTime = Date.now();
-  if (batch.data.length === 0) {
+async function flushBatch(network) {
+  const batch = batches[network];
+  if (batch.length === 0) {
     return;
   }
 
-  const api = getApi(batch.network);
+  const api = getApi(network);
   const result = await submitRemarks(
     api,
-    batch.data.map((i) => i.remark)
+    batch.map((i) => i.remark)
   );
 
   if (result.status === "success") {
     await Answer.updateMany(
       {
         cid: {
-          $in: batch.data.map((i) => i.answerCid),
+          $in: batch.map((i) => i.answerCid),
         },
       },
       { status: OnChainStatus.Published }
@@ -41,49 +38,40 @@ async function flushBatch(batch) {
   }
 }
 
-async function batchSend(batch, answerCid, remark) {
-  batch.data.push({ answerCid, remark });
-  if (batch.data.length >= BATCH_SIZE) {
-    await flushBatch(batch);
+async function batchSend(network, answerCid, remark) {
+  const batch = batches[network];
+
+  batch.push({ answerCid, remark });
+  if (batch.length >= BATCH_SIZE) {
+    await flushBatch(network);
   }
 }
 
-async function submitAnswer(batch, answer) {
+async function submitAnswer(network, answer) {
   const interaction = new AnswerInteraction(answer.cid);
   const remark = new InteractionEncoder(interaction).getRemark();
 
-  await batchSend(batch, answer.cid, remark);
+  await batchSend(network, answer.cid, remark);
 }
 
 async function startSubmitAnswers(network) {
-  if (batches[network]) {
-    // Clear old batch data
-    batches[network].data = [];
-  } else {
-    // Initialize batch data
-    batches[network] = {
-      network,
-      lastFlushTime: 0,
-      data: [],
-    };
-  }
-  const batch = batches[network];
+  batches[network] = [];
 
   const answers = await Answer.find({
     status: OnChainStatus.Reserved,
     network,
-  });
+  }).limit(1000);
+
   for (const answer of answers) {
     try {
-      await submitAnswer(batch, answer);
+      await submitAnswer(network, answer);
     } catch (e) {
       console.error(e);
     }
   }
-  // Force to do batch submit in intervals
-  if (Date.now() - batch.lastFlushTime > FLUSH_INTERVAL) {
-    await flushBatch(batch);
-  }
+
+  // Force to do batch submit for the rest
+  await flushBatch(network);
 }
 
 async function main() {
@@ -91,18 +79,14 @@ async function main() {
     status: OnChainStatus.Reserved,
   }).distinct("network");
 
-  while (true) {
-    try {
-      for (const network of networks) {
-        await startSubmitAnswers(network);
-      }
-      console.log(`Last submit at:`, new Date());
-    } catch (e) {
-      console.error(e);
+  try {
+    for (const network of networks) {
+      await startSubmitAnswers(network);
     }
-
-    await sleep(30 * 1000);
+    console.log(`Last submit at:`, new Date());
+  } catch (e) {
+    console.error(e);
   }
 }
 
-main();
+main().finally(() => process.exit());

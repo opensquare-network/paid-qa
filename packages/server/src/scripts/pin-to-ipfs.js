@@ -8,10 +8,8 @@ const {
 } = require("@paid-qa/backend-common/src/models");
 const { ipfsAdd } = require("../services/ipfs.service");
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 async function startPinTopics() {
-  const topics = await Topic.find({ pinned: { $ne: true } });
+  const topics = await Topic.find({ pinned: { $ne: true } }).limit(50);
   for (const topic of topics) {
     try {
       const added = await ipfsAdd(topic.data);
@@ -31,7 +29,7 @@ async function startPinTopics() {
 }
 
 async function startPinAppendants() {
-  const appendants = await Appendant.find({ pinned: false });
+  const appendants = await Appendant.find({ pinned: false }).limit(50);
   for (const appendant of appendants) {
     try {
       const added = await ipfsAdd(appendant.data);
@@ -51,7 +49,7 @@ async function startPinAppendants() {
 }
 
 async function startPinAnswers() {
-  const answers = await Answer.find({ pinned: false });
+  const answers = await Answer.find({ pinned: false }).limit(50);
   for (const answer of answers) {
     try {
       const added = await ipfsAdd(answer.data);
@@ -79,16 +77,12 @@ async function startPin() {
 }
 
 async function main() {
-  while (true) {
-    try {
-      await startPin();
-      console.log(`Last pin at:`, new Date());
-    } catch (e) {
-      console.error(e);
-    }
-
-    await sleep(30 * 1000);
+  try {
+    await startPin();
+    console.log(`Last pin at:`, new Date());
+  } catch (e) {
+    console.error(e);
   }
 }
 
-main();
+main().finally(() => process.exit());
