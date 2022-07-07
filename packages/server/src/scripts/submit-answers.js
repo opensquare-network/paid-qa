@@ -11,67 +11,42 @@ const {
 } = require("@paid-qa/backend-common/src/utils/constants");
 const { getApi, submitRemarks } = require("../services/node.service");
 
-const BATCH_SIZE = 1000;
-const batches = {};
+const MAX_BATCH_SIZE = 1000;
 
-async function flushBatch(network) {
-  const batch = batches[network];
-  if (batch.length === 0) {
+async function submitAnswers(network, answers = []) {
+  if (answers.length <= 0) {
     return;
   }
 
+  let cids = [];
+  let remarks = [];
+  for (const answer of answers) {
+    const interaction = new AnswerInteraction(answer.cid);
+    const remark = new InteractionEncoder(interaction).getRemark();
+    cids.push(answer.cid);
+    remarks.push(remark);
+  }
+
   const api = getApi(network);
-  const result = await submitRemarks(
-    api,
-    batch.map((i) => i.remark)
-  );
+  const result = await submitRemarks(api, remarks);
 
   if (result.status === "success") {
     await Answer.updateMany(
       {
-        cid: {
-          $in: batch.map((i) => i.answerCid),
-        },
+        cid: { $in: cids },
       },
       { status: OnChainStatus.Published }
     );
   }
 }
 
-async function batchSend(network, answerCid, remark) {
-  const batch = batches[network];
-
-  batch.push({ answerCid, remark });
-  if (batch.length >= BATCH_SIZE) {
-    await flushBatch(network);
-  }
-}
-
-async function submitAnswer(network, answer) {
-  const interaction = new AnswerInteraction(answer.cid);
-  const remark = new InteractionEncoder(interaction).getRemark();
-
-  await batchSend(network, answer.cid, remark);
-}
-
 async function startSubmitAnswers(network) {
-  batches[network] = [];
-
   const answers = await Answer.find({
     status: OnChainStatus.Reserved,
     network,
-  }).limit(1000);
+  }).limit(MAX_BATCH_SIZE);
 
-  for (const answer of answers) {
-    try {
-      await submitAnswer(network, answer);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  // Force to do batch submit for the rest
-  await flushBatch(network);
+  await submitAnswers(network, answers);
 }
 
 async function main() {
