@@ -44,6 +44,12 @@ async function getTopics(symbol, status, title, page, pageSize) {
                   "indexer.blockTime": 1,
                 },
               },
+              {
+                $project: {
+                  _id: 0,
+                  __v: 0,
+                },
+              },
             ],
             as: "rewards",
           },
@@ -105,9 +111,19 @@ async function getTopics(symbol, status, title, page, pageSize) {
               },
               {
                 $addFields: {
+                  "bounty.value": { $toString: "$bounty.value" },
                   answersCount: {
                     $arrayElemAt: ["$answersCount.count", 0],
                   },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  __v: 0,
+                  data: 0,
+                  pinned: 0,
+                  statusSort: 0,
                 },
               },
             ],
@@ -142,15 +158,18 @@ async function getTopics(symbol, status, title, page, pageSize) {
             default: 2,
           },
         },
+        "bounty.value": { $toString: "$bounty.value" },
       })
       .sort({ statusSort: 1, "indexer.blockTime": -1 })
       .skip((page - 1) * pageSize)
-      .limit(pageSize);
+      .limit(pageSize)
+      .project({ _id: 0, __v: 0, data: 0, pinned: 0, statusSort: 0 });
 
     await Promise.all([
       Topic.populate(topics, { path: "answersCount" }),
       Topic.populate(topics, {
         path: "rewards",
+        select: "-_id -__v",
         options: { sort: { "indexer.blockTime": 1 } },
       }),
     ]);
