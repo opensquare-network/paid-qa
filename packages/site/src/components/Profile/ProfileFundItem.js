@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Flex, Card, Time, ChainIcon, Avatar } from "@osn/common-ui";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
-import { Link } from "react-router-dom";
 import IdentityOrAddr from "../User/IdentityOrAddr";
 import {
   text_dark_accessory,
   text_dark_major,
   text_dark_minor,
 } from "@osn/common-ui/lib/styles/colors";
+import TitleLink from "./styled/TitleLink";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -37,13 +37,6 @@ const MarginX8 = styled(Flex)`
 
 const TextAccessory = styled.div`
   color: ${text_dark_accessory};
-`;
-
-const TitleLink = styled(Link)`
-  cursor: pointer;
-  :hover {
-    text-decoration: underline;
-  }
 `;
 
 export default function FundItem({ data }) {

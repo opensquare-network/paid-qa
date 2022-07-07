@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Card, FlexBetween, Flex, ProgressBar } from "@osn/common-ui";
-import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/constants";
 import StatusTag from "components/StatusTag";
+import TitleLink from "./styled/TitleLink";
 
 const NoWrap = styled.span`
   white-space: nowrap;
@@ -52,13 +52,6 @@ const Process = styled(Flex)`
   }
   > :nth-child(2) {
     line-height: 24px;
-  }
-`;
-
-const TitleLink = styled(Link)`
-  cursor: pointer;
-  :hover {
-    text-decoration: underline;
   }
 `;
 
