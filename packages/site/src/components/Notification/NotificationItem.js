@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import NetworkUser from "../User/NetworkUser";
 import {
