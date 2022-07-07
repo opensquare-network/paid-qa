@@ -14,22 +14,23 @@ const { getApi, submitRemarks } = require("../services/node.service");
 const BATCH_SIZE = 1000;
 const batches = {};
 
-async function flushBatch(batch) {
-  if (batch.data.length === 0) {
+async function flushBatch(network) {
+  const batch = batches[network];
+  if (batch.length === 0) {
     return;
   }
 
-  const api = getApi(batch.network);
+  const api = getApi(network);
   const result = await submitRemarks(
     api,
-    batch.data.map((i) => i.remark)
+    batch.map((i) => i.remark)
   );
 
   if (result.status === "success") {
     await Answer.updateMany(
       {
         cid: {
-          $in: batch.data.map((i) => i.answerCid),
+          $in: batch.map((i) => i.answerCid),
         },
       },
       { status: OnChainStatus.Published }
@@ -37,32 +38,24 @@ async function flushBatch(batch) {
   }
 }
 
-async function batchSend(batch, answerCid, remark) {
-  batch.data.push({ answerCid, remark });
-  if (batch.data.length >= BATCH_SIZE) {
-    await flushBatch(batch);
+async function batchSend(network, answerCid, remark) {
+  const batch = batches[network];
+
+  batch.push({ answerCid, remark });
+  if (batch.length >= BATCH_SIZE) {
+    await flushBatch(network);
   }
 }
 
-async function submitAnswer(batch, answer) {
+async function submitAnswer(network, answer) {
   const interaction = new AnswerInteraction(answer.cid);
   const remark = new InteractionEncoder(interaction).getRemark();
 
-  await batchSend(batch, answer.cid, remark);
+  await batchSend(network, answer.cid, remark);
 }
 
 async function startSubmitAnswers(network) {
-  if (batches[network]) {
-    // Clear old batch data
-    batches[network].data = [];
-  } else {
-    // Initialize batch data
-    batches[network] = {
-      network,
-      data: [],
-    };
-  }
-  const batch = batches[network];
+  batches[network] = [];
 
   const answers = await Answer.find({
     status: OnChainStatus.Reserved,
@@ -71,14 +64,14 @@ async function startSubmitAnswers(network) {
 
   for (const answer of answers) {
     try {
-      await submitAnswer(batch, answer);
+      await submitAnswer(network, answer);
     } catch (e) {
       console.error(e);
     }
   }
 
   // Force to do batch submit for the rest
-  await flushBatch(batch);
+  await flushBatch(network);
 }
 
 async function main() {
