@@ -7,7 +7,11 @@ async function getAnswers(topicCid, page, pageSize) {
     .sort({ createdAt: 1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("funds");
+    .populate({
+      path: "funds",
+      select: "-_id -__v",
+    })
+    .select("-_id -__v -data -pinned");
 
   return {
     items: answers,
