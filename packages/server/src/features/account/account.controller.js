@@ -22,7 +22,11 @@ async function getAccountTopics(ctx) {
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("answersCount")
-    .populate("rewards");
+    .populate({
+      path: "rewards",
+      select: "-_id -__v",
+    })
+    .select("-_id -__v -data -pinned");
 
   ctx.body = {
     items: topics,
@@ -59,6 +63,7 @@ async function getAccountPromisedTopics(ctx) {
   // Reterive topics resolves
   await Topic.populate(topics, {
     path: "resolves",
+    select: "-_id -__v",
     match: {
       sponsorPublicKey: signerPublicKey,
     },
@@ -103,7 +108,7 @@ async function getAccountPromisedTopics(ctx) {
   // Load topic details
   const topicDetails = await Topic.find({
     cid: { $in: paginatedTopics.map((item) => item.cid) },
-  });
+  }).select("-_id -__v -data -pinned");
   for (const topic of paginatedTopics) {
     topic.topic = topicDetails.find((item) => item.cid === topic.cid);
   }
@@ -183,11 +188,19 @@ async function getAccountFunds(ctx) {
     .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("topic")
+    .populate({
+      path: "topic",
+      select: "-_id -__v -data -pinned",
+    })
     .populate({
       path: "answer",
-      populate: "topic",
-    });
+      select: "-_id -__v -data -pinned",
+      populate: {
+        path: "topic",
+        select: "-_id -__v -data -pinned",
+      },
+    })
+    .select("-_id -__v");
 
   ctx.body = {
     items: funds,
@@ -208,11 +221,19 @@ async function getAccountRewards(ctx) {
     .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("topic")
+    .populate({
+      path: "topic",
+      select: "-_id -__v -data -pinned",
+    })
     .populate({
       path: "answer",
-      populate: "topic",
-    });
+      select: "-_id -__v -data -pinned",
+      populate: {
+        path: "topic",
+        select: "-_id -__v -data -pinned",
+      },
+    })
+    .select("-_id -__v");
 
   ctx.body = {
     items: rewards,
@@ -233,7 +254,11 @@ async function getAccountAnswers(ctx) {
     .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("topic");
+    .populate({
+      path: "topic",
+      select: "-_id -__v -data -pinned",
+    })
+    .select("-_id -__v -data -pinned");
 
   ctx.body = {
     items: topics,
