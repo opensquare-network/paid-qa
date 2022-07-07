@@ -55,6 +55,13 @@ const Process = styled(Flex)`
   }
 `;
 
+const TitleLink = styled(Link)`
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
 export default function PromiseItem({ data }) {
   const resolved = data?.resolves?.length > 0;
 
@@ -68,11 +75,11 @@ export default function PromiseItem({ data }) {
               {data?.promises?.map((p) => `${p.value} ${p.symbol}`).join(", ")}
             </TextMajor>
             <NoWrap>&nbsp;in&nbsp;</NoWrap>
-            <Link to={`/topic/${data?.topic?.cid}`}>
+            <TitleLink to={`/topic/${data?.topic?.cid}`}>
               <TextMajor style={{ whiteSpace: "pre-wrap" }}>
                 {data?.topic?.title}
               </TextMajor>
-            </Link>
+            </TitleLink>
           </TextWrap>
 
           <StatusTag status={resolved ? "resolved" : "active"} />

@@ -39,6 +39,13 @@ const TextAccessory = styled.div`
   color: ${text_dark_accessory};
 `;
 
+const TitleLink = styled(Link)`
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
 export default function FundItem({ data }) {
   const topic = data?.topic ?? data?.answer?.topic;
 
@@ -57,9 +64,9 @@ export default function FundItem({ data }) {
           {data?.bounty?.value} {data?.bounty?.symbol}
         </TextMajor>
         &nbsp;in&nbsp;
-        <Link to={`/topic/${topic?.cid}`}>
+        <TitleLink to={`/topic/${topic?.cid}`}>
           <TextMajor>{topic?.title}</TextMajor>
-        </Link>
+        </TitleLink>
         <TextAccessory>
           <Time time={data?.indexer?.blockTime} />
         </TextAccessory>
