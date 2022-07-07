@@ -17,6 +17,10 @@ async function fetchAnswer(answer) {
     return;
   }
 
+  /**
+   * FIXME: we should check the signature validity before update the data to database.
+   *  We may need set a field to mark the invalidity, then we don't have to sync it to business database.
+   */
   const {
     answer: { topic, content } = {},
     address,
