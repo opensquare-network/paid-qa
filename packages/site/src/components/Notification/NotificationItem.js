@@ -86,6 +86,7 @@ const Amount = styled.span`
 const Title = styled.p`
   ${p_14_medium};
   margin: 0;
+  cursor: pointer;
 
   @media screen and (min-width: ${MOBILE_SIZE - 1}px) {
     text-overflow: ellipsis;
