@@ -29,7 +29,7 @@ async function report(ctx) {
 
   // Check signature
   const msg = JSON.stringify(data);
-  const isValid = isValidSignature(msg, signature, address);
+  const isValid = await isValidSignature(msg, signature, address);
   if (!isValid) {
     throw new HttpError(400, "Signature is invalid");
   }

@@ -1,6 +1,7 @@
-const { signatureVerify } = require("@polkadot/util-crypto");
+const { signatureVerify, cryptoWaitReady } = require("@polkadot/util-crypto");
 
-function isValidSignature(signedMessage, signature, address) {
+async function isValidSignature(signedMessage, signature, address) {
+  await cryptoWaitReady();
   try {
     const result = signatureVerify(signedMessage, signature, address);
     return result.isValid;

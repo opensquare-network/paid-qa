@@ -18,7 +18,7 @@ async function postAnswer(data) {
 
   // Check signature
   const msg = JSON.stringify(answer);
-  const isValid = isValidSignature(msg, signature, signer);
+  const isValid = await isValidSignature(msg, signature, signer);
   if (!isValid) {
     throw new HttpError(400, "Signature is invalid");
   }

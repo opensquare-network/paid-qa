@@ -28,7 +28,7 @@ async function fetchAnswer(answer) {
   } = answerData;
 
   const msg = JSON.stringify({ topic, content });
-  const isValid = isValidSignature(msg, signature, address);
+  const isValid = await isValidSignature(msg, signature, address);
   if (!isValid) {
     await Answer.updateOne(
       { _id: answer._id },
