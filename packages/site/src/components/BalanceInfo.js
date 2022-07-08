@@ -26,7 +26,11 @@ const Wrapper = styled(FlexBetween)`
   }
 `;
 
-export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
+export default function BalanceInfo({
+  account,
+  tokenIdentifier = "N",
+  onBalanceChange = () => {},
+}) {
   const [symbol, setSymbol] = useState();
   const [decimals, setDecimals] = useState(0);
   const [balance, setBalance] = useState("0");
@@ -34,6 +38,10 @@ export default function BalanceInfo({ account, tokenIdentifier = "N" }) {
   const [loadingBalance, setLoadingBalance] = useState(false);
   const isMounted = useIsMounted();
   const api = useApi();
+
+  useEffect(() => {
+    onBalanceChange(balance);
+  }, [onBalanceChange, balance]);
 
   const setUnknownSymbol = () => {
     setSymbol(null);

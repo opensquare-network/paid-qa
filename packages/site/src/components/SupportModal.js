@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
@@ -47,12 +47,21 @@ const StyledDescription = styled.p`
   color: #506176;
 `;
 
+const ErrorMessage = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #ee4444;
+`;
+
 export default function SupportModal({ open, setOpen, topicCid }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [symbol, setSymbol] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const api = useApi();
   const isMounted = useIsMounted();
 
@@ -62,6 +71,27 @@ export default function SupportModal({ open, setOpen, topicCid }) {
       setOpen(false);
     }
   };
+
+  useEffect(() => {
+    if (!inputAmount) {
+      setErrorMessage("");
+      return;
+    }
+
+    const bnAmount = new BigNumber(inputAmount);
+    if (bnAmount.isNaN()) {
+      setErrorMessage(`Amount must be a number`);
+      return;
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (bnAmount.lt(minimum)) {
+      setErrorMessage(`Amount cannot be less than minimum: ${minimum}`);
+      return;
+    }
+
+    setErrorMessage("");
+  }, [symbol, inputAmount]);
 
   const doConfirm = async () => {
     setOpen(false);
@@ -145,7 +175,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         open={open}
         setOpen={setOpen}
         okText="Confirm"
-        disableButton={!symbol || !inputAmount}
+        disableButton={!symbol || !inputAmount || errorMessage}
         onOk={doConfirm}
       >
         <StyledTitle>Promise</StyledTitle>
@@ -166,6 +196,8 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         <StyledDescription>
           Promise amount is not limited by the balance.
         </StyledDescription>
+
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Modal>
     </Wrapper>
   );
