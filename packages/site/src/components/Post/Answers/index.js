@@ -37,6 +37,7 @@ import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
 import { identityChainMap } from "@osn/constants";
 import NetworkUser from "components/User/NetworkUser";
+import { MentionIdentityUser } from "@osn/common-ui";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -254,6 +255,7 @@ export default function Answers({ topicCid }) {
             submitButtonName="Reply"
             submitting={loading}
             loadSuggestions={loadSuggestions}
+            identifier={<MentionIdentityUser hashRoute target="_blank" />}
           />
         </EditorWrapper>
       )}
