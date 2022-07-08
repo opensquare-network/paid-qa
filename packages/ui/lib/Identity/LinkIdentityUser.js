@@ -9,6 +9,11 @@ const Link = styled.a`
   ${(p) => p.extraCss}
 `;
 
+/**
+ * @requires `hashRoute` or `explore` - boolean
+ *
+ * The `a` tag wrapped with identity user logic
+ */
 export default function LinkIdentityUser({
   network,
   address,
@@ -18,6 +23,7 @@ export default function LinkIdentityUser({
   explore,
   hashRoute,
   href = "",
+  target,
   ...restProps
 }) {
   let linkProps = {
@@ -48,7 +54,7 @@ export default function LinkIdentityUser({
   }
 
   return (
-    <Link {...restProps} {...linkProps} extraCss={extraCss}>
+    <Link target={target} {...restProps} {...linkProps} extraCss={extraCss}>
       {prefix}
       <IdentityUser items={items} network={network} address={ss58Address} />
     </Link>
