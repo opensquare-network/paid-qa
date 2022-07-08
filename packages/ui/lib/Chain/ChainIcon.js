@@ -22,6 +22,7 @@ import Westmint from "../imgs/icons/chain/wesmint.png";
 import Statemine from "../imgs/icons/chain/statemine.png";
 import Statemint from "../imgs/icons/chain/statemint.png";
 import Karura from "../imgs/icons/chain/karura.png";
+import Phala from "../imgs/icons/chain/phala.png";
 import styled from "styled-components";
 import Tooltip from "../Tooltip";
 
@@ -55,6 +56,7 @@ const pngs = {
   Turing,
   Crab,
   Darwinia,
+  Phala,
 };
 
 // since nextjs v11, import image assets will return an object { src, ... }
