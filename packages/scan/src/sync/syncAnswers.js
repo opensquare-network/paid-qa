@@ -47,7 +47,11 @@ async function syncAnswer(answer) {
 }
 
 async function syncAnswers() {
-  const answers = await Answer.find({ parsed: true, synced: { $ne: true } });
+  const answers = await Answer.find({
+    parsed: true,
+    invalid: { $ne: true },
+    synced: { $ne: true },
+  });
   console.log(`Syncing ${answers.length} answers`);
   for (const answer of answers) {
     console.log(`Syncing answer ${answer.cid}`);
