@@ -36,6 +36,7 @@ function RichEdit(
     disabled = false,
     errorMsg = "",
     loadSuggestions = () => [],
+    identifier,
   },
   ref
 ) {
@@ -46,6 +47,7 @@ function RichEdit(
         value={content}
         onChange={setContent}
         loadSuggestions={loadSuggestions}
+        identifier={identifier}
       />
 
       {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
