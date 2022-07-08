@@ -16,6 +16,11 @@ const styles = css`
   }
 `;
 
+/**
+ * @requires `hashRoute` or `explore` - boolean
+ *
+ * The `LinkIdentityUser(a)` component wrapped with mention styles
+ */
 export default function MentionIdentityUser({
   network,
   address,
@@ -23,6 +28,7 @@ export default function MentionIdentityUser({
   explore,
   hashRoute,
   href,
+  target,
   ...restProps
 }) {
   return (
@@ -35,6 +41,7 @@ export default function MentionIdentityUser({
       explore={explore}
       hashRoute={hashRoute}
       href={href}
+      target={target}
       {...restProps}
     />
   );
