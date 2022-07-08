@@ -1,5 +1,7 @@
 const { HttpError } = require("../../utils/exc");
-const { isValidSignature } = require("../../utils/signature");
+const {
+  isValidSignature,
+} = require("@paid-qa/backend-common/src/utils/signature");
 const { Report, Topic, Answer } = require("@paid-qa/backend-common/src/models");
 const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 

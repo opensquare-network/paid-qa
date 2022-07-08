@@ -1,6 +1,8 @@
 const { Topic, Answer } = require("@paid-qa/backend-common/src/models");
+const {
+  isValidSignature,
+} = require("@paid-qa/backend-common/src/utils/signature");
 const { HttpError } = require("../../utils/exc");
-const { isValidSignature } = require("../../utils/signature");
 const {
   OnChainStatus,
 } = require("@paid-qa/backend-common/src/utils/constants");
