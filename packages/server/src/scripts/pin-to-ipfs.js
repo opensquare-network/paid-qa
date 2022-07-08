@@ -29,7 +29,7 @@ async function startPinTopics() {
   const topics = await Topic.find({ pinned: { $ne: true } }).limit(50);
   let promises = [];
   for (const topic of topics) {
-    promises.push(await pinOneTopic(topic));
+    promises.push(pinOneTopic(topic));
   }
 
   await Promise.all(promises);
@@ -56,7 +56,7 @@ async function startPinAppendants() {
   const appendants = await Appendant.find({ pinned: false }).limit(50);
   let promises = [];
   for (const appendant of appendants) {
-    promises.push(await pinOneAppendant(appendant));
+    promises.push(pinOneAppendant(appendant));
   }
 
   await Promise.all(promises);
@@ -83,7 +83,7 @@ async function startPinAnswers() {
   const answers = await Answer.find({ pinned: false }).limit(50);
   let promises = [];
   for (const answer of answers) {
-    promises.push(await pinOneAnswer(answer));
+    promises.push(pinOneAnswer(answer));
   }
 
   await Promise.all(promises);
