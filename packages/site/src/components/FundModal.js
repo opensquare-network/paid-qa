@@ -109,12 +109,40 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [symbol, setSymbol] = useState("");
   const [decimals, setDecimals] = useState(0);
+  const [balance, setBalance] = useState(0);
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [loadingSymbol, setLoadingSymbol] = useState(false);
   const isMounted = useIsMounted();
   const answers = useSelector(answersSelector);
   const topic = useSelector(topicSelector);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (!inputAmount) {
+      setErrorMessage("");
+      return;
+    }
+
+    const bnAmount = new BigNumber(inputAmount);
+    if (bnAmount.isNaN()) {
+      setErrorMessage(`Amount must be a number`);
+      return;
+    }
+
+    if (bnAmount.times(Math.pow(10, decimals)).gt(balance)) {
+      setErrorMessage(`Balance insufficient`);
+      return;
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (bnAmount.lt(minimum)) {
+      setErrorMessage(`Amount cannot be less than minimum: ${minimum}`);
+      return;
+    }
+
+    setErrorMessage("");
+  }, [symbol, inputAmount, decimals, balance]);
 
   const api = useApi();
 
@@ -256,7 +284,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         open={open}
         setOpen={setOpen}
         okText="Confirm"
-        disableButton={!symbol || !inputAmount}
+        disableButton={!symbol || !inputAmount || errorMessage}
         onOk={doConfirm}
       >
         <StyledTitle>Fund</StyledTitle>
@@ -299,7 +327,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
           onChange={(e) => setInputAmount(e.target.value)}
         />
 
-        <BalanceInfo account={account} tokenIdentifier={tokenIdentifier} />
+        <BalanceInfo
+          account={account}
+          tokenIdentifier={tokenIdentifier}
+          onBalanceChange={setBalance}
+        />
+
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Modal>
     </Wrapper>
   );
