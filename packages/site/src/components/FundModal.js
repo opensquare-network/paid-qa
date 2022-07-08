@@ -284,7 +284,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         open={open}
         setOpen={setOpen}
         okText="Confirm"
-        disableButton={!symbol || !inputAmount}
+        disableButton={!symbol || !inputAmount || errorMessage}
         onOk={doConfirm}
       >
         <StyledTitle>Fund</StyledTitle>
