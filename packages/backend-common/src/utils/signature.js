@@ -1,9 +1,9 @@
-const { encodeAddress, signatureVerify } = require("@polkadot/util-crypto");
+const { signatureVerify } = require("@polkadot/util-crypto");
 
 function isValidSignature(signedMessage, signature, address) {
-  const result = signatureVerify(signedMessage, signature, address);
   try {
-    return encodeAddress(result.publicKey, 42) === encodeAddress(address, 42);
+    const result = signatureVerify(signedMessage, signature, address);
+    return result.isValid;
   } catch (e) {
     return false;
   }
