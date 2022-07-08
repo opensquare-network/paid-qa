@@ -28,6 +28,16 @@ async function fetchAnswer(answer) {
     signature,
   } = answerData;
 
+  const msg = JSON.stringify({ topic, content });
+  const isValid = await isValidSignature(msg, signature, address);
+  if (!isValid) {
+    await Answer.updateOne(
+      { _id: answer._id },
+      { parsed: true, invalid: true }
+    );
+    return;
+  }
+
   await Answer.updateOne(
     { _id: answer._id },
     {
