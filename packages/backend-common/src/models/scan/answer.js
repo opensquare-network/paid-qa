@@ -19,6 +19,7 @@ const AnswerSchema = new mongoose.Schema(
     cid: RequiredString,
     parsed: Boolean,
     synced: Boolean,
+    invalid: Boolean,
     retries: Number,
     lastRetryTime: Date,
   },
