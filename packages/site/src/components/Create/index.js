@@ -25,7 +25,7 @@ import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import RewardDetail from "./RewardDetail";
-import { RichEditor } from "@osn/common-ui";
+import RichEditor from "@osn/common-ui/lib/RichEditor";
 import {
   DEFAULT_MINIMUM_FUND_AMOUNT,
   MINIMUM_FUND_AMOUNTS,

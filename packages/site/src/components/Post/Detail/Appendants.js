@@ -5,12 +5,12 @@ import { ReactComponent as AddIcon } from "./icons/add-appendant.svg";
 
 import {
   DividerWrapper,
-  RichEditor,
   Time,
   FlexBetween,
   FlexCenter,
   IpfsSquare,
 } from "@osn/common-ui";
+import RichEditor from "@osn/common-ui/lib/RichEditor";
 import { useApi } from "utils/hooks";
 import {
   newErrorToast,
