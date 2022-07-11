@@ -11,7 +11,7 @@
     },
     "./*": "./*",
     "./RichEditor": {
-      "import": "./es/RichEdit"
+      "import": "./es/RichEditor"
     }
   },
   "scripts": {
