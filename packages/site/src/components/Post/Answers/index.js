@@ -16,7 +16,7 @@ import {
 } from "store/reducers/toastSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
-import RichEdit from "@osn/common-ui/lib/RichEdit";
+import RichEditor from "@osn/common-ui/lib/RichEditor";
 import { signMessage } from "services/chainApi";
 import NoReplies from "components/NoReplies";
 import {
@@ -246,7 +246,7 @@ export default function Answers({ topicCid }) {
       </PaginationWrapper>
       {!(answers === null) && (
         <EditorWrapper>
-          <RichEdit
+          <RichEditor
             ref={editorRef}
             content={content}
             setContent={setContent}

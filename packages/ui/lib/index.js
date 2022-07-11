@@ -9,7 +9,6 @@ import MarkdownEditor from "./Editor/MarkdownEditor";
 import IpfsSquare from "./IpfsSquare";
 import Breadcrumb from "./Breadcrumb";
 import Tag from "./Tag";
-import RichEditor from "./RichEdit";
 import NoData from "./NoData";
 import Header from "./Header";
 import List from "./List";
@@ -47,7 +46,6 @@ export {
   IpfsSquare,
   Breadcrumb,
   Tag,
-  RichEditor,
   NoData,
   Header,
   Button,
