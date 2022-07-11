@@ -42,7 +42,9 @@ export default function Detail({ topic }) {
         editable={isOwner && !topic.resolved}
       />
       <Share />
-      <Resolve className="post-detail-resolve" topic={topic} />
+      {!topic.resolved && (
+        <Resolve className="post-detail-resolve" topic={topic} />
+      )}
     </Wrapper>
   );
 }
