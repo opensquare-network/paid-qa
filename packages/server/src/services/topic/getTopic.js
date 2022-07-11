@@ -2,24 +2,24 @@ const { Topic } = require("@paid-qa/backend-common/src/models");
 
 async function getTopic(cid) {
   const topic = await Topic.findOne({ cid })
-    .select("-_id -__v -data -pinned")
+    .select("-__v -data")
     .populate({
       path: "rewards",
-      select: "-_id -__v",
+      select: "-__v",
       options: { sort: { "indexer.blockTime": 1 } },
     })
     .populate({
       path: "appendants",
-      select: "-_id -__v -data -pinned",
+      select: "-__v -data",
       options: { sort: { "indexer.blockTime": 1 } },
     })
     .populate({
       path: "funds",
-      select: "-_id -__v",
+      select: "-__v",
     })
     .populate({
       path: "resolves",
-      select: "-_id -__v",
+      select: "-__v",
     });
 
   return topic;

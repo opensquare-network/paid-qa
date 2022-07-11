@@ -169,7 +169,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
       Topic.populate(topics, { path: "answersCount" }),
       Topic.populate(topics, {
         path: "rewards",
-        select: "-_id -__v",
+        select: "-__v",
         options: { sort: { "indexer.blockTime": 1 } },
       }),
     ]);

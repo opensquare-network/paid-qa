@@ -9,9 +9,9 @@ async function getAnswers(topicCid, page, pageSize) {
     .limit(pageSize)
     .populate({
       path: "funds",
-      select: "-_id -__v",
+      select: "-__v",
     })
-    .select("-_id -__v -data -pinned");
+    .select("-__v -data");
 
   return {
     items: answers,
