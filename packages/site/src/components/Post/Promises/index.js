@@ -48,12 +48,13 @@ const GreyText = styled.p`
   ${p_14_normal};
 `;
 
-export default function Promises({ topicCid, rewards, resolves }) {
+export default function Promises({ topicCid, rewards, resolves, resolved }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [openSupportModel, setOpenSupportModel] = useState(false);
   // At least one promise exists which is support by topic creator
   const isLoading = !(rewards?.length > 0);
+  const showSupport = !isLoading && !resolved;
 
   const sumUpRewards = calcSponserRewards(rewards, true);
 
@@ -92,7 +93,7 @@ export default function Promises({ topicCid, rewards, resolves }) {
           return <Item key={index} reward={reward} resolve={resolve} />;
         })}
       </ContentWrapper>
-      {!isLoading && (
+      {showSupport && (
         <ButtonContainer>
           {account ? (
             <Button block large onClick={() => setOpenSupportModel(true)}>

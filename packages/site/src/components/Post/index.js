@@ -50,6 +50,7 @@ export default function Post({ topic }) {
           topicCid={topic?.cid}
           rewards={topic?.rewards}
           resolves={topic?.resolves}
+          resolved={topic?.resolved}
         />
         <Funds topicCid={topic?.cid} />
       </div>
