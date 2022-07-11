@@ -9,7 +9,10 @@
       "import": "./es/index.js",
       "types": "./es/index.d.ts"
     },
-    "./*": "./*"
+    "./*": "./*",
+    "./RichEditor": {
+      "import": "./es/RichEdit"
+    }
   },
   "scripts": {
     "build": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel lib --out-dir es --copy-files",
