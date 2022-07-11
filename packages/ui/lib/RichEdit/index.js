@@ -1,3 +1,6 @@
+// import '@osn/common-ui/RichEditor'
+// SSR issue because rich-text-editor uses quilljs under the hood
+
 import React from "react";
 import styled from "styled-components";
 import RichTextEditor from "@osn/rich-text-editor";
