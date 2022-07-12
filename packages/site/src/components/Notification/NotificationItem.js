@@ -79,6 +79,9 @@ const Title = styled.p`
   ${p_14_medium};
   margin: 0;
   cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
 
   @media screen and (min-width: ${MOBILE_SIZE - 1}px) {
     text-overflow: ellipsis;
@@ -210,8 +213,8 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
             <TitleWrapper>
               <Type>{type}</Type>
               <Dash />
+              {titlePrefix}
               <Title>
-                {titlePrefix}
                 <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
               </Title>
             </TitleWrapper>
