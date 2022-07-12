@@ -3,7 +3,7 @@ const { addFund } = require("../../fund");
 
 jest.mock("../../node.service");
 jest.mock("../../ipfs.service");
-jest.mock("../../../utils/signature");
+jest.mock("@paid-qa/backend-common/src/utils/signature");
 
 module.exports = () => {
   test("Fund the answer", async () => {
