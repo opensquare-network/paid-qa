@@ -2,7 +2,7 @@ const { postAnswer, getAnswers } = require("../../answer");
 
 jest.mock("../../node.service");
 jest.mock("../../ipfs.service");
-jest.mock("../../../utils/signature");
+jest.mock("@paid-qa/backend-common/src/utils/signature");
 
 module.exports = () => {
   test("Post answer", async () => {
@@ -32,17 +32,6 @@ module.exports = () => {
         {
           cid: "bafybeid7rubeeu4vyrivdgkpiwgyruvybcriwth7pjn5k5syznpgzegavy",
           content: "This is the answer content",
-          data: {
-            address: "5C5C24tLgXg973FRixpzTYTJq9r443LVwjceDvnVErdXgNfn",
-            answer: {
-              content: "This is the answer content",
-              topic:
-                "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku",
-            },
-            network: "statemine",
-            signature:
-              "0x2670b1d48c34c0f2ea011ca9a4ffc0d67e7e6feae3d9b27e98f3f37cddd6ea2d8be7f7709d835b556e6775b05ceeb030625566d4f4bebcad3a7b20685caeca80",
-          },
           funds: [],
           network: "statemine",
           pinned: false,

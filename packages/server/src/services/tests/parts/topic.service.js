@@ -55,11 +55,6 @@ module.exports = () => {
           },
           cid: "bafybeifbp4mtplen3aov5jw52ftv6pigxmniq5yivjh4zaxbuoy6p6fyay",
           content: "This is the appendant content",
-          data: {
-            content: "This is the appendant content",
-            topic:
-              "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku",
-          },
           network: "statemine",
           pinned: true,
           signer: "5C5C24tLgXg973FRixpzTYTJq9r443LVwjceDvnVErdXgNfn",
@@ -77,10 +72,6 @@ module.exports = () => {
       },
       cid: "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku",
       content: "This is the content",
-      data: {
-        content: "This is the content",
-        title: "This is the title",
-      },
       funds: [],
       network: "statemine",
       pinned: true,
