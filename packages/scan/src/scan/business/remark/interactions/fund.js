@@ -51,6 +51,9 @@ async function handleFundInteraction(interaction, caller, indexer, transfer) {
     beneficiaryPublicKey,
   };
 
+  // fixme: FUND interaction don't have to been put into the sync process, since there is no IPFS related issues
+  //  in this interaction. We can update FUND directly to business db, so the topic funded status will be updated
+  //  in time.
   await insertFund(fund);
 }
 

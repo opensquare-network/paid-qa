@@ -15,6 +15,11 @@ async function handleSupport(interaction, caller, indexer) {
     return;
   }
 
+  // fixme: 1. SUPPORT interaction don't have to been put into the sync process, since there is no IPFS related issues
+  //  in this interaction. We can update SUPPORT directly to business db, so the topic supported status will be updated
+  //  in time.
+
+  // fixme: 2. don't handle support to a resolved topic.
   const bounty = {
     value: interaction.tokenAmount,
     tokenIdentifier: interaction.tokenIdentifier,
