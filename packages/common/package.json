@@ -17,6 +17,10 @@
       "import": "./es/index.js",
       "require": "./cjs/index.js"
     },
+    "./state": {
+      "import": "./es/state/index.js",
+      "require": "./cjs/state/index.js"
+    },
     "./extension": {
       "import": "./es/extension.js",
       "require": "./cjs/extension.js"
