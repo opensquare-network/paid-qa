@@ -7,6 +7,7 @@ import {
   Flex,
   FlexBetween,
   MentionIdentityUser,
+  Dot,
 } from "@osn/common-ui";
 import {
   MarkdownPreviewer,
@@ -21,7 +22,6 @@ import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/constants";
 import { useState } from "react";
-import Dash from "../Dash";
 
 const NotificationItemWrapper = styled.div`
   &:hover {
@@ -199,7 +199,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
         <Amount>
           {bounty?.value} {bounty?.symbol}
         </Amount>
-        <Dash />
+        <Dot />
       </>
     );
   }
@@ -212,7 +212,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
           <Head>
             <TitleWrapper>
               <Type>{type}</Type>
-              <Dash />
+              <Dot />
               {titlePrefix}
               <Title>
                 <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
