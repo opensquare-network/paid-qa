@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Flex, Card, Time, ChainIcon, Avatar } from "@osn/common-ui";
+import { Flex, Card, Time, ChainIcon, Avatar, Dot } from "@osn/common-ui";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import IdentityOrAddr from "../User/IdentityOrAddr";
 import {
@@ -8,7 +8,6 @@ import {
   text_dark_minor,
 } from "@osn/common-ui/lib/styles/colors";
 import TitleLink from "./styled/TitleLink";
-import Dash from "../Dash";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -55,7 +54,7 @@ export default function FundItem({ data }) {
         <TitleLink to={`/topic/${topic?.cid}`}>
           <TextMajor>{topic?.title}</TextMajor>
         </TitleLink>
-        <Dash />
+        <Dot />
         <TextAccessory>
           <Time time={data?.indexer?.blockTime} />
         </TextAccessory>

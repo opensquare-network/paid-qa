@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { Time, Flex, Card, MentionIdentityUser } from "@osn/common-ui";
+import { Time, Flex, Card, MentionIdentityUser, Dot } from "@osn/common-ui";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import {
   MarkdownPreviewer,
   renderMentionIdentityUserPlugin,
 } from "@osn/previewer";
 import TitleLink from "./styled/TitleLink";
-import Dash from "../Dash";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -27,7 +26,7 @@ export default function AnswerItem({ data }) {
           <TitleLink to={`/topic/${data?.topic?.cid}`}>
             {data?.topic?.title}
           </TitleLink>
-          <Dash />
+          <Dot />
           <Time time={data?.createdAt} />
         </StyledDividerWrapper>
       }
