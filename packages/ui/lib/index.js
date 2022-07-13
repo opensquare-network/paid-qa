@@ -17,6 +17,8 @@ import Card from "./Card";
 import Tabs from "./Tabs";
 import IdentityUser from "./Identity/IdentityUser";
 import MentionIdentityUser from "./Identity/MentionIdentityUser";
+import LinkIdentityUser from "./Identity/LinkIdentityUser";
+import Dot from "./Dot";
 //styled
 import Button from "./styled/Button";
 import Container from "./styled/Container";
@@ -68,6 +70,8 @@ export {
   Time,
   Tabs,
   IdentityUser,
+  LinkIdentityUser,
   MentionIdentityUser,
+  Dot,
 };
 export * from "./Toast";
