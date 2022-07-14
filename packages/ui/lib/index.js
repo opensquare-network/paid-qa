@@ -15,7 +15,6 @@ import List from "./List";
 import Time from "./Time";
 import Card from "./Card";
 import Tabs from "./Tabs";
-import MarkdownPreview from "./Preview";
 import Divider from "./Divider";
 import IdentityUser from "./Identity/IdentityUser";
 import MentionIdentityUser from "./Identity/MentionIdentityUser";
@@ -71,7 +70,6 @@ export {
   List,
   Time,
   Tabs,
-  MarkdownPreview,
   Divider,
   IdentityUser,
   LinkIdentityUser,
