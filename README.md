@@ -77,6 +77,9 @@ Site package depends on [React](https://reactjs.org/) and renders the fronted pa
 Make sure mongodb is installed, while corresponding url is required to config in the server package.
 Check [here](https://www.mongodb.com/docs/manual/administration/install-community/) to find a way to install it natively.
 
+> **Note**  
+> We require a MongoDB replica set to keep some business transactional. Please refer [here](https://www.mongodb.com/docs/manual/tutorial/convert-standalone-to-replica-set/) for how to convert it to a replica set.
+
 ### Infura api key and secret
 
 Register an [infura](https://infura.io/) account, crate and IPFS project and get the project ID and secret.
