@@ -1,7 +1,9 @@
 const { HttpError } = require("../../utils/exc");
-const { isValidSignature } = require("../../utils/signature");
-const { Report, Topic, Answer } = require("../../models");
-const { toPublicKey } = require("../../utils/address");
+const {
+  isValidSignature,
+} = require("@paid-qa/backend-common/src/utils/signature");
+const { Report, Topic, Answer } = require("@paid-qa/backend-common/src/models");
+const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 
 async function report(ctx) {
   const { data, address, network, signature } = ctx.request.body;
@@ -27,7 +29,7 @@ async function report(ctx) {
 
   // Check signature
   const msg = JSON.stringify(data);
-  const isValid = isValidSignature(msg, signature, address);
+  const isValid = await isValidSignature(msg, signature, address);
   if (!isValid) {
     throw new HttpError(400, "Signature is invalid");
   }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
@@ -38,6 +38,13 @@ import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
 import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import BalanceInfo from "./BalanceInfo";
+import debounce from "lodash.debounce";
+import { hexToString } from "@polkadot/util";
+import {
+  ASSET_CHAINS,
+  DEFAULT_MINIMUM_FUND_AMOUNT,
+  MINIMUM_FUND_AMOUNTS,
+} from "utils/constants";
 
 const { InteractionEncoder } = encoder;
 const { FundInteraction } = interactions;
@@ -86,6 +93,15 @@ const StyledTitle = styled.header`
   margin-bottom: 8px;
 `;
 
+const ErrorMessage = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #ee4444;
+  margin: 8px 0;
+`;
+
 export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
@@ -93,14 +109,65 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [symbol, setSymbol] = useState("");
   const [decimals, setDecimals] = useState(0);
+  const [balance, setBalance] = useState(0);
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [loadingSymbol, setLoadingSymbol] = useState(false);
   const isMounted = useIsMounted();
   const answers = useSelector(answersSelector);
   const topic = useSelector(topicSelector);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (!inputAmount) {
+      setErrorMessage("");
+      return;
+    }
+
+    const bnAmount = new BigNumber(inputAmount);
+    if (bnAmount.isNaN()) {
+      setErrorMessage(`Amount must be a number`);
+      return;
+    }
+
+    if (bnAmount.times(Math.pow(10, decimals)).gt(balance)) {
+      setErrorMessage(`Balance insufficient`);
+      return;
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (bnAmount.lt(minimum)) {
+      setErrorMessage(`Amount cannot be less than minimum: ${minimum}`);
+      return;
+    }
+
+    setErrorMessage("");
+  }, [symbol, inputAmount, decimals, balance]);
 
   const api = useApi();
+
+  const fetchAssetSymbol = useMemo(() => {
+    return debounce(async (assetId) => {
+      if (!api || assetId === "N" || assetId === "") {
+        setSymbol("");
+        setLoadingSymbol(false);
+        return;
+      }
+
+      try {
+        const metadata = await api.query.assets.metadata(assetId);
+        const { symbol: hexSymbol } = metadata.toJSON();
+        const symbol = hexToString(hexSymbol);
+        if (isMounted.current) {
+          setSymbol(symbol);
+          setLoadingSymbol(false);
+        }
+      } catch (e) {
+        setSymbol("");
+        setLoadingSymbol(false);
+      }
+    }, 300);
+  }, [api, isMounted]);
 
   useEffect(() => {
     if (manualOn) {
@@ -109,8 +176,9 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         return;
       }
       setLoadingSymbol(true);
+      fetchAssetSymbol(tokenIdentifier);
     }
-  }, [manualOn, tokenIdentifier]);
+  }, [fetchAssetSymbol, manualOn, tokenIdentifier]);
 
   useEffect(() => {
     if (!manualOn && selectedAsset) {
@@ -148,6 +216,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
     if (new BigNumber(inputAmount).isNaN()) {
       return showErrorToast("Amount is invalid");
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (new BigNumber(inputAmount).lt(minimum)) {
+      return showErrorToast(
+        `Fund amount cannot be less than minimum: ${minimum}`
+      );
     }
 
     const interaction = new FundInteraction(ipfsCid);
@@ -205,7 +280,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
   return (
     <Wrapper>
-      <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
+      <Modal
+        open={open}
+        setOpen={setOpen}
+        okText="Confirm"
+        disableButton={!symbol || !inputAmount || errorMessage}
+        onOk={doConfirm}
+      >
         <StyledTitle>Fund</StyledTitle>
         <StyledText>Network</StyledText>
         <ChainWrapper>
@@ -215,7 +296,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
 
         <ItemTitle>
           <StyledText>Asset</StyledText>
-          {["statemine", "westmint"].includes(account?.network) && (
+          {ASSET_CHAINS.includes(account?.network) && (
             <ManualSwitch>
               <span>Manual</span>
               <Toggle on={manualOn} setOn={setManualOn} />
@@ -223,10 +304,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
           )}
         </ItemTitle>
         {manualOn ? (
-          <AssetInput
-            value={tokenIdentifier}
-            onChange={(e) => setTokenIdentifier(e.target.value)}
-          />
+          <>
+            <AssetInput
+              value={tokenIdentifier}
+              onChange={(e) => setTokenIdentifier(e.target.value)}
+            />
+            {!symbol && <ErrorMessage>Asset doesn't exist.</ErrorMessage>}
+          </>
         ) : (
           <AssetSelector
             network={account?.network}
@@ -243,7 +327,13 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
           onChange={(e) => setInputAmount(e.target.value)}
         />
 
-        <BalanceInfo account={account} tokenIdentifier={tokenIdentifier} />
+        <BalanceInfo
+          account={account}
+          tokenIdentifier={tokenIdentifier}
+          onBalanceChange={setBalance}
+        />
+
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Modal>
     </Wrapper>
   );

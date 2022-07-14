@@ -19,11 +19,6 @@ router.get(
 );
 
 router.get(
-  "/network/:network/address/:address/promises",
-  accountController.getAccountPromises
-);
-
-router.get(
   "/network/:network/address/:address/funds",
   accountController.getAccountFunds
 );

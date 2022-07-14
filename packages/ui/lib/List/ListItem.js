@@ -19,6 +19,9 @@ const Item = styled.li`
     `}
 `;
 
+/**
+ * @param {import('./types').ListItemProps} props
+ */
 function ListItem(props) {
   const { children, gap, ...restProps } = props;
 

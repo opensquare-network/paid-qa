@@ -3,7 +3,7 @@ const {
   interactions: { FundInteraction },
 } = require("@paid-qa/spec");
 const { HttpError } = require("../../utils/exc");
-const { Topic, Fund, Notification, Answer } = require("../../models");
+const { Topic, Fund, Answer } = require("@paid-qa/backend-common/src/models");
 const {
   getApi,
   getRemark,
@@ -11,7 +11,13 @@ const {
   getNativeTokenInfo,
 } = require("../node.service");
 const BigNumber = require("bignumber.js");
-const { toPublicKey } = require("../../utils/address");
+const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const {
+  updatePromiseFulfillment,
+} = require("@paid-qa/backend-common/src/services/fulfill");
+const {
+  createFundNotification,
+} = require("@paid-qa/backend-common/src/services/notification/createFundNotification");
 
 async function addFund(network, blockHash, extrinsicIndex) {
   // Get system remark from network/blockHash/extrinsicIndex
@@ -64,11 +70,14 @@ async function addFund(network, blockHash, extrinsicIndex) {
   let topic = await Topic.findOne({ cid: interaction.ipfsCid });
   let answer = await Answer.findOne({ cid: interaction.ipfsCid });
 
+  let topicCid;
   let refCidType;
   if (topic) {
     refCidType = "topic";
+    topicCid = topic.cid;
   } else if (answer) {
     refCidType = "answer";
+    topicCid = answer.topicCid;
   } else {
     throw new HttpError(500, "Invalid ipfsCid");
   }
@@ -98,25 +107,9 @@ async function addFund(network, blockHash, extrinsicIndex) {
     { upsert: true, new: true }
   );
 
-  const fundTo = answer?.signer || topic?.signer;
-  if (answer) {
-    topic = await Topic.findOne({ cid: answer.topicCid });
-  }
+  await updatePromiseFulfillment(topicCid, sponsorPublicKey);
 
-  const owner = toPublicKey(fundTo);
-  await Notification.create({
-    owner,
-    type: ["fund"],
-    data: {
-      topic: topic?._id,
-      answer: answer?._id,
-      fund: fundObj._id,
-      byWho: {
-        address: signer,
-        network,
-      },
-    },
-  });
+  await createFundNotification(fundObj);
 
   return {
     beneficiary,

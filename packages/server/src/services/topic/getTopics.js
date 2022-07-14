@@ -1,5 +1,7 @@
-const { Topic } = require("../../models");
-const { PostStatus } = require("../../utils/constants");
+const { Topic } = require("@paid-qa/backend-common/src/models");
+const {
+  OnChainStatus,
+} = require("@paid-qa/backend-common/src/utils/constants");
 const { escapeRegex } = require("../../utils/regex");
 
 async function getTopics(symbol, status, title, page, pageSize) {
@@ -8,7 +10,7 @@ async function getTopics(symbol, status, title, page, pageSize) {
     q.status = status;
   } else {
     q.status = {
-      $in: [PostStatus.Published, PostStatus.Active, PostStatus.Resolved],
+      $in: [OnChainStatus.Published],
     };
   }
 
@@ -40,6 +42,12 @@ async function getTopics(symbol, status, title, page, pageSize) {
               {
                 $sort: {
                   "indexer.blockTime": 1,
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  __v: 0,
                 },
               },
             ],
@@ -103,9 +111,19 @@ async function getTopics(symbol, status, title, page, pageSize) {
               },
               {
                 $addFields: {
+                  "bounty.value": { $toString: "$bounty.value" },
                   answersCount: {
                     $arrayElemAt: ["$answersCount.count", 0],
                   },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  __v: 0,
+                  data: 0,
+                  pinned: 0,
+                  statusSort: 0,
                 },
               },
             ],
@@ -140,15 +158,18 @@ async function getTopics(symbol, status, title, page, pageSize) {
             default: 2,
           },
         },
+        "bounty.value": { $toString: "$bounty.value" },
       })
       .sort({ statusSort: 1, "indexer.blockTime": -1 })
       .skip((page - 1) * pageSize)
-      .limit(pageSize);
+      .limit(pageSize)
+      .project({ _id: 0, __v: 0, data: 0, pinned: 0, statusSort: 0 });
 
     await Promise.all([
       Topic.populate(topics, { path: "answersCount" }),
       Topic.populate(topics, {
         path: "rewards",
+        select: "-__v",
         options: { sort: { "indexer.blockTime": 1 } },
       }),
     ]);

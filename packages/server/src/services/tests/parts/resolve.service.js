@@ -1,5 +1,5 @@
-const { getTopic } = require("../../topic.service");
-const { resolve } = require("../../resolve.service");
+const { getTopic } = require("../../topic");
+const { resolve } = require("../../resolve");
 
 jest.mock("../../node.service");
 jest.mock("../../ipfs.service");
@@ -25,7 +25,8 @@ module.exports = () => {
       resolves: [
         {
           indexer: {
-            blockHash: "0x0000000000000000000000000000000000000000000000000000000000000004",
+            blockHash:
+              "0x0000000000000000000000000000000000000000000000000000000000000004",
             blockHeight: 4,
             extrinsicIndex: 1,
             blockTime: 1648444080001,
@@ -36,7 +37,8 @@ module.exports = () => {
             "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku",
         },
       ],
-      status: "resolved",
+      status: "published",
+      resolved: true,
     });
   });
 };

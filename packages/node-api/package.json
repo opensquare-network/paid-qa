@@ -1,5 +1,5 @@
 {
-  "name": "@collaboration/node-api",
+  "name": "@paid-qa/node-api",
   "version": "1.1.0",
   "private": true,
   "license": "Apache-2.0",
@@ -12,9 +12,9 @@
   "scripts": {},
   "dependencies": {
     "@koa/cors": "^3.1.0",
-    "@osn/provider-options": "^1.0.2",
-    "@polkadot/api": "^7.9.1",
-    "@polkadot/util": "^8.4.1",
+    "@osn/polkadot-api-container": "^1.0.3",
+    "@polkadot/keyring": "9.7.2",
+    "@polkadot/util": "9.7.2",
     "dotenv": "^10.0.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
@@ -22,6 +22,7 @@
     "koa-logger": "^3.2.1",
     "koa-router": "^10.1.1",
     "lodash.isnil": "^4.0.0",
-    "log4js": "^6.4.0"
+    "log4js": "^6.4.0",
+    "mongoose": "^6.4.0"
   }
 }

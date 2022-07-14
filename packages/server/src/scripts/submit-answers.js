@@ -5,97 +5,63 @@ const {
   encoder: { InteractionEncoder },
   interactions: { AnswerInteraction },
 } = require("@paid-qa/spec");
-const { Answer } = require("../models");
-const { PostStatus } = require("../utils/constants");
+const { Answer } = require("@paid-qa/backend-common/src/models");
+const {
+  OnChainStatus,
+} = require("@paid-qa/backend-common/src/utils/constants");
 const { getApi, submitRemarks } = require("../services/node.service");
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const MAX_BATCH_SIZE = 1000;
 
-const BATCH_SIZE = 100;
-const FLUSH_INTERVAL = 3600 * 1000;
-const batches = {};
-
-async function flushBatch(batch) {
-  batch.lastFlushTime = Date.now();
-  if (batch.data.length === 0) {
+async function submitAnswers(network, answers = []) {
+  if (answers.length <= 0) {
     return;
   }
 
-  const api = getApi(batch.network);
-  const result = await submitRemarks(
-    api,
-    batch.data.map((i) => i.remark)
-  );
+  let cids = [];
+  let remarks = [];
+  for (const answer of answers) {
+    const interaction = new AnswerInteraction(answer.cid);
+    const remark = new InteractionEncoder(interaction).getRemark();
+    cids.push(answer.cid);
+    remarks.push(remark);
+  }
+
+  const api = getApi(network);
+  const result = await submitRemarks(api, remarks);
 
   if (result.status === "success") {
     await Answer.updateMany(
       {
-        cid: {
-          $in: batch.data.map((i) => i.answerCid),
-        },
+        cid: { $in: cids },
       },
-      { status: PostStatus.Published }
+      { status: OnChainStatus.Published }
     );
   }
 }
 
-async function batchSend(batch, answerCid, remark) {
-  batch.data.push({ answerCid, remark });
-  if (batch.data.length >= BATCH_SIZE) {
-    await flushBatch(batch);
-  }
-}
-
-async function submitAnswer(batch, answer) {
-  const interaction = new AnswerInteraction(answer.cid);
-  const remark = new InteractionEncoder(interaction).getRemark();
-
-  await batchSend(batch, answer.cid, remark);
-}
-
 async function startSubmitAnswers(network) {
-  if (batches[network]) {
-    // Clear old batch data
-    batches[network].data = [];
-  } else {
-    // Initialize batch data
-    batches[network] = {
-      network,
-      lastFlushTime: 0,
-      data: [],
-    };
-  }
-  const batch = batches[network];
+  const answers = await Answer.find({
+    status: OnChainStatus.Reserved,
+    network,
+  }).limit(MAX_BATCH_SIZE);
 
-  const answers = await Answer.find({ status: PostStatus.Reserved, network });
-  for (const answer of answers) {
-    try {
-      await submitAnswer(batch, answer);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  // Force to do batch submit in intervals
-  if (Date.now() - batch.lastFlushTime > FLUSH_INTERVAL) {
-    await flushBatch(batch);
-  }
+  await submitAnswers(network, answers);
 }
 
 async function main() {
-  const networks = await Answer.find({ status: PostStatus.Reserved }).distinct("network");
+  const networks = await Answer.find({
+    status: OnChainStatus.Reserved,
+  }).distinct("network");
 
-  while (true) {
-    try {
-      for (const network of networks) {
-        await startSubmitAnswers(network);
-      }
-      console.log(`Last submit at:`, new Date());
-    } catch (e) {
-      console.error(e);
+  try {
+    for (const network of networks) {
+      await startSubmitAnswers(network);
     }
-
-    await sleep(30 * 1000);
+    console.log(`Last submit at:`, new Date());
+  } catch (e) {
+    console.error(e);
   }
 }
 
-main();
+main().finally(() => process.exit());

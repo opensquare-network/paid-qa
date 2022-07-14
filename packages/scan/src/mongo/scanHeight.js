@@ -1,4 +1,4 @@
-const { getStatusCollection } = require("./index");
+const { Status } = require("@paid-qa/backend-common/src/models/scan");
 const isNil = require("lodash.isnil");
 const { currentChain } = require("../common/env");
 const { CHAINS } = require("../common/constants");
@@ -11,11 +11,11 @@ const scanStartHeight = {
   [CHAINS.POLKADOT]: 9139074,
   [CHAINS.STATEMINE]: 9139074,
   [CHAINS.WESTEND]: 9688127,
-}
+  [CHAINS.WESTMINT]: 2009349,
+};
 
 async function getNextScanHeight() {
-  const statusCol = await getStatusCollection();
-  const heightInfo = await statusCol.findOne({ name: mainScanName });
+  const heightInfo = await Status.findOne({ name: mainScanName });
 
   let result;
   if (!heightInfo) {
@@ -36,8 +36,7 @@ async function getNextScanHeight() {
 }
 
 async function updateScanHeight(height) {
-  const statusCol = await getStatusCollection();
-  await statusCol.updateOne(
+  await Status.updateOne(
     { name: mainScanName },
     { $set: { value: height } },
     { upsert: true }

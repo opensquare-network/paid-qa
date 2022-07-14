@@ -1,7 +1,18 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
 import NetworkUser from "../User/NetworkUser";
-import { Time, Card, Flex, FlexBetween, MarkdownPreview } from "@osn/common-ui";
+import {
+  Time,
+  Card,
+  Flex,
+  FlexBetween,
+  MentionIdentityUser,
+  Dot,
+} from "@osn/common-ui";
+import {
+  MarkdownPreviewer,
+  renderMentionIdentityUserPlugin,
+} from "@osn/previewer";
 import {
   text_dark_minor,
   primary_turquoise_500,
@@ -9,15 +20,8 @@ import {
 } from "@osn/common-ui/lib/styles/colors";
 import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 import { useState } from "react";
-
-const dot = css`
-  &::after {
-    content: "·";
-    margin: 0 8px;
-  }
-`;
 
 const NotificationItemWrapper = styled.div`
   &:hover {
@@ -29,14 +33,6 @@ const NotificationItemWrapper = styled.div`
       path {
         fill: ${text_dark_accessory};
       }
-    }
-  }
-
-  a {
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
     }
   }
 `;
@@ -57,6 +53,7 @@ const TitleWrapper = styled(Flex)`
 const InfoWrapper = styled(FlexBetween)`
   flex: 1;
   max-width: 50%;
+  display: flex;
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     max-width: 100%;
@@ -66,7 +63,6 @@ const InfoWrapper = styled(FlexBetween)`
 const Type = styled.div`
   text-transform: capitalize;
   color: ${text_dark_minor};
-  ${dot}
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     &::after {
@@ -78,11 +74,14 @@ const Amount = styled.span`
   ${p_14_medium};
   white-space: nowrap;
   margin: 0;
-  ${dot}
 `;
 const Title = styled.p`
   ${p_14_medium};
   margin: 0;
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
 
   @media screen and (min-width: ${MOBILE_SIZE - 1}px) {
     text-overflow: ellipsis;
@@ -95,9 +94,18 @@ const Title = styled.p`
   }
 `;
 
+const NetworkUserWrapper = styled(Flex)`
+  flex: 1;
+`;
+const TimeWrapper = styled(Flex)`
+  flex: 1;
+  justify-content: flex-end;
+`;
 const StatusWrapper = styled(Flex)`
+  flex: 1;
   width: 18px;
   height: 18px;
+  justify-content: flex-end;
 
   @media screen and (max-width: ${MOBILE_SIZE}px) {
     display: none;
@@ -108,8 +116,8 @@ const MarkAsReadButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  width: 100%;
-  height: 100%;
+  width: 18px;
+  height: 18px;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -169,7 +177,7 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
   const {
     type: origType,
     read: origRead,
-    data: { topic, answer, support, fund },
+    data: { byWho, topic, answer, support, fund },
   } = data;
 
   const [read, setRead] = useState(origRead);
@@ -187,9 +195,12 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
     const { bounty } = { ...support, ...fund };
 
     titlePrefix = (
-      <Amount>
-        {bounty?.value} {bounty?.symbol}
-      </Amount>
+      <>
+        <Amount>
+          {bounty?.value} {bounty?.symbol}
+        </Amount>
+        <Dot />
+      </>
     );
   }
 
@@ -201,21 +212,28 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
           <Head>
             <TitleWrapper>
               <Type>{type}</Type>
+              <Dot />
+              {titlePrefix}
               <Title>
-                {titlePrefix}
                 <Link to={`/topic/${topic.cid}`}>{topic.title}</Link>
               </Title>
             </TitleWrapper>
 
             <InfoWrapper>
-              <NetworkUser
-                address={topic.signer}
-                network={topic.network}
-                iconSize={16}
-                tooltipPosition="down"
-              />
+              <NetworkUserWrapper>
+                {byWho && (
+                  <NetworkUser
+                    address={byWho.address}
+                    network={byWho.network}
+                    iconSize={16}
+                    tooltipPosition="down"
+                  />
+                )}
+              </NetworkUserWrapper>
 
-              <Time time={topic.createdAt} />
+              <TimeWrapper>
+                <Time time={topic.createdAt} />
+              </TimeWrapper>
 
               <StatusWrapper>
                 {!read ? (
@@ -232,10 +250,15 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
         }
       >
         {shouldShowAnswer && (
-          <MarkdownPreview
+          <MarkdownPreviewer
             content={answer.content}
-            bordered={false}
-            allowTags={["a"]}
+            allowedTags={["a"]}
+            maxLines={3}
+            plugins={[
+              renderMentionIdentityUserPlugin(
+                <MentionIdentityUser hashRoute />
+              ),
+            ]}
           />
         )}
       </Card>

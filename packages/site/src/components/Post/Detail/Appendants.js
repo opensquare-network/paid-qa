@@ -5,13 +5,12 @@ import { ReactComponent as AddIcon } from "./icons/add-appendant.svg";
 
 import {
   DividerWrapper,
-  RichEditor,
   Time,
   FlexBetween,
   FlexCenter,
-  MarkdownPreview,
   IpfsSquare,
 } from "@osn/common-ui";
+import RichEditor from "@osn/common-ui/lib/RichEditor";
 import { useApi } from "utils/hooks";
 import {
   newErrorToast,
@@ -33,6 +32,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import { text_dark_accessory } from "@osn/common-ui/lib/styles/colors";
+import { MarkdownPreviewer } from "@osn/previewer";
 
 const { InteractionEncoder } = encoder;
 const { AppendInteraction } = interactions;
@@ -208,7 +208,7 @@ export default function Appendants({
           </div>
 
           <MarkdownPreviewWrapper>
-            <MarkdownPreview content={item.content} bordered={false} />
+            <MarkdownPreviewer content={item.content} />
           </MarkdownPreviewWrapper>
         </ItemWrapper>
       ))}

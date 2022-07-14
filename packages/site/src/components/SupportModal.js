@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
@@ -24,6 +24,10 @@ import {
   p_20_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import SupportDetail from "./SupportDetail";
+import {
+  DEFAULT_MINIMUM_FUND_AMOUNT,
+  MINIMUM_FUND_AMOUNTS,
+} from "utils/constants";
 
 const { InteractionEncoder } = encoder;
 const { SupportInteraction } = interactions;
@@ -43,11 +47,21 @@ const StyledDescription = styled.p`
   color: #506176;
 `;
 
+const ErrorMessage = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #ee4444;
+`;
+
 export default function SupportModal({ open, setOpen, topicCid }) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [tokenIdentifier, setTokenIdentifier] = useState("");
   const [inputAmount, setInputAmount] = useState("");
+  const [symbol, setSymbol] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const api = useApi();
   const isMounted = useIsMounted();
 
@@ -57,6 +71,27 @@ export default function SupportModal({ open, setOpen, topicCid }) {
       setOpen(false);
     }
   };
+
+  useEffect(() => {
+    if (!inputAmount) {
+      setErrorMessage("");
+      return;
+    }
+
+    const bnAmount = new BigNumber(inputAmount);
+    if (bnAmount.isNaN()) {
+      setErrorMessage(`Amount must be a number`);
+      return;
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (bnAmount.lt(minimum)) {
+      setErrorMessage(`Amount cannot be less than minimum: ${minimum}`);
+      return;
+    }
+
+    setErrorMessage("");
+  }, [symbol, inputAmount]);
 
   const doConfirm = async () => {
     setOpen(false);
@@ -79,6 +114,13 @@ export default function SupportModal({ open, setOpen, topicCid }) {
 
     if (new BigNumber(inputAmount).isNaN()) {
       return showErrorToast("Amount is invalid");
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (new BigNumber(inputAmount).lt(minimum)) {
+      return showErrorToast(
+        `Support amount cannot be less than minimum: ${minimum}`
+      );
     }
 
     const interaction = new SupportInteraction(
@@ -129,7 +171,13 @@ export default function SupportModal({ open, setOpen, topicCid }) {
 
   return (
     <Wrapper>
-      <Modal open={open} setOpen={setOpen} okText="Confirm" onOk={doConfirm}>
+      <Modal
+        open={open}
+        setOpen={setOpen}
+        okText="Confirm"
+        disableButton={!symbol || !inputAmount || errorMessage}
+        onOk={doConfirm}
+      >
         <StyledTitle>Promise</StyledTitle>
         <StyledDescription>
           Support the topic and promise rewards for answers. No need to deduct
@@ -141,11 +189,15 @@ export default function SupportModal({ open, setOpen, topicCid }) {
           setTokenIdentifier={setTokenIdentifier}
           inputAmount={inputAmount}
           setInputAmount={setInputAmount}
+          symbol={symbol}
+          setSymbol={setSymbol}
         />
 
         <StyledDescription>
           Promise amount is not limited by the balance.
         </StyledDescription>
+
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Modal>
     </Wrapper>
   );

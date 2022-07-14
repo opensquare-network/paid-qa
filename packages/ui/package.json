@@ -1,6 +1,6 @@
 {
   "name": "@osn/common-ui",
-  "version": "0.0.61",
+  "version": "0.0.84",
   "main": "es/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
@@ -9,14 +9,17 @@
       "import": "./es/index.js",
       "types": "./es/index.d.ts"
     },
-    "./*": "./*"
+    "./*": "./*",
+    "./RichEditor": {
+      "import": "./es/RichEditor"
+    }
   },
   "scripts": {
     "build": "rm -rf es && NODE_ENV=production BABEL_ENV=es babel lib --out-dir es --copy-files",
-    "test": "craco test",
+    "test": "jest lib",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run test && npm run build"
   },
   "jest": {
     "transformIgnorePatterns": []
@@ -35,17 +38,15 @@
   ],
   "dependencies": {
     "@craco/craco": "^6.4.3",
-    "@osn/common": "^0.0.8",
-    "@osn/consts": "^0.0.2",
     "dayjs": "^1.10.8",
-    "micromark": "^3.0.10",
-    "micromark-extension-gfm": "^2.0.1",
     "react-mde": "^11.5.0",
     "react-router-dom": "^6.3.0",
-    "sanitize-html": "^2.7.0",
     "styled-components": "^5.3.1"
   },
   "peerDependencies": {
+    "@osn/common": "^0.0.13",
+    "@osn/constants": "1.1.0",
+    "@osn/rich-text-editor": "^0.1.16",
     "react": "^17.0.2",
     "styled-components": "^5.3.1"
   },
@@ -63,7 +64,11 @@
     "@storybook/react": "^6.4.22",
     "@storybook/testing-library": "^0.0.9",
     "@svgr/webpack": "^6.2.1",
+    "@types/jest": "^27.5.1",
+    "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.4",
+    "jest": "^28.1.0",
+    "react-content-loader": "^6.2.0",
     "semantic-ui-css": "^2.4.1"
   }
 }

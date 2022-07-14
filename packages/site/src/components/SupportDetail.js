@@ -18,6 +18,7 @@ import {
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
 import BalanceInfo from "./BalanceInfo";
+import { ASSET_CHAINS } from "utils/constants";
 
 const StyledText = styled.p`
   ${p_16_semibold};
@@ -62,16 +63,26 @@ const ItemTitle = styled.div`
   margin-top: 8px;
 `;
 
+const ErrorMessage = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #ee4444;
+  margin: 8px 0;
+`;
+
 export default function SupportDetail({
   tokenIdentifier,
   setTokenIdentifier,
   inputAmount,
   setInputAmount,
+  symbol,
+  setSymbol,
 }) {
   const account = useSelector(accountSelector);
   const [manualOn, setManualOn] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
-  const [symbol, setSymbol] = useState("");
   const [loadingSymbol, setLoadingSymbol] = useState(false);
   const api = useApi();
   const isMounted = useIsMounted();
@@ -83,15 +94,21 @@ export default function SupportDetail({
         setLoadingSymbol(false);
         return;
       }
-      const metadata = await api.query.assets.metadata(assetId);
-      const { symbol: hexSymbol } = metadata.toJSON();
-      const symbol = hexToString(hexSymbol);
-      if (isMounted.current) {
-        setSymbol(symbol);
+
+      try {
+        const metadata = await api.query.assets.metadata(assetId);
+        const { symbol: hexSymbol } = metadata.toJSON();
+        const symbol = hexToString(hexSymbol);
+        if (isMounted.current) {
+          setSymbol(symbol);
+          setLoadingSymbol(false);
+        }
+      } catch (e) {
+        setSymbol("");
         setLoadingSymbol(false);
       }
     }, 300);
-  }, [api, isMounted]);
+  }, [api, isMounted, setSymbol]);
 
   useEffect(() => {
     if (manualOn) {
@@ -110,7 +127,7 @@ export default function SupportDetail({
       setTokenIdentifier(selectedAsset.tokenIdentifier);
       setSymbol(selectedAsset.symbol);
     }
-  }, [selectedAsset, manualOn, setTokenIdentifier]);
+  }, [selectedAsset, manualOn, setTokenIdentifier, setSymbol]);
 
   return (
     <>
@@ -122,7 +139,7 @@ export default function SupportDetail({
 
       <ItemTitle>
         <StyledText>Asset</StyledText>
-        {["statemine", "westmint"].includes(account?.network) && (
+        {ASSET_CHAINS.includes(account?.network) && (
           <ManualSwitch>
             <span>Manual</span>
             <Toggle on={manualOn} setOn={setManualOn} />
@@ -130,10 +147,13 @@ export default function SupportDetail({
         )}
       </ItemTitle>
       {manualOn ? (
-        <AssetInput
-          value={tokenIdentifier}
-          onChange={(e) => setTokenIdentifier(e.target.value)}
-        />
+        <>
+          <AssetInput
+            value={tokenIdentifier}
+            onChange={(e) => setTokenIdentifier(e.target.value)}
+          />
+          {!symbol && <ErrorMessage>Asset doesn't exist.</ErrorMessage>}
+        </>
       ) : (
         <AssetSelector network={account?.network} setAsset={setSelectedAsset} />
       )}

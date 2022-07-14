@@ -9,7 +9,6 @@ import MarkdownEditor from "./Editor/MarkdownEditor";
 import IpfsSquare from "./IpfsSquare";
 import Breadcrumb from "./Breadcrumb";
 import Tag from "./Tag";
-import RichEditor from "./RichEdit";
 import NoData from "./NoData";
 import Header from "./Header";
 import List from "./List";
@@ -18,6 +17,10 @@ import Card from "./Card";
 import Tabs from "./Tabs";
 import MarkdownPreview from "./Preview";
 import Divider from "./Divider";
+import IdentityUser from "./Identity/IdentityUser";
+import MentionIdentityUser from "./Identity/MentionIdentityUser";
+import LinkIdentityUser from "./Identity/LinkIdentityUser";
+import Dot from "./Dot";
 //styled
 import Button from "./styled/Button";
 import Container from "./styled/Container";
@@ -47,7 +50,6 @@ export {
   IpfsSquare,
   Breadcrumb,
   Tag,
-  RichEditor,
   NoData,
   Header,
   Button,
@@ -71,4 +73,9 @@ export {
   Tabs,
   MarkdownPreview,
   Divider,
+  IdentityUser,
+  LinkIdentityUser,
+  MentionIdentityUser,
+  Dot,
 };
+export * from "./Toast";

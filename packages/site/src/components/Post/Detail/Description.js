@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
-import MicromarkMd from "@osn/common-ui/lib/Preview/MicromarkMd";
 import ActionBar from "./ActionBar";
 import {
   p_14_normal,
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
+import { MarkdownPreviewer } from "@osn/previewer";
 
 const Wrapper = styled.div`
   > :first-child {
@@ -17,7 +17,6 @@ const Wrapper = styled.div`
   > :nth-child(2) {
     margin-top: 16px;
     ${p_14_normal};
-    color: #506176;
   }
   > :nth-child(3) {
     margin-top: 15px;
@@ -35,7 +34,7 @@ export default function Description({ topic }) {
           }
         />
       </div>
-      <MicromarkMd md={topic.content} />
+      <MarkdownPreviewer content={topic.content} />
       <ActionBar
         topicCid={topic.cid}
         topicOwner={topic.signer}

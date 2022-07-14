@@ -1,10 +1,16 @@
-const { Topic, Answer, Notification } = require("../../models");
+const { Topic, Answer } = require("@paid-qa/backend-common/src/models");
+const {
+  isValidSignature,
+} = require("@paid-qa/backend-common/src/utils/signature");
 const { HttpError } = require("../../utils/exc");
-const { isValidSignature } = require("../../utils/signature");
-const { PostStatus } = require("../../utils/constants");
+const {
+  OnChainStatus,
+} = require("@paid-qa/backend-common/src/utils/constants");
 const { cidOf } = require("../ipfs.service");
-const { extractMentions } = require("../../utils/mention");
-const { toPublicKey, isSamePublicKey } = require("../../utils/address");
+const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const {
+  createAnswerNotification,
+} = require("@paid-qa/backend-common/src/services/notification/createAnswerNotification");
 
 async function postAnswer(data) {
   const { answer, address: signer, network, signature } = data;
@@ -12,7 +18,7 @@ async function postAnswer(data) {
 
   // Check signature
   const msg = JSON.stringify(answer);
-  const isValid = isValidSignature(msg, signature, signer);
+  const isValid = await isValidSignature(msg, signature, signer);
   if (!isValid) {
     throw new HttpError(400, "Signature is invalid");
   }
@@ -36,48 +42,10 @@ async function postAnswer(data) {
     signature,
     data,
     pinned: false,
-    status: PostStatus.Reserved,
+    status: OnChainStatus.Reserved,
   });
 
-  if (!isSamePublicKey(topic.signer, signer)) {
-    const owner = toPublicKey(topic.signer);
-    await Notification.create({
-      owner,
-      type: ["reply"],
-      data: {
-        topic: topic._id,
-        answer: answerObj._id,
-        byWho: {
-          address: signer,
-          network,
-        },
-      },
-    });
-  }
-
-  const mentions = extractMentions(content);
-  for (const mention of mentions) {
-    const owner = toPublicKey(mention.address);
-    await Notification.updateOne(
-      {
-        owner,
-        "data.topic": topic._id,
-        "data.answer": answerObj._id,
-      },
-      {
-        $addToSet: {
-          type: "mention",
-        },
-        $set: {
-          "data.byWho": {
-            address: signer,
-            network,
-          },
-        },
-      },
-      { upsert: true }
-    );
-  }
+  await createAnswerNotification(answerObj);
 
   return {
     cid,

@@ -1,4 +1,4 @@
-const { Answer } = require("../../models");
+const { Answer } = require("@paid-qa/backend-common/src/models");
 
 async function getAnswers(topicCid, page, pageSize) {
   const q = { topicCid };
@@ -7,7 +7,11 @@ async function getAnswers(topicCid, page, pageSize) {
     .sort({ createdAt: 1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("funds");
+    .populate({
+      path: "funds",
+      select: "-__v",
+    })
+    .select("-__v -data");
 
   return {
     items: answers,

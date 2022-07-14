@@ -1,4 +1,4 @@
-const { createTopic, getTopic, addAppendant } = require("../../topic.service");
+const { createTopic, getTopic, addAppendant } = require("../../topic");
 
 jest.mock("../../node.service");
 jest.mock("../../ipfs.service");
@@ -13,7 +13,10 @@ module.exports = () => {
       },
       "statemine",
       "0x0000000000000000000000000000000000000000000000000000000000000000",
-      1
+      1 /* extrinsicIndex */,
+      1 /* blockHeight */,
+      1648444080001 /* blockTime */,
+      "5C5C24tLgXg973FRixpzTYTJq9r443LVwjceDvnVErdXgNfn" /* signer */
     );
 
     expect(cid).toBe(
@@ -29,7 +32,10 @@ module.exports = () => {
       },
       "statemine",
       "0x0000000000000000000000000000000000000000000000000000000000000001",
-      1
+      1 /* extrinsicIndex */,
+      1 /* blockHeight */,
+      1648444080001 /* blockTime */,
+      "5C5C24tLgXg973FRixpzTYTJq9r443LVwjceDvnVErdXgNfn" /* signer */
     );
   });
 
@@ -41,18 +47,14 @@ module.exports = () => {
       appendants: [
         {
           indexer: {
-            blockHash: "0x0000000000000000000000000000000000000000000000000000000000000001",
+            blockHash:
+              "0x0000000000000000000000000000000000000000000000000000000000000001",
             blockHeight: 1,
             extrinsicIndex: 1,
             blockTime: 1648444080001,
           },
           cid: "bafybeifbp4mtplen3aov5jw52ftv6pigxmniq5yivjh4zaxbuoy6p6fyay",
           content: "This is the appendant content",
-          data: {
-            content: "This is the appendant content",
-            topic:
-              "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku",
-          },
           network: "statemine",
           pinned: true,
           signer: "5C5C24tLgXg973FRixpzTYTJq9r443LVwjceDvnVErdXgNfn",
@@ -62,27 +64,23 @@ module.exports = () => {
         },
       ],
       indexer: {
-        blockHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
+        blockHash:
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
         blockHeight: 0,
         extrinsicIndex: 1,
         blockTime: 1648444080001,
       },
       cid: "bafybeidnbaxbd4wvj57nby5vx2d3wwjgcfd2bkbydmqa3p2yw4jcesfwku",
       content: "This is the content",
-      data: {
-        content: "This is the content",
-        language: "en",
-        title: "This is the title",
-      },
       funds: [],
-      language: "en",
       network: "statemine",
       pinned: true,
       resolves: [],
       rewards: [
         {
           indexer: {
-            blockHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
+            blockHash:
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
             blockHeight: 0,
             extrinsicIndex: 1,
             blockTime: 1648444080001,

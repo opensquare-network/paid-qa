@@ -1,12 +1,11 @@
 import debounce from "lodash.debounce";
-import { Chains } from "@osn/consts";
-import { encodeNetworkAddress } from "../utils/address";
+import { identityChainMap } from "@osn/constants";
+import { encodeNetworkAddress } from "../utils";
 
-export const identityChainMap = Object.freeze({
-  [Chains.kintsugi]: [Chains.kusama],
-  [Chains.statemine]: [Chains.kusama],
-  [Chains.karura]: [Chains.kusama],
-});
+const identityServerHost =
+  process.env.REACT_APP_IDENTITY_SERVER_HOST ||
+  process.env.NEXT_PUBLIC_IDENTITY_SERVER_HOST ||
+  "https://id.statescan.io";
 
 const cachedIdentities = new Map();
 let pendingQueries = new Map();
@@ -36,7 +35,7 @@ const delayQuery = debounce(() => {
       "content-type": "application/json;charset=UTF-8",
     };
 
-    fetch(`${process.env.REACT_APP_IDENTITY_SERVER_HOST}/${chain}/short-ids`, {
+    fetch(`${identityServerHost}/${chain}/short-ids`, {
       headers,
       method: "POST",
       body: JSON.stringify({ addresses }),

@@ -1,5 +1,4 @@
-const { getApis } = require("../../apis");
-const { getBlockApi } = require("../utils");
+const { getApis, getBlockApi } = require("@osn/polkadot-api-container");
 const { hexToString } = require("@polkadot/util");
 
 async function getNativeTokenInfoFromOneApi(api) {

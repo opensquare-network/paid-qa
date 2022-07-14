@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import Topic from "components/Topic";
-import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { List, Pagination } from "@osn/common-ui";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -50,12 +49,11 @@ export default function TopicsList() {
       });
   }, [dispatch, filterAsset?.symbol, filterTitle, page, topics.total]);
 
-  return isLoading ? (
-    <ListLoader />
-  ) : (
+  return (
     <>
       <List
         gap={20}
+        loading={isLoading}
         data={topics?.items}
         noDataMessage="No current topics"
         itemRender={(item) => (

@@ -1,6 +1,9 @@
 {
   "name": "paid-qa",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "private": true,
   "workspaces": {
     "packages": [
@@ -26,10 +29,15 @@
   },
   "scripts": {
     "prepare": "husky install && husky set .husky/pre-commit \"npx lint-staged\"",
-    "build": "yarn workspace @osn/common build && yarn workspace @osn/consts build && yarn workspace @osn/common-ui build",
+    "build": "yarn workspace @osn/common build && yarn workspace @osn/common-ui build",
     "build-storybook": "yarn build && yarn workspace @osn/common-ui build-storybook",
     "build-site": "yarn build && yarn workspace @paid-qa/site build",
-    "start": "yarn build && yarn workspace @paid-qa/site start"
+    "start": "yarn build && yarn workspace @paid-qa/site start",
+    "test-server": "yarn workspace @paid-qa/server test",
+    "test-scan": "yarn workspace @paid-qa/scan test",
+    "test-spec": "yarn workspace @paid-qa/spec test",
+    "test-ui": "yarn workspace @osn/common-ui test",
+    "test": "yarn run test-server && yarn run test-scan && yarn run test-spec && yarn run test-ui"
   },
   "main": "index.js",
   "repository": "https://github.com/opensquare-network/paid-qa.git",

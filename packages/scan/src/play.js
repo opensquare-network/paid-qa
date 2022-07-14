@@ -3,19 +3,23 @@
 // westend 9756325-2: osn:q:1:AS:bafybeibknoqig3k472ke56llloupmlf7g6u6xwxntje4pm2a37npb343n4
 
 require("dotenv").config();
+const {
+  chain: { fetchBlocks, disconnect },
+} = require("@osn/scan-common");
 const { scanBlock } = require("./scan/block");
-const { fetchBlocks } = require("./scan/fetch");
-const { initDb, closeDb, } = require("./mongo");
-const { disconnect } = require("./chain/api")
 
 async function play() {
-  await initDb();
-
-  const heights = [9688365, 9755646, 9756325];
+  const heights = [
+    2009349, 2009392, 2009446, 2009474, 2009512, 2009530, 2016376, 2016390,
+    2016467, 2016687, 2016736, 2016896, 2016903, 2016906, 2016913, 2136887,
+    2144217, 2144426, 2247795, 2247833, 2247846, 2247851, 2247877, 2247883,
+    2247892, 2247897, 2257102, 2257106, 2259320, 2259333, 2259642,
+  ];
   const blocks = await fetchBlocks(heights);
-  for (const { block, events } of blocks) {
-    const blockIndexer = await scanBlock(block, events);
-    console.log(`${ blockIndexer.blockHeight } done`)
+  for (let i = 0; i < heights.length; i++) {
+    const height = heights[i];
+    const { block, events } = blocks[i];
+    await scanBlock({ height, block, events });
   }
 }
 
@@ -23,6 +27,5 @@ play()
   .then(() => console.log("Scan finished"))
   .catch(console.error)
   .finally(async () => {
-    await closeDb();
     await disconnect();
   });

@@ -2,6 +2,20 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Config environment variables
+
+Run `cat .env.example > .env` to init the `.env` file, then edit it.
+
+```dotenv
+# The backend server endpoint configuration
+REACT_APP_QA_API_SERVER=https://test-qa-api.opensquare.io/
+REACT_APP_SOCKET_IO_URL=test-qa-api.opensquare.io/
+
+REACT_APP_IDENTITY_SERVER_HOST=https://id.statescan.io
+# development | production
+REACT_APP_ENVIRONMENT=development
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

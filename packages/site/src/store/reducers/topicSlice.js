@@ -57,7 +57,7 @@ export const fetchTopic = (topicCid) => async (dispatch) => {
 
 export const fetchFundSummary = (topicCid) => async (dispatch) => {
   serverApi
-    .fetch(`/topics/${topicCid}/fundsummary`)
+    .fetch(`/topics/${topicCid}/funds/summary`)
     .then(({ result, error }) => {
       if (result) {
         dispatch(setFundSummary(result));

@@ -1,20 +1,19 @@
-const { busLogger } = require("../../common/logger");
-const {
-  getTopicCollection,
-} = require("../index");
+const { busLogger } = require("@osn/scan-common");
+const { Topic } = require("@paid-qa/backend-common/src/models/scan");
 
 async function insertTopic(topic) {
-  const { ipfsCid } = topic;
-  const col = await getTopicCollection();
-  const maybeInTopicDb = await col.findOne({ ipfsCid });
-  if (maybeInTopicDb) {
-    busLogger.info(`Same topic ${ ipfsCid } has existed in DB, #${ topic.indexer.blockHeight }`)
+  const { cid } = topic;
+  const maybeInDb = await Topic.findOne({ cid });
+  if (maybeInDb) {
+    busLogger.info(
+      `Same topic ${cid} has existed in DB, #${topic.indexer.blockHeight}`
+    );
     return;
   }
 
-  await col.insertOne(topic);
+  await Topic.create(topic);
 }
 
 module.exports = {
   insertTopic,
-}
+};

@@ -1,4 +1,4 @@
-import { Chains } from "@osn/consts/src";
+import { Chains } from "@osn/constants";
 
 const DEVELOPMENT_NETWORK = [
   { network: Chains.westend },
@@ -100,108 +100,6 @@ export const DEFAULT_KUSAMA_NODES = [
 ];
 export const DEFAULT_KUSAMA_NODE_URL = DEFAULT_KUSAMA_NODES[0]?.url;
 
-export const DEFAULT_KARURA_NODES = [
-  {
-    name: "OnFinality",
-    url: "wss://karura.api.onfinality.io/public-ws",
-  },
-  {
-    name: "Polkawallet",
-    url: "wss://karura.polkawallet.io",
-  },
-  {
-    name: "Acala Foundation 0",
-    url: "wss://karura-rpc-0.aca-api.network",
-  },
-  {
-    name: "Acala Foundation 1",
-    url: "wss://karura-rpc-1.aca-api.network",
-  },
-  {
-    name: "Acala Foundation 2",
-    url: "wss://karura-rpc-2.aca-api.network/ws",
-  },
-  {
-    name: "Acala Foundation 3",
-    url: "wss://karura-rpc-3.aca-api.network/ws",
-  },
-];
-export const DEFAULT_KARURA_NODE_URL = DEFAULT_KARURA_NODES[0]?.url;
-
-export const DEFAULT_ACALA_NODES = [
-  {
-    name: "OnFinality",
-    url: "wss://acala-polkadot.api.onfinality.io/public-ws",
-  },
-  {
-    name: "Polkawallet",
-    url: "wss://acala.polkawallet.io/",
-  },
-  {
-    name: "Acala Foundation 0",
-    url: "wss://acala-rpc-0.aca-api.network/",
-  },
-  {
-    name: "Acala Foundation 1",
-    url: "wss://acala-rpc-1.aca-api.network/",
-  },
-  {
-    name: "Acala Foundation 2",
-    url: "wss://acala-rpc-2.aca-api.network/ws",
-  },
-  {
-    name: "Acala Foundation 3",
-    url: "wss://acala-rpc-3.aca-api.network/ws",
-  },
-];
-export const DEFAULT_ACALA_NODE_URL = DEFAULT_ACALA_NODES[0]?.url;
-
-export const DEFAULT_KHALA_NODES = [
-  {
-    name: "OnFinality",
-    url: "wss://khala.api.onfinality.io/public-ws",
-  },
-];
-export const DEFAULT_KHALA_NODE_URL = DEFAULT_KHALA_NODES[0]?.url;
-
-export const DEFAULT_BASILISK_NODES = [
-  {
-    name: "OnFinality",
-    url: "wss://basilisk.api.onfinality.io/public-ws",
-  },
-  {
-    name: "HydraDX",
-    url: "wss://rpc-01.basilisk.hydradx.io",
-  },
-];
-export const DEFAULT_BASILISK_NODE_URL = DEFAULT_BASILISK_NODES[0]?.url;
-
-export const DEFAULT_BIFROST_NODES = [
-  {
-    name: "OnFinality",
-    url: "wss://bifrost-parachain.api.onfinality.io/public-ws",
-  },
-  {
-    name: "Liebi",
-    url: "wss://bifrost-rpc.liebi.com/ws",
-  },
-];
-
-export const DEFAULT_BIFROST_NODE_URL = DEFAULT_BIFROST_NODES[0]?.url;
-
-export const DEFAULT_KINTSUGI_NODES = [
-  {
-    name: "OnFinality",
-    url: "wss://kintsugi.api.onfinality.io/public-ws",
-  },
-  {
-    name: "Kintsugi Labs",
-    url: "wss://api-kusama.interlay.io/parachain",
-  },
-];
-
-export const DEFAULT_KINTSUGI_NODE_URL = DEFAULT_KINTSUGI_NODES[0]?.url;
-
 export const DEFAULT_WESTEND_NODES = [
   {
     name: "Parity",
@@ -239,12 +137,7 @@ export const DEFAULT_WESTMINT_NODE_URL = DEFAULT_WESTMINT_NODES[0]?.url;
 export const DEFAULT_NODES = {
   polkadot: DEFAULT_POLKADOT_NODE_URL,
   kusama: DEFAULT_KUSAMA_NODE_URL,
-  karura: DEFAULT_KARURA_NODE_URL,
-  acala: DEFAULT_ACALA_NODE_URL,
-  khala: DEFAULT_KHALA_NODE_URL,
-  basilisk: DEFAULT_BASILISK_NODE_URL,
-  bifrost: DEFAULT_BIFROST_NODE_URL,
-  kintsugi: DEFAULT_KINTSUGI_NODE_URL,
+  statemine: DEFAULT_STATEMINE_NODE_URL,
   westend: DEFAULT_WESTEND_NODE_URL,
   westmint: DEFAULT_WESTMINT_NODE_URL,
 };
@@ -263,3 +156,15 @@ export const tabRouterMap = new Map([
 ]);
 
 export const PROJECT_NAME = "OpenSquare-Paid-QA";
+
+export const ASSET_CHAINS = ["statemine", "westmint"];
+
+export const DEFAULT_MINIMUM_FUND_AMOUNT = 0.01;
+
+export const MINIMUM_FUND_AMOUNTS = {
+  DOT: 0.1,
+  KSM: 0.01,
+  RMRK: 0.1,
+  OSNT: 0.1,
+  WND: 0.1,
+};

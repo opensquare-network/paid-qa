@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import Avatar from "@osn/common-ui/lib/Account/Avatar";
 import Name from "../User/Name";
 import ExternalLink from "@osn/common-ui/lib/ExternalLink";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
 import Flex from "@osn/common-ui/lib/styled/Flex";
 import { ReactComponent as CopyIcon } from "../Post/Detail/icons/copy.svg";
@@ -31,9 +31,6 @@ const Wrapper = styled(Flex)`
   }
   object > div {
     justify-content: center;
-  }
-  a {
-    display: block;
   }
 `;
 

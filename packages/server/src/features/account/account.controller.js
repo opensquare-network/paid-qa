@@ -1,7 +1,13 @@
 const flatten = require("lodash.flatten");
 const BigNumber = require("bignumber.js");
-const { Topic, Reward, Fund, Answer } = require("../../models");
-const { toPublicKey } = require("../../utils/address");
+const {
+  Topic,
+  Reward,
+  Fund,
+  Answer,
+  Fulfill,
+} = require("@paid-qa/backend-common/src/models");
+const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
 const { extractPage } = require("../../utils/pagination");
 
 async function getAccountTopics(ctx) {
@@ -16,7 +22,11 @@ async function getAccountTopics(ctx) {
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .populate("answersCount")
-    .populate("rewards");
+    .populate({
+      path: "rewards",
+      select: "-__v",
+    })
+    .select("-__v -data -pinned");
 
   ctx.body = {
     items: topics,
@@ -53,6 +63,7 @@ async function getAccountPromisedTopics(ctx) {
   // Reterive topics resolves
   await Topic.populate(topics, {
     path: "resolves",
+    select: "-__v",
     match: {
       sponsorPublicKey: signerPublicKey,
     },
@@ -97,7 +108,7 @@ async function getAccountPromisedTopics(ctx) {
   // Load topic details
   const topicDetails = await Topic.find({
     cid: { $in: paginatedTopics.map((item) => item.cid) },
-  });
+  }).select("-__v -data -pinned");
   for (const topic of paginatedTopics) {
     topic.topic = topicDetails.find((item) => item.cid === topic.cid);
   }
@@ -177,11 +188,19 @@ async function getAccountFunds(ctx) {
     .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("topic")
+    .populate({
+      path: "topic",
+      select: "-__v -data -pinned",
+    })
     .populate({
       path: "answer",
-      populate: "topic",
-    });
+      select: "-__v -data -pinned",
+      populate: {
+        path: "topic",
+        select: "-__v -data -pinned",
+      },
+    })
+    .select("-__v");
 
   ctx.body = {
     items: funds,
@@ -189,44 +208,6 @@ async function getAccountFunds(ctx) {
     pageSize,
     total,
   };
-}
-
-async function getAccountPromises(ctx) {
-  const { address } = ctx.params;
-
-  const sponsorPublicKey = toPublicKey(address);
-  const q = { sponsorPublicKey };
-  const rewards = await Reward.aggregate([
-    { $match: q },
-    {
-      $group: {
-        _id: "$bounty.symbol",
-        value: { $sum: "$bounty.value" },
-      },
-    },
-  ]);
-
-  const funds = await Fund.aggregate([
-    { $match: q },
-    {
-      $group: {
-        _id: "$bounty.symbol",
-        value: { $sum: "$bounty.value" },
-      },
-    },
-  ]);
-
-  const result = {};
-  rewards.forEach((reward) => {
-    result[reward._id] = { promise: reward.value.toString() };
-  });
-  funds.forEach((fund) => {
-    if (result[fund._id]) {
-      result[fund._id].fund = fund.value.toString();
-    }
-  });
-
-  ctx.body = result;
 }
 
 async function getAccountRewards(ctx) {
@@ -240,11 +221,19 @@ async function getAccountRewards(ctx) {
     .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("topic")
+    .populate({
+      path: "topic",
+      select: "-__v -data -pinned",
+    })
     .populate({
       path: "answer",
-      populate: "topic",
-    });
+      select: "-__v -data -pinned",
+      populate: {
+        path: "topic",
+        select: "-__v -data -pinned",
+      },
+    })
+    .select("-__v");
 
   ctx.body = {
     items: rewards,
@@ -265,7 +254,11 @@ async function getAccountAnswers(ctx) {
     .sort({ "indexer.blockTime": -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .populate("topic");
+    .populate({
+      path: "topic",
+      select: "-__v -data -pinned",
+    })
+    .select("-__v -data -pinned");
 
   ctx.body = {
     items: topics,
@@ -278,80 +271,16 @@ async function getAccountAnswers(ctx) {
 async function getAccountOverview(ctx) {
   const { address } = ctx.params;
   const signerPublicKey = toPublicKey(address);
-  const q = { sponsorPublicKey: signerPublicKey };
-  const promisesCountQuery = Reward.aggregate([
-    { $match: q },
+
+  const promisesCountQuery = Fulfill.aggregate([
+    { $match: { sponsorPublicKey: signerPublicKey } },
     { $group: { _id: "$topicCid" } },
     { $count: "total" },
   ]);
 
-  const notFulfilledPromiseCountQuery = Reward.aggregate([
-    { $match: q },
-    {
-      $group: {
-        _id: {
-          topicCid: "$topicCid",
-          symbol: "$bounty.symbol",
-        },
-        promiseAmount: { $sum: "$bounty.value" },
-      },
-    },
-    {
-      $lookup: {
-        from: "answers",
-        localField: "_id.topicCid",
-        foreignField: "topicCid",
-        as: "answers",
-      },
-    },
-    {
-      $lookup: {
-        from: "funds",
-        let: {
-          topicCid: "$_id.topicCid",
-          answerCid: "$answers.cid",
-          symbol: "$_id.symbol",
-        },
-        pipeline: [
-          {
-            $match: {
-              $expr: {
-                $and: [
-                  { $eq: ["$sponsorPublicKey", signerPublicKey] },
-                  { $eq: ["$bounty.symbol", "$$symbol"] },
-                  {
-                    $or: [
-                      { $eq: ["$refCid", "$$topicCid"] },
-                      { $in: ["$refCid", "$$answerCid"] },
-                    ],
-                  },
-                ],
-              },
-            },
-          },
-          {
-            $group: {
-              _id: null,
-              value: { $sum: "$bounty.value" },
-            },
-          },
-        ],
-        as: "fundAmount",
-      },
-    },
-    {
-      $addFields: {
-        fundAmount: { $first: "$fundAmount.value" },
-      },
-    },
-    {
-      $match: {
-        $expr: {
-          $lt: ["$fundAmount", "$promiseAmount"],
-        },
-      },
-    },
-    { $group: { _id: "$_id.topicCid" } },
+  const notFulfilledPromiseCountQuery = Fulfill.aggregate([
+    { $match: { sponsorPublicKey: signerPublicKey, fulfilled: false } },
+    { $group: { _id: "$topicCid" } },
     { $count: "count" },
   ]);
 
@@ -383,7 +312,6 @@ async function getAccountOverview(ctx) {
 
 module.exports = {
   getAccountTopics,
-  getAccountPromises,
   getAccountPromisedTopics,
   getAccountFunds,
   getAccountRewards,

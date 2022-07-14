@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import BigNumber from "bignumber.js";
 import ConnectWallet from "../ConnectWallet";
 import Input from "@osn/common-ui/lib/styled/Input";
 import Button from "@osn/common-ui/lib/styled/Button";
@@ -24,7 +25,11 @@ import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import RewardDetail from "./RewardDetail";
-import { RichEditor } from "@osn/common-ui";
+import RichEditor from "@osn/common-ui/lib/RichEditor";
+import {
+  DEFAULT_MINIMUM_FUND_AMOUNT,
+  MINIMUM_FUND_AMOUNTS,
+} from "utils/constants";
 
 const { InteractionEncoder } = encoder;
 const { NewInteraction } = interactions;
@@ -130,6 +135,13 @@ export default function Create() {
 
     if (isNaN(rewardAmount) || +rewardAmount <= 0) {
       return showErrorToast("Reward must be a valid number");
+    }
+
+    const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
+    if (new BigNumber(rewardAmount).lt(minimum)) {
+      return showErrorToast(
+        `Reward amount cannot be less than minimum: ${minimum}`
+      );
     }
 
     const data = { title, content };

@@ -1,12 +1,9 @@
 const Chains = {
   polkadot: "polkadot",
   kusama: "kusama",
-  karura: "karura",
-  khala: "khala",
-  statemine: "statemine",
-  bifrost: "bifrost",
-  kintsugi: "kintsugi",
   westend: "westend",
+  statemine: "statemine",
+  statemint: "statemint",
   westmint: "westmint",
 };
 

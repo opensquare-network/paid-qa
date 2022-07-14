@@ -4,7 +4,7 @@ import Detail from "./Detail";
 import Answers from "./Answers";
 import Promises from "./Promises";
 import Funds from "./Funds";
-import { MOBILE_SIZE } from "@osn/consts";
+import { MOBILE_SIZE } from "@osn/constants";
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,6 +50,7 @@ export default function Post({ topic }) {
           topicCid={topic?.cid}
           rewards={topic?.rewards}
           resolves={topic?.resolves}
+          resolved={topic?.resolved}
         />
         <Funds topicCid={topic?.cid} />
       </div>

@@ -12,6 +12,9 @@ export const netural_grey_900 = "#191E27";
 
 // secondary
 export const secondary_red_500 = "#EE4444";
+export const secondary_green_500 = "#4CAF50";
+export const secondary_blue_100 = "#eff5fb";
+export const secondary_blue_500 = "#1f70c7";
 
 // text
 export const text_light_major = "#fff";

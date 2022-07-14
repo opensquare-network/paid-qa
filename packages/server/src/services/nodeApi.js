@@ -1,6 +1,4 @@
 const { HttpError } = require("../utils/exc");
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 class NodeApi {
   endpoint = null;

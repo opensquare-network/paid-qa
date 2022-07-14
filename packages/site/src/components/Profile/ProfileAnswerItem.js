@@ -1,7 +1,11 @@
 import styled from "styled-components";
-import { Time, MarkdownPreview, Flex, Card } from "@osn/common-ui";
-import { Link } from "react-router-dom";
+import { Time, Flex, Card, MentionIdentityUser, Dot } from "@osn/common-ui";
 import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import {
+  MarkdownPreviewer,
+  renderMentionIdentityUserPlugin,
+} from "@osn/previewer";
+import TitleLink from "./styled/TitleLink";
 
 const StyledDividerWrapper = styled(Flex)`
   ${p_14_normal};
@@ -9,18 +13,6 @@ const StyledDividerWrapper = styled(Flex)`
   > :nth-child(2) {
     font-weight: 500;
     color: #1e2134;
-  }
-  > :nth-child(2)::after {
-    content: "·";
-    margin: 0 8px;
-    color: #a1a8b3;
-  }
-`;
-
-const TitleLink = styled(Link)`
-  cursor: pointer;
-  :hover {
-    text-decoration: underline;
   }
 `;
 
@@ -34,15 +26,18 @@ export default function AnswerItem({ data }) {
           <TitleLink to={`/topic/${data?.topic?.cid}`}>
             {data?.topic?.title}
           </TitleLink>
-          &nbsp;
+          <Dot />
           <Time time={data?.createdAt} />
         </StyledDividerWrapper>
       }
     >
-      <MarkdownPreview
+      <MarkdownPreviewer
         content={data?.content}
-        bordered={false}
-        allowTags={["a"]}
+        allowedTags={["a"]}
+        maxLines={3}
+        plugins={[
+          renderMentionIdentityUserPlugin(<MentionIdentityUser hashRoute />),
+        ]}
       />
     </Card>
   );

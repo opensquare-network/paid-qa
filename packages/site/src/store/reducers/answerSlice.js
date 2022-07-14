@@ -20,7 +20,7 @@ export const answersSelector = (state) => state.answer.answers;
 
 export const fetchAnswers = (topicCid, page) => async (dispatch) => {
   serverApi
-    .fetch(`/topics/${topicCid}/answers`, { page })
+    .fetch(`/topics/${topicCid}/answers`, { page, pageSize: 50 })
     .then(({ result, error }) => {
       if (result) {
         dispatch(setAnswers(result));

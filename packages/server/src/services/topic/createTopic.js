@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
-const { Topic, Reward } = require("../../models");
-const { PostStatus } = require("../../utils/constants");
+const {
+  connection,
+  Topic,
+  Reward,
+} = require("@paid-qa/backend-common/src/models");
+const {
+  OnChainStatus,
+} = require("@paid-qa/backend-common/src/utils/constants");
 const {
   getApi,
   getRemark,
@@ -14,7 +20,11 @@ const {
 const { HttpError } = require("../../utils/exc");
 const { ipfsAdd, cidOf } = require("../ipfs.service");
 const { validateTokenAmount } = require("../common");
-const { toPublicKey } = require("../../utils/address");
+const { toPublicKey } = require("@paid-qa/backend-common/src/utils/address");
+const {
+  updatePromiseFulfillment,
+} = require("@paid-qa/backend-common/src/services/fulfill");
+const { logger } = require("../logger");
 
 async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
   const { title, content } = data;
@@ -41,6 +51,7 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
 
   // Verify if ipfs cid is the same as the one in the system remark
   if (interaction.topicIpfsCid !== cid) {
+    console.log(cid);
     throw new HttpError(
       500,
       "System remark topic cid does not match the ipfs content"
@@ -66,7 +77,7 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
 
   const signerPublicKey = toPublicKey(signer);
 
-  const session = await mongoose.startSession();
+  const session = await connection.startSession();
   await session.withTransaction(async () => {
     await Topic.updateOne(
       { cid },
@@ -79,12 +90,18 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
         },
         title,
         content,
+        bounty: {
+          value: tokenAmount,
+          tokenIdentifier,
+          symbol,
+          decimals,
+        },
         data,
         pinned: false,
         network,
         signer,
         signerPublicKey,
-        status: PostStatus.Published,
+        status: OnChainStatus.Published,
       },
       { upsert: true, session }
     );
@@ -105,13 +122,15 @@ async function createVerifiedTopic(data, network, blockHash, extrinsicIndex) {
           symbol,
           decimals,
         },
+        type: "topic",
         sponsor: signer,
         sponsorPublicKey: signerPublicKey,
-        status: PostStatus.Published,
       },
       { upsert: true, session }
     );
   });
+
+  await updatePromiseFulfillment(cid, signerPublicKey);
 
   // Upload topic content to IPFS
   try {
@@ -146,7 +165,7 @@ async function saveUnverifiedTopic(
   const signerPublicKey = toPublicKey(signer);
   const cid = await cidOf(data);
 
-  const session = await mongoose.startSession();
+  const session = await connection.startSession();
   await session.withTransaction(async () => {
     await Topic.updateOne(
       { cid },
@@ -164,7 +183,7 @@ async function saveUnverifiedTopic(
         network,
         signer,
         signerPublicKey,
-        status: PostStatus.Reserved,
+        status: OnChainStatus.Reserved,
       },
       { upsert: true, session }
     );
@@ -182,11 +201,13 @@ async function saveUnverifiedTopic(
         bounty,
         sponsor: signer,
         sponsorPublicKey: signerPublicKey,
-        status: PostStatus.Reserved,
+        status: OnChainStatus.Reserved,
       },
       { upsert: true, session }
     );
   });
+
+  await updatePromiseFulfillment(cid, signerPublicKey);
 
   return {
     cid,
@@ -206,7 +227,7 @@ async function createTopic(
   try {
     return await createVerifiedTopic(data, network, blockHash, extrinsicIndex);
   } catch (e) {
-    console.error(e);
+    logger.error(`Cannot verify topic: ${e.message}`);
     return await saveUnverifiedTopic(
       data,
       network,

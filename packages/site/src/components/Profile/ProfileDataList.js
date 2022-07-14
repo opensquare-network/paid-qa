@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import serverApi from "services/serverApi";
-import ListLoader from "@osn/common-ui/lib/Skeleton/ListLoader";
 import { newErrorToast } from "store/reducers/toastSlice";
 import { EmptyList } from "utils/constants";
 import { List, Pagination } from "@osn/common-ui";
@@ -14,14 +13,6 @@ import AnswerItem from "./ProfileAnswerItem";
 
 const ListWrapper = styled.div`
   margin: 20px 0;
-
-  a {
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
 
 const meta = {
@@ -72,14 +63,13 @@ function ProfileDataList({ tab, network, address }) {
     fetchData(1);
   }, [tab, network, address, fetchData]);
 
-  return isLoading ? (
-    <ListLoader />
-  ) : (
+  return (
     <>
       <ListWrapper>
         <List
           data={data?.items}
           gap={20}
+          loading={isLoading}
           noDataMessage={`No current ${tab}`}
           itemRender={(item) => (
             <List.Item>{Item && <Item data={item} />}</List.Item>

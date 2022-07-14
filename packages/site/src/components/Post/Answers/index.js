@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -16,7 +16,7 @@ import {
 } from "store/reducers/toastSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
-import RichEdit from "@osn/common-ui/lib/RichEdit";
+import RichEditor from "@osn/common-ui/lib/RichEditor";
 import { signMessage } from "services/chainApi";
 import NoReplies from "components/NoReplies";
 import {
@@ -35,7 +35,9 @@ import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
 import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
-import { identityChainMap } from "@osn/consts";
+import { identityChainMap } from "@osn/constants";
+import NetworkUser from "components/User/NetworkUser";
+import { MentionIdentityUser } from "@osn/common-ui";
 
 const Title = styled.div`
   border-bottom: solid 1px #f0f3f8;
@@ -75,8 +77,14 @@ export default function Answers({ topicCid }) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();
+  const [suggestions, setSuggestions] = useState([]);
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
+
+  const resolveMentionFormat = (identity, user) =>
+    `[@${identity?.info?.display || addressEllipsis(user.address)}](${
+      user.address
+    }-${user.network}) `;
 
   useEffect(() => {
     if (topicCid) {
@@ -140,7 +148,7 @@ export default function Answers({ topicCid }) {
     }
   };
 
-  const loadSuggestions = async (text) => {
+  const fetchIdentitySuggestions = useCallback(async () => {
     const userIdentities = await Promise.all(
       uniqWith(
         answers?.items || [],
@@ -159,16 +167,28 @@ export default function Answers({ topicCid }) {
           };
         })
     );
-    return userIdentities
-      .map((user) => {
-        const display =
-          user.identity?.info?.display || addressEllipsis(user.address);
-        return {
-          preview: display,
-          value: `[@${display}](/network/${user.network}/address/${user.address})`,
-        };
-      })
-      .filter((i) => i.preview.toLowerCase().includes(text.toLowerCase()));
+
+    return userIdentities.map((user) => {
+      return {
+        address: user.address,
+        value: resolveMentionFormat(user.identity, user),
+        preview: (
+          <NetworkUser noLink address={user.address} network={user.network} />
+        ),
+      };
+    });
+  }, [answers]);
+
+  useEffect(() => {
+    fetchIdentitySuggestions().then((v) => {
+      setSuggestions(v);
+    });
+  }, [answers, fetchIdentitySuggestions]);
+
+  const loadSuggestions = (text) => {
+    return suggestions.filter((i) =>
+      i.address.toLowerCase().includes(text.toLowerCase())
+    );
   };
 
   const forceEditor = () => {
@@ -179,9 +199,7 @@ export default function Answers({ topicCid }) {
   const onReply = async (user) => {
     const identityChain = identityChainMap[user.network] || user.network;
     const identity = fetchIdentity(identityChain, user.address);
-    const mention = `[@${
-      identity?.info?.display || addressEllipsis(user.address)
-    }](/network/${user.network}/address/${user.address})`;
+    const mention = resolveMentionFormat(identity, user);
 
     setContent(content + mention + " ");
 
@@ -228,7 +246,7 @@ export default function Answers({ topicCid }) {
       </PaginationWrapper>
       {!(answers === null) && (
         <EditorWrapper>
-          <RichEdit
+          <RichEditor
             ref={editorRef}
             content={content}
             setContent={setContent}
@@ -237,6 +255,7 @@ export default function Answers({ topicCid }) {
             submitButtonName="Reply"
             submitting={loading}
             loadSuggestions={loadSuggestions}
+            identifier={<MentionIdentityUser hashRoute target="_blank" />}
           />
         </EditorWrapper>
       )}
