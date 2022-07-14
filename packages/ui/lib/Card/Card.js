@@ -57,6 +57,7 @@ const CardWrapper = styled(Flex)`
 
 const CardBody = styled.div`
   flex: 1;
+  max-width: 100%;
 `;
 
 const HeadTitle = styled.p`
