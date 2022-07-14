@@ -32,6 +32,14 @@ export const h4_24_bold = css`
   line-height: 24px;
 `;
 
+export const h5_24_bold = css`
+  font-family: Montserrat, serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+`;
+
 export const p_20_semibold = css`
   font-style: normal;
   font-weight: 600;
