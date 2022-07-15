@@ -54,9 +54,14 @@ export default function LinkIdentityUser({
   }
 
   return (
-    <Link target={target} {...restProps} {...linkProps} extraCss={extraCss}>
+    <Link target={target} {...linkProps} extraCss={extraCss}>
       {prefix}
-      <IdentityUser items={items} network={network} address={ss58Address} />
+      <IdentityUser
+        items={items}
+        network={network}
+        address={ss58Address}
+        {...restProps}
+      />
     </Link>
   );
 }
