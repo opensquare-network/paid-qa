@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import IdentityUser from "../../lib/Identity/IdentityUser";
+import LinkIdentityUser from "../../lib/Identity/LinkIdentityUser";
+import MentionIdentityUser from "../../lib/Identity/MentionIdentityUser";
 
 const maintenance = {
   network: "kusama",
@@ -39,8 +41,6 @@ const EllipsisWrapper = styled.div`
 export const ellipsisIdentityName = () => {
   return (
     <>
-      <p>with width 150px</p>
-
       <EllipsisWrapper>
         <IdentityUser
           network={maintenance.network}
@@ -79,5 +79,40 @@ export const hoverIdentityName = () => {
         hoverAddressForDetail
       />
     </HoverWrapper>
+  );
+};
+
+export const linkIdentityUser = () => {
+  return (
+    <HoverWrapper>
+      <EllipsisWrapper>
+        <LinkIdentityUser
+          explore
+          network={maintenance.network}
+          address={maintenance.address}
+          hoverAddressForDetail
+        />
+      </EllipsisWrapper>
+    </HoverWrapper>
+  );
+};
+
+export const mentionIdentityUser = () => {
+  return (
+    <>
+      <MentionIdentityUser
+        explore
+        network={maintenance.network}
+        address={maintenance.address}
+      />
+
+      <EllipsisWrapper>
+        <MentionIdentityUser
+          explore
+          network={maintenance.network}
+          address={maintenance.address}
+        />
+      </EllipsisWrapper>
+    </>
   );
 };
