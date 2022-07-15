@@ -1,3 +1,4 @@
+import React from "react";
 import { text_dark_accessory } from "../styles/colors";
 import styled from "styled-components";
 
