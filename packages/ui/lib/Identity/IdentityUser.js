@@ -52,6 +52,7 @@ export default function IdentityUser({
   networkIconSize = 16,
   identityIconSize = 12,
   identityTooltipPosition,
+  // FIXME: DON'T use this for now
   hoverAddressForDetail,
 }) {
   const isMounted = useIsMounted();
