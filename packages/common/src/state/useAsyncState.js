@@ -19,7 +19,7 @@ export function useAsyncState(promise, initialState, options) {
   const [state, setState] = useState(initialState);
   const [error, setError] = useState(null);
   const [isReady, setIsReady] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(immediate);
 
   const execute = async (...args) => {
     setIsReady(false);
