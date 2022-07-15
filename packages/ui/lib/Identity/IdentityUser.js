@@ -9,11 +9,14 @@ import { fetchIdentity } from "@osn/common/src/services/identity";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { identityChainMap } from "@osn/constants";
 import { addressEllipsis } from "@osn/common/src/utils/address";
+import Popover from "../Popover";
+import Card from "../Card";
 
 const Wrapper = styled.span`
   display: inline-flex;
   align-items: center;
   font-weight: 500;
+  max-width: 100%;
 `;
 
 const AvatarIconWrapper = styled.span`
@@ -25,6 +28,15 @@ const NetworkIconWrapper = styled.span`
 `;
 const IdentityIconWrapper = styled.span`
   margin-right: 4px;
+`;
+const TextWrapper = styled.span`
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
+const PopoverAddress = styled.p`
+  word-wrap: break-word;
 `;
 
 function defaultTextRender(text) {
@@ -40,6 +52,7 @@ export default function IdentityUser({
   networkIconSize = 16,
   identityIconSize = 12,
   identityTooltipPosition,
+  hoverAddressForDetail,
 }) {
   const isMounted = useIsMounted();
   const [identity, setIdentity] = useState({});
@@ -93,7 +106,28 @@ export default function IdentityUser({
   }
   let text;
   if (assertItems("text")) {
-    text = textRender(identity?.info?.display ?? addressEllipsis(address));
+    text = (
+      <TextWrapper>
+        {textRender(identity?.info?.display ?? addressEllipsis(address))}
+      </TextWrapper>
+    );
+
+    if (hoverAddressForDetail) {
+      text = (
+        <Popover
+          content={
+            <Card
+              size="small"
+              head={<IdentityUser network={network} address={address} />}
+            >
+              <PopoverAddress>{address}</PopoverAddress>
+            </Card>
+          }
+        >
+          {text}
+        </Popover>
+      );
+    }
   }
 
   return (
