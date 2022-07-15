@@ -6,6 +6,7 @@ import { isExternalLink } from "@osn/common/src/utils/url";
 import { getAddressLink } from "@osn/common/src/utils/blockExplorer";
 
 const Link = styled.a`
+  max-width: 100%;
   ${(p) => p.extraCss}
 `;
 
