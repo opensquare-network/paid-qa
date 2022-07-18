@@ -12,6 +12,9 @@
     "./*": "./*",
     "./RichEditor": {
       "import": "./es/RichEditor"
+    },
+    "./Account": {
+      "import": "./es/Account"
     }
   },
   "scripts": {

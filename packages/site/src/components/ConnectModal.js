@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { accountSelector, setAccount } from "../store/reducers/accountSlice";
 
 import Modal from "@osn/common-ui/lib/Modal";
-import AccountSelector from "./Account/AccountSelector";
+import AccountSelector from "@osn/common-ui/lib/Account/AccountSelector";
 import styled from "styled-components";
 import ChainSelector from "@osn/common-ui/lib/Chain/ChainSelector";
 import { closeConnect } from "../store/reducers/showConnectSlice";
