@@ -49,8 +49,8 @@ const AccountSelector = ({
     value: index,
     content: (
       <AccountItem
-        accountName={item.name}
-        accountAddress={item.address}
+        accountName={item?.meta?.name}
+        accountAddress={item?.address}
         chain={chain.network}
       />
     ),
@@ -68,7 +68,7 @@ const AccountSelector = ({
           value={selectedIndex}
         />
         <AccountItem
-          accountName={accounts?.[selectedIndex]?.name}
+          accountName={accounts?.[selectedIndex]?.meta?.name}
           accountAddress={accounts?.[selectedIndex]?.address}
           chain={chain.network}
           header
