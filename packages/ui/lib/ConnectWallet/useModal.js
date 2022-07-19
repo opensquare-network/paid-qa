@@ -25,6 +25,11 @@ export function useModal({
   function hideModal() {
     setVisible(false);
   }
+  function newTabToPolkadotExtension() {
+    const link = "https://polkadot.js.org/extension/";
+    const newWindow = window.open(link, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+  }
 
   function noAccount() {
     const el = (
@@ -35,8 +40,11 @@ export function useModal({
     );
 
     const props = {
-      okText: "Got it.",
-      onOk: hideModal,
+      okText: "Create/Import address",
+      onOk() {
+        newTabToPolkadotExtension();
+        hideModal();
+      },
       okButtonProps: { color: "orange" },
     };
 
@@ -47,8 +55,6 @@ export function useModal({
   }
 
   function noExtension() {
-    const link = "https://polkadot.js.org/extension/";
-
     const el = (
       <Description>
         Polkadot-js extension not detected. No web3 account could be found.
@@ -59,8 +65,8 @@ export function useModal({
     const props = {
       okText: "Polkadot{.js} Extension",
       onOk() {
-        const newWindow = window.open(link, "_blank", "noopener,noreferrer");
-        if (newWindow) newWindow.opener = null;
+        newTabToPolkadotExtension();
+        hideModal();
       },
     };
 
