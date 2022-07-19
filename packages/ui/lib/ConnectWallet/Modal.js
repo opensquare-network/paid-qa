@@ -2,13 +2,18 @@ import { useEffect, useState } from "react";
 import { usePolkadotExtension } from "./usePolkadotExtension";
 import { useModal } from "./useModal";
 
-export default function ConnectWalletModal({
-  availableNetworks = [],
-  projectName,
-  onConnect = () => {},
-  visible,
-  setVisible = () => {},
-}) {
+/**
+ * @param {import('./types').ConnectWalletModalProps} props
+ */
+export default function ConnectWalletModal(props) {
+  const {
+    availableNetworks = [],
+    projectName,
+    onConnect = () => {},
+    visible,
+    setVisible = () => {},
+  } = props ?? {};
+
   const [chain, setChain] = useState(availableNetworks[0]);
   const [address, setAddress] = useState();
   const [normalizedAccounts, setNormalizedAccounts] = useState([]);
