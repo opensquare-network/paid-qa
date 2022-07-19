@@ -8,7 +8,7 @@ import React from "react";
 export default function ConnectWallet(props = {}) {
   return (
     <>
-      <Button onClick={() => props?.setVisible?.(!props?.visible)} />
+      <Button setVisible={props?.setVisible} />
       <Modal {...props} />
     </>
   );
