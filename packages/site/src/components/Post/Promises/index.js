@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Card from "@osn/common-ui/lib/styled/Card";
 import Item from "./Item";
 import { accountSelector } from "store/reducers/accountSlice";
-import { popUpConnect } from "store/reducers/showConnectSlice";
 import SupportModal from "components/SupportModal";
 import { calcSponserRewards } from "utils/rewards";
 import { isSamePublicKey } from "@osn/common/src/utils/address";
@@ -16,8 +15,8 @@ import {
   p_14_normal,
   p_16_semibold,
 } from "@osn/common-ui/lib/styles/textStyles";
-import ConnectWallet from "components/ConnectWallet";
 import Tooltip from "@osn/common-ui/lib/Tooltip";
+import ConnectWallet from "components/ConnectWallet";
 
 const Title = styled.div`
   padding-bottom: 16px;
@@ -49,12 +48,13 @@ const GreyText = styled.p`
 `;
 
 export default function Promises({ topicCid, rewards, resolves, resolved }) {
-  const dispatch = useDispatch();
   const account = useSelector(accountSelector);
   const [openSupportModel, setOpenSupportModel] = useState(false);
   // At least one promise exists which is support by topic creator
   const isLoading = !(rewards?.length > 0);
   const showSupport = !isLoading && !resolved;
+  const [connectWalletModalVisible, setConnectWalletModalVisible] =
+    useState(false);
 
   const sumUpRewards = calcSponserRewards(rewards, true);
 
@@ -100,7 +100,12 @@ export default function Promises({ topicCid, rewards, resolves, resolved }) {
               Support
             </Button>
           ) : (
-            <ConnectWallet large onClick={() => dispatch(popUpConnect())} />
+            <>
+              <ConnectWallet
+                visible={connectWalletModalVisible}
+                setVisible={setConnectWalletModalVisible}
+              />
+            </>
           )}
         </ButtonContainer>
       )}
