@@ -49,8 +49,8 @@ const AccountSelector = ({
     value: index,
     content: (
       <AccountItem
-        accountName={item?.meta?.name}
-        accountAddress={item?.address}
+        accountName={item.name}
+        accountAddress={item.address}
         chain={chain.network}
       />
     ),
@@ -67,14 +67,12 @@ const AccountSelector = ({
           }}
           value={selectedIndex}
         />
-        {accounts && (
-          <AccountItem
-            accountName={accounts?.[selectedIndex]?.meta?.name}
-            accountAddress={accounts?.[selectedIndex]?.address}
-            chain={chain.network}
-            header
-          />
-        )}
+        <AccountItem
+          accountName={accounts?.[selectedIndex]?.name}
+          accountAddress={accounts?.[selectedIndex]?.address}
+          chain={chain.network}
+          header
+        />
       </DropdownWrapper>
     </Wrapper>
   );

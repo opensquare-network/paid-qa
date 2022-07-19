@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
 import Avatar from "./Avatar";
@@ -9,7 +9,6 @@ import { fetchIdentity } from "@osn/common/src/services/identity";
 import IdentityIcon from "../Identity/IdentityIcon";
 import { p_16_semibold } from "../styles/textStyles";
 import ChainIcon from "../Chain/ChainIcon";
-import { useAsyncState } from "@osn/common/src/state/useAsyncState";
 
 const Text = styled.p`
   color: #1e2134;
@@ -66,18 +65,19 @@ const IdentityDisplay = ({ identity, displayAccountName, chain }) => {
 };
 
 const AccountItem = ({ header, accountName, accountAddress, chain }) => {
+  const [identity, setIdentity] = useState();
   const ss58Format = ChainSS58Format[chain];
   let address = accountAddress;
   if (typeof ss58Format === "number") {
     address = encodeAddress(accountAddress, ss58Format);
   }
-
-  const { state: identity } = useAsyncState(() => {
-    const identityChain = identityChainMap[chain] || chain;
-    return fetchIdentity(identityChain, accountAddress);
-  }, {});
-
   let displayAccountName = accountName;
+  useEffect(() => {
+    const identityChain = identityChainMap[chain] || chain;
+    fetchIdentity(identityChain, accountAddress).then((identity) => {
+      setIdentity(identity);
+    });
+  }, [accountAddress, chain]);
 
   return (
     <ItemWrapper header={header}>
