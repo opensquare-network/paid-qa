@@ -1,7 +1,7 @@
 import Button from "../styled/Button";
 
 /**
- * @param {import("./types").ConnectWalletModalProps} props
+ * @param {Pick<import("./types").ConnectWalletModalProps, 'setVisible'>} props
  */
 export default function ConnectWalletButton(props) {
   const { setVisible } = props ?? {};
