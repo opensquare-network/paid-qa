@@ -74,9 +74,18 @@ const AccountItem = ({ header, accountName, accountAddress, chain }) => {
   let displayAccountName = accountName;
   useEffect(() => {
     const identityChain = identityChainMap[chain] || chain;
-    fetchIdentity(identityChain, accountAddress).then((identity) => {
-      setIdentity(identity);
-    });
+    const fetchIdentityAbortController = new AbortController();
+    fetchIdentity(identityChain, accountAddress, {
+      signal: fetchIdentityAbortController.signal,
+    })
+      .then((identity) => {
+        setIdentity(identity);
+      })
+      .catch(() => {});
+
+    return () => {
+      fetchIdentityAbortController.abort();
+    };
   }, [accountAddress, chain]);
 
   return (
