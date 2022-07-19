@@ -1,14 +1,12 @@
 import styled from "styled-components";
 
 import BigNumber from "bignumber.js";
-import ConnectWallet from "../ConnectWallet";
 import Input from "@osn/common-ui/lib/styled/Input";
 import Button from "@osn/common-ui/lib/styled/Button";
 import { accountSelector } from "../../store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { cidOf } from "../../services/ipfs";
-import { popUpConnect } from "../../store/reducers/showConnectSlice";
 import {
   newToastId,
   newErrorToast,
@@ -30,6 +28,7 @@ import {
   DEFAULT_MINIMUM_FUND_AMOUNT,
   MINIMUM_FUND_AMOUNTS,
 } from "utils/constants";
+import ConnectWallet from "components/ConnectWallet";
 
 const { InteractionEncoder } = encoder;
 const { NewInteraction } = interactions;
@@ -113,6 +112,8 @@ export default function Create() {
   const [rewardAmount, setRewardAmount] = useState("");
   const [symbol, setSymbol] = useState();
   const [decimals, setDecimals] = useState();
+  const [connectWalletModalVisible, setConnectWalletModalVisible] =
+    useState(false);
 
   const showErrorToast = (message) => dispatch(newErrorToast(message));
 
@@ -239,7 +240,10 @@ export default function Create() {
           </Box>
         ) : (
           <Box>
-            <ConnectWallet onClick={() => dispatch(popUpConnect())} />
+            <ConnectWallet
+              visible={connectWalletModalVisible}
+              setVisible={setConnectWalletModalVisible}
+            />
           </Box>
         )}
       </Side>
