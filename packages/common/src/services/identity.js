@@ -10,7 +10,7 @@ const identityServerHost =
 const cachedIdentities = new Map();
 let pendingQueries = new Map();
 
-const delayQuery = debounce(() => {
+const delayQuery = debounce((fetchOptions) => {
   const pending = pendingQueries;
   if (pending.size < 1) {
     return;
@@ -36,6 +36,7 @@ const delayQuery = debounce(() => {
     };
 
     fetch(`${identityServerHost}/${chain}/short-ids`, {
+      ...fetchOptions,
       headers,
       method: "POST",
       body: JSON.stringify({ addresses }),
@@ -75,7 +76,10 @@ const delayQuery = debounce(() => {
   }
 }, 0);
 
-export function fetchIdentity(chain, address) {
+/**
+ * @param {RequestInit} fetchOptions
+ */
+export function fetchIdentity(chain, address, fetchOptions = {}) {
   const targetChain = identityChainMap[chain] || chain;
   const targetAddress = encodeNetworkAddress(address, targetChain);
   const idName = `${targetChain}/${targetAddress}`;
@@ -91,7 +95,7 @@ export function fetchIdentity(chain, address) {
         setTimeout(() => {
           const promise = pending.get(idName);
           promise.push(resolve, reject);
-          delayQuery();
+          delayQuery(fetchOptions);
         }, 0)
       ),
     ]);
