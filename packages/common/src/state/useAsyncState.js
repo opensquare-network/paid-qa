@@ -1,5 +1,6 @@
 // @ts-check
 import { useState, useEffect } from "react";
+import { useIsMounted } from "../utils/hooks";
 
 /**
  * @typedef {{
@@ -15,6 +16,7 @@ import { useState, useEffect } from "react";
  */
 export function useAsyncState(promise, initialState, options) {
   const { immediate = true, onError = () => {} } = options ?? {};
+  const isMounted = useIsMounted();
 
   const [state, setState] = useState(initialState);
   const [error, setError] = useState(null);
@@ -42,7 +44,9 @@ export function useAsyncState(promise, initialState, options) {
 
   useEffect(() => {
     if (immediate) {
-      execute();
+      if (isMounted) {
+        execute();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
