@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Modal as SemanticModal } from "semantic-ui-react";
 
 import Button from "../styled/Button";
-import CloseIcon from "../imgs/icons/close.svg";
+import CloseIcon from "../Icon/Close";
 
 const Wrapper = styled.div``;
 
@@ -28,8 +28,10 @@ const CloseBar = styled.div`
   }
 `;
 
-const CloseButton = styled.img`
+const CloseButton = styled.button`
   cursor: pointer;
+  border: none;
+  background: none;
 `;
 
 const FooterWrapper = styled.div`
@@ -57,7 +59,9 @@ export default function Modal({
   };
 
   const closeButton = (
-    <CloseButton onClick={closeModal} src={CloseIcon} width={24} alt="" />
+    <CloseButton onClick={closeModal}>
+      <CloseIcon />
+    </CloseButton>
   );
 
   footer = footer ?? (
