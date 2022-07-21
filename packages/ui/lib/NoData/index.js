@@ -9,9 +9,15 @@ const Message = styled(FlexCenter)`
   height: 66px;
 `;
 
-export default function NoData({ message = "No current data" }) {
+/**
+ * @param {import("./types").NoDataProps} props
+ * @description Wrapped `Card` component
+ */
+export default function NoData(props) {
+  const { message = "No current data", ...restProps } = props ?? {};
+
   return (
-    <Card>
+    <Card {...restProps}>
       <Message>{message}</Message>
     </Card>
   );

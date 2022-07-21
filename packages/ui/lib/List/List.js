@@ -20,16 +20,17 @@ function List(props) {
     gap,
     itemRender,
     noDataMessage,
+    noDataProps = {},
     loading = false,
     ...restProps
-  } = props;
+  } = props ?? {};
 
   if (loading) {
     return <ListLoader />;
   }
 
   if (!data?.length) {
-    return <NoData message={noDataMessage} />;
+    return <NoData {...noDataProps} message={noDataMessage} />;
   }
 
   if (typeof itemRender !== "function") {

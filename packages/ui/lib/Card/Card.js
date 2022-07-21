@@ -77,6 +77,9 @@ const Divider = styled.div`
   margin: 16px 0;
 `;
 
+/**
+ * @param {import('./types').CardProps} props
+ */
 function Card(props) {
   const {
     children,
@@ -89,7 +92,7 @@ function Card(props) {
     prefix,
     suffix,
     ...restProps
-  } = props;
+  } = props ?? {};
 
   const head =
     customizeHead ||
