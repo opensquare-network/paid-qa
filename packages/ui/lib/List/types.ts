@@ -1,4 +1,5 @@
 import React from "react";
+import { NoDataProps } from "../NoData/types";
 
 export type ListProps = {
   /**
@@ -21,6 +22,11 @@ export type ListProps = {
    * @default false
    */
   loading?: boolean;
+
+  /**
+   * Props for `NoData` component
+   */
+  noDataProps?: NoDataProps;
 };
 
 export type ListItemProps = {
