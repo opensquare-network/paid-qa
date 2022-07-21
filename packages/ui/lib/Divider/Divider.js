@@ -10,13 +10,13 @@ const DividerWrapper = styled.div`
   `}
 
   ${(p) =>
-    p.mt &&
+    p.mt >= 0 &&
     css`
       margin-top: ${p.mt}px;
     `}
 
   ${(p) =>
-    p.mb &&
+    p.mb >= 0 &&
     css`
       margin-top: ${p.mb}px;
     `}
@@ -26,7 +26,7 @@ const DividerWrapper = styled.div`
  * @param {import('./types').DividerProps} props
  */
 function Divider(props) {
-  const { my = 20, gap = my, mx, mb, ...restProps } = props ?? {};
+  const { my = 20, gap = my, mt, mb, ...restProps } = props ?? {};
   return <DividerWrapper {...restProps} gap={gap} my={my} mt={mt} mb={mb} />;
 }
 
