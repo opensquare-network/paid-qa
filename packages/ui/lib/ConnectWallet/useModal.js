@@ -117,11 +117,6 @@ export function useModal({
 
     setModalContent(
       <>
-        <Title>Connect Wallet</Title>
-
-        <Text>Chain</Text>
-        <ChainSelector chains={availableNetworks} onSelect={setChain} />
-
         <Text>Account</Text>
         <AccountSelector
           chain={chain}
@@ -154,6 +149,11 @@ export function useModal({
 
   const modal = isReady && (
     <Modal open={visible} setOpen={setVisible} {...props}>
+      <Title>Connect Wallet</Title>
+
+      <Text>Chain</Text>
+      <ChainSelector chains={availableNetworks} onSelect={setChain} />
+
       {content}
     </Modal>
   );
