@@ -92,7 +92,7 @@ function Card(props) {
     prefix,
     suffix,
     ...restProps
-  } = props;
+  } = props ?? {};
 
   const head =
     customizeHead ||
