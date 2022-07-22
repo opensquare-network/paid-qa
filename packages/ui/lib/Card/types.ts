@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type CardProps = React.HTMLAttributes<{
+export type CardProps = React.HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
   title: ReactNode;
   extra: ReactNode;
@@ -10,4 +10,4 @@ export type CardProps = React.HTMLAttributes<{
   bordered: boolean;
   prefix: ReactNode;
   suffix: ReactNode;
-}>;
+};

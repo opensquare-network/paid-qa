@@ -20,6 +20,7 @@ import IdentityUser from "./Identity/IdentityUser";
 import MentionIdentityUser from "./Identity/MentionIdentityUser";
 import LinkIdentityUser from "./Identity/LinkIdentityUser";
 import Dot from "./Dot";
+import Collapse from "./Collapse";
 //styled
 import Button from "./styled/Button";
 import Container from "./styled/Container";
@@ -75,5 +76,6 @@ export {
   LinkIdentityUser,
   MentionIdentityUser,
   Dot,
+  Collapse,
 };
 export * from "./Toast";
