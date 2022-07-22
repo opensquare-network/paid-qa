@@ -24,6 +24,11 @@ export type ListProps = {
   loading?: boolean;
 
   /**
+   * @default <ListLoader />
+   */
+  loadingComponent?: React.ReactNode;
+
+  /**
    * Props for `NoData` component
    */
   noDataProps?: NoDataProps;

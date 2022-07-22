@@ -22,11 +22,12 @@ function List(props) {
     noDataMessage,
     noDataProps = {},
     loading = false,
+    loadingComponent = <ListLoader />,
     ...restProps
   } = props ?? {};
 
   if (loading) {
-    return <ListLoader />;
+    return loadingComponent;
   }
 
   if (!data?.length) {
