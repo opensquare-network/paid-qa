@@ -27,7 +27,16 @@ const DividerWrapper = styled.div`
  */
 function Divider(props) {
   const { my = 20, gap = my, mt, mb, ...restProps } = props ?? {};
-  return <DividerWrapper {...restProps} gap={gap} my={my} mt={mt} mb={mb} />;
+  return (
+    <DividerWrapper
+      {...restProps}
+      gap={gap}
+      my={my}
+      mt={mt}
+      mb={mb}
+      className="osn-divider"
+    />
+  );
 }
 
 export default Divider;
