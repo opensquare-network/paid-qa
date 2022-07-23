@@ -23,6 +23,7 @@ import Statemine from "../imgs/icons/chain/statemine.png";
 import Statemint from "../imgs/icons/chain/statemint.png";
 import Karura from "../imgs/icons/chain/karura.png";
 import Phala from "../imgs/icons/chain/phala.png";
+import Litmus from "../imgs/icons/chain/litmus.png";
 import styled from "styled-components";
 import Tooltip from "../Tooltip";
 
@@ -57,6 +58,7 @@ const pngs = {
   Crab,
   Darwinia,
   Phala,
+  Litmus,
 };
 
 // since nextjs v11, import image assets will return an object { src, ... }
