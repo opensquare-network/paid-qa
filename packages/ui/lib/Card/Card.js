@@ -5,6 +5,7 @@ import { netural_grey_200 } from "../styles/colors";
 import { MOBILE_SIZE } from "@osn/constants";
 import Flex from "../styled/Flex";
 import FlexBetween from "../styled/FlexBetween";
+import Divider from "../Divider";
 
 const CardWrapper = styled(Flex)`
   ${p_14_normal};
@@ -71,12 +72,6 @@ const HeadTitle = styled.p`
     `}
 `;
 
-const Divider = styled.div`
-  height: 1px;
-  background-color: ${netural_grey_200};
-  margin: 16px 0;
-`;
-
 /**
  * @param {import('./types').CardProps} props
  */
@@ -119,7 +114,7 @@ function Card(props) {
         })}
       <CardBody className="osn-card-body">
         {head}
-        {head && children && <Divider />}
+        {head && children && <Divider my={16} />}
         {children}
       </CardBody>
       {suffix &&
