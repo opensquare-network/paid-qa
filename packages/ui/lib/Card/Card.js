@@ -61,7 +61,7 @@ const CardBody = styled.div`
   max-width: 100%;
 `;
 
-const HeadTitle = styled.p`
+const HeadTitle = styled.div`
   margin: 0;
   ${p_16_semibold}
 
