@@ -37,6 +37,7 @@ export const CollapseButton = styled.button`
   border: none;
   background: none;
   cursor: pointer;
+  padding: 0;
 
   ${(p) =>
     p.collapsed &&
