@@ -14,4 +14,6 @@ export {
   MentionIdentityUser,
   Collapse,
 };
+
+export * from "./Icon";
 export * from "./Toast";

@@ -78,4 +78,6 @@ export {
   Dot,
   Collapse,
 };
+
+export * from "./Icon";
 export * from "./Toast";
