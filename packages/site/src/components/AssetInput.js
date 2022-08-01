@@ -1,4 +1,4 @@
-import Input from "@osn/common-ui/lib/styled/Input";
+import { Input } from "@osn/common-ui";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -25,8 +25,17 @@ const Wrapper = styled.div`
 function AssetInput({ value, onChange }) {
   return (
     <Wrapper>
-      <img src={"/imgs/icons/assets/unknown.svg"} alt="" width={"24px"} height={"24px"} />
-      <Input type="number" {...{ value, onChange }} placeholder="Enter an asset ID" />
+      <img
+        src={"/imgs/icons/assets/unknown.svg"}
+        alt=""
+        width={"24px"}
+        height={"24px"}
+      />
+      <Input
+        type="number"
+        {...{ value, onChange }}
+        placeholder="Enter an asset ID"
+      />
     </Wrapper>
   );
 }

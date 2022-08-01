@@ -1,5 +1,5 @@
 import flatten from "lodash.flatten";
-import Avatar from "@osn/common-ui/lib/Account/Avatar";
+import Avatar from "@osn/common-ui/es/Account/Avatar";
 import styled from "styled-components";
 import { calcRewards } from "utils/rewards";
 import { useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import { fundSummarySelector } from "store/reducers/topicSlice";
 import {
   p_14_normal,
   p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 
 const Wrapper = styled.div`
   display: flex;

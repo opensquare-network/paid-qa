@@ -11,10 +11,7 @@ import {
   setFilterTitle,
 } from "store/reducers/topicSlice";
 import { MOBILE_SIZE } from "@osn/constants";
-import {
-  h3_36_bold,
-  p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+import { h3_36_bold, p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 
 const Wrapper = styled.div`
   > :not(:first-child) {

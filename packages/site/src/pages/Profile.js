@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import Header from "components/Profile/Header";
-import Container from "@osn/common-ui/lib/styled/Container";
+import Container from "@osn/common-ui/es/styled/Container";
 import { useParams } from "react-router";
 import serverApi from "../services/serverApi";
 import { newErrorToast } from "../store/reducers/toastSlice";

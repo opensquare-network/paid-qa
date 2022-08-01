@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { accountSelector } from "../../store/reducers/accountSlice";
 
 import styled from "styled-components";
-import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
+import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";
 import AssetSelector from "../NetworkAssetSelector";
 import AmountInput from "../AmountInput";
 import { ReactComponent as NetworkIcon } from "imgs/icons/network.svg";
@@ -11,9 +11,9 @@ import { ReactComponent as RewardIcon } from "imgs/icons/treasury.svg";
 import {
   p_14_medium,
   p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 import BalanceInfo from "../BalanceInfo";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 
 const StyledText = styled.p`
   ${p_16_semibold};

@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import ProgressBar from "@osn/common-ui/lib/styled/ProgressBar";
+import ProgressBar from "@osn/common-ui/es/styled/ProgressBar";
 import { useSelector } from "react-redux";
 import { fundSummarySelector } from "store/reducers/topicSlice";
 import BigNumber from "bignumber.js";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
+import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
+import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import NetworkUser from "../../User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import BigNumber from "bignumber.js";
-import Input from "@osn/common-ui/lib/styled/Input";
-import Button from "@osn/common-ui/lib/styled/Button";
+import Input from "@osn/common-ui/es/styled/Input";
+import Button from "@osn/common-ui/es/styled/Button";
 import { accountSelector } from "../../store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -21,9 +21,9 @@ import { useApi } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
-import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 import RewardDetail from "./RewardDetail";
-import RichEditor from "@osn/common-ui/lib/RichEditor";
+import RichEditor from "@osn/common-ui/es/RichEditor";
 import {
   DEFAULT_MINIMUM_FUND_AMOUNT,
   MINIMUM_FUND_AMOUNTS,

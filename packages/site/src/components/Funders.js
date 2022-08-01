@@ -1,8 +1,8 @@
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
+import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
 import styled from "styled-components";
 import IdentityOrAddr from "./User/IdentityOrAddr";
-import { p_12_normal } from "@osn/common-ui/lib/styles/textStyles";
-import Flex from "@osn/common-ui/lib/styled/Flex";
+import { p_12_normal } from "@osn/common-ui/es/styles/textStyles";
+import Flex from "@osn/common-ui/es/styled/Flex";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 import { getExtrinsicLink } from "@osn/common/src/utils/blockExplorer";
 

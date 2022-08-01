@@ -1,8 +1,6 @@
 // APP_A/craco.config.js
 
 const path = require("path");
-const fs = require("fs");
-const cracoBabelLoader = require("craco-babel-loader");
 
 /**
  * CRA has a ModuleScopePlugin that prohibits imports outside of the /src
@@ -34,37 +32,12 @@ const enableImportOutsideSrcDir = {
   },
 };
 
-// Handle relative paths to sibling packages
-const appDirectory = fs.realpathSync(process.cwd());
-const resolvePackage = (relativePath) =>
-  path.resolve(appDirectory, relativePath);
-
 module.exports = {
   plugins: [
-    {
-      // enable compilation for the following directories outside of CRA's /src
-      plugin: cracoBabelLoader,
-      options: {
-        includes: [resolvePackage("../ui")],
-      },
-    },
-    {
-      // now that we're compiling these files, enable importing them
-      plugin: enableImportOutsideSrcDir,
-      options: { path: "../ui", name: "ui" },
-    },
     {
       // now that we're compiling these files, enable importing them
       plugin: enableImportOutsideSrcDir,
       options: { path: "./public/imgs", name: "imgs" },
-    },
-    {
-      // aliasing `@osn/common-ui` to `ui/lib`
-      plugin: enableImportOutsideSrcDir,
-      options: {
-        path: "../ui/lib",
-        name: "@osn/common-ui$",
-      },
     },
   ],
   webpack: {
@@ -78,6 +51,11 @@ module.exports = {
             },
           },
         ],
+      },
+      resolve: {
+        fallback: {
+          crypto: false,
+        },
       },
     },
   },

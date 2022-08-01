@@ -2,8 +2,8 @@ import styled, { css } from "styled-components";
 import { ReactComponent as ExpandDownIcon } from "imgs/icons/expand-down.svg";
 import { ReactComponent as ExpandUpIcon } from "imgs/icons/expand-up.svg";
 import { ReactComponent as FundIcon } from "imgs/icons/fund.svg";
-import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
-import Flex from "@osn/common-ui/lib/styled/Flex";
+import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
+import Flex from "@osn/common-ui/es/styled/Flex";
 
 const Wrapper = styled(Flex)`
   > :first-child {

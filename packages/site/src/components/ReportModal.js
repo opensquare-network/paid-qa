@@ -1,10 +1,10 @@
-import Modal from "@osn/common-ui/lib/Modal";
+import Modal from "@osn/common-ui/es/Modal";
 import styled from "styled-components";
 import {
   p_12_normal,
   p_14_medium,
   p_20_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 import serverApi from "services/serverApi";
 import { accountSelector } from "store/reducers/accountSlice";
 import {

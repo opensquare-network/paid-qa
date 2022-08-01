@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import Card from "@osn/common-ui/lib/styled/Card";
+import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
+import Card from "@osn/common-ui/es/styled/Card";
 import Item from "./Item";
-import Pagination from "@osn/common-ui/lib/styled/Pagination";
+import Pagination from "@osn/common-ui/es/styled/Pagination";
 import {
   newErrorToast,
   newPendingToast,
@@ -16,7 +16,7 @@ import {
 } from "store/reducers/toastSlice";
 import { accountSelector } from "store/reducers/accountSlice";
 import serverApi from "services/serverApi";
-import RichEditor from "@osn/common-ui/lib/RichEditor";
+import RichEditor from "@osn/common-ui/es/RichEditor";
 import { signMessage } from "services/chainApi";
 import NoReplies from "components/NoReplies";
 import {
@@ -32,8 +32,8 @@ import { fetchIdentity } from "@osn/common/src/services/identity";
 import uniqWith from "lodash.uniqwith";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
-import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
+import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
 import { identityChainMap } from "@osn/constants";
 import NetworkUser from "components/User/NetworkUser";

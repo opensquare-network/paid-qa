@@ -1,16 +1,16 @@
 import styled, { css } from "styled-components";
 
-import Avatar from "@osn/common-ui/lib/Account/Avatar";
+import Avatar from "@osn/common-ui/es/Account/Avatar";
 import Name from "../User/Name";
-import ExternalLink from "@osn/common-ui/lib/ExternalLink";
+import ExternalLink from "@osn/common-ui/es/ExternalLink";
 import { MOBILE_SIZE } from "@osn/constants";
-import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
-import Flex from "@osn/common-ui/lib/styled/Flex";
+import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
+import Flex from "@osn/common-ui/es/styled/Flex";
 import { ReactComponent as CopyIcon } from "../Post/Detail/icons/copy.svg";
-import Tooltip from "@osn/common-ui/lib/Tooltip";
+import Tooltip from "@osn/common-ui/es/Tooltip";
 import { useCallback, useState } from "react";
 import copy from "copy-to-clipboard";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { addressEllipsis } from "@osn/common/src/utils/address";
 import { getAddressLink } from "@osn/common/src/utils/blockExplorer";
 

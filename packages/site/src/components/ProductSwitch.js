@@ -1,10 +1,10 @@
-import Flex from "@osn/common-ui/lib/styled/Flex";
+import Flex from "@osn/common-ui/es/styled/Flex";
 import styled from "styled-components";
 import {
   p_12_normal,
   p_16_semibold,
   p_18_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 
 const AppWrapper = styled(Flex)`
   ${p_18_semibold};

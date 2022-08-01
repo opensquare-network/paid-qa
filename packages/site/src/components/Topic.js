@@ -2,16 +2,16 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import TagList from "./TagList";
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import MobileInvisible from "@osn/common-ui/lib/styled/MobileInvisible";
-import MobileVisible from "@osn/common-ui/lib/styled/MobileVisible";
+import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
+import MobileInvisible from "@osn/common-ui/es/styled/MobileInvisible";
+import MobileVisible from "@osn/common-ui/es/styled/MobileVisible";
 import NetworkUser from "./User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 import {
   p_14_normal,
   p_16_semibold,
   p_20_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 import { Card, Time, FlexCenter } from "@osn/common-ui";
 
 const ReplyWrapper = styled(FlexCenter)`

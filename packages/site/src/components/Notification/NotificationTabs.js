@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Tabs, Container } from "@osn/common-ui";
 import { MOBILE_SIZE } from "@osn/constants";
-import { netural_grey_200 } from "@osn/common-ui/lib/styles/colors";
+import { netural_grey_200 } from "@osn/common-ui/es/styles/colors";
 
 const TabsWrapper = styled.div`
   background-color: #fff;

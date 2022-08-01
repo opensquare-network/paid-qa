@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Flex, Card, Time, ChainIcon, Avatar, Dot } from "@osn/common-ui";
-import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
 import IdentityOrAddr from "../User/IdentityOrAddr";
 import {
   text_dark_accessory,
   text_dark_major,
   text_dark_minor,
-} from "@osn/common-ui/lib/styles/colors";
+} from "@osn/common-ui/es/styles/colors";
 import TitleLink from "./styled/TitleLink";
 
 const StyledDividerWrapper = styled(Flex)`

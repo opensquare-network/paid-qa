@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/reducers/accountSlice";
-import { ReactComponent as ExitIcon } from "@osn/common-ui/lib/Account/exit.svg";
-import { ReactComponent as CircleIcon } from "@osn/common-ui/lib/Account/circle.svg";
-import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import { ReactComponent as ExitIcon } from "@osn/common-ui/es/Account/exit.svg";
+import { ReactComponent as CircleIcon } from "@osn/common-ui/es/Account/circle.svg";
+import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import NetworkUser from "./NetworkUser";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 
 const Wrapper = styled.div`
   position: relative;

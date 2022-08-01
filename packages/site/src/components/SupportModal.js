@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
 
-import Modal from "@osn/common-ui/lib/Modal";
+import Modal from "@osn/common-ui/es/Modal";
 import styled from "styled-components";
 import { useApi } from "utils/hooks";
 import serverApi from "services/serverApi";
@@ -22,7 +22,7 @@ import { useIsMounted } from "@osn/common/src/utils/hooks";
 import {
   p_14_normal,
   p_20_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 import SupportDetail from "./SupportDetail";
 import {
   DEFAULT_MINIMUM_FUND_AMOUNT,

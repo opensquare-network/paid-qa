@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import { useState, useCallback } from "react";
 import copy from "copy-to-clipboard";
-import Tooltip from "@osn/common-ui/lib/Tooltip";
+import Tooltip from "@osn/common-ui/es/Tooltip";
 import { ReactComponent as TwitterIcon } from "./icons/twitter.svg";
 import { ReactComponent as CopyIcon } from "./icons/copy.svg";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 
 const Wrapper = styled.div`
   display: flex;

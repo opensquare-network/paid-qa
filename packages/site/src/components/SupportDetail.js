@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 
 import styled from "styled-components";
-import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
-import Toggle from "@osn/common-ui/lib/Toggle";
+import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";
+import Toggle from "@osn/common-ui/es/Toggle";
 import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
 import AssetInput from "./AssetInput";
@@ -16,7 +16,7 @@ import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import {
   p_14_medium,
   p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 import BalanceInfo from "./BalanceInfo";
 import { ASSET_CHAINS } from "utils/constants";
 

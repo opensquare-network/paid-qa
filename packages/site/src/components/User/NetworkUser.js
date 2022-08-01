@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Avatar from "@osn/common-ui/lib/Account/Avatar";
-import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
+import Avatar from "@osn/common-ui/es/Account/Avatar";
+import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";
 import IdentityOrAddr from "./IdentityOrAddr";
-import Flex from "@osn/common-ui/lib/styled/Flex";
+import Flex from "@osn/common-ui/es/styled/Flex";
 
 const Wrapper = styled(Flex)`
   color: #2e343d;

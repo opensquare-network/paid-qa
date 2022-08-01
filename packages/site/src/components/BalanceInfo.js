@@ -5,10 +5,10 @@ import { useApi } from "../utils/hooks";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import styled from "styled-components";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
+import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
-import ValueDisplay from "@osn/common-ui/lib/Chain/ValueDisplay";
+import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 
 const Wrapper = styled(FlexBetween)`
   margin-top: 8px;

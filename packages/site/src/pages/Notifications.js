@@ -8,9 +8,9 @@ import { accountSelector } from "store/reducers/accountSlice";
 import { useNotifications } from "../utils/hooks";
 import NotificationItem from "../components/Notification/NotificationItem";
 import NotificationTabs from "../components/Notification/NotificationTabs";
-import { ReactComponent as CheckUnderline } from "@osn/common-ui/lib/imgs/icons/check-underline.svg";
-import { text_dark_minor } from "@osn/common-ui/lib/styles/colors";
-import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import { ReactComponent as CheckUnderline } from "@osn/common-ui/es/imgs/icons/check-underline.svg";
+import { text_dark_minor } from "@osn/common-ui/es/styles/colors";
+import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 
 const Wrapper = styled.div`
   position: relative;

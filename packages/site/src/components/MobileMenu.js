@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { p_12_normal, p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import { p_12_normal, p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 
 const Wrapper = styled.div``;
 
