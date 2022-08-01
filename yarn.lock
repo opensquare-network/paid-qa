@@ -2470,6 +2470,15 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@osn/common-ui@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@osn/common-ui/-/common-ui-1.2.1.tgz#c547deba952174563a11b410f9a4296f8db8c0a7"
+  integrity sha512-kn3UKPIO4IpJQLv4+pYaKshgiHwbSTrAEVrPxZSIdxe712IkfUj8oqeVZwhqJN7mlEUB+Zt46os8Tuz9z/1Z5g==
+  dependencies:
+    "@osn/polkadot-react-identicon" "^1.0.8"
+    copy-to-clipboard "^3.3.1"
+    dayjs "^1.10.8"
+
 "@osn/constants@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@osn/constants/-/constants-1.1.0.tgz#e098c43b7d34b5f4ae9c63772521457d4d480c95"
@@ -2494,7 +2503,7 @@
     "@polkadot/util" "^9.6.1"
     lodash.isnil "^4.0.0"
 
-"@osn/polkadot-react-identicon@^1.0.7":
+"@osn/polkadot-react-identicon@^1.0.7", "@osn/polkadot-react-identicon@^1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@osn/polkadot-react-identicon/-/polkadot-react-identicon-1.0.8.tgz#c4da14f5122057ff72cba1724467cb1455e4377c"
   integrity sha512-X8I205cEAzOIsqhLP7FRHJEk6DskZMK/SetBbyVSBEpd20+Y5JK82Y110ue/LwbMbZgIRSG/oNEBLBXRvmCq0w==
@@ -2530,10 +2539,10 @@
   resolved "https://registry.yarnpkg.com/@osn/provider-options/-/provider-options-1.0.7.tgz#bd7fce7426b44c370812376704aa9092ca6cc216"
   integrity sha512-8P45Pc/N9FrFJz4R922J47w2u8ZCQ8e7/UpMpUmRKayCgQ3oCSH1xtsKYNozbSUsuGNsWJ+UZaap2AfIJIrgjA==
 
-"@osn/rich-text-editor@^0.1.49":
-  version "0.1.49"
-  resolved "https://registry.npmjs.org/@osn/rich-text-editor/-/rich-text-editor-0.1.49.tgz#d2f7290fe89fb02060c9f564fa3eb6a972124483"
-  integrity sha512-qVPA9esq2MxSCv0yqpqIW7Q77Wmb4FCOHRi5+7sBXQecBIe+FugiMRyoyRfHpt9faJ5mSbP18fvKCQJqxsBrFw==
+"@osn/rich-text-editor@^0.1.52":
+  version "0.1.52"
+  resolved "https://registry.npmjs.org/@osn/rich-text-editor/-/rich-text-editor-0.1.52.tgz#3f0abf3830a4c014e79362b56abe47e32b15e667"
+  integrity sha512-bMjCSBwNvLdm0dkxv/JT0cfZdjXIxnsPxviSVpuNPBm/T3H/uQm9xgiDRrxf31cNAWStzuC0pU/pHPzipJuXEQ==
   dependencies:
     "@polkadot/keyring" "^9.6.2"
     "@types/lodash" "^4.14.182"
