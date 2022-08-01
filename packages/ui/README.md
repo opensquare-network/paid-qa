@@ -1,3 +1,0 @@
-# Document
-
-`yarn storybook`
