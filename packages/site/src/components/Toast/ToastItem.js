@@ -9,7 +9,7 @@ import { useIsMounted } from "@osn/common/src/utils/hooks";
 import {
   p_14_normal,
   p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 
 const Wrapper = styled.div`
   padding: 20px;

@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
+import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
 import TagList from "components/TagList";
-import Time from "@osn/common-ui/lib/Time";
-import MobileInvisible from "@osn/common-ui/lib/styled/MobileInvisible";
+import Time from "@osn/common-ui/es/Time";
+import MobileInvisible from "@osn/common-ui/es/styled/MobileInvisible";
 import NetworkUser from "../../User/NetworkUser";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
 import { useSelector } from "react-redux";
 import { answersSelector } from "../../../store/reducers/answerSlice";
-import { p_18_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import { p_18_semibold } from "@osn/common-ui/es/styles/textStyles";
 
 const Wrapper = styled.div`
   > :first-child {

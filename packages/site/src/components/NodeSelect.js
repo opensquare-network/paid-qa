@@ -11,8 +11,8 @@ import {
   activeChainNodeSelector,
 } from "store/reducers/nodeSlice";
 import { DEFAULT_NODES } from "utils/constants";
-import Flex from "@osn/common-ui/lib/styled/Flex";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import Flex from "@osn/common-ui/es/styled/Flex";
+import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 
 const Wrapper = styled.div`
   position: relative;

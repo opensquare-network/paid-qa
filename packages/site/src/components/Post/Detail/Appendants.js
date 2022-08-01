@@ -10,7 +10,7 @@ import {
   FlexCenter,
   IpfsSquare,
 } from "@osn/common-ui";
-import RichEditor from "@osn/common-ui/lib/RichEditor";
+import RichEditor from "@osn/common-ui/es/RichEditor";
 import { useApi } from "utils/hooks";
 import {
   newErrorToast,
@@ -30,8 +30,8 @@ import { useIsMounted } from "@osn/common/src/utils/hooks";
 import {
   p_14_normal,
   p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
-import { text_dark_accessory } from "@osn/common-ui/lib/styles/colors";
+} from "@osn/common-ui/es/styles/textStyles";
+import { text_dark_accessory } from "@osn/common-ui/es/styles/colors";
 import { MarkdownPreviewer } from "@osn/previewer";
 
 const { InteractionEncoder } = encoder;

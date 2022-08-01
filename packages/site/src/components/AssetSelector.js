@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import DropdownSelector from "@osn/common-ui/lib/DropdownSelector";
-import Flex from "@osn/common-ui/lib/styled/Flex";
+import DropdownSelector from "@osn/common-ui/es/DropdownSelector";
+import Flex from "@osn/common-ui/es/styled/Flex";
 import { ASSETS, TEST_ASSETS } from "../utils/constants";
 
 const Wrapper = styled.div`

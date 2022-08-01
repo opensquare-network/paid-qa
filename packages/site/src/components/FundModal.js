@@ -3,15 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 import BigNumber from "bignumber.js";
 
-import Modal from "@osn/common-ui/lib/Modal";
+import Modal from "@osn/common-ui/es/Modal";
 import styled from "styled-components";
-import ChainIcon from "@osn/common-ui/lib/Chain/ChainIcon";
+import ChainIcon from "@osn/common-ui/es/Chain/ChainIcon";
 import {
   p_14_medium,
   p_16_semibold,
   p_20_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
-import Toggle from "@osn/common-ui/lib/Toggle";
+} from "@osn/common-ui/es/styles/textStyles";
+import Toggle from "@osn/common-ui/es/Toggle";
 import AssetSelector from "./NetworkAssetSelector";
 import AmountInput from "./AmountInput";
 import AssetInput from "./AssetInput";
@@ -35,8 +35,8 @@ import {
   topicSelector,
 } from "store/reducers/topicSlice";
 import { answersSelector, fetchAnswers } from "store/reducers/answerSlice";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
-import Flex from "@osn/common-ui/lib/styled/Flex";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
+import Flex from "@osn/common-ui/es/styled/Flex";
 import BalanceInfo from "./BalanceInfo";
 import debounce from "lodash.debounce";
 import { hexToString } from "@polkadot/util";

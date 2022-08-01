@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Time, Flex, Card, MentionIdentityUser, Dot } from "@osn/common-ui";
-import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
+import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
 import {
   MarkdownPreviewer,
   renderMentionIdentityUserPlugin,

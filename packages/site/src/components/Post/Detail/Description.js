@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
+import IpfsSquare from "@osn/common-ui/es/IpfsSquare";
 import ActionBar from "./ActionBar";
 import {
   p_14_normal,
   p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 import { MarkdownPreviewer } from "@osn/previewer";
 
 const Wrapper = styled.div`

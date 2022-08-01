@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { p_16_semibold } from "@osn/common-ui/lib/styles/textStyles";
+import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 
 const Wrapper = styled.div`
   display: flex;

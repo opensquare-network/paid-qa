@@ -2,20 +2,20 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-import Card from "@osn/common-ui/lib/styled/Card";
+import Card from "@osn/common-ui/es/styled/Card";
 import Item from "./Item";
 import { accountSelector } from "store/reducers/accountSlice";
 import SupportModal from "components/SupportModal";
 import { calcSponserRewards } from "utils/rewards";
 import { isSamePublicKey } from "@osn/common/src/utils/address";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { Button } from "@osn/common-ui";
 import {
   p_14_normal,
   p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
-import Tooltip from "@osn/common-ui/lib/Tooltip";
+} from "@osn/common-ui/es/styles/textStyles";
+import Tooltip from "@osn/common-ui/es/Tooltip";
 import ConnectWallet from "components/ConnectWallet";
 
 const Title = styled.div`

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { calcRewards } from "utils/rewards";
 import { Tag } from "@osn/common-ui";
 import StatusTag from "./StatusTag";
-import { primary_purple_500 } from "@osn/common-ui/lib/styles/colors";
+import { primary_purple_500 } from "@osn/common-ui/es/styles/colors";
 
 const Wrapper = styled.div`
   display: flex;

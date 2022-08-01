@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import DividerWrapper from "@osn/common-ui/lib/styled/DividerWrapper";
-import Time from "@osn/common-ui/lib/Time";
-import IpfsSquare from "@osn/common-ui/lib/IpfsSquare";
+import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
+import Time from "@osn/common-ui/es/Time";
+import IpfsSquare from "@osn/common-ui/es/IpfsSquare";
 import NetworkUser from "../../User/NetworkUser";
 import ActionBar from "./ActionBar";
 import { encodeNetworkAddress } from "@osn/common/src/utils/address";
-import { p_14_normal } from "@osn/common-ui/lib/styles/textStyles";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import {
   MarkdownPreviewer,
   renderMentionIdentityUserPlugin,

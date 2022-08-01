@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { accountSelector } from "../store/reducers/accountSlice";
 
-import Modal from "@osn/common-ui/lib/Modal";
+import Modal from "@osn/common-ui/es/Modal";
 import styled from "styled-components";
 import {
   p_14_normal,
   p_16_semibold,
   p_20_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
+} from "@osn/common-ui/es/styles/textStyles";
 import { useApi } from "utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
@@ -23,7 +23,7 @@ import serverApi from "services/serverApi";
 import PromiseItem from "./Post/Promises/Item";
 import { fetchTopic } from "store/reducers/topicSlice";
 import { useIsMounted } from "@osn/common/src/utils/hooks";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 
 const { InteractionEncoder } = encoder;
 const { ResolveInteraction } = interactions;

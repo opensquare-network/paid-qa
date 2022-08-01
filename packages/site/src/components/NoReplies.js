@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import NoData from "@osn/common-ui/lib/NoData";
+import NoData from "@osn/common-ui/es/NoData";
 
 const Wrapper = styled.div`
   > div {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { p_14_medium } from "@osn/common-ui/lib/styles/textStyles";
+import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import NetworkUser from "../User/NetworkUser";
 import {
   Time,
@@ -17,8 +17,8 @@ import {
   text_dark_minor,
   primary_turquoise_500,
   text_dark_accessory,
-} from "@osn/common-ui/lib/styles/colors";
-import { ReactComponent as CheckIcon } from "@osn/common-ui/lib/imgs/icons/check.svg";
+} from "@osn/common-ui/es/styles/colors";
+import { ReactComponent as CheckIcon } from "@osn/common-ui/es/imgs/icons/check.svg";
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/constants";
 import { useState } from "react";

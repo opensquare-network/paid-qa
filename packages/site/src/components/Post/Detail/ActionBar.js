@@ -5,10 +5,10 @@ import FundModal from "../../FundModal";
 import Funders from "../../Funders";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { useOnClickOutside } from "@osn/common/src/utils/hooks";
 import ReportModal from "../../ReportModal";
-import Flex from "@osn/common-ui/lib/styled/Flex";
+import Flex from "@osn/common-ui/es/styled/Flex";
 import { useIsOwner } from "../../../utils/hooks";
 
 const Wrapper = styled.div`

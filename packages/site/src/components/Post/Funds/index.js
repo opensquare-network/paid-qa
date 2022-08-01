@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Card from "@osn/common-ui/lib/styled/Card";
+import Card from "@osn/common-ui/es/styled/Card";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,13 +9,13 @@ import {
   setFundSummary,
 } from "store/reducers/topicSlice";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
-import FlexCenter from "@osn/common-ui/lib/styled/FlexCenter";
+import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import {
   p_14_medium,
   p_14_normal,
   p_16_semibold,
-} from "@osn/common-ui/lib/styles/textStyles";
-import FlexBetween from "@osn/common-ui/lib/styled/FlexBetween";
+} from "@osn/common-ui/es/styles/textStyles";
+import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 
 const Title = styled(FlexBetween)`
   padding-bottom: 16px;

@@ -2,14 +2,14 @@ import { PROJECT_NAME, AVAILABLE_NETWORKS } from "utils/constants";
 import CW, {
   ConnectWalletModal as CWM,
   ConnectWalletButton,
-} from "@osn/common-ui/lib/ConnectWallet";
+} from "@osn/common-ui/es/ConnectWallet";
 import { useDispatch } from "react-redux";
 import { setAccount } from "../store/reducers/accountSlice";
 
 export { ConnectWalletButton };
 
 /**
- * @param {import("@osn/common-ui/lib/ConnectWallet/types").ConnectWalletModalProps} props
+ * @param {import("@osn/common-ui/es/ConnectWallet/types").ConnectWalletModalProps} props
  * @description Wrap the ConnectWallet component with `projectName`, `availableNetworks` and `onConnect`
  */
 export default function ConnectWallet(props) {
@@ -26,7 +26,7 @@ export default function ConnectWallet(props) {
 }
 
 /**
- * @param {import("@osn/common-ui/lib/ConnectWallet/types").ConnectWalletModalProps} props
+ * @param {import("@osn/common-ui/es/ConnectWallet/types").ConnectWalletModalProps} props
  * @description Wrap the ConnectWalletModal component with `projectName`, `availableNetworks` and `onConnect`
  */
 export function ConnectWalletModal(props) {

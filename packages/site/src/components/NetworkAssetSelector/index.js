@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import DropdownSelector from "@osn/common-ui/lib/DropdownSelector";
+import DropdownSelector from "@osn/common-ui/es/DropdownSelector";
 import { IconsMap, NetworkAssets } from "./config";
 
 const Wrapper = styled.div`
