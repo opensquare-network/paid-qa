@@ -1775,10 +1775,10 @@
   resolved "https://registry.yarnpkg.com/@osn/constants/-/constants-1.1.0.tgz#e098c43b7d34b5f4ae9c63772521457d4d480c95"
   integrity sha512-Rc1LxlVvZ4OrHn+zfXe3KbZpoCJrLloxvLlHzN6nWcsw4SDOBNDguYfZPoKgR24rH8BQebgEDqu+8w0GaFAKgg==
 
-"@osn/constants@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@osn/constants/-/constants-1.1.1.tgz#b64d8fbce333e9a0c73f0f4fd77915cf329c6a7e"
-  integrity sha512-5wXukECKQIi0xXsGG38IAezgxS19zdph2jsnabbTHpJ0kDk1kMxCd3HL+2kzxyz/7w/wPWz/qg940qQs4N2ozA==
+"@osn/constants@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@osn/constants/-/constants-1.1.2.tgz#6b8bf547b066800949fdb8232e3ff5913ea60659"
+  integrity sha512-jHKIDY4FQK/m40O11nPUeZ9HIgXrfi4ZkfU4hDGkwtl3FbIQ9jynqj5H/6BQm/nAVFUYR/II+sd0PEnWMtwRaw==
 
 "@osn/ipfs@^0.0.3":
   version "0.0.3"
