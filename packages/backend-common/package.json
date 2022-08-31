@@ -11,6 +11,6 @@
   ],
   "dependencies": {
     "@polkadot/util-crypto": "9.7.2",
-    "mongoose": "^6.4.0"
+    "mongoose": "^6.4.6"
   }
 }
