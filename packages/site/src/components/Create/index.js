@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useApi } from "../../utils/hooks";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 import RewardDetail from "./RewardDetail";
 import RichEditor from "@osn/common-ui/es/RichEditor";

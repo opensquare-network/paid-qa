@@ -18,7 +18,7 @@ import {
   updatePendingToast,
 } from "store/reducers/toastSlice";
 import { fetchTopic } from "store/reducers/topicSlice";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import {
   p_14_normal,
   p_20_semibold,

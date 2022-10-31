@@ -12,7 +12,8 @@
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@craco/craco": "^6.4.5",
-    "@osn/common-ui": "^1.2.2",
+    "@osn/common": "^1.2.0",
+    "@osn/common-ui": "^1.16.4",
     "@osn/constants": "^1.1.0",
     "@osn/polkadot-react-identicon": "^1.0.7",
     "@osn/previewer": "^0.11.2",
@@ -52,7 +53,7 @@
     "postinstall-postinstall": "^2.1.0"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "GENERATE_SOURCEMAP=false craco start",
     "build": "craco build",
     "test": "craco test",
     "postinstall": "patch-package"

@@ -7,7 +7,7 @@ import Item from "./Item";
 import { accountSelector } from "store/reducers/accountSlice";
 import SupportModal from "components/SupportModal";
 import { calcSponserRewards } from "utils/rewards";
-import { isSamePublicKey } from "@osn/common/src/utils/address";
+import { isSamePublicKey } from "@osn/common/utils/address";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { Button } from "@osn/common-ui";

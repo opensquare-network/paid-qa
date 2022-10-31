@@ -11,7 +11,7 @@ import AssetInput from "./AssetInput";
 import { useApi } from "utils/hooks";
 import { hexToString } from "@polkadot/util";
 import debounce from "lodash.debounce";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import {
   p_14_medium,

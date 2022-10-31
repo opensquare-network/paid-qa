@@ -7,7 +7,7 @@ import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import NetworkUser from "../../User/NetworkUser";
-import { encodeNetworkAddress } from "@osn/common/src/utils/address";
+import { encodeNetworkAddress } from "@osn/common/utils/address";
 
 const Wrapper = styled.div`
   > :not(:first-child) {

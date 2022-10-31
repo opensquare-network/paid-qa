@@ -5,7 +5,7 @@ import Time from "@osn/common-ui/es/Time";
 import IpfsSquare from "@osn/common-ui/es/IpfsSquare";
 import NetworkUser from "../../User/NetworkUser";
 import ActionBar from "./ActionBar";
-import { encodeNetworkAddress } from "@osn/common/src/utils/address";
+import { encodeNetworkAddress } from "@osn/common/utils/address";
 import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import {

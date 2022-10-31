@@ -1,10 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 
-import {
-  setCookie,
-  getCookie,
-  clearCookie,
-} from "@osn/common/src/utils/cookie";
+import { setCookie, getCookie, clearCookie } from "@osn/common/utils/cookie";
 import { encodeAddress } from "@polkadot/util-crypto";
 import { AVAILABLE_NETWORKS } from "../../utils/constants";
 

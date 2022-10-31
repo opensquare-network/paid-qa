@@ -6,7 +6,7 @@ import DividerWrapper from "@osn/common-ui/es/styled/DividerWrapper";
 import MobileInvisible from "@osn/common-ui/es/styled/MobileInvisible";
 import MobileVisible from "@osn/common-ui/es/styled/MobileVisible";
 import NetworkUser from "./User/NetworkUser";
-import { encodeNetworkAddress } from "@osn/common/src/utils/address";
+import { encodeNetworkAddress } from "@osn/common/utils/address";
 import {
   p_14_normal,
   p_16_semibold,
