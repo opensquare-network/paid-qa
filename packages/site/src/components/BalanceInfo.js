@@ -2,12 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 import { hexToString } from "@polkadot/util";
 import { useApi } from "../utils/hooks";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import styled from "styled-components";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import { p_14_medium } from "@osn/common-ui/es/styles/textStyles";
-import { getSymbolMetaByChain } from "@osn/common/src/utils/tokenValue";
+import { getSymbolMetaByChain } from "@osn/common/utils/tokenValue";
 import ValueDisplay from "@osn/common-ui/es/Chain/ValueDisplay";
 
 const Wrapper = styled(FlexBetween)`

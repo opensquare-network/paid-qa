@@ -11,8 +11,8 @@ import Tooltip from "@osn/common-ui/es/Tooltip";
 import { useCallback, useState } from "react";
 import copy from "copy-to-clipboard";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
-import { addressEllipsis } from "@osn/common/src/utils/address";
-import { getAddressLink } from "@osn/common/src/utils/blockExplorer";
+import { addressEllipsis } from "@osn/common/utils/address";
+import { getAddressLink } from "@osn/common/utils/blockExplorer";
 
 const Wrapper = styled(Flex)`
   flex-wrap: wrap;

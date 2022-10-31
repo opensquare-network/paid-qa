@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { removeToast, ToastTypes } from "store/reducers/toastSlice";
 import { ReactComponent as Close } from "./icons/close.svg";
 import { ReactComponent as Sticky } from "./icons/sticky.svg";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import {
   p_14_normal,
   p_16_semibold,

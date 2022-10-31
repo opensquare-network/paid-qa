@@ -4,14 +4,14 @@ import FundButton from "../../FundButton";
 import FundModal from "../../FundModal";
 import Funders from "../../Funders";
 import { ReactComponent as ReplyIcon } from "imgs/icons/reply.svg";
-import { encodeNetworkAddress } from "@osn/common/src/utils/address";
+import { encodeNetworkAddress } from "@osn/common/utils/address";
 import Flex from "@osn/common-ui/es/styled/Flex";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import { p_14_normal } from "@osn/common-ui/es/styles/textStyles";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 import ReportModal from "../../ReportModal";
-import { useOnClickOutside } from "@osn/common/src/utils/hooks";
+import { useOnClickOutside } from "@osn/common/utils/hooks";
 import { useIsOwner } from "../../../utils/hooks";
 
 const Wrapper = styled.div`

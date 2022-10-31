@@ -6,7 +6,7 @@ import Funders from "../../Funders";
 import { useSelector } from "react-redux";
 import { accountSelector } from "store/reducers/accountSlice";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
-import { useOnClickOutside } from "@osn/common/src/utils/hooks";
+import { useOnClickOutside } from "@osn/common/utils/hooks";
 import ReportModal from "../../ReportModal";
 import Flex from "@osn/common-ui/es/styled/Flex";
 import { useIsOwner } from "../../../utils/hooks";

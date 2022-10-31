@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import getApi from "@osn/common/src/services/chain/api";
+import getApi from "@osn/common/services/chain/api";
 import { accountSelector } from "../store/reducers/accountSlice";
 import { activeChainNodeSelector } from "../store/reducers/nodeSlice";
 import serverApi from "../services/serverApi";
 import { EmptyList, tabRouterMap } from "./constants";
-import { encodeNetworkAddress } from "@osn/common/src";
+import { encodeNetworkAddress } from "@osn/common";
 import { unreadSelector } from "store/reducers/notificationSlice";
 
 export function useApi() {

@@ -26,7 +26,7 @@ import { fetchTopic } from "store/reducers/topicSlice";
 import serverApi from "services/serverApi";
 import { encoder, interactions } from "@paid-qa/spec";
 import { submitRemark } from "services/chainApi";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import {
   p_14_normal,
   p_16_semibold,

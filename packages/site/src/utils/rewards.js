@@ -1,4 +1,4 @@
-import { bnAdd } from "@osn/common/src/utils/tokenValue";
+import { bnAdd } from "@osn/common/utils/tokenValue";
 
 export function calcRewards(rewards) {
   //TODO: handle different asset with same symbol name

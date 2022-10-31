@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 import NodeSelect from "./NodeSelect";
 import { useSelector } from "react-redux";
 import ConnectedAccount from "./User/ConnectedAccount";
-import { useOnClickOutside, useWindowSize } from "@osn/common/src/utils/hooks";
+import { useOnClickOutside, useWindowSize } from "@osn/common/utils/hooks";
 import useUpdateNodesDelay from "utils/useUpdateNodesDelay";
 import MobileMenu from "./MobileMenu";
 import ProductSwitch from "./ProductSwitch";

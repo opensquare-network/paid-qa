@@ -26,7 +26,7 @@ import {
   removeToast,
   updatePendingToast,
 } from "store/reducers/toastSlice";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
 import serverApi from "services/serverApi";
 import {

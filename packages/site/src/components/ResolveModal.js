@@ -22,7 +22,7 @@ import {
 import serverApi from "services/serverApi";
 import PromiseItem from "./Post/Promises/Item";
 import { fetchTopic } from "store/reducers/topicSlice";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import FlexBetween from "@osn/common-ui/es/styled/FlexBetween";
 
 const { InteractionEncoder } = encoder;

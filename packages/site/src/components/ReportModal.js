@@ -19,7 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { signMessage } from "services/chainApi";
-import { encodeNetworkAddress } from "@osn/common/src/utils/address";
+import { encodeNetworkAddress } from "@osn/common/utils/address";
 
 const Wrapper = styled.div``;
 

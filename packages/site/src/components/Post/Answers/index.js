@@ -27,11 +27,11 @@ import {
 import {
   addressEllipsis,
   encodeNetworkAddress,
-} from "@osn/common/src/utils/address";
-import { fetchIdentity } from "@osn/common/src/services/identity";
+} from "@osn/common/utils/address";
+import { fetchIdentity } from "@osn/common/services/identity";
 import uniqWith from "lodash.uniqwith";
 import { ReactComponent as Loading } from "imgs/icons/loading.svg";
-import { useIsMounted } from "@osn/common/src/utils/hooks";
+import { useIsMounted } from "@osn/common/utils/hooks";
 import { p_16_semibold } from "@osn/common-ui/es/styles/textStyles";
 import FlexCenter from "@osn/common-ui/es/styled/FlexCenter";
 import { useSearchParams } from "react-router-dom";
