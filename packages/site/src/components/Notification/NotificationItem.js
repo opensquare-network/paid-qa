@@ -8,6 +8,7 @@ import {
   FlexBetween,
   MentionIdentityUser,
   Dot,
+  LoadingIcon,
 } from "@osn/common-ui";
 import {
   MarkdownPreviewer,
@@ -22,6 +23,9 @@ import { ReactComponent as CheckIcon } from "@osn/common-ui/es/imgs/icons/check.
 import { Link } from "react-router-dom";
 import { MOBILE_SIZE } from "@osn/constants";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { accountSelector } from "store/reducers/accountSlice";
+import { clearUnread } from "store/reducers/notificationSlice";
 
 const NotificationItemWrapper = styled.div`
   &:hover {
@@ -173,21 +177,37 @@ const resolveItemState = (t = []) => {
   return value;
 };
 
-export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
+export default function NotificationItem({ data }) {
   const {
     type: origType,
     read: origRead,
     data: { byWho, topic, answer, support, fund },
+    _id: id,
   } = data;
 
+  const dispatch = useDispatch();
+  const account = useSelector(accountSelector);
+
   const [read, setRead] = useState(origRead);
+  const [clearing, setClearing] = useState(false);
 
   const { type, shouldShowAmount, shouldShowAnswer } =
     resolveItemState(origType);
 
-  function handleMarkAsRead(data) {
-    onMarkAsRead(data);
-    setRead(true);
+  function handleMarkAsRead() {
+    setClearing(true);
+
+    dispatch(
+      clearUnread(account.network, account.address, {
+        items: [id],
+      })
+    )
+      .then(() => {
+        setRead(true);
+      })
+      .finally(() => {
+        setClearing(false);
+      });
   }
 
   let titlePrefix;
@@ -236,7 +256,9 @@ export default function NotificationItem({ data, onMarkAsRead = () => {} }) {
               </TimeWrapper>
 
               <StatusWrapper>
-                {!read ? (
+                {clearing ? (
+                  <LoadingIcon />
+                ) : !read ? (
                   <MarkAsReadButton onClick={() => handleMarkAsRead(data)}>
                     <UnreadDot className="unread-dot" />
                     <CheckIcon className="check-icon" />
