@@ -28,7 +28,7 @@ export const fetchUnread = (network, address) => async (dispatch) => {
 };
 
 export const clearUnread = (network, address, body) => async (dispatch) => {
-  await serverApi
+  return serverApi
     .post(
       `/network/${network}/address/${address}/notifications/clearunread`,
       body
