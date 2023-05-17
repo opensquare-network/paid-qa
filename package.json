@@ -8,9 +8,6 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "**/semantic-ui-css"
     ]
   },
   "husky": {
@@ -48,5 +45,6 @@
       "type": "Apache-2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
-  ]
+  ],
+  "packageManager": "yarn@3.5.1"
 }
