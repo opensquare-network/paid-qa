@@ -151,7 +151,7 @@ export default function Appendants({
 
       const { result, error } = await serverApi.post(
         `/topics/${topicCid}/appendants`,
-        payload
+        payload,
       );
       if (result) {
         dispatch(newSuccessToast("Appendant added"));

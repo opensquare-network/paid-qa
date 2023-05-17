@@ -107,7 +107,7 @@ export default function NodeSelect({ small, chain }) {
   const nodes = useSelector(chainNodesSelector(chain));
 
   const [currentNodeSetting, setCurrentNodeSetting] = useState(
-    DEFAULT_NODES[chain]
+    DEFAULT_NODES[chain],
   );
   const dispatch = useDispatch();
 
@@ -122,7 +122,7 @@ export default function NodeSelect({ small, chain }) {
   useEffect(() => {
     if (currentNode) {
       const nodeSetting = (nodes || []).find(
-        (item) => item.url === currentNode
+        (item) => item.url === currentNode,
       );
       setCurrentNodeSetting(nodeSetting);
     }

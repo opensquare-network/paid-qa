@@ -200,7 +200,7 @@ export default function NotificationItem({ data }) {
     dispatch(
       clearUnread(account.network, account.address, {
         items: [id],
-      })
+      }),
     )
       .then(() => {
         setRead(true);
@@ -278,7 +278,7 @@ export default function NotificationItem({ data }) {
             maxLines={3}
             plugins={[
               renderMentionIdentityUserPlugin(
-                <MentionIdentityUser hashRoute />
+                <MentionIdentityUser hashRoute />,
               ),
             ]}
           />

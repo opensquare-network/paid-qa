@@ -90,7 +90,7 @@ export default function Explorer() {
   };
   const debouncedSetTitle = useMemo(
     () => debounce((text) => dispatch(setFilterTitle(text)), 500),
-    [dispatch]
+    [dispatch],
   );
 
   return (

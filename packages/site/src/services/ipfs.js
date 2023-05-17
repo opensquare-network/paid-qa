@@ -1,6 +1,6 @@
 import Hash from "ipfs-only-hash";
 import { CID } from "multiformats/cid";
-import { Buffer } from "buffer";
+import Buffer from "tiny-buffer";
 
 export async function cidOf(obj) {
   const data = JSON.stringify(obj);

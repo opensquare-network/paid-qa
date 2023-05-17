@@ -83,7 +83,7 @@ export default function PromiseItem({ data }) {
             data?.funds?.find((item) => item.symbol === symbol)?.value || 0;
           const percentage = Math.max(
             0,
-            Math.min(100, parseInt((fundedAmount / promisedAmount) * 100))
+            Math.min(100, parseInt((fundedAmount / promisedAmount) * 100)),
           );
           return (
             <Process key={index}>

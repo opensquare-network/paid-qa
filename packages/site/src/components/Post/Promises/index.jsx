@@ -88,7 +88,7 @@ export default function Promises({ topicCid, rewards, resolves, resolved }) {
         )}
         {sumUpRewards.map((reward, index) => {
           const resolve = resolves?.find((resolve) =>
-            isSamePublicKey(resolve.sponsor, reward.sponsor)
+            isSamePublicKey(resolve.sponsor, reward.sponsor),
           );
           return <Item key={index} reward={reward} resolve={resolve} />;
         })}

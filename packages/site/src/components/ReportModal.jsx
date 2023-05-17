@@ -157,7 +157,7 @@ export default function ReportModal({ open, setOpen, ipfsCid }) {
             title: "Thanks for reporting",
             message:
               "We will review your report and take action if there is a violation of Paid QA Guidelines.",
-          })
+          }),
         );
       }
 

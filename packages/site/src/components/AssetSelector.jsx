@@ -59,17 +59,17 @@ const Assets = [
     name: "All Assets",
   },
 ];
-if (process.env.REACT_APP_ENVIRONMENT === "production") {
+if (import.meta.env.PROD) {
   Assets.push(...ASSETS);
 }
-if (process.env.REACT_APP_ENVIRONMENT === "development") {
+if (import.meta.env.DEV) {
   Assets.push(...TEST_ASSETS);
 }
 
 export default function AssetSelector({ asset, setAsset }) {
   const index = Assets.findIndex((item) => item.id === asset?.id);
   const [selectedAssetIndex, setSelectedAssetIndex] = useState(
-    index === -1 ? 0 : index
+    index === -1 ? 0 : index,
   );
   const assetsOptions = Assets.map((item, i) => {
     return {

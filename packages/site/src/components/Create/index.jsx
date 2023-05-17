@@ -141,7 +141,7 @@ export default function Create() {
     const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
     if (new BigNumber(rewardAmount).lt(minimum)) {
       return showErrorToast(
-        `Reward amount cannot be less than minimum: ${minimum}`
+        `Reward amount cannot be less than minimum: ${minimum}`,
       );
     }
 

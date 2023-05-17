@@ -47,7 +47,7 @@ export default function Rewards() {
       sponsor,
       symbol: token,
       value: fundsStats[sponsor][token],
-    }))
+    })),
   );
 
   const tokenValues = calcRewards(flatten(funds));

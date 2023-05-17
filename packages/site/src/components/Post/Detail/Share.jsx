@@ -47,7 +47,7 @@ export default function Share() {
     window.open(
       url,
       "",
-      "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+      "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600",
     );
   }, []);
 
