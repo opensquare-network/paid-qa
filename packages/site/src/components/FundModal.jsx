@@ -221,7 +221,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
     const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
     if (new BigNumber(inputAmount).lt(minimum)) {
       return showErrorToast(
-        `Fund amount cannot be less than minimum: ${minimum}`
+        `Fund amount cannot be less than minimum: ${minimum}`,
       );
     }
 
@@ -248,7 +248,7 @@ export default function FundModal({ open, setOpen, ipfsCid, beneficiary }) {
         account,
         (status) => {
           dispatch(updatePendingToast(toastId, status));
-        }
+        },
       );
       const payload = {
         network: account.network,

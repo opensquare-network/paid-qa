@@ -67,7 +67,7 @@ export default function Funders({ funds }) {
               href={getExtrinsicLink(
                 fund.network,
                 fund.indexer.blockHeight,
-                fund.indexer.extrinsicIndex
+                fund.indexer.extrinsicIndex,
               )}
               target="_blank"
               rel="noreferrer"

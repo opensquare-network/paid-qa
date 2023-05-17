@@ -55,7 +55,7 @@ function ProfileDataList({ tab, network, address }) {
           setIsLoading(false);
         });
     },
-    [dispatch, tab, apiUrl]
+    [dispatch, tab, apiUrl],
   );
 
   useEffect(() => {

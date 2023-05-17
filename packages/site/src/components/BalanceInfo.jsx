@@ -105,7 +105,7 @@ export default function BalanceInfo({
         } else {
           const assetAccount = await api.query.assets.account(
             assetId,
-            account?.address
+            account?.address,
           );
           const { balance: hexBalance = 0 } = assetAccount.toJSON() || {};
           balance = hexBalance;

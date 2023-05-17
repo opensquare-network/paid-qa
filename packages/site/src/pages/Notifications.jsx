@@ -52,7 +52,7 @@ export default function Notifications() {
     page,
     account,
     tab,
-    setPage
+    setPage,
   );
 
   const unread = useSelector(unreadSelector);

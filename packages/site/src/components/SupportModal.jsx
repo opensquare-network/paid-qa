@@ -119,14 +119,14 @@ export default function SupportModal({ open, setOpen, topicCid }) {
     const minimum = MINIMUM_FUND_AMOUNTS[symbol] || DEFAULT_MINIMUM_FUND_AMOUNT;
     if (new BigNumber(inputAmount).lt(minimum)) {
       return showErrorToast(
-        `Support amount cannot be less than minimum: ${minimum}`
+        `Support amount cannot be less than minimum: ${minimum}`,
       );
     }
 
     const interaction = new SupportInteraction(
       tokenIdentifier,
       inputAmount,
-      topicCid
+      topicCid,
     );
     if (!interaction.isValid) {
       return showErrorToast("Interaction is invalid");
@@ -143,7 +143,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
         account,
         (status) => {
           dispatch(updatePendingToast(toastId, status));
-        }
+        },
       );
       const payload = {
         network: account.network,
@@ -153,7 +153,7 @@ export default function SupportModal({ open, setOpen, topicCid }) {
 
       const { result, error } = await serverApi.post(
         `/topics/${topicCid}/supports`,
-        payload
+        payload,
       );
       if (result) {
         dispatch(newSuccessToast("Support added"));

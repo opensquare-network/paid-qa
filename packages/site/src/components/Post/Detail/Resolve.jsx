@@ -12,7 +12,7 @@ export default function Resolve({ topic, ...restProps }) {
   const [open, setOpen] = useState();
   const account = useSelector(accountSelector);
   const sumUpRewards = calcSponserRewards(
-    topic.rewards.filter((item) => item.sponsor === account?.address)
+    topic.rewards.filter((item) => item.sponsor === account?.address),
   );
 
   if (!sumUpRewards?.length > 0) {
@@ -21,7 +21,8 @@ export default function Resolve({ topic, ...restProps }) {
 
   const myResolve = topic?.resolves?.find(
     (resolve) =>
-      resolve.sponsor === account.address && resolve.network === account.network
+      resolve.sponsor === account.address &&
+      resolve.network === account.network,
   );
 
   if (myResolve) {

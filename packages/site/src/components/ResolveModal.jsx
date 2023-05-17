@@ -91,7 +91,7 @@ export default function ResolveModal({ open, setOpen, rewards, topicCid }) {
         account,
         (status) => {
           dispatch(updatePendingToast(toastId, status));
-        }
+        },
       );
       const payload = {
         network: account.network,

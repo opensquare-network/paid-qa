@@ -128,7 +128,7 @@ export default function Answers({ topicCid }) {
 
       const { result, error } = await serverApi.post(
         `/topics/${topicCid}/answers`,
-        payload
+        payload,
       );
       if (result) {
         setContent("");
@@ -152,7 +152,7 @@ export default function Answers({ topicCid }) {
     const userIdentities = await Promise.all(
       uniqWith(
         answers?.items || [],
-        (a, b) => a.signer === b.signer && a.network === b.network
+        (a, b) => a.signer === b.signer && a.network === b.network,
       )
         .map((item) => ({
           address: encodeNetworkAddress(item.signer, item.network),
@@ -165,7 +165,7 @@ export default function Answers({ topicCid }) {
             ...item,
             identity,
           };
-        })
+        }),
     );
 
     return userIdentities.map((user) => {
@@ -187,7 +187,7 @@ export default function Answers({ topicCid }) {
 
   const loadSuggestions = (text) => {
     return suggestions.filter((i) =>
-      i.address.toLowerCase().includes(text.toLowerCase())
+      i.address.toLowerCase().includes(text.toLowerCase()),
     );
   };
 
