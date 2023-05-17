@@ -3962,6 +3962,8 @@ __metadata:
     buffer: ^6.0.3
     copy-to-clipboard: ^3.3.1
     craco-babel-loader: ^1.0.3
+    eslint: ^8.40.0
+    eslint-config-react-app: ^7.0.1
     ipfs-only-hash: ^4.0.0
     lodash.debounce: ^4.0.8
     lodash.flatten: ^4.4.0
@@ -10145,7 +10147,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.3.0":
+"eslint@npm:^8.3.0, eslint@npm:^8.40.0":
   version: 8.40.0
   resolution: "eslint@npm:8.40.0"
   dependencies:
