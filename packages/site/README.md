@@ -8,12 +8,10 @@ Run `cat .env.example > .env` to init the `.env` file, then edit it.
 
 ```dotenv
 # The backend server endpoint configuration
-REACT_APP_QA_API_SERVER=https://test-qa-api.opensquare.io/
-REACT_APP_SOCKET_IO_URL=test-qa-api.opensquare.io/
+VITE_APP_QA_API_SERVER=https://test-qa-api.opensquare.io/
+VITE_APP_SOCKET_IO_URL=test-qa-api.opensquare.io/
 
-REACT_APP_IDENTITY_SERVER_HOST=https://id.statescan.io
-# development | production
-REACT_APP_ENVIRONMENT=development
+VITE_APP_IDENTITY_SERVER_HOST=https://id.statescan.io
 ```
 
 ## Available Scripts

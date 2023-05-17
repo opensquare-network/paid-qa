@@ -3,8 +3,8 @@ import { identityChainMap } from "@osn/constants";
 import { encodeNetworkAddress } from "../utils";
 
 const identityServerHost =
-  process.env.REACT_APP_IDENTITY_SERVER_HOST ||
-  process.env.NEXT_PUBLIC_IDENTITY_SERVER_HOST ||
+  import.meta.env.VITE_APP_IDENTITY_SERVER_HOST ||
+  import.meta.env.NEXT_PUBLIC_IDENTITY_SERVER_HOST ||
   "https://id.statescan.io";
 
 const cachedIdentities = new Map();
@@ -96,7 +96,7 @@ export function fetchIdentity(chain, address, fetchOptions = {}) {
           const promise = pending.get(idName);
           promise.push(resolve, reject);
           delayQuery(fetchOptions);
-        }, 0)
+        }, 0),
       ),
     ]);
   }

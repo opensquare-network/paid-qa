@@ -169,12 +169,10 @@ Open the '.env' file and do necessary configuration
 
 ```dotenv
 # QA server restful API endpoint
-REACT_APP_QA_API_SERVER=http://127.0.0.1:5050/
-REACT_APP_SOCKET_IO_URL=http://127.0.0.1:5050/
+VITE_APP_QA_API_SERVER=http://127.0.0.1:5050/
+VITE_APP_SOCKET_IO_URL=http://127.0.0.1:5050/
 
-REACT_APP_IDENTITY_SERVER_HOST=https://id.statescan.io
-# development | production
-REACT_APP_ENVIRONMENT=development
+VITE_APP_IDENTITY_SERVER_HOST=https://id.statescan.io
 ```
 
 Then run
