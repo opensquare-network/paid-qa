@@ -114,9 +114,7 @@ function signAndSendTx(tx, account, callback = () => {}) {
 
             callback("Remarks have been successfully submitted to the chain");
 
-            const extrinsicIndex = JSON.parse(
-              events[0]?.phase?.toString()
-            )?.applyExtrinsic;
+            const extrinsicIndex = events[0]?.phase?.value?.toNumber();
 
             const blockHash = status.asInBlock.toString();
             resolve({
